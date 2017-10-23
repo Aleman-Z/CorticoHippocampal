@@ -1,4 +1,4 @@
-function [nS,ny]=orderICA(S,y)
+function [ese]=orderICA(S,y)
 [corr,indx,indy,corrs] = matcorr(S,y,0,2);
 % 
 nS=S(indx,:);
@@ -19,5 +19,9 @@ end
 %   plot(nS(i,:))
 %   
 % end
+
+for i=1:length(corr)
+    ese(indx(i,1),:)=ny(i,:);
+end
 
 end

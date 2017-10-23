@@ -22,7 +22,7 @@ S7=-2*sin(9*t2)+2;
 
  S8=[S6 S7];
 figure(1)
-whitebg;
+%whitebg;
 subplot(3,2,1);
 plot(t,S1,'-m');
 subplot(3,2,2);
@@ -38,7 +38,7 @@ subplot(3,2,5);
 plot(t,S5,'--c');
 subplot(3,2,6);
 plot(t,S8,'--g');
-S=[S1;S2;S3;S4;S5;S8];%6 Señales de entrada 
+S=[S1;S2;S3;S4;S5;S8];%6 Seï¿½ales de entrada 
 B=2*rand(6)-1;%Matriz de mezclas que tenga valores entre -1 y 1.
 X=B*S;% Observaciones
 % x1=X(1,:);
@@ -65,10 +65,10 @@ y4=y(4,:);
 y5=y(5,:);
 y6=y(6,:);
 
-
+%%
  figure(2)
 % 
-whitebg;
+%%whitebg;
 subplot(3,2,1);
 plot(t,y1,'-m');
 subplot(3,2,2);
@@ -93,29 +93,47 @@ for i=1:6
   plot(S(i,:))
   
 end
-
-%% Adding Matcorr
-
-[corr,indx,indy,corrs] = matcorr(S,y,0,2);
-% 
-nuS=S(indx,:);
-nuy=y(indy,:);
-
-corrsign=(corr<0);
-
-for i=1:6
-  if corrsign(i,1)==1
-      nuy(i,:)=nuy(i,:)*(-1);
-  end    
-end
-
-for i=1:6
-  subplot(6,2,2*i)
-  plot(nuy(i,:))
-  subplot(6,2,(2*i)-1)
-  plot(nuS(i,:))
-  
-end
 %%
-[nS,ny]=orderICA(S,y);
+[ese]=orderICA(S,y);
+%%
 
+for i=1:6
+    subplot(6,2,2*i-1)
+plot(S(i,:))
+
+    subplot(6,2,2*i)
+    plot(ese(i,:)) 
+end
+
+%%
+figure()
+for i=1:6
+    subplot(6,1,i)
+    plot(ese(i,:)) 
+end
+
+% % %% Adding Matcorr
+% % 
+% % [corr,indx,indy,corrs] = matcorr(S,y,0,2);
+% % % 
+% % nuS=S(indx,:);
+% % nuy=y(indy,:);
+% % 
+% % corrsign=(corr<0);
+% % 
+% % for i=1:6
+% %   if corrsign(i,1)==1
+% %       nuy(i,:)=nuy(i,:)*(-1);
+% %   end    
+% % end
+% % 
+% % for i=1:6
+% %   subplot(6,2,2*i)
+% %   plot(nuy(i,:))
+% %   subplot(6,2,(2*i)-1)
+% %   plot(nuS(i,:))
+% %   
+% % end
+% % %%
+% % [nS,ny]=orderICA(S,y);
+% % 
