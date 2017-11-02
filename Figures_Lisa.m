@@ -19,6 +19,9 @@
 %% LOADING DATA OF 2 MAIN CHANNELS AND REFERENCE
 fs=20000; %Sampling frequency of acquisition.  
 
+addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
+
+%%
 % %Reference
 % [data6m, timestamps6, ~] = load_open_ephys_data_faster('100_CH6_merged.continuous');
 
