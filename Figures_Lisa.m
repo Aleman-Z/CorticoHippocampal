@@ -32,7 +32,7 @@ addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')
 %Hippocampus
 [data17m, ~, ~] = load_open_ephys_data_faster('100_CH46.continuous');
 %% Verifying time
- l=length(data9m); %samples
+ l=length(ax1); %samples
  t=l*(1/fs); %  2.7276e+03  seconds
 % Equivalent to 45.4596 minutes
 t=1:l;
@@ -41,10 +41,45 @@ t=t*(1/fs);
 [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
 [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
 [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');
+% %%
+% [ax4, ~, ~] = load_open_ephys_data_faster('100_AUX4.continuous');
+% [ax5, ~, ~] = load_open_ephys_data_faster('100_AUX5.continuous');
+% [ax6, ~, ~] = load_open_ephys_data_faster('100_AUX6.continuous');
+
 %%
-[ax4, ~, ~] = load_open_ephys_data_faster('100_AUX4.continuous');
-[ax5, ~, ~] = load_open_ephys_data_faster('100_AUX5.continuous');
-[ax6, ~, ~] = load_open_ephys_data_faster('100_AUX6.continuous');
+% plot(t,ax1)
+% hold on
+% plot(t,ax1d)
+% legend('AUX1','AUX1 (detrended)')
+% 
+% xlabel('Time(sec)')
+% ylabel('Magnitude')
+% grid minor
+% title('Comparison between original and detrended data')
+%%
+%%
+da=diff([ax1; ax1(end)]);
+da=abs(da);
+
+mda=da*0;
+mda=mda+mode(da);
+
+plot(t,ax1(1:end))
+hold on
+plot(t,da)
+
+plot(t,mda,'Color','k')
+% plot(t,eax1(1:end))
+% plot(t,ax3(1:end))
+
+xlabel('Time(sec)')
+ylabel('Magnitude')
+grid minor
+title('Accelerometer data')
+%legend('AUX1','AUX2','AUX3')
+%%
+eax1=entropy1(ax1);
+plot(t,eax1)
 
 %%
 plot(t,ax1(1:end))
@@ -70,14 +105,17 @@ title('Accelerometer data')
 legend('AUX4','AUX5','AUX6')
 %% Detrend
 ax1d=detrend(ax1);
+%%
 ax1d=detrend(ax2);
 ax1d=detrend(ax3);
+%%
 ax1d=detrend(ax4);
 ax1d=detrend(ax5);
 ax1d=detrend(ax6);
 
 %%
 sos=ax1.^2+ax2.^2+ax3.^2;
+%%
 so=ax4.^2+ax5.^2+ax6.^2;
 %%
 plot(t,sos(1:end))
@@ -89,6 +127,21 @@ ylabel('Magnitude')
 grid minor
 title('Resulting Vector for Accelerometer data')
 legend('AUX1,AUX2,AUX3', 'AUX4,AUX5,AUX6')
+%%
+plot(t,sos(1:end),'Color',[1 0.3 0])
+
+xlabel('Time(sec)')
+ylabel('Magnitude')
+grid minor
+title('Resultant Vector for Accelerometer data')
+%%
+plot(t,(sos(1:end)),'Color',[1 0.3 0])
+
+xlabel('Time(sec)')
+ylabel('Magnitude')
+grid minor
+title('Resultant Vector for Accelerometer data')
+
 
 %% Extract only NREM signals. (1 for awake, 3 for NREM)
 c=find(transitions(:,1)==3); 
