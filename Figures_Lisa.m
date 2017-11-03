@@ -24,19 +24,50 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 
 
 %%
-% %Reference
-% [data6m, timestamps6, ~] = load_open_ephys_data_faster('100_CH6_merged.continuous');
-clear all
-%PFC
+cd('/media/raleman/My Book/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43');
+
 [data9m, ~, ~] = load_open_ephys_data_faster('100_CH14.continuous');
-% %Parietal lobe
-% [data12m, ~, ~] = load_open_ephys_data_faster('100_CH12_merged.continuous');
-%Hippocampus
 [data17m, ~, ~] = load_open_ephys_data_faster('100_CH46.continuous');
-%% Loading accelerometer data
+% Loading accelerometer data
 [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
 [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
 [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');
+
+% Verifying time
+ l=length(ax1); %samples
+% t=l*(1/fs); %  2.7276e+03  seconds
+% Equivalent to 45.4596 minutes
+t=1:l;
+t=t*(1/fs);
+
+sos=ax1.^2+ax2.^2+ax3.^2;
+clear ax1 ax2 ax3 
+
+%%
+% close all
+%[vtr]=findsleep(sos,0.006,t); %post_trial2
+[vtr]=findsleep(sos,0.006,t); %post_trial3
+
+%%
+vin=find(vtr~=1);
+tvin=vin*(1/fs);
+
+C9=data9m(vin).*(0.195);
+C17=data17m(vin).*(0.195);
+
+clear data17m data9m
+%%
+cd('/home/raleman/Documents/internship/Lisa_files/data/PT1')
+save('C9.mat','C9')
+save('C17.mat','C17')
+
+
+%% FINITO
+
+
+
+
+
 % %%
 % [ax4, ~, ~] = load_open_ephys_data_faster('100_AUX4.continuous');
 % [ax5, ~, ~] = load_open_ephys_data_faster('100_AUX5.continuous');
@@ -45,12 +76,6 @@ clear all
 % ax1=ax1(1:10000000);
 % ax2=ax2(1:10000000);
 % ax3=ax3(1:10000000);
-%% Verifying time
- l=length(ax1); %samples
- t=l*(1/fs); %  2.7276e+03  seconds
-% Equivalent to 45.4596 minutes
-t=1:l;
-t=t*(1/fs);
 %%
 % close all
 % findsleep(ax3,0.006,t)
@@ -108,21 +133,24 @@ legend('AUX4','AUX5','AUX6')
 
 %%
 sos=ax1.^2+ax2.^2+ax3.^2;
+clear ax1 ax2 ax3 
+
 %%
-close all
-[vtr]=findsleep(sos,0.008,t); %post_trial2
+% close all
+%[vtr]=findsleep(sos,0.006,t); %post_trial2
+[vtr]=findsleep(sos,0.006,t); %post_trial3
+
 %%
 vin=find(vtr~=1);
 tvin=vin*(1/fs);
 
+C9=data9m(vin).*(0.195); %Sleep+Correction factor
+C17=data17m(vin).*(0.195); %Sleep+Correction factor
 
-clear ax1 ax2 ax3 
-
-C9=data17m(vin);
-C17=data9m(vin);
+clear data17m data9m
 %%
+cd('/home/raleman/Documents/internship/Lisa_files/data/PT3')
 save('C9.mat','C9')
-
 save('C17.mat','C17')
 
 %%

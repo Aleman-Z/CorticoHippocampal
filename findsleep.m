@@ -23,18 +23,18 @@ thr=(da>threshold);
 % thr=thr+1;
 
 
-
-for i=3:length(thr)-2
-    %tt=thr(i,1);
-    
-    %if i~=1 || i~=length(thr) || i~=2 || i~=length(thr)-1
-   if  thr(i,1)==0   
-        %if (thr(i-1,1)==1 || thr(i+2,1)==1)    
-        if sum([thr(i-1,1),thr(i-1,1),thr(i-1,1),thr(i-1,1)])>=1 
-        thr(i,1)==1;
-        end
-   end
-end
+% 
+% for i=3:length(thr)-2
+%     %tt=thr(i,1);
+%     
+%     %if i~=1 || i~=length(thr) || i~=2 || i~=length(thr)-1
+%    if  thr(i,1)==0   
+%         %if (thr(i-1,1)==1 || thr(i+2,1)==1)    
+%         if sum([thr(i-1,1),thr(i-1,1),thr(i-1,1),thr(i-1,1)])>=1 
+%         thr(i,1)==1;
+%         end
+%    end
+% end
 
 %th=da.*thr;
 
