@@ -182,11 +182,14 @@ ax1d=detrend(ax6);
 
 %%
 sos=ax1.^2+ax2.^2+ax3.^2;
-findsleep(sos,0.005,t)
+[vtr]=findsleep(sos,0.005,t);
+vin=find(vtr==0);
 
+ax1s=ax1(vin);
 
+plot(ax1s)
 %%
-so=ax4.^2+ax5.^2+ax6.^2;
+% so=ax4.^2+ax5.^2+ax6.^2;
 %%
 plot(t,sos(1:end))
 hold on
