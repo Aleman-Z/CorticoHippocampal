@@ -54,4 +54,5 @@ xlabel('Time(sec)')
 ylabel('Normalized Magnitude')
 grid minor
 legend('Awake state','Accelerometer data ')
+
 end

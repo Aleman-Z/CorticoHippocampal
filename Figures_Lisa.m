@@ -21,7 +21,21 @@ fs=20000; %Sampling frequency of acquisition.
 
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')  
-
+%%
+num=1;
+data_lisa(num)
+%%
+num=2;
+data_lisa(num)
+%%
+num=3;
+data_lisa(num)
+%%
+num=4;
+data_lisa(num)
+%%
+num=5;
+data_lisa(num)
 
 %%
 cd('/media/raleman/My Book/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43');
@@ -64,8 +78,38 @@ save('C17.mat','C17')
 
 %% FINITO
 
+%% Downsampling x20
+
+Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+[b,a] = butter(3,Wn); %Filter coefficients for LPF
+V9=cell(length(C12),1);
+V6=cell(length(C12),1);
+V12=cell(length(C12),1);
+V17=cell(length(C12),1);
+S9=cell(length(C12),1);
+S12=cell(length(C12),1);
+S17=cell(length(C12),1);
+
+for i=1:length(C12)
+%Monipolar    
+V9{i,1}=filtfilt(b,a,C9{i,1});
+V9{i,1}=decimator(V9{i,1},20).';
+V6{i,1}=filtfilt(b,a,C6{i,1});
+V6{i,1}=decimator(V6{i,1},20).';
+V12{i,1}=filtfilt(b,a,C12{i,1});
+V12{i,1}=decimator(V12{i,1},20).';
+V17{i,1}=filtfilt(b,a,C17{i,1});
+V17{i,1}=decimator(V17{i,1},20).';
+
+%Bipolar
+S9{i,1}=V9{i,1}-V6{i,1};
+S12{i,1}=V12{i,1}-V6{i,1};
+S17{i,1}=V17{i,1}-V6{i,1};
+end
+fn=1000; %New sampling frequency
 
 
+%%
 
 
 % %%
