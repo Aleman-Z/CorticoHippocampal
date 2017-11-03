@@ -31,12 +31,6 @@ addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')
 % [data12m, ~, ~] = load_open_ephys_data_faster('100_CH12_merged.continuous');
 %Hippocampus
 [data17m, ~, ~] = load_open_ephys_data_faster('100_CH46.continuous');
-%% Verifying time
- l=length(ax1); %samples
- t=l*(1/fs); %  2.7276e+03  seconds
-% Equivalent to 45.4596 minutes
-t=1:l;
-t=t*(1/fs);
 %% Loading accelerometer data
 [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
 [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
@@ -45,6 +39,18 @@ t=t*(1/fs);
 % [ax4, ~, ~] = load_open_ephys_data_faster('100_AUX4.continuous');
 % [ax5, ~, ~] = load_open_ephys_data_faster('100_AUX5.continuous');
 % [ax6, ~, ~] = load_open_ephys_data_faster('100_AUX6.continuous');
+%% Shorten
+ax1=ax1(1:10000000);
+
+ax2=ax2(1:10000000);
+ax3=ax3(1:10000000);
+%% Verifying time
+ l=length(ax1); %samples
+ t=l*(1/fs); %  2.7276e+03  seconds
+% Equivalent to 45.4596 minutes
+t=1:l;
+t=t*(1/fs);
+
 
 %%
 % plot(t,ax1)
@@ -60,21 +66,67 @@ t=t*(1/fs);
 %%
 da=diff([ax1; ax1(end)]);
 da=abs(da);
+da=da./max(da);
 
-mda=da*0;
-mda=mda+2*std(da);
+%%
+% mda=da*0;
+% mda=mda+2*std(da);
 
 % thr=(da>1*std(da));
 % th=da.*ax1;
 % 
 % plot(t,ax1(1:end))
 % hold on
-
+%figure()
+close all
 allscreen
-plot(t,da)
-thr=(da<=mean(da));
+%plot(t,da)
+thr=(da>0.004);
+%thr=(da>0.005);
+
+thr=thr*(-1);
+thr=thr+1;
+
+
+
+for i=3:length(thr)-2
+    %tt=thr(i,1);
+    
+    %if i~=1 || i~=length(thr) || i~=2 || i~=length(thr)-1
+   if     
+        %if (thr(i-1,1)==1 || thr(i+2,1)==1)    
+        if sum([thr(i-1,1),thr(i-1,1),thr(i-1,1),thr(i-1,1)])>=2 
+        thr(i,1)==1;
+        end
+    %end
+end
+
 th=da.*thr;
+
+
+ax=ax1-mean(ax1);
+ax=abs(ax);
+% ax=ax1;
+ax=ax./max(ax);
+
 hold on
+plot(t,thr,'Color','k')
+plot(t,ax,'Color',[1 0.7 0])
+
+title('Threshold on Accelerometer data')
+xlabel('Time(sec)')
+ylabel('Normalized Magnitude')
+grid minor
+
+% alpha(0.1)
+% ylim([0 0.025])
+%%
+
+%%
+rrc=area(t,thr,'FaceColor','none')
+set(rrc,'FaceColor','r')
+%alpha(0.5)
+%%
 plot(t,th,'Color','k')
 % plot(t,eax1(1:end))
 % plot(t,ax3(1:end))
