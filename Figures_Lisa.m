@@ -20,11 +20,13 @@
 fs=20000; %Sampling frequency of acquisition.  
 
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
+addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')  
+
 
 %%
 % %Reference
 % [data6m, timestamps6, ~] = load_open_ephys_data_faster('100_CH6_merged.continuous');
-
+clear all
 %PFC
 [data9m, ~, ~] = load_open_ephys_data_faster('100_CH14.continuous');
 % %Parietal lobe
@@ -40,9 +42,9 @@ addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')
 % [ax5, ~, ~] = load_open_ephys_data_faster('100_AUX5.continuous');
 % [ax6, ~, ~] = load_open_ephys_data_faster('100_AUX6.continuous');
 %% Shorten
-ax1=ax1(1:10000000);
-ax2=ax2(1:10000000);
-ax3=ax3(1:10000000);
+% ax1=ax1(1:10000000);
+% ax2=ax2(1:10000000);
+% ax3=ax3(1:10000000);
 %% Verifying time
  l=length(ax1); %samples
  t=l*(1/fs); %  2.7276e+03  seconds
@@ -50,8 +52,8 @@ ax3=ax3(1:10000000);
 t=1:l;
 t=t*(1/fs);
 %%
-close all
-findsleep(ax3,0.006,t)
+% close all
+% findsleep(ax3,0.006,t)
 
 %%
 % plot(t,ax1)
@@ -63,71 +65,7 @@ findsleep(ax3,0.006,t)
 % ylabel('Magnitude')
 % grid minor
 % title('Comparison between original and detrended data')
-%%
-%%
-da=diff([ax1; ax1(end)]);
-da=abs(da);
-da=da./max(da);
 
-%%
-% mda=da*0;
-% mda=mda+2*std(da);
-
-% thr=(da>1*std(da));
-% th=da.*ax1;
-% 
-% plot(t,ax1(1:end))
-% hold on
-%figure()
-close all
-allscreen
-%plot(t,da)
-thr=(da>0.004);
-%thr=(da>0.005);
-
-thr=thr*(-1);
-thr=thr+1;
-
-
-
-for i=3:length(thr)-2
-    %tt=thr(i,1);
-    
-    %if i~=1 || i~=length(thr) || i~=2 || i~=length(thr)-1
-   if  thr(i,1)==0   
-        %if (thr(i-1,1)==1 || thr(i+2,1)==1)    
-        if sum([thr(i-1,1),thr(i-1,1),thr(i-1,1),thr(i-1,1)])>=2 
-        thr(i,1)==1;
-        end
-   end
-end
-
-th=da.*thr;
-
-
-ax=ax1-mean(ax1);
-ax=abs(ax);
-% ax=ax1;
-ax=ax./max(ax);
-
-plot(t,thr,'Color','k')
-hold on
-
-plot(t,ax,'Color',[1 0.7 0])
-
-title('Threshold on Accelerometer data')
-xlabel('Time(sec)')
-ylabel('Normalized Magnitude')
-grid minor
-legend('Awake state','Accelerometer data ')
-% alpha(0.1)
-% ylim([0 0.025])
-%%
-
-%%
-% rrc=area(t,thr,'FaceColor','none')
-% set(rrc,'FaceColor','r')
-%alpha(0.5)
 %%
 plot(t,thr,'Color','k')
 % plot(t,eax1(1:end))
@@ -144,9 +82,6 @@ title('Accelerometer data')
 % area(1:length(di),di)
 % %%
 % hist(da,1000)
-%%
-% eax1=entropy1(ax1);
-% plot(t,eax1)
 
 %%
 plot(t,ax1(1:end))
@@ -170,24 +105,33 @@ ylabel('Magnitude')
 grid minor
 title('Accelerometer data')
 legend('AUX4','AUX5','AUX6')
-%% Detrend
-ax1d=detrend(ax1);
-%%
-ax1d=detrend(ax2);
-ax1d=detrend(ax3);
-%%
-ax1d=detrend(ax4);
-ax1d=detrend(ax5);
-ax1d=detrend(ax6);
 
 %%
 sos=ax1.^2+ax2.^2+ax3.^2;
-[vtr]=findsleep(sos,0.005,t);
-vin=find(vtr==0);
+%%
+close all
+[vtr]=findsleep(sos,0.008,t); %post_trial2
+%%
+vin=find(vtr~=1);
+tvin=vin*(1/fs);
 
-ax1s=ax1(vin);
 
-plot(ax1s)
+clear ax1 ax2 ax3 
+
+C9=data17m(vin);
+C17=data9m(vin);
+%%
+save('C9.mat','C9')
+
+save('C17.mat','C17')
+
+%%
+C6{i}=data6m(round(probemos(1)):round(probemos(2))).*(0.195); %CORRECTION FACTOR 
+C9{i}=data9m(round(probemos(1)):round(probemos(2))).*(0.195); %CORRECTION FACTOR
+
+%ax1s=ax1(vin);
+
+%plot(ax1s)
 %%
 % so=ax4.^2+ax5.^2+ax6.^2;
 %%
