@@ -41,7 +41,6 @@ addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')
 % [ax6, ~, ~] = load_open_ephys_data_faster('100_AUX6.continuous');
 %% Shorten
 ax1=ax1(1:10000000);
-
 ax2=ax2(1:10000000);
 ax3=ax3(1:10000000);
 %% Verifying time
@@ -50,7 +49,9 @@ ax3=ax3(1:10000000);
 % Equivalent to 45.4596 minutes
 t=1:l;
 t=t*(1/fs);
-
+%%
+close all
+findsleep(ax3,0.006,t)
 
 %%
 % plot(t,ax1)
@@ -109,25 +110,26 @@ ax=abs(ax);
 % ax=ax1;
 ax=ax./max(ax);
 
-hold on
 plot(t,thr,'Color','k')
+hold on
+
 plot(t,ax,'Color',[1 0.7 0])
 
 title('Threshold on Accelerometer data')
 xlabel('Time(sec)')
 ylabel('Normalized Magnitude')
 grid minor
-
+legend('Awake state','Accelerometer data ')
 % alpha(0.1)
 % ylim([0 0.025])
 %%
 
 %%
-rrc=area(t,thr,'FaceColor','none')
-set(rrc,'FaceColor','r')
+% rrc=area(t,thr,'FaceColor','none')
+% set(rrc,'FaceColor','r')
 %alpha(0.5)
 %%
-plot(t,th,'Color','k')
+plot(t,thr,'Color','k')
 % plot(t,eax1(1:end))
 % plot(t,ax3(1:end))
 
@@ -135,16 +137,16 @@ xlabel('Time(sec)')
 ylabel('Magnitude')
 grid minor
 title('Accelerometer data')
-xlim([100 110])
+%xlim([100 110])
 %legend('AUX1','AUX2','AUX3')
+% %%
+% di=da(1:20);
+% area(1:length(di),di)
+% %%
+% hist(da,1000)
 %%
-di=da(1:20);
-area(1:length(di),di)
-%%
-hist(da,1000)
-%%
-eax1=entropy1(ax1);
-plot(t,eax1)
+% eax1=entropy1(ax1);
+% plot(t,eax1)
 
 %%
 plot(t,ax1(1:end))
@@ -180,6 +182,9 @@ ax1d=detrend(ax6);
 
 %%
 sos=ax1.^2+ax2.^2+ax3.^2;
+findsleep(sos,0.005,t)
+
+
 %%
 so=ax4.^2+ax5.^2+ax6.^2;
 %%
