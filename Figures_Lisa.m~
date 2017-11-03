@@ -57,19 +57,43 @@ t=t*(1/fs);
 % grid minor
 % title('Comparison between original and detrended data')
 %%
+%%
+da=diff([ax1; ax1(end)]);
+da=abs(da);
 
-plot(t,ax1(1:end))
+mda=da*0;
+mda=mda+2*std(da);
+
+% thr=(da>1*std(da));
+% th=da.*ax1;
+% 
+% plot(t,ax1(1:end))
 % hold on
-% plot(t,ax2(1:end))
+
+allscreen
+plot(t,da)
+thr=(da<=mean(da));
+th=da.*thr;
+hold on
+plot(t,th,'Color','k')
+% plot(t,eax1(1:end))
 % plot(t,ax3(1:end))
 
 xlabel('Time(sec)')
 ylabel('Magnitude')
 grid minor
 title('Accelerometer data')
+xlim([100 110])
 %legend('AUX1','AUX2','AUX3')
 %%
-entropy1(ax1)
+di=da(1:20);
+area(1:length(di),di)
+%%
+hist(da,1000)
+%%
+eax1=entropy1(ax1);
+plot(t,eax1)
+
 %%
 plot(t,ax1(1:end))
 hold on

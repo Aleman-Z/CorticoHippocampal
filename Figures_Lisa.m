@@ -62,13 +62,20 @@ da=diff([ax1; ax1(end)]);
 da=abs(da);
 
 mda=da*0;
-mda=mda+mode(da);
+mda=mda+2*std(da);
 
-plot(t,ax1(1:end))
-hold on
+% thr=(da>1*std(da));
+% th=da.*ax1;
+% 
+% plot(t,ax1(1:end))
+% hold on
+
+allscreen
 plot(t,da)
-
-plot(t,mda,'Color','k')
+thr=(da<=mean(da));
+th=da.*thr;
+hold on
+plot(t,th,'Color','k')
 % plot(t,eax1(1:end))
 % plot(t,ax3(1:end))
 
@@ -76,7 +83,13 @@ xlabel('Time(sec)')
 ylabel('Magnitude')
 grid minor
 title('Accelerometer data')
+xlim([100 110])
 %legend('AUX1','AUX2','AUX3')
+%%
+di=da(1:20);
+area(1:length(di),di)
+%%
+hist(da,1000)
 %%
 eax1=entropy1(ax1);
 plot(t,eax1)
