@@ -19,8 +19,8 @@ allscreen
 thr=(da>threshold);
 %thr=(da>0.005);
 
-thr=thr*(-1);
-thr=thr+1;
+% thr=thr*(-1);
+% thr=thr+1;
 
 
 
@@ -36,7 +36,7 @@ for i=3:length(thr)-2
    end
 end
 
-th=da.*thr;
+%th=da.*thr;
 
 
 ax=ax1-mean(ax1);
