@@ -21,6 +21,8 @@ fs=20000; %Sampling frequency of acquisition.
 
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')  
+addpath('/home/raleman/Documents/internship')  
+
 %%
 num=1;
 data_lisa(num)
@@ -89,101 +91,74 @@ downsamp(4);
 load('V9.mat')
 load('V17.mat')
 
+V9n=outlier(V9);
+V17n=outlier(V17);
+
+%%
+load('V9.mat')
+load('V17.mat')
+
+%%
+V9n=outlier(V9);
+V17n=outlier(V17);
 
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients for LPF
 
-Mono17=filtfilt(b1,a1,V17);
-Mono9=filtfilt(b1,a1,V9);
+Mono17=filtfilt(b1,a1,V17n);
+Mono9=filtfilt(b1,a1,V9n);
 
 
 %% SWR detection 
 
 signal=Mono17*(1/0.195);
 
-
+thr=60;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
-[S, E, M] = findRipplesLisa(signal, t, 150 , 150*(1/3), []);
+[S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/3), []);
 
-s17=length(M);
+%%
+label1='PFC';
+label2= strcat('Threshold:',num2str(thr));
+num=500;
+
+[cellx,cellr]=winL(M,Mono17,V17n,num);
+[cellx,cellr]=clean(cellx,cellr);
+
+allscreen
+[p3 ,p4]=eta(cellx,cellr,num);
+mtit(strcat(label1,' (',label2,')'),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
+barplot2(p4,p3,num)
+
+[cfs,f]=barplot3(p4,p3,num);
+%%
+saveas(gcf,'Barchart.png')
+%%
+label1='Hippocampus';
+label2=strcat('Threshold:',num2str(thr));
+Mono17=Mono17*();
+
+[cellx,cellr]=winL(M,Mono17,V17n,500);
+[cellx,cellr]=clean(cellx,cellr);
+
+%
+[p3 ,p4]=eta(cellx,cellr,500);
+
+%%
+barplot2(p4,p3)
+[cfs,f]=barplot3(p4,p3);
+
 %%
 
-%function [TI,TN, cellx,cellr,to,tu]=win(carajo,veamos,Bip17,S17)
-count=0;
-%clear TI TN cellx cellr tu to
-fn=1000;
-%for index=1:length(carajo)
-% index=3;
+%%
 
-checa=carajo(index,:);
-maxch=M;
+[cellx,cellr]=winL(M,Mono17,V17n);
 
-%200 ms window before and after= 400+1
-max1=maxch-(200/1000);
-max2=maxch+(200/1000);
-
-max1s=max1*(fn);
-max2s=max2*(fn);
-
-%Start and end of SWR in samples
-mu1=S*(fn);
-mu2=E*(fn);
-%
-%epoch=veamos(index);
-
-% signal=M17{epoch};
-t=(0:length(signal)-1)*(1/fn); %IN SECONDS
-
-lm=length(maxch);
-
-%
-
-for ii=1:lm
-   checksize=max(round(max1s(1,ii)):round(max2s(1,ii)));
-   if checksize>length(t)
-    tn=t(round(max1s):end); %Window length
-
-   else
-       if max1s(1,ii)<0
-           max1s(1,ii)=1;
-       end
-    tn=t(round(max1s(1,ii)):round(max2s(1,ii))); %Window length
-    
-   end
-ti=t(round(mu1(1,ii)):round(mu2(1,ii))); %Ripple length
-
-%Windows
-if checksize>length(signal)
-  sn=signal(round(max1s(1,ii)):end);  
-  sn1=signalwave(round(max1s(1,ii)):end);
-else
-  sn=signal(round(max1s(1,ii)):round(max2s(1,ii)));
-  sn1=signalwave(round(max1s(1,ii)):round(max2s(1,ii)));
-    
-end
-
-% % % % %Ripples
-% % % % sno1=signal(round(mu1(1,ii)):round(mu2(1,ii)));
-% % % % sno2=signalwave(round(mu1(1,ii)):round(mu2(1,ii)));
-
-count=count+1;
-%Windows
-cellx{count,1}=sn1;
-cellr{count,1}=sn;
-%Ripples
-% % % % % % % % % % tu{count,:}=sno1;
-% % % % % % % % % % to{count,:}=sno2;
-tu=0;
-to=0;
-%Times
-% % % % % % % % % TN{count,:}=tn;
-% % % % % % % % % TI{count,:}=ti;
-TN=0;
-TI=0;
-
-end
-
+[p3 ,p4]=eta(cellx,cellr);
+barplot2(p4,p3)
+[cfs,f]=barplot3(p4,p3);
+%%
 % tn=t(max1s:max2s);
 % sn=signal(max1s:max2s);
 % sn1=signalwave(max1s:max2s);    
