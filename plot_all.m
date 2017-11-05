@@ -53,7 +53,7 @@ Mono9=filtfilt(b1,a1,V9n);
 
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=110;
+thr=107;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
 [S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
 % 
@@ -76,7 +76,7 @@ label2=strcat('Thr:',num2str(thr));
 %V17n=V17n*(1/0.195);
 
 
-[cellx,cellr]=winL(M,Mono17,V17n,num);
+[cellx,cellr]=winL(M,Mono17,V17n,num,1000);
 
 % [cellr, cellx]=remover(cellr, cellx);
 %[cellr, cellx]=remover(cellr, cellx);
@@ -85,16 +85,16 @@ label2=strcat('Thr:',num2str(thr));
 [cellx,cellr]=clean(cellx,cellr);
 
 allscreen
-[p3 ,p4,avex]=eta(cellx,cellr,num);
+[p3 ,p4,avex]=eta(cellx,cellr,num,1000);
 mtit(strcat(label1),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
 mtit(strcat(' (',label2,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
 mtit(strcat('Events:',num2str(ripples)),'fontsize',14,'color',[1 0 0],'position',[.5 0.6 ])
 
 
-barplot2(p4,p3,num)
+barplot2(p4,p3,num,1000)
 
 [cfs,f]=barplot3(p4,p3,num);
-saveas(gcf,strcat(num2str(num),'Hippo2','.png'));
+saveas(gcf,strcat(num2str(num),'XXnHippo','.png'));
 
 %Save PFC 
 label1='PFC';
@@ -102,25 +102,25 @@ label2=strcat('Thr:',num2str(thr));
 Mono9=Mono9*(1/0.195);
 V9n=V9n*(1/0.195);
 
-[cellx,cellr]=winL(M,Mono9,V9n,num);
+[cellx,cellr]=winL(M,Mono9,V9n,num,1000);
 [cellx,cellr]=clean(cellx,cellr);
 
 allscreen
-[p3 ,p4]=eta(cellx,cellr,num);
+[p3 ,p4]=eta(cellx,cellr,num,1000);
 mtit(strcat(label1),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
 mtit(strcat(' (',label2,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
 mtit(strcat('Events:',num2str(ripples)),'fontsize',14,'color',[1 0 0],'position',[.5 0.6 ])
 
-barplot2(p4,p3,num)
+barplot2(p4,p3,num,1000)
 
 [cfs,f]=barplot3(p4,p3,num);
-saveas(gcf,strcat(num2str(num),'PFC2','.png'));
-
+saveas(gcf,strcat(num2str(num),'XXnPFC','.png'));
+% error('stop')
 
 
 
 
 end
 
-close all
+% close all
 end
