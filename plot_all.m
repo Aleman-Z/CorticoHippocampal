@@ -1,11 +1,20 @@
 function plot_all(folder)
 
-str2=cell(5,1);
+str2=cell(11,1);
 str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
 str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
 str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
 str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
 str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
+
+str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_1';
+str2{7,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_2';
+str2{8,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_3';
+str2{9,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_4';
+str2{10,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_5';
+str2{11,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_6';
+
+
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
 
 
@@ -17,9 +26,20 @@ cd(str2{folder,1});
 
 load('V9.mat')
 load('V17.mat')
+fn=1000;
+
+Wn1=[300/(fn/2)]; % Cutoff=500 Hz
+[b1,a1] = butter(3,Wn1,'low'); %Filter coefficients for LPF
+V17=filtfilt(b1,a1,V17);
+V9=filtfilt(b1,a1,V9);
+
+% % 
 
 V9n=outlier(V9);
 V17n=outlier(V17);
+% 
+% V9n=V9;
+% V17n=V17;
 
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
@@ -28,16 +48,20 @@ Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 Mono17=filtfilt(b1,a1,V17n);
 Mono9=filtfilt(b1,a1,V9n);
 
+
+% [peakVals,peakLocs]=findpeaks(signal,'sortstr','descend');
+
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=60;
+thr=110;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
-[S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/3), []);
+[S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
+% 
+% remshort=E-S;
+% %remindex=(remshort>0.06);
+% remindex=(remshort>0.08);
 
-remshort=E-S;
-remindex=(remshort>0.06);
-
-M=M(remindex);
+% M=M(remindex);
 
 ripples=length(M);
 NUM=[200 500];
@@ -48,17 +72,17 @@ for i=1:2
 num=NUM(i);    
 label1='Hippocampus';
 label2=strcat('Thr:',num2str(thr));
-Mono17=Mono17*(1/0.195);
-V17n=V17n*(1/0.195);
+%Mono17=Mono17*(1/0.195);
+%V17n=V17n*(1/0.195);
 
 
 [cellx,cellr]=winL(M,Mono17,V17n,num);
 
-[cellr, cellx]=remover(cellr, cellx);
+% [cellr, cellx]=remover(cellr, cellx);
 %[cellr, cellx]=remover(cellr, cellx);
 
 
-% [cellx,cellr]=clean(cellx,cellr);
+[cellx,cellr]=clean(cellx,cellr);
 
 allscreen
 [p3 ,p4,avex]=eta(cellx,cellr,num);
