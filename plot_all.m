@@ -1,6 +1,6 @@
 function plot_all(folder)
 
-str2=cell(11,1);
+str2=cell(13,1);
 str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
 str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
 str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
@@ -14,6 +14,8 @@ str2{9,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_4';
 str2{10,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_5';
 str2{11,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_6';
 
+str2{12,1}='/home/raleman/Documents/internship/Lisa_files/data/Presleep1';
+str2{13,1}='/home/raleman/Documents/internship/Lisa_files/data/Presleep2';
 
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
 
@@ -53,7 +55,7 @@ Mono9=filtfilt(b1,a1,V9n);
 
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=107;
+thr=120;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
 [S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
 % 
