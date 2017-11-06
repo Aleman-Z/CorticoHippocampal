@@ -55,7 +55,7 @@ Mono9=filtfilt(b1,a1,V9n);
 
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=120;
+thr=165;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
 [S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
 % 
