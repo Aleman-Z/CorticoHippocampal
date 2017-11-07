@@ -17,6 +17,16 @@ str2{11,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5_6';
 str2{12,1}='/home/raleman/Documents/internship/Lisa_files/data/Presleep1';
 str2{13,1}='/home/raleman/Documents/internship/Lisa_files/data/Presleep2';
 
+%Control
+str2{14,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_retest';
+str2{15,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial1';
+str2{16,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial2';
+str2{17,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial3';
+str2{18,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial4';
+str2{19,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial5';
+str2{20,1}='/home/raleman/Documents/internship/Lisa_files/day 4/presleep_22';
+str2{21,1}='/home/raleman/Documents/internship/Lisa_files/day 4/presleep_28';
+
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
 
 
@@ -55,7 +65,7 @@ Mono9=filtfilt(b1,a1,V9n);
 
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=165;
+thr=175;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
 [S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
 % 
@@ -96,7 +106,7 @@ mtit(strcat('Events:',num2str(ripples)),'fontsize',14,'color',[1 0 0],'position'
 barplot2(p4,p3,num,1000)
 
 [cfs,f]=barplot3(p4,p3,num);
-saveas(gcf,strcat(num2str(num),'XXnHippo','.png'));
+saveas(gcf,strcat(num2str(num),'Hippo','.png'));
 
 %Save PFC 
 label1='PFC';
@@ -116,7 +126,7 @@ mtit(strcat('Events:',num2str(ripples)),'fontsize',14,'color',[1 0 0],'position'
 barplot2(p4,p3,num,1000)
 
 [cfs,f]=barplot3(p4,p3,num);
-saveas(gcf,strcat(num2str(num),'XXnPFC','.png'));
+saveas(gcf,strcat(num2str(num),'PFC','.png'));
 % error('stop')
 
 
