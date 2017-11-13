@@ -1,13 +1,22 @@
-num=6;
+num=5;
 
 %function downsamp(num)
-str2=cell(6,1);
-str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial1';
-str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial2';
-str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial3';
-str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial4';
-str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial5';
-str2{6,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/presleep';
+str2=cell(8,1);
+str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial1';
+str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial2';
+str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial3';
+str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial4';
+str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial5';
+str2{6,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial6';
+str2{7,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/presleep_x29';
+str2{8,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/presleep_x40';
+
+% str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial1';
+% str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial2';
+% str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial3';
+% str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial4';
+% str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial5';
+% str2{6,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/presleep';
 
 % str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
 % str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';

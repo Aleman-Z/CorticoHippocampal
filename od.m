@@ -6,7 +6,7 @@ str1{1,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post_trial1_2
 str1{2,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post_trial2_2017-09-21_11-57-34';
 str1{3,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post_trial3_2017-09-21_12-48-10';
 str1{4,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post_trial4_2017-09-21_13-40-22';
-str1{5,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post-trial5_2017-09-21_14-31-';
+str1{5,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post-trial5_2017-09-21_14-31-51';
 str1{6,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/post_trial6_2017-09-22_13-54-06';
 str1{7,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/pre-sleep_test_2017-09-22_12-58-29';
 str1{8,1}='/media/raleman/My Book/ObjectSpace/rat_1/study day_1_OD/presleep_2017-09-21_10-12-40';
@@ -63,6 +63,7 @@ fs=20000;
 [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');
 %load('sos.mat')
 
+%vea=ax1.^2+ax2.^2;
 
 % Verifying time
  l=length(ax1); %samples
@@ -77,13 +78,13 @@ t=t*(1/fs);
 sos=ax1.^2+ax2.^2+ax3.^2;
 clear ax1 ax2 ax3 
 
-
-
+% 
+% sos=vea+ax3.^2;
 % close all
 %[vtr]=findsleep(sos,0.006,t); %post_trial2
 [vtr]=findsleep(sos,0.006,t); %post_trial3
 
-
+clear sos
 vin=find(vtr~=1);
 %tvin=vin*(1/fs);
 clear vtr
