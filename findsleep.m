@@ -14,7 +14,6 @@ da=da./max(da);
 % hold on
 %figure()
 %close all
-allscreen
 %plot(t,da)
 thr=(da>threshold);
 %thr=(da>0.005);
@@ -44,15 +43,17 @@ ax=abs(ax);
 % ax=ax1;
 ax=ax./max(ax);
 
-plot(t,thr,'Color','k')
-hold on
+%allscreen
 
-plot(t,ax,'Color',[1 0.7 0])
-
-title('Threshold on Accelerometer data')
-xlabel('Time(sec)')
-ylabel('Normalized Magnitude')
-grid minor
-legend('Awake state','Accelerometer data ')
+% plot(t,thr,'Color','k')
+% hold on
+% 
+% plot(t,ax,'Color',[1 0.7 0])
+% 
+% title('Threshold on Accelerometer data')
+% xlabel('Time(sec)')
+% ylabel('Normalized Magnitude')
+% grid minor
+% legend('Awake state','Accelerometer data ')
 
 end
