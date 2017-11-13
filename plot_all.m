@@ -1,5 +1,5 @@
 function plot_all(folder)
-fs= gethpath()
+fs= gethpath();
 
 thresholds=[ 138 120 138 110 124 115 105 105 105 108 165 110 228 190 176 172 142 206 260 175 140 110 130 140 187 150 ];
 
@@ -40,9 +40,18 @@ str2{24,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial4';
 str2{25,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial5';
 str2{26,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/presleep';
 
+%OD
+str2{27,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial1';
+str2{28,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial2';
+str2{29,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial3';
+str2{30,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial4';
+str2{31,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial5';
+str2{32,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial6';
+str2{33,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/presleep_x29';
+str2{34,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/presleep_x40';
+
+
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
-
-
 
 % cd('/media/raleman/My Book/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43');
 cd(str2{folder,1});
@@ -59,9 +68,12 @@ V17=filtfilt(b1,a1,V17);
 V9=filtfilt(b1,a1,V9);
 
 % % 
+% 
+% V9n=outlier(V9,out(folder));
+% V17n=outlier(V17,out(folder));
+V9n=outlier(V9,4);
+V17n=outlier(V17,4);
 
-V9n=outlier(V9,out(folder));
-V17n=outlier(V17,out(folder));
 % 
 % V9n=V9;
 % V17n=V17;
@@ -78,8 +90,8 @@ Mono9=filtfilt(b1,a1,V9n);
 
 %Ripple detection 
 signal=Mono17*(1/0.195);
-thr=thresholds(1,folder);
-%thr=150;
+%thr=thresholds(1,folder);
+thr=192;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
 if folder<=12   
     [S, E, M] = findRipplesLisa(signal, t, thr , thr*(1/2), []);
