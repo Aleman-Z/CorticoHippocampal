@@ -246,7 +246,7 @@ R17=R17.R17;
 cd('/home/raleman/Documents/internship')
 
 %% Plotting Original and ICA bipolar signals
-i=22;
+i=4;
 allscreen()
 subplot(2,3,1)
 plot(S9{i,1})
@@ -341,16 +341,8 @@ R17n{i,1}=outlier(pro,2.5);
 end
 
 %%
-num=20;
-t1=(1:length(R9{num}))*(1/1000);
-t2=(1:length(R9n{num}))*(1/1000);
-
-plot(t1,R9{num}); hold on; plot(t2,R9n{num})
-grid minor
-title('Artifact detection')
-legend('Signal with artifacts','Signal without artifacts')
-xlabel('Time (Sec)')
-ylabel('uV')
+num=34;
+plot(R12{num}); hold on; plot(R12n{num})
 %%
 
 % %Bipolar
