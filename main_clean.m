@@ -530,7 +530,8 @@ title('Threshold for Ripple detection')
 s17=nan(63,1);
 swr17=cell(63,3);
 %thr=140;
-thr=200;
+%thr=200;
+thr=180;
 
 
 for i=1:63
@@ -545,11 +546,12 @@ swr17{i,1}=S;
 swr17{i,2}=E;
 swr17{i,3}=M;
 
-% [S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
-% s217(i)=length(M2);
-% swr217{i,1}=S2;
-% swr217{i,2}=E2;
-% swr217{i,3}=M2;
+ti=(0:length(signal2)-1)*(1/fn); %IN SECONDS
+[S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
+s217(i)=length(M2);
+swr217{i,1}=S2;
+swr217{i,2}=E2;
+swr217{i,3}=M2;
 
 
 i
@@ -564,7 +566,7 @@ xlabel('epoch #')
 % grid on
 ylabel('Number of ripples')
 title('Ripple Detection per configuration')
-
+grid minor
 legend('Bipolar', 'Monopolar')
 %%
 
@@ -584,3 +586,7 @@ veamos=find(s17~=0);  %Epochs with ripples detected
 carajo=swr17(veamos,:);
 
 %Proceed to rearrange.m
+%%  Windowing using Monopolar
+
+veamos2=find(s217~=0);  %Epochs with ripples detected
+carajo2=swr217(veamos2,:);
