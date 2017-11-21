@@ -308,7 +308,7 @@ S9n{i,1}=outlier(pro,2.5);
 pro=S12{i};
 S12n{i,1}=outlier(pro,2.5);
 pro=S17{i};
-S17n{i,1}=outlier(pro,2.5);
+S17n{i,1}=outlier(pro,1.5);
 
 %Bipolar after ICA
 pro=B9{i};
@@ -326,7 +326,7 @@ V9n{i,1}=outlier(pro,2.5);
 pro=V12{i};
 V12n{i,1}=outlier(pro,2.5);
 pro=V17{i};
-V17n{i,1}=outlier(pro,2.5);
+V17n{i,1}=outlier(pro,1.5);
 
 %Monopolar after ICA
 pro=R6{i};
@@ -339,7 +339,6 @@ pro=R17{i};
 R17n{i,1}=outlier(pro,2.5);
 
 end
-
 %%
 num=20;
 t1=(1:length(R9{num}))*(1/1000);
@@ -351,6 +350,28 @@ title('Artifact detection')
 legend('Signal with artifacts','Signal without artifacts')
 xlabel('Time (Sec)')
 ylabel('uV')
+
+
+%% Reassign variable names to avoid changing the following code
+
+S9=S9n;
+S12=S12n;
+S17=S17n;
+
+B9=B9n;
+B12=B12n;
+B17=B17n;
+
+V6=V6n;
+V9=V9n;
+V12=V12n;
+V17=V17n;
+
+R6=R6n;
+R9=R9n;
+R12=R12n;
+R17=R17n;
+
 %%
 
 % %Bipolar
@@ -375,18 +396,26 @@ Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 %% Bandpass filter 
 fn=1000;
 
-Mono17=cell(63,1);
-Bip17=cell(63,1);
-Mono12=cell(63,1);
+Mono6=cell(63,1);
 Mono9=cell(63,1);
+Mono12=cell(63,1);
+Mono17=cell(63,1);
+
+Bip9=cell(63,1);
+Bip12=cell(63,1);
+Bip17=cell(63,1);
 
 
 for i=1:63
+    
+Bip9{i}=filtfilt(b1,a1,S9{i});    
+Bip12{i}=filtfilt(b1,a1,S12{i});
 Bip17{i}=filtfilt(b1,a1,S17{i});
-Mono17{i}=filtfilt(b1,a1,V17{i});
+
 Mono6{i}=filtfilt(b1,a1,V6{i});
 Mono9{i}=filtfilt(b1,a1,V9{i});
 Mono12{i}=filtfilt(b1,a1,V12{i});
+Mono17{i}=filtfilt(b1,a1,V17{i});
 
 end
 
@@ -443,21 +472,65 @@ epoch=62;
 signal=Bip17{epoch}*(1/0.195);
 %signalwave=S17{epoch}*(1/0.195);
 % signalwave=S17{epoch};
-
+thr=200;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
-[S, E, M] = findRipplesLisa(signal, t.', 100 , 100*(1/3), []);
+aprox_ripple=max(t);
+[S, E, M] = findRipplesLisa(signal, t.', thr , thr*(1/3), []);
 %%
 plot(signal)
 hold on
-plot([ones(1,length(signal))]*200,'Linewidth',2)
+plot([ones(1,length(signal))]*thr,'Linewidth',2)
 xlabel('Samples')
 ylabel('Magnitude')
 grid minor
 title('Threshold for Ripple detection')
 %%
+% alv=outlier(signal,2);
+% plot(signal);
+% hold on
+% plot(alv);
+%%
+% thr=20;
+% t=(0:length(alv)-1)*(1/fn); %IN SECONDS
+% aprox_ripple=max(t);
+% [S, E, M] = findRipplesLisa(alv, t.', thr , thr*(1/3), []);
+
+
+% % %% Test with signal 
+% % num=500;
+% % t=(0:length(signal)-1)*(1/fn); %IN SECONDS
+% % [S, E, M] = findRipplesLisa(signal, t.', thr , thr*(1/2), []);
+% % ripples=length(M);
+% % [cellx,cellr]=winL(M,Mono17{epoch},V17n{epoch},num,1000);
+% % [cellx,cellr]=clean(cellx,cellr);
+% % 
+% % allscreen
+% % [p3 ,p4,avex]=eta(cellx,cellr,num,1000);
+% % barplot2(p4,p3,num,1000)
+% % 
+% % [cfs,f]=barplot3(p4,p3,num);
+% % 
+% % 
+% % %% Test with alv
+% % figure()
+% % num=500;
+% % t=(0:length(alv)-1)*(1/fn); %IN SECONDS
+% % [S, E, M] = findRipplesLisa(alv, t.', thr , thr*(1/2), []);
+% % ripples=length(M);
+% % [cellx,cellr]=winL(M,Mono17{epoch},V17n{epoch},num,1000);
+% % [cellx,cellr]=clean(cellx,cellr);
+% % 
+% % allscreen
+% % [p3 ,p4,avex]=eta(cellx,cellr,num,1000);
+% % barplot2(p4,p3,num,1000)
+% % 
+% % [cfs,f]=barplot3(p4,p3,num);
+
 %%
 s17=nan(63,1);
 swr17=cell(63,3);
+%thr=140;
+thr=200;
 
 
 for i=1:63
@@ -466,17 +539,17 @@ signal=Bip17{i}*(1/0.195);
 signal2=Mono17{i}*(1/0.195);
 
 ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
-[S, E, M] = findRipplesLisa(signal, ti.', 200 , (200)*(1/3), []);
+[S, E, M] = findRipplesLisa(signal, ti.', thr , (thr)*(1/3), []);
 s17(i)=length(M);
 swr17{i,1}=S;
 swr17{i,2}=E;
 swr17{i,3}=M;
 
-[S2, E2, M2] = findRipplesLisa(signal2, ti.', 200 , (200)*(1/3), []);
-s217(i)=length(M2);
-swr217{i,1}=S2;
-swr217{i,2}=E2;
-swr217{i,3}=M2;
+% [S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
+% s217(i)=length(M2);
+% swr217{i,1}=S2;
+% swr217{i,2}=E2;
+% swr217{i,3}=M2;
 
 
 i
@@ -510,3 +583,4 @@ legend('Bipolar', 'Monopolar')
 veamos=find(s17~=0);  %Epochs with ripples detected
 carajo=swr17(veamos,:);
 
+%Proceed to rearrange.m

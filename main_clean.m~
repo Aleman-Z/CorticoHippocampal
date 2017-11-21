@@ -246,7 +246,7 @@ R17=R17.R17;
 cd('/home/raleman/Documents/internship')
 
 %% Plotting Original and ICA bipolar signals
-i=4;
+i=22;
 allscreen()
 subplot(2,3,1)
 plot(S9{i,1})
@@ -339,10 +339,39 @@ pro=R17{i};
 R17n{i,1}=outlier(pro,2.5);
 
 end
+%% Reassign variable names to avoid changing the following code
+
+S9=S9n;
+S12=S12n;
+S17=S17n;
+
+B9=B9n;
+B12=B12n;
+B17=B17n;
+
+V6=V6n;
+V9=V9n;
+V12=V12n;
+V17=V17n;
+
+R6=R6n;
+R9=R9n;
+R12=R12n;
+R17=R17n;
+
+
 
 %%
-num=34;
-plot(R12{num}); hold on; plot(R12n{num})
+num=20;
+t1=(1:length(R9{num}))*(1/1000);
+t2=(1:length(R9n{num}))*(1/1000);
+
+plot(t1,R9{num}); hold on; plot(t2,R9n{num})
+grid minor
+title('Artifact detection')
+legend('Signal with artifacts','Signal without artifacts')
+xlabel('Time (Sec)')
+ylabel('uV')
 %%
 
 % %Bipolar
@@ -435,18 +464,60 @@ epoch=62;
 signal=Bip17{epoch}*(1/0.195);
 %signalwave=S17{epoch}*(1/0.195);
 % signalwave=S17{epoch};
-
+thr=200;
 t=(0:length(signal)-1)*(1/fn); %IN SECONDS
-[S, E, M] = findRipplesLisa(signal, t.', 100 , 100*(1/3), []);
+aprox_ripple=max(t);
+[S, E, M] = findRipplesLisa(signal, t.', thr , thr*(1/3), []);
 %%
 plot(signal)
 hold on
-plot([ones(1,length(signal))]*200,'Linewidth',2)
+plot([ones(1,length(signal))]*thr,'Linewidth',2)
 xlabel('Samples')
 ylabel('Magnitude')
 grid minor
 title('Threshold for Ripple detection')
 %%
+% alv=outlier(signal,2);
+% plot(signal);
+% hold on
+% plot(alv);
+%%
+% thr=20;
+% t=(0:length(alv)-1)*(1/fn); %IN SECONDS
+% aprox_ripple=max(t);
+% [S, E, M] = findRipplesLisa(alv, t.', thr , thr*(1/3), []);
+
+
+%% Test with signal 
+num=500;
+t=(0:length(signal)-1)*(1/fn); %IN SECONDS
+[S, E, M] = findRipplesLisa(signal, t.', thr , thr*(1/2), []);
+ripples=length(M);
+[cellx,cellr]=winL(M,Mono17{epoch},V17n{epoch},num,1000);
+[cellx,cellr]=clean(cellx,cellr);
+
+allscreen
+[p3 ,p4,avex]=eta(cellx,cellr,num,1000);
+barplot2(p4,p3,num,1000)
+
+[cfs,f]=barplot3(p4,p3,num);
+
+
+%% Test with alv
+figure()
+num=500;
+t=(0:length(alv)-1)*(1/fn); %IN SECONDS
+[S, E, M] = findRipplesLisa(alv, t.', thr , thr*(1/2), []);
+ripples=length(M);
+[cellx,cellr]=winL(M,Mono17{epoch},V17n{epoch},num,1000);
+[cellx,cellr]=clean(cellx,cellr);
+
+allscreen
+[p3 ,p4,avex]=eta(cellx,cellr,num,1000);
+barplot2(p4,p3,num,1000)
+
+[cfs,f]=barplot3(p4,p3,num);
+
 %%
 s17=nan(63,1);
 swr17=cell(63,3);
