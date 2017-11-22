@@ -49,10 +49,16 @@ ripple=sum(s17);
 
 ripple2=sum(s217);
 %% SWR from Bipolar Hippocampus
-Num=500;
+Num=200;
 for i=1:length(sig2)
     allscreen()
-[p3, p5]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
+[p3, p5,cellx,cellr]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
+[p,q,timecell]=newgetwin(cellx,cellr,p3,Num);
+q=cut(q);
+p=cut(p);
+timecell=cut(timecell);
+gc(q,timecell,'Bandpassed',Num);
+
 mtit(strcat('Events:',num2str(ripple)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
 labelthr=strcat('Thr:',num2str(thr));
 mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
@@ -66,7 +72,7 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 cd hola
 
 string=strcat(num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
-saveas(gcf,string)
+%saveas(gcf,string)
 cd ..     
 % [D1, D2, D3, D4,D5 ]=deco(p3,p5);
 % plotwave(D1, D2, D3, D4,D5)
@@ -84,7 +90,7 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 cd hola
 
 string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
-saveas(gcf,string)
+%saveas(gcf,string)
 cd ..     
 
 
@@ -95,8 +101,10 @@ end
 
  %%   
 % Monopolar 
- Ro=[200 500 1000];
-for i=1:3
+ %Ro=[200 500 1000];
+Ro=[200];
+%for i=1:3
+i=1;
   ro=Ro(i);  
   [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   close all
@@ -126,7 +134,7 @@ saveas(gcf,string)
 cd ..  
  close all
  
-end
+%end
 
 %%
 %Bipolar
