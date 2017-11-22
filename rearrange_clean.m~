@@ -42,22 +42,25 @@ sig2{5}=V9;
 % sig2{7}=R9;
 sig2{6}=S9;
 %sig2{10}=SSS9;
-ssig2{7}=V6;
+sig2{7}=V6;
  
 % ripple=length(M);
 ripple=sum(s17);
 
 ripple2=sum(s217);
 %% SWR from Bipolar Hippocampus
+addpath /home/raleman/Documents/internship/fieldtrip-master/
 Num=200;
 for i=1:length(sig2)
     allscreen()
 [p3, p5,cellx,cellr]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
-% [p,q,timecell]=newgetwin(cellx,cellr,p3,Num);
-% q=cut(q);
-% p=cut(p);
-% timecell=cut(timecell);
-% gc(q,timecell,'Bandpassed',Num);
+[p,q,timecell]=newgetwin(cellx,cellr,p3,Num);
+q=cut(q);
+p=cut(p);
+timecell=cut(timecell);
+cd fieldtrip-master
+gc(q,timecell,'Bandpassed',Num);
+cd ..
 
 mtit(strcat('Events:',num2str(ripple)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
 labelthr=strcat('Thr:',num2str(thr));
@@ -100,16 +103,12 @@ end
 
 
  %%   
-addpath /home/raleman/Documents/internship/fieldtrip-master/
-InitFieldtrip()
-
- % Monopolar 
+% Monopolar 
  %Ro=[200 500 1000];
-Ro=[500];
+Ro=[200];
 %for i=1:3
 i=1;
   ro=Ro(i);  
-  allscreen()
   [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   close all
    q=cut(q);
