@@ -103,11 +103,11 @@ end
 addpath /home/raleman/Documents/internship/fieldtrip-master/
 InitFieldtrip()
 
- % Monopolar 
- %Ro=[200 500 1000];
-Ro=[500];
-%for i=1:3
-i=1;
+ % Monopolar signals only
+ Ro=[200 500];
+%Ro=[200];
+for i=1:2
+%i=1;
   ro=Ro(i);  
   allscreen()
   [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
@@ -115,11 +115,16 @@ i=1;
    q=cut(q);
    p=cut(p);
   timecell=cut(timecell);
+  
+  autotest(q,timecell,'Bandpassed',ro)
+  
    gc(q,timecell,'Bandpassed',ro)
    
  string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
 %cd Nuevo
-cd Spectrograms_Threshold_45
+%cd Spectrograms_Threshold_45
+cd testGC
+
 fig=gcf;
 fig.InvertHardcopy='off';
 saveas(gcf,string)
@@ -130,7 +135,8 @@ cd ..
 
 string=strcat(num2str(ro),'_GC_','Monopolar','Widepass','.png');
 %cd Nuevo
-cd Spectrograms_Threshold_45
+%cd Spectrograms_Threshold_45
+cd testGC
 fig=gcf;
 fig.InvertHardcopy='off';
 
@@ -138,7 +144,7 @@ saveas(gcf,string)
 cd ..  
  close all
  
-%end
+end
 
 %%
 %Bipolar
