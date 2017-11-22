@@ -48,8 +48,8 @@ sig2{7}=V6;
 ripple=sum(s17);
 
 ripple2=sum(s217);
-%% 200ms SWR from Bipolar Hippocampus
-Num=200;
+%% SWR from Bipolar Hippocampus
+Num=500;
 for i=1:length(sig2)
     allscreen()
 [p3, p5]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
@@ -91,50 +91,6 @@ cd ..
 
 end
 %close all
-
-
-%% 500ms SWR from Bipolar Hippocampus
-for i=1:11
-[p3,p5]=generate500(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i});
-%cd NewFolderSinFiltro
-cd Spectrograms_Threshold_45
-string=strcat('500_WAV_',label1{i},label2{i},'.png');
-saveas(gcf,string)
-cd ..  
-
-% [D1, D2, D3, D4,D5 ]=deco500(p3,p5);
-% plotwave500(D1, D2, D3, D4,D5)
-% mtit(strcat(label1{i},' (',label2{i},')'),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
-% cd WaveDec
-% string=strcat('500_WD_',label1{i},label2{i},'.png');
-% saveas(gcf,string)
-% cd ..     
-
-end
-close all
-
-
-%% 1000ms SWR from Bipolar Hippocampus 
-for i=1:11
-[p3,p5]=generate1000(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i});
-%cd probando
-%cd NewFolderSinFiltro
-cd Spectrograms_Threshold_45
-string=strcat('1000_WAV_',label1{i},label2{i},'.png');
-saveas(gcf,string)
-cd ..     
-% 
-% [D1, D2, D3, D4,D5 ]=deco1000(p3,p5);
-% plotwave1000(D1, D2, D3, D4,D5)
-% mtit(strcat(label1{i},' (',label2{i},')'),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
-% cd WaveDec
-% string=strcat('1000_WD_',label1{i},label2{i},'.png');
-% saveas(gcf,string)
-% cd ..     
-
-end
-close all
-
 
 
  %%   

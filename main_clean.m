@@ -530,8 +530,8 @@ title('Threshold for Ripple detection')
 s17=nan(63,1);
 swr17=cell(63,3);
 %thr=140;
-%thr=200;
-thr=180;
+thr=200;
+%thr=180;
 
 
 for i=1:63
