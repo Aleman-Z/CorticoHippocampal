@@ -42,14 +42,14 @@ sig2{5}=V9;
 % sig2{7}=R9;
 sig2{6}=S9;
 %sig2{10}=SSS9;
-ssig2{7}=V6;
+sig2{7}=V6;
  
 % ripple=length(M);
 ripple=sum(s17);
 
 ripple2=sum(s217);
 %% SWR from Bipolar Hippocampus
-Num=200;
+Num=500;
 for i=1:length(sig2)
     allscreen()
 [p3, p5,cellx,cellr]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
@@ -81,17 +81,18 @@ cd ..
 % string=strcat('200_WD_',label1{i},label2{i},'.png');
 % saveas(gcf,string)
 % cd ..     
-    allscreen()
-[p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
-mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
-labelthr=strcat('Thr:',num2str(thr));
-mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
 
-cd hola
-
-string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
-%saveas(gcf,string)
-cd ..     
+% % % % allscreen()
+% % % % [p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
+% % % % mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
+% % % % labelthr=strcat('Thr:',num2str(thr));
+% % % % mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
+% % % % 
+% % % % cd hola
+% % % % 
+% % % % string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
+% % % % %saveas(gcf,string)
+% % % % cd ..     
 
 
 
@@ -175,7 +176,7 @@ cd G
 fig=gcf;
 fig.InvertHardcopy='off';
 
-saveas(gcf,string)
+%saveas(gcf,string)
 cd ..  
  close all
  
