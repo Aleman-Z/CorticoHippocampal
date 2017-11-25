@@ -11,27 +11,31 @@ moving_window_pairwise;
 %%
 dat=data2;
 
-order  = 4;
-morder = order;
+order  = 5;
 spts   = 1;
-epts   = 18;
-winlen = 10;
-fs = 200;
-%frang = 1:0.5:fs/2;
-frang = 1:0.25:40;
-fmax=max(frang);
-%%
+epts   = 15;
+winlen = 9;
+
 BS_order(dat,winlen,10)
 % core: moving window multivariate model
 %%
 mov_bi_model(dat,order,spts,epts,winlen);
 %%
 
-[Fxy1,Fyx1] = mov_bi_ga(dat,spts,epts,winlen,morder,fs,frang);
-%%
-Fxy=Fxy1;
-Fyx=Fyx1;
 
+morder = order;
+
+fs = 200;
+
+spts  = 1;
+
+epts = 5;
+%winlen = 10;
+
+frang = 1:fs/2;
+% core:
+
+[Fxy1,Fyx1] = mov_bi_ga(dat,spts,epts,winlen,morder,fs,frang);
 %%
 c = size(Fxy,1);
 nch = (1+sqrt(1+8*c))/2;
@@ -40,9 +44,6 @@ chy=10;
 timen=0;
 %%
 ga_view(Fxy,Fyx,fs,chx,chy)
-%%
-
-BS_plot(Fxy,Fyx,chx,chy,fmax,1)
 %%
 if timen==0
     % timen=0;
@@ -79,8 +80,7 @@ if timen==0
             c = dat(k,:,:); % Fxy
             c = squeeze(c);
             time = [1,si(3)];
-            %freq = [0,fs/2];
-            freq = [0,fmax];
+            freq = [0,fs/2];
             figure;
             imagesc(time,freq,c);
             axis xy;
@@ -182,8 +182,7 @@ else
         end
         % figure('Name','Granger Causality','NumberTitle','off')
         nb = si(2); % number of frequency bin
-        %frq = linspace(0,fs/2,nb);
-        frq = linspace(0,fmax,nb);
+        frq = linspace(0,fs/2,nb);
         figure;
         plot(frq,c);
         % axis([0,si(2),0,1]);
@@ -214,8 +213,7 @@ else
             end
         end
         nb = si(2); % number of frequency bin
-        %frq = linspace(0,fs/2,nb);
-        frq = linspace(0,fmax,nb);
+        frq = linspace(0,fs/2,nb);
         figure;
         plot(frq,c);
         % axis([0,si(2),0,1]);
@@ -226,21 +224,3 @@ else
         ylabel(h,'Granger Causality')
     end
 end
-%%
-frang=1:0.5:40;
-fs=200;
-
-spts   = 1;
-epts   = 18;
-winlen = 10;
-
-[Fxy, Fyx]=BS_main(data2,order, spts, epts, winlen,fs,frang);
-%%
-chx=9;
-chy=10;
-allscreen()
-subplot(1,2,1)
-BS_plot(Fxy,Fyx,chx,chy,frang,1)
-subplot(1,2,2)
-BS_plot(Fxy,Fyx,chx,chy,frang,0)
-

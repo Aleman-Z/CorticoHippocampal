@@ -1,49 +1,6 @@
-data1 = pre_sube(dat);
-
-data2 = pre_sube_divs(dat);
-
-data3 = pre_subt(dat);
-
-data4 = pre_subt_divs(dat);
-
-%%
-moving_window_pairwise;
-%%
-dat=data2;
-
-order  = 4;
-morder = order;
-spts   = 1;
-epts   = 18;
-winlen = 10;
-fs = 200;
-%frang = 1:0.5:fs/2;
-frang = 1:0.25:40;
+function BS_plot(Fxy,Fyx,chx,chy,frang,timen)
 fmax=max(frang);
-%%
-BS_order(dat,winlen,10)
-% core: moving window multivariate model
-%%
-mov_bi_model(dat,order,spts,epts,winlen);
-%%
 
-[Fxy1,Fyx1] = mov_bi_ga(dat,spts,epts,winlen,morder,fs,frang);
-%%
-Fxy=Fxy1;
-Fyx=Fyx1;
-
-%%
-c = size(Fxy,1);
-nch = (1+sqrt(1+8*c))/2;
-chx=9;
-chy=10;
-timen=0;
-%%
-ga_view(Fxy,Fyx,fs,chx,chy)
-%%
-
-BS_plot(Fxy,Fyx,chx,chy,fmax,1)
-%%
 if timen==0
     % timen=0;
     dat  = Fxy;
@@ -81,7 +38,7 @@ if timen==0
             time = [1,si(3)];
             %freq = [0,fs/2];
             freq = [0,fmax];
-            figure;
+            %figure;
             imagesc(time,freq,c);
             axis xy;
             colorbar;
@@ -94,7 +51,7 @@ if timen==0
             c = c';
             nb = si(2); % number of frequency bin
             frq = linspace(0,fs/2,nb);
-            figure;
+            %figure;
             plot(frq,c);
             % axis([0,si(2),0,1]);
             h = gca;
@@ -120,7 +77,7 @@ if timen==0
             c=squeeze(c);
             time = [1,si(3)];
             freq = [0,fs/2];
-            figure;
+            %figure;
             imagesc(time,freq,c);
             axis xy;
             colorbar;
@@ -133,7 +90,7 @@ if timen==0
             c=c';
             nb = si(2); % number of frequency bin
             frq = linspace(0,fs/2,nb);
-            figure;
+            %figure;
             plot(frq,c);
             % axis([0,si(2),0,1]);
             h = gca;
@@ -184,7 +141,7 @@ else
         nb = si(2); % number of frequency bin
         %frq = linspace(0,fs/2,nb);
         frq = linspace(0,fmax,nb);
-        figure;
+        %figure;
         plot(frq,c);
         % axis([0,si(2),0,1]);
         h = gca;
@@ -216,7 +173,7 @@ else
         nb = si(2); % number of frequency bin
         %frq = linspace(0,fs/2,nb);
         frq = linspace(0,fmax,nb);
-        figure;
+        %figure;
         plot(frq,c);
         % axis([0,si(2),0,1]);
         h = gca;
@@ -226,21 +183,5 @@ else
         ylabel(h,'Granger Causality')
     end
 end
-%%
-frang=1:0.5:40;
-fs=200;
 
-spts   = 1;
-epts   = 18;
-winlen = 10;
-
-[Fxy, Fyx]=BS_main(data2,order, spts, epts, winlen,fs,frang);
-%%
-chx=9;
-chy=10;
-allscreen()
-subplot(1,2,1)
-BS_plot(Fxy,Fyx,chx,chy,frang,1)
-subplot(1,2,2)
-BS_plot(Fxy,Fyx,chx,chy,frang,0)
-
+end
