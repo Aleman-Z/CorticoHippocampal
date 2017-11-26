@@ -1,9 +1,4 @@
-art=0;
-%function [veamos, carajo, veamos2,carajo2,S17,S9,S12,V17,V9,V12,V6]=load_data(art);
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-cd('/home/raleman/Documents/internship')
-
+%Load data, easy and quick. Make art=1 to include Artifact detection. 
 
 %
 S17=load('S17.mat');

@@ -1,5 +1,5 @@
 %AIC test
-function BS_order(dat,winlen,maxorder)
+function BS_order(dat)
 
 winlen   = 12;
 maxorder = 10;

@@ -227,14 +227,18 @@ else
     end
 end
 %%
+load('test71_pre.mat')
+
 frang=1:0.5:40;
 fs=200;
 
+order=4;
 spts   = 1;
 epts   = 18;
 winlen = 10;
-
-[Fxy, Fyx]=BS_main(data2,order, spts, epts, winlen,fs,frang);
+BS_order(dat,winlen,10)
+%%
+[Fxy, Fyx]=BS_main(dat,order, spts, epts, winlen,fs,frang);
 %%
 chx=9;
 chy=10;
@@ -243,4 +247,111 @@ subplot(1,2,1)
 BS_plot(Fxy,Fyx,chx,chy,frang,1)
 subplot(1,2,2)
 BS_plot(Fxy,Fyx,chx,chy,frang,0)
+%% Arranging p and q to use them in BSMART
+%dat. 
+%15 channels.
+%137 trials.
+%18 points. 
+
+load('test71_pre.mat')
+load('p.mat')
+load('q.mat')
+% 4 channels
+% 77 trials 
+% 400 points
+
+%400x4x77
+np=nan(400,4,77);
+for i=1:77
+ aver=p{i};   
+ aver=aver.';
+ np(:,:,i)=aver;
+end
+
+nq=nan(400,4,77);
+for i=1:77
+ aver=q{i};   
+ aver=aver.';
+ nq(:,:,i)=aver;
+end
+%%
+dat=nq;
+frang=1:1:300;
+fs=1000;
+
+order=4;
+spts   = 1;
+epts   = 400;
+winlen = 10;
+%%
+data1 = pre_sube(dat);
+
+data2 = pre_sube_divs(dat);
+
+data3 = pre_subt(dat);
+
+data4 = pre_subt_divs(dat);
+%%
+BS_order(data4)
+%title('data2')
+%%
+dat=data2;
+[Fxy3, Fyx3]=BS_main(dat,order, spts, epts, winlen,fs,frang);
+%%
+hippo=1;
+parietal=2;
+pfc=3;
+ref=4;
+
+
+% chx=2;
+% chy=1;
+chx=pfc;
+chy=hippo;
+
+allscreen()
+% subplot(1,2,1)
+% BS_plot(Fxy2,Fyx2,chx,chy,frang,149)
+% subplot(1,2,2)
+% BS_plot(Fxy2,Fyx2,chx,chy,frang,0)
+%
+% combos = nchoosek([1:4],2);
+% Combos=[combos;fliplr(combos)];
+% CCOmbos=[1 2; 2 1;]
+
+% comb(:,1)=[ones(4,1);2*ones(4,1);3*ones(4,1);4*ones(4,1) ]
+% comb(:,2)=[[1:4]';[1:4]';[1:4]';[1:4]' ]
+
+comb(:,1)=[ones(3,1);2*ones(3,1);3*ones(3,1) ]
+comb(:,2)=[[1:3]';[1:3]';[1:3]' ]
+
+%%
+% Fxynew=Fxy3.*(Fxy3>0.10);
+% Fyxnew=Fyx3.*(Fyx3>0.10);
+th=0.2
+
+Fxynew=(Fxy3>th);
+Fyxnew=(Fyx3>th);
+
+
+allscreen()
+for ii=1:9
+subplot(3,3,ii)
+if comb(ii,1)~=comb(ii,2)
+BS_plot2(Fxynew,Fyxnew,comb(ii,1),comb(ii,2),frang)
+%ylim([0 20])
+%xlim([100 300])
+else
+set(gca,'Color','k')   
+end
+
+end
+%%
+Co=[1 2; 2 1; 1 3; 3 1; 2 3; 3 2];
+
+for i=1:length(Co)
+subplot(3,2,i)
+BS_plot2(Fxy3,Fyx3,Co(i,1),Co(i,2),frang)
+    
+end
 

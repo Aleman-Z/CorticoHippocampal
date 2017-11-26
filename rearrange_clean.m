@@ -1,4 +1,12 @@
-%% Rearrange (clean)
+art=0;
+%function [veamos, carajo, veamos2,carajo2,S17,S9,S12,V17,V9,V12,V6]=load_data(art);
+addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
+addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
+cd('/home/raleman/Documents/internship')
+
+run('load_data.m')
+
+% Rearrange (clean)
 
 %Make labels
 label1=cell(7,1);
@@ -119,12 +127,13 @@ for i=1:2
   
   autotest(q,timecell,'Bandpassed',ro)
   
-   gc(q,timecell,'Bandpassed',ro)
+   %gc(q,timecell,'Bandpassed',ro)
    
  string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
 %cd Nuevo
 %cd Spectrograms_Threshold_45
-cd testGC
+%cd testGC
+cd ARorder
 
 fig=gcf;
 fig.InvertHardcopy='off';
@@ -132,12 +141,14 @@ saveas(gcf,string)
 cd ..  
  close all
  
- gc(p,timecell,'Widepass',ro)
+ autotest(p,timecell,'Widepassed',ro)
+ %gc(p,timecell,'Widepass',ro)
 
 string=strcat(num2str(ro),'_GC_','Monopolar','Widepass','.png');
 %cd Nuevo
 %cd Spectrograms_Threshold_45
-cd testGC
+%cd testGC
+cd ARorder
 fig=gcf;
 fig.InvertHardcopy='off';
 
