@@ -256,6 +256,8 @@ BS_plot(Fxy,Fyx,chx,chy,frang,0)
 load('test71_pre.mat')
 load('p.mat')
 load('q.mat')
+%%
+
 % 4 channels
 % 77 trials 
 % 400 points
