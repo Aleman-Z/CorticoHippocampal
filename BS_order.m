@@ -1,5 +1,5 @@
 %AIC test
-function BS_order(dat)
+function[data]=BS_order(dat)
 
 winlen   = 12;
 maxorder = 10;
@@ -17,11 +17,11 @@ end
 
 dat = aic(wind,:);
 data=dat(~isnan(dat));
-
-% draw the figure
-figure('Name','AIC Model Order Estimation','NumberTitle','off')
-plot(data,'-s');
-h = gca;
-xlabel(h,'Model Order');
-ylabel(h,'AIC measure');
+% 
+% % draw the figure
+% figure('Name','AIC Model Order Estimation','NumberTitle','off')
+% plot(data,'-s');
+% h = gca;
+% xlabel(h,'Model Order');
+% ylabel(h,'AIC measure');
 end

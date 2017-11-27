@@ -2,7 +2,7 @@ function BS_plot2(Fxy,Fyx,chx,chy,frang)
 fmax=max(frang);
 
 str={'Hippo';'Parietal';'Pfc';'Reference'};
-c1=max([max(max(max(Fxy))) max(max(max(Fyx)))])
+c1=max([max(max(max(Fxy))) max(max(max(Fyx)))]);
 %if timen==0
     % timen=0;
     dat  = Fxy;
@@ -46,12 +46,12 @@ c1=max([max(max(max(Fxy))) max(max(max(Fyx)))])
             colorbar;
             %colormap(jet(256));
             %colorbar('YTick',linspace(0,3,10))
-             caxis([0 c1])
+            %caxis([0 c1])
             %tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
              tstr = sprintf(strcat(str{chx},'\\rightarrow',str{chy}));
             
             title(tstr);
-            xlabel('Time')
+            xlabel('Time (ms)')
             ylabel('Frequency (Hz)');
         else % draw GC spectrum
             c = dat(k,:);
@@ -91,15 +91,15 @@ c1=max([max(max(max(Fxy))) max(max(max(Fyx)))])
             imagesc(time,freq,c);
             axis xy;
              colorbar;
-             %colormap(jet(256));
+             colormap(jet(256));
             
             %colorbar('YTick',linspace(0,3,10))
-            caxis([0 c1])
+            %caxis([0 c1])
             %tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
             tstr = sprintf(strcat(str{chx},'\\rightarrow',str{chy}));
 
             title(tstr);
-            xlabel('Time')
+            xlabel('Time (ms)')
             ylabel('Frequency (Hz)');
         else
             c=dat2(k,:);

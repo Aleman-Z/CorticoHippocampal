@@ -263,14 +263,14 @@ load('q.mat')
 % 400 points
 
 %400x4x77
-np=nan(400,4,77);
+np=nan(length(p{1}),4,length(p));
 for i=1:77
  aver=p{i};   
  aver=aver.';
  np(:,:,i)=aver;
 end
 
-nq=nan(400,4,77);
+nq=nan(length(p{1}),4,length(q));
 for i=1:77
  aver=q{i};   
  aver=aver.';
