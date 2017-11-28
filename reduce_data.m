@@ -24,6 +24,7 @@ C6{i}=data6m(round(probemos(1)):round(probemos(2))).*(0.195); % Open Ephys BitVo
 
 %T6{i}=timestamps6(round(probemos(1)):round(probemos(2)));
 tiempo(i)=length(C6{i})*(1/fs); %Seconds
+
 end
 
 
