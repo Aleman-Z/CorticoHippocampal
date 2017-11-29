@@ -127,7 +127,103 @@ save('S17.mat','S17')
 %end
 % END OF CODE
 
+%% Reading data
+cd('/home/raleman/Documents/internship/26')
+i=1;
+cd(nFF{i})
+
+
+S17=load('S17.mat');
+S17=S17.S17;
+
+S12=load('S12.mat');
+S12=S12.S12;
+
+S9=load('S9.mat');
+S9=S9.S9;
+
+V17=load('V17.mat');
+V17=V17.V17;
+
+V12=load('V12.mat');
+V12=V12.V12;
+
+V9=load('V9.mat');
+V9=V9.V9;
+
+V6=load('V6.mat');
+V6=V6.V6;
 %%
+%% Band pass design 
+fn=1000; % New sampling frequency. 
+Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
+[b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients for LPF
+% Bandpass filter 
+fn=1000;
+
+Mono6=cell(length(S9),1);
+Mono9=cell(length(S9),1);
+Mono12=cell(length(S9),1);
+Mono17=cell(length(S9),1);
+
+Bip9=cell(length(S9),1);
+Bip12=cell(length(S9),1);
+Bip17=cell(length(S9),1);
+
+
+for i=1:length(S9)
+    
+Bip9{i}=filtfilt(b1,a1,S9{i});    
+Bip12{i}=filtfilt(b1,a1,S12{i});
+Bip17{i}=filtfilt(b1,a1,S17{i});
+
+Mono6{i}=filtfilt(b1,a1,V6{i});
+Mono9{i}=filtfilt(b1,a1,V9{i});
+Mono12{i}=filtfilt(b1,a1,V12{i});
+Mono17{i}=filtfilt(b1,a1,V17{i});
+
+end
+
+%%
+s17=nan(length(S9),1);
+swr17=cell(length(S9),3);
+%thr=140;
+thr=200;
+%thr=180;
+
+
+for i=1:length(S9)
+    
+signal=Bip17{i}*(1/0.195);
+signal2=Mono17{i}*(1/0.195);
+
+ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
+[S, E, M] = findRipplesLisa(signal, ti.', thr , (thr)*(1/3), []);
+s17(i)=length(M);
+swr17{i,1}=S;
+swr17{i,2}=E;
+swr17{i,3}=M;
+
+ti=(0:length(signal2)-1)*(1/fn); %IN SECONDS
+[S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
+s217(i)=length(M2);
+swr217{i,1}=S2;
+swr217{i,2}=E2;
+swr217{i,3}=M2;
+
+
+i/length(S9)
+end
+
+% Windowing
+veamos=find(s17~=0);  %Epochs with ripples detected
+carajo=swr17(veamos,:);
+
+%Proceed to rearrange.m
+%  Windowing using Monopolar
+
+veamos2=find(s217~=0);  %Epochs with ripples detected
+carajo2=swr217(veamos2,:);
 
 
 %%

@@ -1,8 +1,11 @@
+% cd('/home/raleman/Documents/internship/26')
+% cd(nFF{1})
+
 art=0;
 %function [veamos, carajo, veamos2,carajo2,S17,S9,S12,V17,V9,V12,V6]=load_data(art);
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-cd('/home/raleman/Documents/internship')
+%cd('/home/raleman/Documents/internship')
 
 run('load_data.m')
 

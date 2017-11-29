@@ -23,32 +23,32 @@ V6=load('V6.mat');
 V6=V6.V6;
 'Loaded channels'
 
-% Load ICA results
-cd('/home/raleman/Documents/GitHub/CorticoHippocampal')
-B9=load('B9.mat');
-B9=B9.B9;
+% % Load ICA results
+% cd('/home/raleman/Documents/GitHub/CorticoHippocampal')
+% B9=load('B9.mat');
+% B9=B9.B9;
+% 
+% B12=load('B12.mat');
+% B12=B12.B12;
+% 
+% B17=load('B17.mat');
+% B17=B17.B17;
+% 
+% R6=load('R6.mat');
+% R6=R6.R6;
+% 
+% R9=load('R9.mat');
+% R9=R9.R9;
+% 
+% R12=load('R12.mat');
+% R12=R12.R12;
+% 
+% R17=load('R17.mat');
+% R17=R17.R17;
+% 
+% cd('/home/raleman/Documents/internship')
 
-B12=load('B12.mat');
-B12=B12.B12;
-
-B17=load('B17.mat');
-B17=B17.B17;
-
-R6=load('R6.mat');
-R6=R6.R6;
-
-R9=load('R9.mat');
-R9=R9.R9;
-
-R12=load('R12.mat');
-R12=R12.R12;
-
-R17=load('R17.mat');
-R17=R17.R17;
-
-cd('/home/raleman/Documents/internship')
-
-'Loaded ICA results'
+%'Loaded ICA results'
 if art==1
 
     % Removing artifacts. 
@@ -135,19 +135,18 @@ Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients for LPF
 
 % Bandpass filter 
-fn=1000;
 
-Mono6=cell(63,1);
-Mono9=cell(63,1);
-Mono12=cell(63,1);
-Mono17=cell(63,1);
+Mono6=cell(length(S9),1);
+Mono9=cell(length(S9),1);
+Mono12=cell(length(S9),1);
+Mono17=cell(length(S9),1);
 
-Bip9=cell(63,1);
-Bip12=cell(63,1);
-Bip17=cell(63,1);
+Bip9=cell(length(S9),1);
+Bip12=cell(length(S9),1);
+Bip17=cell(length(S9),1);
 
 
-for i=1:63
+for i=1:length(S9)
     
 Bip9{i}=filtfilt(b1,a1,S9{i});    
 Bip12{i}=filtfilt(b1,a1,S12{i});
@@ -162,14 +161,14 @@ end
 
 'Bandpass performed'
 
-s17=nan(63,1);
-swr17=cell(63,3);
+s17=nan(length(S9),1);
+swr17=cell(length(S9),3);
 %thr=140;
 thr=200;
 %thr=180;
 
 
-for i=1:63
+for i=1:length(S9)
     
 signal=Bip17{i}*(1/0.195);
 signal2=Mono17{i}*(1/0.195);
@@ -189,7 +188,7 @@ swr217{i,2}=E2;
 swr217{i,3}=M2;
 
 
-i
+i/length(S9)
 end
 
 % Windowing

@@ -1,8 +1,24 @@
-art=0;
-%function [veamos, carajo, veamos2,carajo2,S17,S9,S12,V17,V9,V12,V6]=load_data(art);
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-cd('/home/raleman/Documents/internship')
+addpath('/home/raleman/Documents/internship')
+
+
+nFF=[
+   % {'rat26_Base_II_2016-03-24'                         }
+   % {'rat26_Base_II_2016-03-24_09-47-13'                }
+   % {'rat26_Base_II_2016-03-24_12-55-58'                }
+   % {'rat26_Base_II_2016-03-24_12-57-57'                }
+    
+    {'rat26_nl_base_III_2016-03-30_10-32-57'            }
+    {'rat26_nl_base_II_2016-03-28_10-40-19'             }
+    {'rat26_nl_baseline2016-03-01_11-01-55'             }
+    {'rat26_plusmaze_base_2016-03-08_10-24-41'}]
+%%
+for iii=1:length(nFF)
+cd('/home/raleman/Documents/internship/26')
+cd(nFF{iii})
+%
+art=0;
 
 run('load_data.m')
 
@@ -56,7 +72,9 @@ sig2{7}=V6;
 ripple=sum(s17);
 
 ripple2=sum(s217);
-%% SWR from Bipolar Hippocampus
+%
+
+% SWR from Bipolar Hippocampus
 Num=500;
 for i=1:length(sig2)
     allscreen()
@@ -78,11 +96,11 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 %cd Spectrograms_Threshold_45
 %cd borrame
 %cd hola
-cd RED
+%cd RED
 
 string=strcat(num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
 saveas(gcf,string)
-cd ..     
+%cd ..     
 % [D1, D2, D3, D4,D5 ]=deco(p3,p5);
 % plotwave(D1, D2, D3, D4,D5)
 % mtit(strcat(label1{i},' (',label2{i},')'),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
@@ -104,18 +122,23 @@ cd ..
 % % % % cd ..     
 
 
-
 end
-%close all
+close all
+end
 
-
- %%   
+cd('/home/raleman/Documents/internship/26')
 addpath /home/raleman/Documents/internship/fieldtrip-master/
 InitFieldtrip()
 
+cd('/home/raleman/Documents/internship/26')
+iii=1
+cd(nFF{iii})
+
+%%
+
  % Monopolar signals only
 %Ro=[200 500];
-Ro=[200];
+Ro=[500];
 for i=1:length(Ro)
 %i=1;
   ro=Ro(i);  
@@ -125,25 +148,25 @@ for i=1:length(Ro)
    q=cut(q);
    p=cut(p);
   timecell=cut(timecell);
-  [Fxy3, Fyx3]=BS(p,q);
-  BS_thr(Fxy3,Fyx3,0.1);
+%   [Fxy3, Fyx3]=BS(p,q);
+%   BS_thr(Fxy3,Fyx3,0.1);
   
 
   
   %autotest(q,timecell,'Bandpassed',ro)
   
-   %gc(q,timecell,'Bandpassed',ro)
+   gc(q,timecell,'Bandpassed',ro)
    
  string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
 %cd Nuevo
 %cd Spectrograms_Threshold_45
 %cd testGC
-cd ARorder
+% cd ARorder
 
 fig=gcf;
 fig.InvertHardcopy='off';
 %saveas(gcf,string)
-cd ..  
+%cd ..  
  close all
  
  autotest(p,timecell,'Widepassed',ro)
@@ -163,37 +186,3 @@ cd ..
  
 end
 
-%%
-%Bipolar
- Ro=[200 500 1000];
-for i=1:3
-  ro=Ro(i);  
-  [p,q,timecell]=getwinbip(carajo,veamos,sig1,sig2,label1,label2,ro);
-  close all
-  q=cut(q);
-  p=cut(p);
-  timecell=cut(timecell);
-  
-%   gcbip(q,timecell,'Bandpassed',ro)
-%   
-%   string=strcat(num2str(ro),'_GC_','Bipolar','Bandpassed','.png');
-% cd G
-% fig=gcf;
-% fig.InvertHardcopy='off';
-% 
-% saveas(gcf,string)
-% cd ..  
-%  close all
- 
- gcbip(p,timecell,'Widepass',ro)
-error('Stop here')
- string=strcat(num2str(ro),'_GC_','Bipolar','Widepass','.png');
-cd G
-fig=gcf;
-fig.InvertHardcopy='off';
-
-%saveas(gcf,string)
-cd ..  
- close all
- 
-end
