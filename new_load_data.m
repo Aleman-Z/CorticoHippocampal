@@ -137,6 +137,9 @@ end
 
 s17=nan(length(S9),1);
 swr17=cell(length(S9),3);
+s217=nan(length(S9),1);
+swr217=cell(length(S9),3);
+
 %thr=140;
 thr=200;
 %thr=180;

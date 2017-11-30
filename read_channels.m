@@ -80,17 +80,18 @@ ripple2=sum(s217);
 % SWR from Bipolar Hippocampus
 Num=500;
 for i=1:length(sig2)
-    allscreen()
-[p3, p5,cellx,cellr]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
+% % % % % % % % % % % %     allscreen()
+% % % % % % % % % % % % [p3, p5,cellx,cellr]=generate(carajo,veamos, sig1{i},sig2{i},label1{i},label2{i},Num);
+
 % [p,q,timecell]=newgetwin(cellx,cellr,p3,Num);
 % q=cut(q);
 % p=cut(p);
 % timecell=cut(timecell);
 % gc(q,timecell,'Bandpassed',Num);
 
-mtit(strcat('Events:',num2str(ripple)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
-labelthr=strcat('Thr:',num2str(thr));
-mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
+% % % % % % % % % % % % % mtit(strcat('Events:',num2str(ripple)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
+% % % % % % % % % % % % % labelthr=strcat('Thr:',num2str(thr));
+% % % % % % % % % % % % % mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
 
 
 % error('stop')
@@ -101,8 +102,9 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 %cd hola
 %cd RED
 
-string=strcat('OPT',num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
-saveas(gcf,string)
+% % % % % % % % % % % % % % % % string=strcat('OPT',num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
+% % % % % % % % % % % % % % % % saveas(gcf,string)
+
 %cd ..     
 % [D1, D2, D3, D4,D5 ]=deco(p3,p5);
 % plotwave(D1, D2, D3, D4,D5)
@@ -112,16 +114,16 @@ saveas(gcf,string)
 % saveas(gcf,string)
 % cd ..     
 % % % % % % % 
-% % % % % % % allscreen()
-% % % % % % % [p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
-% % % % % % % mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
-% % % % % % % labelthr=strcat('Thr:',num2str(thr));
-% % % % % % % mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
+allscreen()
+[p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
+mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
+labelthr=strcat('Thr:',num2str(thr));
+mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
 % % % % % % % % % % % 
 % % % % % % % % % % % cd hola
 % % % % % % % % % % % 
-% % % % % % % string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
-% % % % % % % saveas(gcf,string)
+string=strcat(num2str(Num),'POT_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
+saveas(gcf,string)
 % % % % cd ..     
 
 
