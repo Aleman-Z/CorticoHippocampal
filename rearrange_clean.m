@@ -6,7 +6,7 @@ art=0;
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 %cd('/home/raleman/Documents/internship')
-
+%%
 run('load_data.m')
 
 % Rearrange (clean)

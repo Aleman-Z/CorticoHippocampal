@@ -19,7 +19,7 @@ function [S, E, M] = findRipplesLisa(Filt_EEG, timestamps, DetectThreshold, Limi
 % copyright (c) 1999 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
-%
+
 
 % adapted for LG data FPB 2016
 

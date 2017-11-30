@@ -23,32 +23,6 @@ V6=load('V6.mat');
 V6=V6.V6;
 'Loaded channels'
 
-% % Load ICA results
-% cd('/home/raleman/Documents/GitHub/CorticoHippocampal')
-% B9=load('B9.mat');
-% B9=B9.B9;
-% 
-% B12=load('B12.mat');
-% B12=B12.B12;
-% 
-% B17=load('B17.mat');
-% B17=B17.B17;
-% 
-% R6=load('R6.mat');
-% R6=R6.R6;
-% 
-% R9=load('R9.mat');
-% R9=R9.R9;
-% 
-% R12=load('R12.mat');
-% R12=R12.R12;
-% 
-% R17=load('R17.mat');
-% R17=R17.R17;
-% 
-% cd('/home/raleman/Documents/internship')
-
-%'Loaded ICA results'
 if art==1
 
     % Removing artifacts. 
@@ -174,7 +148,7 @@ signal=Bip17{i}*(1/0.195);
 signal2=Mono17{i}*(1/0.195);
 
 ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
-sh=round(1.5*max(ti));
+[thr]=opt_thr(signal,thr);
 [S, E, M] = findRipplesLisa(signal, ti.', thr , (thr)*(1/3), []);
 s17(i)=length(M);
 swr17{i,1}=S;
@@ -182,6 +156,7 @@ swr17{i,2}=E;
 swr17{i,3}=M;
 
 ti=(0:length(signal2)-1)*(1/fn); %IN SECONDS
+% [thr]=opt_thr(signal,thr);
 [S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
 s217(i)=length(M2);
 swr217{i,1}=S2;

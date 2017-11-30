@@ -14,7 +14,7 @@ nFF=[
     {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}]
 %%
-for iii=2:length(nFF)
+for iii=1:length(nFF)
 %for iii=4
     
 cd('/home/raleman/Documents/internship/26')
@@ -24,6 +24,7 @@ art=0;
 
 %run('load_data.m')
 run('new_load_data.m')
+
 
 % Rearrange (clean)
 
@@ -101,7 +102,7 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 %cd hola
 %cd RED
 
-string=strcat('OPT',num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
+string=strcat(num2str(Num),'_WAV_thr_Hipp_bipolar',num2str(thr),label1{i},label2{i},'.png');
 saveas(gcf,string)
 %cd ..     
 % [D1, D2, D3, D4,D5 ]=deco(p3,p5);
@@ -111,17 +112,17 @@ saveas(gcf,string)
 % string=strcat('200_WD_',label1{i},label2{i},'.png');
 % saveas(gcf,string)
 % cd ..     
-% % % % % % % 
-% % % % % % % allscreen()
-% % % % % % % [p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
-% % % % % % % mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
-% % % % % % % labelthr=strcat('Thr:',num2str(thr));
-% % % % % % % mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
-% % % % % % % % % % % 
-% % % % % % % % % % % cd hola
-% % % % % % % % % % % 
-% % % % % % % string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
-% % % % % % % saveas(gcf,string)
+
+allscreen()
+[p3, p5]=generate(carajo2,veamos2, sig1{i},sig2{i},label1{i},label2{i},Num);
+mtit(strcat('Events:',num2str(ripple2)),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
+labelthr=strcat('Thr:',num2str(thr));
+mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
+% % % % 
+% % % % cd hola
+% % % % 
+string=strcat(num2str(Num),'_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
+saveas(gcf,string)
 % % % % cd ..     
 
 
