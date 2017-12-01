@@ -14,7 +14,7 @@ nFF=[
     {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}]
 %%
-for iii=2:length(nFF)
+for iii=1:length(nFF)
 %for iii=4
     
 cd('/home/raleman/Documents/internship/26')
