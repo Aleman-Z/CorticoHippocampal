@@ -154,7 +154,9 @@ for i=1:length(Ro)
 %i=1;
   ro=Ro(i);  
   allscreen()
-  [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
+  %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
+  [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr);
+
   close all
    q=cut(q);
    p=cut(p);

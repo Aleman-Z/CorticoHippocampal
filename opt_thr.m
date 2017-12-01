@@ -29,7 +29,7 @@ tic
             break
         end
         
-        xdist=abs(sh-length(M))
+        xdist=abs(sh-length(M));
         Xdist=[Xdist xdist];
         Tdist=[Tdist thr];
         
