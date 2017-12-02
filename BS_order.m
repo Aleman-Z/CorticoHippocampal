@@ -4,7 +4,7 @@ function[data]=BS_order(dat)
 % winlen   = 12;
 % maxorder = 10;
 
-winlen   = 10;
+winlen   = 12;
 maxorder = 10;
 
 points   = size(dat,1);

@@ -1,3 +1,6 @@
+dat=load('test71_pre.mat')
+dat=dat.dat;
+%%
 data1 = pre_sube(dat);
 
 data2 = pre_sube_divs(dat);
@@ -21,7 +24,7 @@ fs = 200;
 frang = 1:0.25:40;
 fmax=max(frang);
 %%
-BS_order(dat,winlen,10)
+BS_order(dat)
 % core: moving window multivariate model
 %%
 mov_bi_model(dat,order,spts,epts,winlen);
