@@ -140,8 +140,10 @@ swr17=cell(length(S9),3);
 s217=nan(length(S9),1);
 swr217=cell(length(S9),3);
 
+rep=5;
 %thr=140;
-thr=200;
+% % thr=linspace(max(signal)/(2.^(4)),max(signal),rep);
+% % thr=sort(thr,'descend');
 %thr=180;
 %%
 
@@ -151,33 +153,55 @@ signal=Bip17{i}*(1/0.195);
 signal2=Mono17{i}*(1/0.195);
 
 ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
+
+%thr=linspace(max(signal)/(2.^(rep-1)),max(signal),rep);
+%thr=sort(thr,'descend');
+
+thr=[max(signal) max(signal)/2 max(signal)/4 max(signal)/8 max(signal)/16];
+thr=round(thr);
 %[thr]=opt_thr(signal,thr);
 % thr=max(signal)/2
-[S, E, M] = findRipplesLisa(signal, ti.', thr , (thr)*(1/3), []);
-s17(i)=length(M);
-swr17{i,1}=S;
-swr17{i,2}=E;
-swr17{i,3}=M;
+% [S1, E1, M1] = findRipplesLisa(signal, ti.', thr() , (thr(1))*(1/2), []);
+% [S2, E2, M2] = findRipplesLisa(signal, ti.', thr , (thr)*(1/2), []);
+% [S3, E3, M3] = findRipplesLisa(signal, ti.', thr , (thr)*(1/2), []);
+% [S4, E4, M4] = findRipplesLisa(signal, ti.', thr , (thr)*(1/2), []);
+% [S5, E5, M5] = findRipplesLisa(signal, ti.', thr , (thr)*(1/2), []);
+for k=1:rep-1
+[S{k}, E{k}, M{k}] = findRipplesLisa(signal, ti.', thr(k+1) , (thr(k+1))*(1/2), []);
+s17(i,k)=length(M{k});
+swr17{i,1,k}=S{k};
+swr17{i,2,k}=E{k};
+swr17{i,3,k}=M{k};
 
-ti=(0:length(signal2)-1)*(1/fn); %IN SECONDS
-% [thr]=opt_thr(signal,thr);
-[S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
-s217(i)=length(M2);
-swr217{i,1}=S2;
-swr217{i,2}=E2;
-swr217{i,3}=M2;
-
-
-i/length(S9)
 end
 
-% Windowing
-veamos=find(s17~=0);  %Epochs with ripples detected
-carajo=swr17(veamos,:);
+% s17(i)=length(M);
+% swr17{i,1}=S;
+% swr17{i,2}=E;
+% swr17{i,3}=M;
 
+% ti=(0:length(signal2)-1)*(1/fn); %IN SECONDS
+% % [thr]=opt_thr(signal,thr);
+% [S2, E2, M2] = findRipplesLisa(signal2, ti.', thr , (thr)*(1/3), []);
+% s217(i)=length(M2);
+% swr217{i,1}=S2;
+% swr217{i,2}=E2;
+% swr217{i,3}=M2;
+
+
+% i/length(S9)
+disp(strcat('Progress:',num2str(round(i*100/length(S9))),'%'))
+end
+
+%%
+% Windowing
+for ind=1:size(s17,2)
+veamos{:,ind}=find(s17(:,ind)~=0);  %Epochs with ripples detected
+carajo{:,:,ind}=swr17(veamos{:,ind},:,ind);
+end
 %Proceed to rearrange.m
 %  Windowing using Monopolar
 
-veamos2=find(s217~=0);  %Epochs with ripples detected
-carajo2=swr217(veamos2,:);
+% veamos2=find(s217~=0);  %Epochs with ripples detected
+% carajo2=swr217(veamos2,:);
 %end
