@@ -122,7 +122,7 @@ mtit(strcat(' (',labelthr,')'),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 
 % % % % % % % % % % % 
 % % % % % % % % % % % cd hola
 % % % % % % % % % % % 
-string=strcat(num2str(Num),'POT_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
+string=strcat('ORIGINAL',num2str(Num),'POT_WAV_thr_Hipp_monopolar',num2str(thr),label1{i},label2{i},'.png');
 saveas(gcf,string)
 % % % % cd ..     
 
@@ -130,72 +130,72 @@ saveas(gcf,string)
 end
 close all
 end
-
-%%
-cd('/home/raleman/Documents/internship/26')
-addpath /home/raleman/Documents/internship/fieldtrip-master/
-InitFieldtrip()
-
-cd('/home/raleman/Documents/internship/26')
-% iii=1
+% 
+% %%
+% cd('/home/raleman/Documents/internship/26')
+% addpath /home/raleman/Documents/internship/fieldtrip-master/
+% InitFieldtrip()
+% 
+% cd('/home/raleman/Documents/internship/26')
+% % iii=1
+% % cd(nFF{iii})
+% 
+% %%
+% for iii=1:length(nFF)
+% %for iii=4
+%     
+% cd('/home/raleman/Documents/internship/26')
 % cd(nFF{iii})
-
-%%
-for iii=1:length(nFF)
-%for iii=4
-    
-cd('/home/raleman/Documents/internship/26')
-cd(nFF{iii})
-
- % Monopolar signals only
-%Ro=[200 500];
-Ro=[500];
-for i=1:length(Ro)
-%i=1;
-  ro=Ro(i);  
-  allscreen()
-  %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
-  [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr);
-
-  close all
-   q=cut(q);
-   p=cut(p);
-  timecell=cut(timecell);
-%   [Fxy3, Fyx3]=BS(p,q);
-%   BS_thr(Fxy3,Fyx3,0.1);
-  
-
-  
-  %autotest(q,timecell,'Bandpassed',ro)
-  
-   gc(q,timecell,'Bandpassed',ro)
-   
- string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
-%cd Nuevo
-%cd Spectrograms_Threshold_45
-%cd testGC
-% cd ARorder
-
-fig=gcf;
-fig.InvertHardcopy='off';
-saveas(gcf,string)
-%cd ..  
- close all
- 
- %autotest(p,timecell,'Widepassed',ro)
- gc(p,timecell,'Widepass',ro)
-
-string=strcat(num2str(ro),'_GC_','Monopolar','Widepass','.png');
-%cd Nuevo
-%cd Spectrograms_Threshold_45
-%cd testGC
-%cd ARorder
-fig=gcf;
-fig.InvertHardcopy='off';
-
-saveas(gcf,string)
-%cd ..  
- close all
- 
-end
-end
+% 
+%  % Monopolar signals only
+% %Ro=[200 500];
+% Ro=[500];
+% for i=1:length(Ro)
+% %i=1;
+%   ro=Ro(i);  
+%   allscreen()
+%   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
+%   [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr);
+% 
+%   close all
+%    q=cut(q);
+%    p=cut(p);
+%   timecell=cut(timecell);
+% %   [Fxy3, Fyx3]=BS(p,q);
+% %   BS_thr(Fxy3,Fyx3,0.1);
+%   
+% 
+%   
+%   %autotest(q,timecell,'Bandpassed',ro)
+%   
+%    gc(q,timecell,'Bandpassed',ro)
+%    
+%  string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
+% %cd Nuevo
+% %cd Spectrograms_Threshold_45
+% %cd testGC
+% % cd ARorder
+% 
+% fig=gcf;
+% fig.InvertHardcopy='off';
+% saveas(gcf,string)
+% %cd ..  
+%  close all
+%  
+%  %autotest(p,timecell,'Widepassed',ro)
+%  gc(p,timecell,'Widepass',ro)
+% 
+% string=strcat(num2str(ro),'_GC_','Monopolar','Widepass','.png');
+% %cd Nuevo
+% %cd Spectrograms_Threshold_45
+% %cd testGC
+% %cd ARorder
+% fig=gcf;
+% fig.InvertHardcopy='off';
+% 
+% saveas(gcf,string)
+% %cd ..  
+%  close all
+%  
+% end
+% end

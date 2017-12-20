@@ -84,7 +84,7 @@ ripple=sum(s17);
 
 ripple2=sum(s217);
 
-
+%
 
  % Monopolar signals only
 %Ro=[200 500];
@@ -94,11 +94,13 @@ for i=1:length(Ro)
   ro=Ro(i);  
   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
-  [p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr);
+  [p,q,timecell,cfs,f,Q]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr);
 
   close all
    q=cut(q);
    p=cut(p);
+   %Q=cut(Q);
+   Q=cut(Q);
   timecell=cut(timecell);
 %   [Fxy3, Fyx3]=BS(p,q);
 %   BS_thr(Fxy3,Fyx3,0.1);
@@ -107,7 +109,7 @@ for i=1:length(Ro)
   
   %autotest(q,timecell,'Bandpassed',ro)
   
-   gc(q,timecell,'Bandpassed',ro)
+ gc(q,timecell,'Bandpassed',ro)
    
  string=strcat(num2str(ro),'_GC_','Monopolar','Bandpassed','.png');
 %cd Nuevo
@@ -135,6 +137,47 @@ fig.InvertHardcopy='off';
 saveas(gcf,string)
 %cd ..  
  close all
+ % Envelope 
+ gc(Q,timecell,'Envelope',ro)
+
+string=strcat(num2str(ro),'_GC_','Monopolar','Envelope','.png');
+%cd Nuevo
+%cd Spectrograms_Threshold_45
+%cd testGC
+%cd ARorder
+fig=gcf;
+fig.InvertHardcopy='off';
+
+saveas(gcf,string)
+%cd ..  
+ close all
  
+ 
+%  T = cell2mat(q); 
+% [F]=mvgc_adapted(T,fn);
+% allscreen()
+% plot_granger(F,fn)
+% mtit('Monopolar','fontsize',14,'color',[1 0 0],'position',[.5 1 ])
+% mtit('Bandpassed','fontsize',14,'color',[1 0 0],'position',[.5 0.75 ])
+% mtit(strcat('(+/-',num2str(ro),'ms)'),'fontsize',14,'color',[1 0 0],'position',[.5 0.5 ])
+% 
+% 
+%  T = cell2mat(p); 
+% [F]=mvgc_adapted(T,fn);
+% allscreen()
+% plot_granger(F,fn)
+% mtit('Monopolar','fontsize',14,'color',[1 0 0],'position',[.5 1 ])
+% mtit('Wideband','fontsize',14,'color',[1 0 0],'position',[.5 0.75 ])
+% mtit(strcat('(+/-',num2str(ro),'ms)'),'fontsize',14,'color',[1 0 0],'position',[.5 0.5 ])
+% 
+%  T = cell2mat(Q); 
+% [F]=mvgc_adapted(T,fn);
+% allscreen()
+% plot_granger(F,fn)
+% mtit('Monopolar','fontsize',14,'color',[1 0 0],'position',[.5 1 ])
+% mtit('Envelope','fontsize',14,'color',[1 0 0],'position',[.5 0.75 ])
+% mtit(strcat('(+/-',num2str(ro),'ms)'),'fontsize',14,'color',[1 0 0],'position',[.5 0.5 ])
+
+
 end
 end
