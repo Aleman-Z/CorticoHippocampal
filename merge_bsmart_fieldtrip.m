@@ -29,6 +29,23 @@ newdata.label=label;
 
 
 %%
+cfg         = [];
+cfg.order   = 5;
+cfg.toolbox = 'bsmart';
+mdata       = ft_mvaranalysis(cfg, newdata);
+%%
+cfg              = [];
+cfg.output       = 'pow';
+%cfg.channel      = 'MEG';
+cfg.method       = 'mtmconvol';
+cfg.taper        = 'hanning';
+cfg.foi          = 1:1:100;                         % analysis 2 to 30 Hz in steps of 2 Hz 
+cfg.t_ftimwin    = ones(length(cfg.foi),1).*0.5;   % length of time window = 0.5 sec
+cfg.toi          = 0:0.01:0.09;                  % time window "slides" from -0.5 to 1.5 sec in steps of 0.05 sec (50 ms)
+TFRhann = ft_freqanalysis(cfg, newdata);
+%%
+
+
 
 %% Nonparametric freq analysis (MTMconvol)
 cfg           = [];
@@ -141,7 +158,25 @@ cfg           = [];
 cfg.method    = 'granger';
 granger       = ft_connectivityanalysis(cfg, freq_mtmfft);
 
+%% Time frequency Field trip
 
-
-
+load dataFIC
+%%
+cfg = [];
+cfg.channel    = 'MEG';	                
+cfg.method     = 'wavelet';                
+cfg.width      = 7; 
+cfg.output     = 'pow';	
+cfg.foi        = 1:2:30;	                
+cfg.toi        = -0.5:0.05:1.5;		              
+TFRwave = ft_freqanalysis(cfg, dataFIC);
+%%
+cfg = [];
+cfg.baseline     = [-0.5 -0.1]; 
+cfg.baselinetype = 'absolute'; 	        
+cfg.zlim         = [-3e-25 3e-25];
+cfg.showlabels   = 'yes';	        
+cfg.layout       = 'CTF151.lay';
+figure
+ft_multiplotTFR(cfg, TFRwave)
 
