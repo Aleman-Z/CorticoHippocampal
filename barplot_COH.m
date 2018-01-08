@@ -1,4 +1,4 @@
-function [granger]=barplot_GC(q,timecell,freqrange)
+function [coh]=barplot_COH(q,timecell,freqrange)
 %[100:1:300]
 
 ft_data1 = [];
@@ -38,8 +38,8 @@ cfg.toi = [-.5:.025:.5];
 
 %cfg.toi = [-.4:.001:.4];
 cfg.keeptrials = 'yes';
-%cfg.output         = 'powandcsd';
-cfg.output         = 'fourier';
+cfg.output         = 'powandcsd';
+%cfg.output         = 'fourier';
 
 
 freq = ft_freqanalysis(cfg, ft_data1);
@@ -91,21 +91,19 @@ freq = ft_freqanalysis(cfg, ft_data1);
 % %colorbar()
 % colormap(jet(256))
 
-%Granger Causality
+%COHERENCE
 cfg           = [];
-cfg.method    = 'granger';
-granger       = ft_connectivityanalysis(cfg, freq);
+cfg.method    = 'coh';
+coh           = ft_connectivityanalysis(cfg, freq);
 
-%Plotting
 cfg           = [];
-cfg.parameter = 'grangerspctrm';
+cfg.parameter = 'cohspctrm';
+cfg.channel= {'Hippo'; 'Parietal'; 'PFC'};
+
 cfg.zlim      = [0 1];
+ft_connectivityplot(cfg, coh);
+title('Time-Frequency Coherence')
 
-%cfg.zlim = 'maxabs'
-cfg.channel= ft_data1.label(1:3)
-ft_connectivityplot(cfg, granger);
-xticks([-0.5:0.2:0.5 ])
-title('Time-Frequency Granger Causality')
 colormap(jet(256))
 narrow_colorbar()
 

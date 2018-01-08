@@ -31,9 +31,9 @@ InitFieldtrip()
 
 cd('/home/raleman/Documents/internship/26')
 
-
+%
 %for iii=1:length(nFF)
-for iii=4
+for iii=1
     
 cd('/home/raleman/Documents/internship/26')
 cd(nFF{iii})

@@ -46,6 +46,6 @@ cfg.colorbar       = 'no';
 % figure()
 ft_singleplotTFR(cfg, stats);
 colormap(jet(256))
- narrow_colorbar()
+narrow_colorbar()
 
 end
