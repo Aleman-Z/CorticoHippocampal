@@ -10,7 +10,8 @@ ft_data1.time = (timecell);
 
 ft_data1;
 
-ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
+%ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
+ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
 
 cfg = [];
 

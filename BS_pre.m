@@ -43,6 +43,7 @@ chy=10;
 timen=0;
 %%
 ga_view(Fxy,Fyx,fs,chx,chy)
+
 %%
 
 BS_plot(Fxy,Fyx,chx,chy,fmax,1)
@@ -238,8 +239,8 @@ fs=200;
 order=4;
 spts   = 1;
 epts   = 18;
-winlen = 10;
-BS_order(dat,winlen,10)
+ winlen = 10;
+% BS_order(dat,,winlen,10);
 %%
 [Fxy, Fyx]=BS_main(dat,order, spts, epts, winlen,fs,frang);
 %%

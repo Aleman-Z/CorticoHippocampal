@@ -35,88 +35,6 @@ V6=V6.V6;
 'Loaded channels'
 
 
-
-% if art==1
-% 
-%     % Removing artifacts. 
-%     S9n=cell(length(V6),1);
-%     S12n=cell(length(V6),1);
-%     S17n=cell(length(V6),1);
-% 
-%     B9n=cell(length(V6),1);
-%     B12n=cell(length(V6),1);
-%     B17n=cell(length(V6),1);
-% 
-%     V6n=cell(length(V6),1);
-%     V9n=cell(length(V6),1);
-%     V12n=cell(length(V6),1);
-%     V17n=cell(length(V6),1);
-% 
-%     R6n=cell(length(V6),1);
-%     R9n=cell(length(V6),1);
-%     R12n=cell(length(V6),1);
-%     R17n=cell(length(V6),1);
-% 
-%         for i=1:length(V6)
-%         %Original Bipolar
-%         pro=S9{i};
-%         S9n{i,1}=outlier(pro,2.5);
-%         pro=S12{i};
-%         S12n{i,1}=outlier(pro,2.5);
-%         pro=S17{i};
-%         S17n{i,1}=outlier(pro,1.5);
-% 
-%         %Bipolar after ICA
-%         pro=B9{i};
-%         B9n{i,1}=outlier(pro,2.5);
-%         pro=B12{i};
-%         B12n{i,1}=outlier(pro,2.5);
-%         pro=B17{i};
-%         B17n{i,1}=outlier(pro,2.5);
-% 
-%         %Original Monopolar
-%         pro=V6{i};
-%         V6n{i,1}=outlier(pro,2.5);
-%         pro=V9{i};
-%         V9n{i,1}=outlier(pro,2.5);
-%         pro=V12{i};
-%         V12n{i,1}=outlier(pro,2.5);
-%         pro=V17{i};
-%         V17n{i,1}=outlier(pro,1.5);
-% 
-%         %Monopolar after ICA
-%         pro=R6{i};
-%         R6n{i,1}=outlier(pro,2.5);
-%         pro=R9{i};
-%         R9n{i,1}=outlier(pro,2.5);
-%         pro=R12{i};
-%         R12n{i,1}=outlier(pro,2.5);
-%         pro=R17{i};
-%         R17n{i,1}=outlier(pro,2.5);
-% 
-%         end
-% 
-%     S9=S9n;
-%     S12=S12n;
-%     S17=S17n;
-% 
-%     B9=B9n;
-%     B12=B12n;
-%     B17=B17n;
-% 
-%     V6=V6n;
-%     V9=V9n;
-%     V12=V12n;
-%     V17=V17n;
-% 
-%     R6=R6n;
-%     R9=R9n;
-%     R12=R12n;
-%     R17=R17n;
-%     
-%     'Artifact detection performed'
-% end
-
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
@@ -172,9 +90,9 @@ signal2=Mono17{i}*(1/0.195);
 % signal_array=[Mono17{i} Mono12{i} Mono9{i} Mono6{i}];
 % signal_array2=[V17{i} V12{i} V9{i} V6{i}];
 % signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i}) envelope1(Mono6{i})];
-signal_array=[Mono17{i} Mono12{i} Mono9{i}];
-signal_array2=[V17{i} V12{i} V9{i} ];
-signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i})];
+% % % % % % % % signal_array=[Mono17{i} Mono12{i} Mono9{i}];
+% % % % % % % % signal_array2=[V17{i} V12{i} V9{i} ];
+% % % % % % % % signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i})];
 
 
 ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
@@ -208,9 +126,9 @@ for k=1:rep-1
 %K=4 has shown to give too many ripples and not large enough no ripple
 %windows. 
 
-if k==1 || k==2 || k==3
-[no{i,k},no2{i,k},noQ{i,k}]=no_ripples(ti,S{k},E{k},ro,signal_array,signal_array2,signal_arrayQ);
-end
+% if k==1 || k==2 || k==3
+% [no{i,k},no2{i,k},noQ{i,k}]=no_ripples(ti,S{k},E{k},ro,signal_array,signal_array2,signal_arrayQ);
+% end
 
 
 % [pks]=no_ripples(ti,S{k},E{k},ro);
@@ -271,74 +189,74 @@ end
 % carajo2=swr217(veamos2,:);
 %end
 
- su=sum(cellfun('length', no));
-
-su1=cell(0);
-su2=cell(0);
-su3=cell(0);
-
-su1_2=cell(0);
-su2_2=cell(0);
-su3_2=cell(0);
-
-su1_Q=cell(0);
-su2_Q=cell(0);
-su3_Q=cell(0);
+%  su=sum(cellfun('length', no));
+% 
+% su1=cell(0);
+% su2=cell(0);
+% su3=cell(0);
+% 
+% su1_2=cell(0);
+% su2_2=cell(0);
+% su3_2=cell(0);
+% 
+% su1_Q=cell(0);
+% su2_Q=cell(0);
+% su3_Q=cell(0);
 
 
 %error('stop here please')
-for he=1:length(no)
-%     if no{he,1}~= 0
-su1=[su1;no{he,1}];
-su2=[su2;no{he,2}];
-su3=[su3;no{he,3}];
+% for he=1:length(no)
+% %     if no{he,1}~= 0
+% su1=[su1;no{he,1}];
+% su2=[su2;no{he,2}];
+% su3=[su3;no{he,3}];
+% 
+% su1_2=[su1_2;no2{he,1}];
+% su2_2=[su2_2;no2{he,2}];
+% su3_2=[su3_2;no2{he,3}];
+% 
+% su1_Q=[su1_Q;noQ{he,1}];
+% su2_Q=[su2_Q;noQ{he,2}];
+% su3_Q=[su3_Q;noQ{he,3}];
+% 
+% %     end
+% end
 
-su1_2=[su1_2;no2{he,1}];
-su2_2=[su2_2;no2{he,2}];
-su3_2=[su3_2;no2{he,3}];
-
-su1_Q=[su1_Q;noQ{he,1}];
-su2_Q=[su2_Q;noQ{he,2}];
-su3_Q=[su3_Q;noQ{he,3}];
-
-%     end
-end
-
-if length(su1)>100
-su1=su1(1:100);
-end
-if length(su2)>100
-su2=su2(1:100);
-end
-if length(su3)>100
-su3=su3(1:100);
-end
-
-%SU=[su1 su2 su3];
-SU={su1 su2 su3};
-
-if length(su1_2)>100
-su1_2=su1_2(1:100);
-end
-if length(su2_2)>100
-su2_2=su2_2(1:100);
-end
-if length(su3_2)>100
-su3_2=su3_2(1:100);
-end
+% if length(su1)>100
+% su1=su1(1:100);
+% end
+% if length(su2)>100
+% su2=su2(1:100);
+% end
+% if length(su3)>100
+% su3=su3(1:100);
+% end
+% 
+% %SU=[su1 su2 su3];
+% SU={su1 su2 su3};
+% 
+% if length(su1_2)>100
+% su1_2=su1_2(1:100);
+% end
+% if length(su2_2)>100
+% su2_2=su2_2(1:100);
+% end
+% if length(su3_2)>100
+% su3_2=su3_2(1:100);
+% end
 
 %SU2=[su1_2 su2_2 su3_2];
-SU2={su1_2 su2_2 su3_2};
-
-if length(su1_Q)>100
-su1_Q=su1_Q(1:100);
-end
-if length(su2_Q)>100
-su2_Q=su2_Q(1:100);
-end
-if length(su3_Q)>100
-su3_Q=su3_Q(1:100);
-end
+% SU2={su1_2 su2_2 su3_2};
+% 
+% if length(su1_Q)>100
+% su1_Q=su1_Q(1:100);
+% end
+% if length(su2_Q)>100
+% su2_Q=su2_Q(1:100);
+% end
+% if length(su3_Q)>100
+% su3_Q=su3_Q(1:100);
+% end
 
 % SUQ=[su1_Q su2_Q su3_Q];
-SUQ={su1_Q su2_Q su3_Q};
+% SUQ={su1_Q su2_Q su3_Q};

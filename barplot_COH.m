@@ -16,7 +16,8 @@ ft_data1.time = (timecell(1,1:end));
 
 %ft_data1
 
-ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
+%ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
+ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
 
 
 % Compute Multitaper
@@ -25,14 +26,22 @@ cfg = [];
 cfg.method = 'mtmconvol';
 %cfg.taper = 'dpss';
 cfg.taper = 'hanning';
-%cfg.pad='nextpow2';
+cfg.pad='nextpow2';
 %cfg.foi = [100:50:300];
 cfg.foi = freqrange;
 
 
-cfg.t_ftimwin = .2 * ones(size(cfg.foi));
+cfg.t_ftimwin = 0.2*ones(size(cfg.foi));
+%  da=freqrange(end)-freqrange(end-1);
+%  da=1/da;
+%  
+% cfg.t_ftimwin  = da./cfg.foi;
+% 
 cfg.tapsmofrq = 10;
-cfg.toi = [-.5:.025:.5];
+cfg.toi = [-1:.025:1];
+%cfg.toi = [-1:.01:1];
+
+
 %cfg.toi = [-0.8:.01:0.8];
 
 

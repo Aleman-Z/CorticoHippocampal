@@ -10,28 +10,28 @@ reference signal (V6)
 
 %Load Bipolar signals
 S17=load('S17.mat');
-S17=S17.S17;
+S17_nl=S17.S17;
 
 S12=load('S12.mat');
-S12=S12.S12;
+S12_nl=S12.S12;
 
 S9=load('S9.mat');
-S9=S9.S9;
+S9_nl=S9.S9;
 
 
 %Load Monopolar signals
 
 V17=load('V17.mat');
-V17=V17.V17;
+V17_nl=V17.V17;
 
 V12=load('V12.mat');
-V12=V12.V12;
+V12_nl=V12.V12;
 
 V9=load('V9.mat');
-V9=V9.V9;
+V9_nl=V9.V9;
 
 V6=load('V6.mat');
-V6=V6.V6;
+V6_nl=V6.V6;
 'Loaded channels'
 
 
@@ -125,35 +125,35 @@ Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 % Bandpass filtering:
 
 %Declare empty cell arrays
-Mono6=cell(length(S9),1);
-Mono9=cell(length(S9),1);
-Mono12=cell(length(S9),1);
-Mono17=cell(length(S9),1);
+Mono6_nl=cell(length(S9_nl),1);
+Mono9_nl=cell(length(S9_nl),1);
+Mono12_nl=cell(length(S9_nl),1);
+Mono17_nl=cell(length(S9_nl),1);
 
-Bip9=cell(length(S9),1);
-Bip12=cell(length(S9),1);
-Bip17=cell(length(S9),1);
+Bip9_nl=cell(length(S9_nl),1);
+Bip12_nl=cell(length(S9_nl),1);
+Bip17_nl=cell(length(S9_nl),1);
 
 %Filtering
-for i=1:length(S9)
+for i=1:length(S9_nl)
     
-Bip9{i}=filtfilt(b1,a1,S9{i});    
-Bip12{i}=filtfilt(b1,a1,S12{i});
-Bip17{i}=filtfilt(b1,a1,S17{i});
+Bip9_nl{i}=filtfilt(b1,a1,S9_nl{i});    
+Bip12_nl{i}=filtfilt(b1,a1,S12_nl{i});
+Bip17_nl{i}=filtfilt(b1,a1,S17_nl{i});
 
-Mono6{i}=filtfilt(b1,a1,V6{i});
-Mono9{i}=filtfilt(b1,a1,V9{i});
-Mono12{i}=filtfilt(b1,a1,V12{i});
-Mono17{i}=filtfilt(b1,a1,V17{i});
+Mono6_nl{i}=filtfilt(b1,a1,V6_nl{i});
+Mono9_nl{i}=filtfilt(b1,a1,V9_nl{i});
+Mono12_nl{i}=filtfilt(b1,a1,V12_nl{i});
+Mono17_nl{i}=filtfilt(b1,a1,V17_nl{i});
 
 end
 'Bandpass performed'
 
 
-s17=nan(length(S9),1);
-swr17=cell(length(S9),3);
-s217=nan(length(S9),1);
-swr217=cell(length(S9),3);
+s17_nl=nan(length(S9_nl),1);
+swr17_nl=cell(length(S9_nl),3);
+s217_nl=nan(length(S9_nl),1);
+swr217_nl=cell(length(S9_nl),3);
 
 rep=5; %Number of thresholds+1
 
@@ -164,31 +164,31 @@ rep=5; %Number of thresholds+1
 
 %%
 
-for i=1:length(S9)
+for i=1:length(S9_nl)
     
-signal=Bip17{i}*(1/0.195);
-signal2=Mono17{i}*(1/0.195);
+signal_nl=Bip17_nl{i}*(1/0.195);
+signal2_nl=Mono17_nl{i}*(1/0.195);
 
 % signal_array=[Mono17{i} Mono12{i} Mono9{i} Mono6{i}];
 % signal_array2=[V17{i} V12{i} V9{i} V6{i}];
 % signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i}) envelope1(Mono6{i})];
-signal_array=[Mono17{i} Mono12{i} Mono9{i}];
-signal_array2=[V17{i} V12{i} V9{i} ];
-signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i})];
+signal_array_nl=[Mono17_nl{i} Mono12_nl{i} Mono9_nl{i}];
+signal_array2_nl=[V17_nl{i} V12_nl{i} V9_nl{i} ];
+%signal_arrayQ=[envelope1(Mono17{i}) envelope1(Mono12{i}) envelope1(Mono9{i})];
 
 
-ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
+ti_nl=(0:length(signal_nl)-1)*(1/fn); %IN SECONDS
 
 %thr=linspace(max(signal)/(2.^(rep-1)),max(signal),rep);
 %thr=sort(thr,'descend');
 
 %Thresholds for Bipolar recording of Hippocampus. 
-thr=[max(signal) max(signal)/2 max(signal)/4 max(signal)/8 max(signal)/16];
-thr=round(thr);
+thr_nl=[max(signal_nl) max(signal_nl)/2 max(signal_nl)/4 max(signal_nl)/8 max(signal_nl)/16];
+thr_nl=round(thr_nl);
 
-%Thresholds for Monopolar recording of Hippocampus. 
-thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
-thr2=round(thr2);
+% %Thresholds for Monopolar recording of Hippocampus. 
+% thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
+% thr2=round(thr2);
 
 %[thr]=opt_thr(signal,thr);
 % thr=max(signal)/2
@@ -200,7 +200,7 @@ thr2=round(thr2);
 for k=1:rep-1
 %     error('stop here')
 
-[S{k}, E{k}, M{k}] = findRipplesLisa(signal, ti.', thr(k+1) , (thr(k+1))*(1/2), []);
+[S_nl{k}, E_nl{k}, M_nl{k}] = findRipplesLisa(signal_nl, ti_nl.', thr_nl(k+1) , (thr_nl(k+1))*(1/2), []);
 
 % [no_rip]=no_ripples(ti,S{k},E{k})
 % [no_rip(:,k)]=no_ripples(ti,S{k},E{k})
@@ -208,9 +208,6 @@ for k=1:rep-1
 %K=4 has shown to give too many ripples and not large enough no ripple
 %windows. 
 
-if k==1 || k==2 || k==3
-[no{i,k},no2{i,k},noQ{i,k}]=no_ripples(ti,S{k},E{k},ro,signal_array,signal_array2,signal_arrayQ);
-end
 
 
 % [pks]=no_ripples(ti,S{k},E{k},ro);
@@ -218,10 +215,10 @@ end
 % ch=sig1(1:2:7);
 % cch=ch{1};
 
-s17(i,k)=length(M{k});
-swr17{i,1,k}=S{k};
-swr17{i,2,k}=E{k};
-swr17{i,3,k}=M{k};
+s17_nl(i,k)=length(M_nl{k});
+swr17_nl{i,1,k}=S_nl{k};
+swr17_nl{i,2,k}=E_nl{k};
+swr17_nl{i,3,k}=M_nl{k};
 
 % 
 % [S2{k}, E2{k}, M2{k}] = findRipplesLisa(signal2, ti.', thr2(k+1) , (thr2(k+1))*(1/2), []);
@@ -248,7 +245,7 @@ end
 
 
 % i/length(S9)
-disp(strcat('Progress:',num2str(round(i*100/length(S9))),'%'))
+disp(strcat('Progress:',num2str(round(i*100/length(S9_nl))),'%'))
 pause(.1)
 end
 
@@ -256,89 +253,10 @@ end
 %error('Stop here please')
 
 % Windowing
-for ind=1:size(s17,2)
-veamos{:,ind}=find(s17(:,ind)~=0);  %Epochs with ripples detected
-carajo{:,:,ind}=swr17(veamos{:,ind},:,ind);
+for ind=1:size(s17_nl,2)
+veamos_nl{:,ind}=find(s17_nl(:,ind)~=0);  %Epochs with ripples detected
+carajo_nl{:,:,ind}=swr17_nl(veamos_nl{:,ind},:,ind);
 
 % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
 % carajo2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
 end
-
-%Proceed to rearrange.m
-%  Windowing using Monopolar
-
-% veamos2=find(s217~=0);  %Epochs with ripples detected
-% carajo2=swr217(veamos2,:);
-%end
-
- su=sum(cellfun('length', no));
-
-su1=cell(0);
-su2=cell(0);
-su3=cell(0);
-
-su1_2=cell(0);
-su2_2=cell(0);
-su3_2=cell(0);
-
-su1_Q=cell(0);
-su2_Q=cell(0);
-su3_Q=cell(0);
-
-
-%error('stop here please')
-for he=1:length(no)
-%     if no{he,1}~= 0
-su1=[su1;no{he,1}];
-su2=[su2;no{he,2}];
-su3=[su3;no{he,3}];
-
-su1_2=[su1_2;no2{he,1}];
-su2_2=[su2_2;no2{he,2}];
-su3_2=[su3_2;no2{he,3}];
-
-su1_Q=[su1_Q;noQ{he,1}];
-su2_Q=[su2_Q;noQ{he,2}];
-su3_Q=[su3_Q;noQ{he,3}];
-
-%     end
-end
-
-if length(su1)>100
-su1=su1(1:100);
-end
-if length(su2)>100
-su2=su2(1:100);
-end
-if length(su3)>100
-su3=su3(1:100);
-end
-
-%SU=[su1 su2 su3];
-SU={su1 su2 su3};
-
-if length(su1_2)>100
-su1_2=su1_2(1:100);
-end
-if length(su2_2)>100
-su2_2=su2_2(1:100);
-end
-if length(su3_2)>100
-su3_2=su3_2(1:100);
-end
-
-%SU2=[su1_2 su2_2 su3_2];
-SU2={su1_2 su2_2 su3_2};
-
-if length(su1_Q)>100
-su1_Q=su1_Q(1:100);
-end
-if length(su2_Q)>100
-su2_Q=su2_Q(1:100);
-end
-if length(su3_Q)>100
-su3_Q=su3_Q(1:100);
-end
-
-% SUQ=[su1_Q su2_Q su3_Q];
-SUQ={su1_Q su2_Q su3_Q};

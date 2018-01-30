@@ -1,4 +1,4 @@
-function [stats]=stats_freq(freq,label,baseline)
+function [stats]=stats_freq2(freq,label,baseline)
 %Statistics
 n_trl=size(freq.powspctrm,1);
 

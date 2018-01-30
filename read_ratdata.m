@@ -43,7 +43,10 @@ nFF=[
     
     ]
 %%
-
+%%
+for i=1:length(nFF)
+    mkdir([nFF{i}])
+end
  %%
  Files=dir(fullfile(cd,'*.mat')) 
  %% Get data 
@@ -56,7 +59,7 @@ cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 %%
 cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 
-iii=4
+iii=1
 %for iii=1:length(nFF)
     cd(nFF{iii})
     %clear all

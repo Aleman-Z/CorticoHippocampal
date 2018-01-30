@@ -85,10 +85,15 @@ Q=cell(length(z1),1);
 for i=1:length(z1)
 %    p{i,1}=[z1{i}.';z2{i}.';z3{i}.'];
 %    q{i,1}=[z4{i}.';z5{i}.';z6{i}.'];
-   p{i,1}=[z1{i}.';z2{i}.';z3{i}.';z7{i}.']; %Widepass
-   q{i,1}=[z4{i}.';z5{i}.';z6{i}.';z8{i}.']; %Bandpassed
+ 
+%    p{i,1}=[z1{i}.';z2{i}.';z3{i}.';z7{i}.']; %Widepass
+%    q{i,1}=[z4{i}.';z5{i}.';z6{i}.';z8{i}.']; %Bandpassed
+   p{i,1}=[z1{i}.';z2{i}.';z3{i}.']; %Widepass
+   q{i,1}=[z4{i}.';z5{i}.';z6{i}.']; %Bandpassed
+   
    timecell{i,1}=[0:length(p7)-1]*(1/fn)-(ro/1000);
-  Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.');envelope1(z8{i}.')]; %Bandpassed
+  %Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.');envelope1(z8{i}.')]; %Bandpassed
+  Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.')]; %Bandpassed 
 end
 
 p=p.';
@@ -115,7 +120,8 @@ Q=Q.';
 % Q=Q.';
 
 
-P1=[p1;p2;p3;p7];
-P2=[p4;p5;p6;p8];
-
+% P1=[p1;p2;p3;p7];
+% P2=[p4;p5;p6;p8];
+P1=[p1;p2;p3];
+P2=[p4;p5;p6];
 end

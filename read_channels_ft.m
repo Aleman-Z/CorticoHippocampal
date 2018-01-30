@@ -4,46 +4,65 @@ addpath('/home/raleman/Documents/internship')
 
 
 nFF=[
-   % {'rat26_Base_II_2016-03-24'                         }
-   % {'rat26_Base_II_2016-03-24_09-47-13'                }
-   % {'rat26_Base_II_2016-03-24_12-55-58'                }
-   % {'rat26_Base_II_2016-03-24_12-57-57'                }
+%    {'rat26_Base_II_2016-03-24'                         }
+%    {'rat26_Base_II_2016-03-24_09-47-13'                }
+%    {'rat26_Base_II_2016-03-24_12-55-58'                }
+%    {'rat26_Base_II_2016-03-24_12-57-57'                }
     
    
-%     {'rat26_nl_base_III_2016-03-30_10-32-57'            }
-%     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
-%     {'rat26_nl_baseline2016-03-01_11-01-55'             }
-%     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
+    {'rat26_nl_base_III_2016-03-30_10-32-57'            }
+    {'rat26_nl_base_II_2016-03-28_10-40-19'             }
+    {'rat26_nl_baseline2016-03-01_11-01-55'             }
+    {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
     
+    {'rat26_novelty_I_2016-04-12_10-05-55'          }
     {'rat26_novelty_II_2016-04-13_10-23-29'             }
-    {'rat26_novelty_I_2016-04-12_10-05-55'              }
     {'rat26_for_2016-03-21_10-38-54'                    }
     {'rat26_for_II_2016-03-23_10-49-50'                 }
     
-    ]
+    ];
 
+labelconditions=[
+    {'PlusMaze'}
+     'Novelty_1'
+     'Novelty 2'
+     'Foraging 1'
+     'Foraging 2'
+    ];
 %%
 cd('/home/raleman/Documents/internship/26')
 addpath /home/raleman/Documents/internship/fieldtrip-master/
 InitFieldtrip()
 
 cd('/home/raleman/Documents/internship/26')
-
-
-%for iii=1:length(nFF)
-for iii=4
+%% Select experiment to perform. 
+inter=1;
+granger=0;
+%
+for iii=4:length(nFF)
+%for iii=1:1
     
+ clearvars -except nFF iii labelconditions inter granger 
+%for iii=1:4
+
 cd('/home/raleman/Documents/internship/26')
 cd(nFF{iii})
 
 art=0;
 
+Ro=[1200];
+ro=Ro;
+
 %run('load_data.m')
 %run('new_load_data.m')
+% error('stop')
+if ro==1200 && inter==0 || granger==1
 run('newest_load_data.m')
-
+else
+run('newest_load_data_only_ripple.m')
+end
 % Rearrange (clean)
 
 %Make labels
@@ -91,181 +110,246 @@ sig2{6}=S9;
 sig2{7}=V6;
  
 % ripple=length(M);
+
+%Number of ripples per threshold.
 ripple=sum(s17);
+% ripple2=sum(s217);
 
-%%ripple2=sum(s217);
-
-%
 
  % Monopolar signals only
 %Ro=[200 500];
-Ro=[1000];
 
 %for i=1:length(Ro)
 %i=1;
-  ro=Ro;  
- for level=1:length(ripple);
-  
-  %error('Stop here')
+    
+ %for level=1:length(ripple);
+ for level=1:length(ripple)-1;
+   
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
-  %Get me p and q.
-  %Get me averaged time signal. 
+  %Get p and q.
+  %Get averaged time signal. 
 [p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),thr(level+1));
+% SUS=SU(:,level).';
+
+if ro==1200 && inter==0 || granger==1
+SUS=SU{level}.';
+% SUS2=SU2(:,level).';
+SUS2=SU2{level}.';
+%SUQ2=SUQ(:,level).';
+SUQ2=SUQ{level}.';
+
+SUStimecell=timecell(1:length(SUS));
+SUS2timecell=timecell(1:length(SUS2));
+SUQ2timecell=timecell(1:length(SUQ2));
+
+P1_SUS=avg_samples(SUS,SUStimecell);
+P2_SUS=avg_samples(SUS2,SUS2timecell);
+
+end
+%p is wideband signal. 
+%q is bandpassed signal. 
+%timecell are the time labels. 
+%Q is the envelope of the Bandpassed signal.  
+
+% [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),thr2(level+1));
+
 %close all
 %P1 bandpassed
 %P2 widepassdw
+% error('stop here please')
+
+%Finding .mat files 
+Files=dir(fullfile(cd,'*.mat'));
+
+if ro==1200 
+    if sum(strcmp({Files.name}, strcat('randnum2_',num2str(level),'.mat')))
+      load(strcat('randnum2_',num2str(level),'.mat'))
+    else
+
+      ran=randi(length(p),100,1);
+      save(strcat('randnum2_',num2str(level)),'ran')
+
+    end
+
+else
+     if sum(strcmp({Files.name}, strcat('randnum17_',num2str(level),'.mat')))
+      load(strcat('randnum17_',num2str(level),'.mat'))
+    else
+
+      ran=randi(length(p),100,1);
+      save(strcat('randnum17_',num2str(level)),'ran')
+
+    end
+    
+end
 
 
-ran=randi(length(p),100,1);
-%load(strcat('randnum_',num2str(level),'.mat'))
+% 
+% ran=randi(length(p),100,1);
+%load(strcat('randnum2_',num2str(level),'.mat'))
 p=p([ran]);
 q=q([ran]);
 Q=Q([ran]);
 timecell=timecell([ran]);
+ 
+% p2=p2([ran]);
+% q2=q2([ran]);
+% Q2=Q2([ran]);
+% timecell2=timecell2([ran]);
+
 % p=p(1:100);
 % q=q(1:100);
 % Q=Q(1:100);
 % timecell=timecell(1:100);
 
-P1=avg_samples(q,timecell)
-P2=avg_samples(p,timecell)
+P1=avg_samples(q,timecell);
+P2=avg_samples(p,timecell);
 
-save(strcat('randnum_',num2str(level)),'ran')
-
-for w=1:size(P2,1)-1
-allscreen()
-subplot(3,2,1)
-plot(timecell{1},P2(w,:))
-xlim([-0.8,0.8])
-grid minor
-narrow_colorbar()
-title('Wide Band Event-triggered Average')
-
-subplot(3,2,2)
-plot(timecell{1},P1(w,:))
-xlim([-0.8,0.8])
-grid minor
-narrow_colorbar()
-title('High Gamma power Event-triggered Average')
-
-subplot(3,2,3)
-freq=barplot2_ft(p,timecell,[0:.1:30],w)
-title('Spectrogram Widepass (High temporal resolution)')
-
+% SUStimecell=timecell(1:length(SUS));
+% SUS2timecell=timecell(1:length(SUS2));
+% SUQ2timecell=timecell(1:length(SUQ2));
 % 
-% subplot(3,2,5)
-% %freq=barplot3_ft(p,timecell,[0:.1:30],w)
-% [stats]=stats_freq(freq,label1{2*w-1},[-0.8, -0.6]);
-% grid minor
+% P1_SUS=avg_samples(SUS,SUStimecell);
+% P2_SUS=avg_samples(SUS2,SUS2timecell);
 
-subplot(3,2,4)
-freq=barplot2_ft(q,timecell,[100:1:300],w)
-title('Spectrogram Bandpass (High temporal resolution)')
-% subplot(3,2,6)
-% %freq=barplot3_ft(q,timecell,[100:1:300],w)
-% [stats]=stats_freq(freq,label1{2*w-1},[-0.8, -0.6]);
-% grid minor
-% title('Spectrogram Bandpass (High frequency resolution)')
-baseline=[-0.8, -0.6];
+% P12=avg_samples(q2,timecell2);
+% P22=avg_samples(p2,timecell2);
 
-subplot(3,2,5)
-freq=barplot3_ft(p,timecell,[0:.1:30],w)
-[stats]=stats_freq(freq,label1{2*w-1},baseline);
-grid minor
-%title('Spectrogram Widepass (High frequency resolution)')
-title(strcat('Statistical Test with Baseline: [', num2str(baseline(1)),': ',num2str(baseline(2)),']',' sec'))
+% save(strcat('randnum2_',num2str(level)),'ran')
 
-subplot(3,2,6)
-freq=barplot3_ft(q,timecell,[100:1:300],w)
-[stats]=stats_freq(freq,label1{2*w-1},baseline);
-xticks([-0.5:0.2:0.5 ])
-grid minor
-%title('Spectrogram Bandpass (High frequency resolution)')
-title(strcat('Statistical Test with Baseline: [', num2str(baseline(1)),': ',num2str(baseline(2)),']',' sec'))
-
+%for w=1:size(P2,1)-1
+for w=1:size(P2,1)
+% %     error('stop here')
+% run('plot_no_ripples.m')
+% string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
+% %saveas(gcf,string)
+% close all
 % 
-% figure()
-% baseline=[0.6, 0.8];
+% baseline1=[-1, -0.8];
+% baseline2=[0.8, 1];
 % 
-% subplot(3,2,5)
-% freq=barplot3_ft(p,timecell,[0:.1:30],w)
-% [stats]=stats_freq(freq,label1{2*w-1},baseline);
-% grid minor
-% %title('Spectrogram Widepass (High frequency resolution)')
-% title(strcat('Statistical Test with Baseline:', num2str(baseline(1)),' to ',num2str(baseline(2))))
+% run('plot_ripples.m')
 % 
-% subplot(3,2,6)
-% freq=barplot3_ft(q,timecell,[100:1:300],w)
-% [stats]=stats_freq(freq,label1{2*w-1},baseline);
-% grid minor
-% %title('Spectrogram Bandpass (High frequency resolution)')
-% title(strcat('Statistical Test with Baseline: [', num2str(baseline(1)),': ',num2str(baseline(2)),']'))
+% string=strcat('NEW_SPEC_',label1{2*w-1},'_',num2str(level),'.png');
+% %saveas(gcf,string)
 
+%     error('stop here')
 
-mtit(strcat('Events:',num2str(ripple(level))),'fontsize',14,'color',[1 0 0],'position',[.5 0.8 ])
-labelthr=strcat('Thr:',num2str(round(thr(level+1))));
-mtit(strcat(labelthr),'fontsize',14,'color',[1 0 0],'position',[.5 0.9 ])
+% error('stop here')
+%%
 
-mtit(strcat(label1{2*w-1},' (',label2{1},')'),'fontsize',14,'color',[1 0 0],'position',[.5 1 ])
-
-string=strcat('SPEC_',label1{2*w-1},'_',num2str(level),'.png');
-
- % % % % % % % % % fig=gcf;
-% % % % % % % % % fig.InvertHardcopy='off';
+if iii>=4 && inter==1
+run('plot_inter_conditions.m')
+string=strcat('NEW2_inter_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 saveas(gcf,string)
+end
 
+if ro==1700
+run('plot_pre_post.m')
+string=strcat('NEW2_pre_post_',label1{2*w-1},'_',num2str(level),'.png');
+saveas(gcf,string)
+end
+
+if ro==1200 && inter==0 && granger==0
+run('plot_both.m')
+% string=strcat('NEW2_between_',label1{2*w-1},'_',num2str(level),'.png');
+ string=strcat('NEW2_NoRip_',label1{2*w-1},'_',num2str(level),'.png');
+ saveas(gcf,string)
+end
 
 close all
-if w==1
-allscreen()    
-[granger]=barplot_GC(cut(q),cut(timecell),[100:20:300])
-title(strcat('Time-Frequency Granger Causality (Bandpassed: 100-300 Hz)',' THR:',num2str(thr(level))))
 
-string=strcat('TFGC_','Bandpass_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+if w==1 && granger==1
+% allscreen()    
+% [granger]=barplot_GC(cut(q),cut(timecell),[100:20:300])
+% title(strcat('Time-Frequency Granger Causality (Bandpassed: 100-300 Hz)',' THR:',num2str(thr(level))))
+% 
+% string=strcat('TFGC_','Bandpass_',num2str(level),'.png');
+% saveas(gcf,string)
+% close all
 
 
 allscreen()    
-[coh]=barplot_COH(q,timecell,[100:20:300])
+[coh]=barplot_COH(q,timecell,[100:2:300])
 title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
-string=strcat('TFCOH_','Bandpass_',num2str(level),'.png');
+string=strcat('NEW_TFCOH_','Bandpass_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
-allscreen()
-[granger]=barplot_GC(cut(p),cut(timecell),[2:2:30])
-title('Time-Frequency Granger Causality (Wideband)')
-string=strcat('TFGC_','Wideband_',num2str(level),'.png');
+allscreen()    
+[coh]=barplot_COH(SUS,SUStimecell,[100:2:300])
+title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
+string=strcat('NEW_TFCOH_','Bandpass_NoRipple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
+
+% allscreen()
+% [granger]=barplot_GC(cut(p),cut(timecell),[2:2:30])
+% title('Time-Frequency Granger Causality (Wideband)')
+% string=strcat('TFGC_','Wideband_',num2str(level),'.png');
+% saveas(gcf,string)
+% close all
 
 allscreen()
 [coh]=barplot_COH(p,timecell,[1:1:30])
 title('Time-Frequency Coherence (Wideband)')
-string=strcat('TFCOH_','Wideband_',num2str(level),'.png');
+string=strcat('NEW_TFCOH_','Wideband_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
+
 allscreen()
+[coh]=barplot_COH(SUS2,SUS2timecell,[1:1:30])
+title('Time-Frequency Coherence (Wideband)')
+string=strcat('NEW_TFCOH_','Wideband_NoRipple_',num2str(level),'.png');
+saveas(gcf,string)
+close all
+
+
+%allscreen()
 gc(Q,timecell,'Envelope',ro)
-string=strcat('GC_','Envelope_',num2str(level),'.png');
+string=strcat('NEW_GC_','Envelope_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
-allscreen()
+%Here onwards (2)
+
+%allscreen()
+gc(SUQ2,SUQ2timecell,'Envelope',ro)
+string=strcat('NEW_GC_','Envelope_NoRipples_',num2str(level),'.png');
+saveas(gcf,string)
+close all
+
+
+%allscreen()
 gc(p,timecell,'Widepass',ro)
-string=strcat('GC_','Widepass_',num2str(level),'.png');
+string=strcat('NEW_GC_','Widepass_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
-allscreen()
-gc(q,timecell,'Bandpassed',ro)
-string=strcat('GC_','Bandpassed_',num2str(level),'.png');
+%allscreen()
+gc(SUS2,SUS2timecell,'Widepass',ro)
+string=strcat('NEW_GC_','Widepass_No_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
+
+
+%allscreen()
+gc(q,timecell,'Bandpassed',ro)
+string=strcat('NEW_GC_','Bandpassed_Ripples_',num2str(level),'.png');
+saveas(gcf,string)
+close all
+
+%allscreen()
+gc(SUS,SUStimecell,'Bandpassed',ro)
+string=strcat('NEW_GC_','Bandpassed_NoRipples_',num2str(level),'.png');
+saveas(gcf,string)
+close all
+
+w=size(P2,1);
 end
+
 
 end
 %
