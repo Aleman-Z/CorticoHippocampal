@@ -34,6 +34,9 @@ V6=load('V6.mat');
 V6=V6.V6;
 'Loaded channels'
 
+%Total amount of time spent sleeping:
+timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
+save('timeasleep.mat','timeasleep')
 
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
@@ -81,8 +84,8 @@ rep=5; %Number of thresholds+1
 %thr=180;
 
 %%
-
-for i=1:length(S9)
+THR=nan(length(S9),5);
+for i=1:length(S9)  %For each NREM epoch
     
 signal=Bip17{i}*(1/0.195);
 signal2=Mono17{i}*(1/0.195);
@@ -103,6 +106,7 @@ ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
 %Thresholds for Bipolar recording of Hippocampus. 
 thr=[max(signal) max(signal)/2 max(signal)/4 max(signal)/8 max(signal)/16];
 thr=round(thr);
+THR(i,:)=thr;
 
 %Thresholds for Monopolar recording of Hippocampus. 
 thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
@@ -169,6 +173,15 @@ end
 disp(strcat('Progress:',num2str(round(i*100/length(S9))),'%'))
 pause(.1)
 end
+
+s17n=s17;
+
+RipFreq=sum(s17)/(timeasleep*(60));
+
+save('THR.mat','THR')
+save('RipFreq.mat','RipFreq')
+save('s17n.mat','s17n')
+
 
 %%
 %error('Stop here please')

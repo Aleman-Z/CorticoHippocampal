@@ -44,10 +44,10 @@ InitFieldtrip()
 cd('/home/raleman/Documents/internship/27')
 %% Select experiment to perform. 
 inter=0;
-granger=0;
+granger=1;
 %
-%for iii=1:length(nFF)
-for iii=2:2
+for iii=5:length(nFF)
+%for iii=3:3
     
  clearvars -except nFF iii labelconditions inter granger 
 %for iii=1:4
@@ -127,9 +127,8 @@ ripple=sum(s17);
 %for i=1:length(Ro)
 %i=1;
     
- %for level=1:length(ripple);
- for level=1:length(ripple)-1;
-   
+% for level=1:length(ripple)-1;
+ for level=1:1  
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   %Get p and q.
@@ -224,7 +223,7 @@ P2=avg_samples(p,timecell);
 % save(strcat('randnum2_',num2str(level)),'ran')
 
 %for w=1:size(P2,1)-1
-for w=1:size(P2,1)
+for w=1:size(P2,1)    
 % %     error('stop here')
 % run('plot_no_ripples.m')
 % string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
@@ -256,7 +255,8 @@ string=strcat('NEW2_pre_post_',label1{2*w-1},'_',num2str(level),'.png');
 saveas(gcf,string)
 end
 
-if ro==1200 && inter==0 && granger==0
+%&& granger==0
+if ro==1200 && inter==0 
 run('plot_both.m')
 % string=strcat('NEW2_between_',label1{2*w-1},'_',num2str(level),'.png');
  string=strcat('NoRipple_',label1{2*w-1},'_',num2str(level),'.png');

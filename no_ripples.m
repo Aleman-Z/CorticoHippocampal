@@ -17,10 +17,18 @@ caoQ=signal_arrayQ;
 
 for L=1:length(S)
 %  caco=caco (find( not(caco>=S{1}(L) & caco<= E{1}(L) )));
- caco=caco (find( not(caco>=S(L) & caco<= E(L) )));
- cao=cao(find( not(caco>=S(L) & caco<= E(L) )),:);
- cao2=cao2(find( not(caco>=S(L) & caco<= E(L) )),:);
-caoQ=caoQ(find( not(caco>=S(L) & caco<= E(L) )),:);
+ 
+% caco=caco (find( not(caco>=S(L) & caco<= E(L) )));
+%  cao=cao(find( not(caco>=S(L) & caco<= E(L) )),:);
+%  cao2=cao2(find( not(caco>=S(L) & caco<= E(L) )),:);
+% caoQ=caoQ(find( not(caco>=S(L) & caco<= E(L) )),:);
+
+caco=caco (( not(caco>=S(L) & caco<= E(L) )));
+ cao=cao(( not(caco>=S(L) & caco<= E(L) )),:);
+ cao2=cao2(( not(caco>=S(L) & caco<= E(L) )),:);
+caoQ=caoQ(( not(caco>=S(L) & caco<= E(L) )),:);
+
+disp(strcat('Waiting:',num2str(round(L*100/length(S))),'%'))
 
 end
 %caco contains the concatenation all times when there are no ripples.

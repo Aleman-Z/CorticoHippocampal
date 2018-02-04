@@ -1,7 +1,7 @@
 %This one requires running data from Non Learning condition
 
 cd('/home/raleman/Documents/internship/27')
-cd(nFF{2})
+cd(nFF{3})
 
 run('newest_load_data_nl.m')
 

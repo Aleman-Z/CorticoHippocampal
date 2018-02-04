@@ -14,8 +14,8 @@ nF(ismember(nF,{'.','..'})) = [];
 %%
 cd('/home/raleman/Documents/internship/27')
 %%
-for i=1:length(nF)
-    mkdir([nF{i}])
+for i=1:length(nFF)
+    mkdir([nFF{i}])
 end
 %%
 % d = dir(cd);
@@ -65,8 +65,8 @@ cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
 %%
 cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
 
-iii=8
-%for iii=3:length(nFF)
+%iii=8
+for iii=4:length(nFF)
     cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
 
     cd(nFF{iii})

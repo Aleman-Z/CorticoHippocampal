@@ -38,10 +38,10 @@ InitFieldtrip()
 
 cd('/home/raleman/Documents/internship/26')
 %% Select experiment to perform. 
-inter=1;
+inter=0;
 granger=0;
 %
-for iii=4:length(nFF)
+for iii=3:length(nFF)
 %for iii=1:1
     
  clearvars -except nFF iii labelconditions inter granger 
