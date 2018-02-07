@@ -71,10 +71,10 @@ end
 'Bandpass performed'
 
 
-s17=nan(length(S9),1);
-swr17=cell(length(S9),3);
-s217=nan(length(S9),1);
-swr217=cell(length(S9),3);
+% s17=nan(length(S9),1);
+% swr17=cell(length(S9),3);
+% s217=nan(length(S9),1);
+% swr217=cell(length(S9),3);
 
 rep=5; %Number of thresholds+1
 
@@ -84,10 +84,12 @@ rep=5; %Number of thresholds+1
 %thr=180;
 
 %%
-THR=nan(length(S9),5);
+%THR=nan(length(S9),5);
+CHTM=nan(length(S9),1);
 
-% chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.         
-% CHTM=floor([chtm chtm/2 chtm/4 chtm/8 chtm/16]);
+chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.         
+% chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
+CHTM=floor([chtm chtm/2 chtm/4 chtm/8 chtm/16]);
 
 for i=1:length(S9)  %For each NREM epoch
     
@@ -109,17 +111,17 @@ ti=(0:length(signal)-1)*(1/fn); %IN SECONDS
 
 %Thresholds for Bipolar recording of Hippocampus. 
 
-thr=[max(signal) max(signal)/2 max(signal)/4 max(signal)/8 max(signal)/16];
-thr=round(thr);
-THR(i,:)=thr;
+% thr=[max(signal) max(signal)/2 max(signal)/4 max(signal)/8 max(signal)/16];
+% thr=round(thr);
+% THR(i,:)=thr;
 
 % thr=[chtm chtm/2 chtm/4 chtm/8 chtm/16];
 % thr=round(thr);
 % THR(i,:)=thr;
 
 %Thresholds for Monopolar recording of Hippocampus. 
-thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
-thr2=round(thr2);
+% thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
+% thr2=round(thr2);
 
 %[thr]=opt_thr(signal,thr);
 % thr=max(signal)/2
@@ -131,8 +133,8 @@ thr2=round(thr2);
 for k=1:rep-1
 %     error('stop here')
 
-[S{k}, E{k}, M{k}] = findRipplesLisa(signal, ti.', thr(k+1) , (thr(k+1))*(1/2), []);
-%[S2{k}, E2{k}, M2{k}] = findRipplesLisa(signal, ti.', CHTM(k+1) , (CHTM(k+1))*(1/2), []);
+%[S{k}, E{k}, M{k}] = findRipplesLisa(signal, ti.', thr(k+1) , (thr(k+1))*(1/2), []);
+[S2{k}, E2{k}, M2{k}] = findRipplesLisa(signal, ti.', CHTM(k+1) , (CHTM(k+1))*(1/2), []);
 
 % [no_rip]=no_ripples(ti,S{k},E{k})
 % [no_rip(:,k)]=no_ripples(ti,S{k},E{k})
@@ -150,15 +152,15 @@ for k=1:rep-1
 % ch=sig1(1:2:7);
 % cch=ch{1};
 
-s17(i,k)=length(M{k});
-swr17{i,1,k}=S{k};
-swr17{i,2,k}=E{k};
-swr17{i,3,k}=M{k};
+% s17(i,k)=length(M{k});
+% swr17{i,1,k}=S{k};
+% swr17{i,2,k}=E{k};
+% swr17{i,3,k}=M{k};
 
-% s172(i,k)=length(M2{k});
-% swr172{i,1,k}=S2{k};
-% swr172{i,2,k}=E2{k};
-% swr172{i,3,k}=M2{k};
+s172(i,k)=length(M2{k});
+swr172{i,1,k}=S2{k};
+swr172{i,2,k}=E2{k};
+swr172{i,3,k}=M2{k};
 
 % 
 % [S2{k}, E2{k}, M2{k}] = findRipplesLisa(signal2, ti.', thr2(k+1) , (thr2(k+1))*(1/2), []);
@@ -186,21 +188,21 @@ end
 
 % i/length(S9)
 disp(strcat('Progress:',num2str(round(i*100/length(S9))),'%'))
-pause(.1)
+pause(.01)
 end
 
-s17n=s17;
+% s17n=s17;
+% 
+% RipFreq=sum(s17)/(timeasleep*(60));
+RipFreq2=sum(s172)/(timeasleep*(60));
 
-RipFreq=sum(s17)/(timeasleep*(60));
-%RipFreq2=sum(s172)/(timeasleep*(60));
 
-
-save('THR.mat','THR')
-save('RipFreq.mat','RipFreq')
-save('s17n.mat','s17n')
+% save('THR.mat','THR')
+% save('RipFreq.mat','RipFreq')
+% save('s17n.mat','s17n')
 
 %To display number of events use:
-%ripple2=sum(s172); %When using same threshold per epoch.
+ripple2=sum(s172); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
 
 %to display thresholds use CHTM 
@@ -209,9 +211,9 @@ save('s17n.mat','s17n')
 %error('Stop here please')
 
 % Windowing
-for ind=1:size(s17,2)
-veamos{:,ind}=find(s17(:,ind)~=0);  %Epochs with ripples detected
-carajo{:,:,ind}=swr17(veamos{:,ind},:,ind);
+for ind=1:size(s172,2)
+veamos{:,ind}=find(s172(:,ind)~=0);  %Epochs with ripples detected
+carajo{:,:,ind}=swr172(veamos{:,ind},:,ind);
 
 % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
 % carajo2{:,:,ind}=swr217(veamos2{:,ind},:,ind);

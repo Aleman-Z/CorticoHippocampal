@@ -5,7 +5,7 @@ cfg.latency          = [-1 1];  % time of interest (exclude baseline: it doesn't
 
 cfg.method           = 'montecarlo';
 cfg.statistic        = 'ft_statfun_indepsamplesT';
-cfg.correctm         = 'cluster';m
+cfg.correctm         = 'cluster';
 %cfg.channel          = 'chan0';  % only one channel at the time, you should correct the p-value for the number of channels
 cfg.channel          = label1{2*w-1};  % only one channel at the time, you should correct the p-value for the number of channels
 

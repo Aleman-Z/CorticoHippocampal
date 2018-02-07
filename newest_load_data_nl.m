@@ -149,7 +149,6 @@ Mono17_nl{i}=filtfilt(b1,a1,V17_nl{i});
 end
 'Bandpass performed'
 
-
 s17_nl=nan(length(S9_nl),1);
 swr17_nl=cell(length(S9_nl),3);
 s217_nl=nan(length(S9_nl),1);
@@ -163,6 +162,10 @@ rep=5; %Number of thresholds+1
 %thr=180;
 
 %%
+CHTM2=nan(length(S9_nl),1);
+chtm2=median(cellfun(@max,Bip17_nl))*(1/0.195); %Minimum maximum value among epochs.         
+CHTM2=floor([chtm2 chtm2/2 chtm2/4 chtm2/8 chtm2/16]);
+
 
 for i=1:length(S9_nl)
     
@@ -183,8 +186,8 @@ ti_nl=(0:length(signal_nl)-1)*(1/fn); %IN SECONDS
 %thr=sort(thr,'descend');
 
 %Thresholds for Bipolar recording of Hippocampus. 
-thr_nl=[max(signal_nl) max(signal_nl)/2 max(signal_nl)/4 max(signal_nl)/8 max(signal_nl)/16];
-thr_nl=round(thr_nl);
+% % % % % % % % % % % thr_nl=[max(signal_nl) max(signal_nl)/2 max(signal_nl)/4 max(signal_nl)/8 max(signal_nl)/16];
+% % % % % % % % % % % thr_nl=round(thr_nl);
 
 % %Thresholds for Monopolar recording of Hippocampus. 
 % thr2=[max(signal2) max(signal2)/2 max(signal2)/4 max(signal2)/8 max(signal2)/16];
@@ -200,7 +203,8 @@ thr_nl=round(thr_nl);
 for k=1:rep-1
 %     error('stop here')
 
-[S_nl{k}, E_nl{k}, M_nl{k}] = findRipplesLisa(signal_nl, ti_nl.', thr_nl(k+1) , (thr_nl(k+1))*(1/2), []);
+%[S_nl{k}, E_nl{k}, M_nl{k}] = findRipplesLisa(signal_nl, ti_nl.', thr_nl(k+1) , (thr_nl(k+1))*(1/2), []);
+[S_nl{k}, E_nl{k}, M_nl{k}] = findRipplesLisa(signal_nl, ti_nl.', CHTM2(k+1) , (CHTM2(k+1))*(1/2), []);
 
 % [no_rip]=no_ripples(ti,S{k},E{k})
 % [no_rip(:,k)]=no_ripples(ti,S{k},E{k})
@@ -246,8 +250,14 @@ end
 
 % i/length(S9)
 disp(strcat('Progress:',num2str(round(i*100/length(S9_nl))),'%'))
-pause(.1)
+pause(.01)
 end
+
+timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60; % In minutes
+RipFreq3=sum(s17_nl)/(timeasleep2*(60));
+
+ripple3=sum(s17_nl); %When using same threshold per epoch.
+
 
 %%
 %error('Stop here please')

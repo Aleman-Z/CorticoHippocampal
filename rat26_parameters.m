@@ -66,5 +66,10 @@ Rfreq(iii,:)=RipFreq;
 MeanTHR(iii,:)=mean(THR);    
 SumS17(iii,:)=sum(s17);
 TimeA(iii,:)=timeasleep;
+
+Rfreq2(iii,:)=RipFreq2;
+MeanTHR2(iii,:)=CHTM;    
+SumS172(iii,:)=sum(s172);
+
 end
 

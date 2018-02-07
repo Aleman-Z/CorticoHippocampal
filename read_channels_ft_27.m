@@ -43,10 +43,10 @@ InitFieldtrip()
 
 cd('/home/raleman/Documents/internship/27')
 %% Select experiment to perform. 
-inter=0;
-granger=1;
+inter=1;
+granger=0;
 %
-for iii=5:length(nFF)
+for iii=7:length(nFF)
 %for iii=3:3
     
  clearvars -except nFF iii labelconditions inter granger 
@@ -115,20 +115,19 @@ sig2{6}=S9;
 sig2{7}=V6;
  
 % ripple=length(M);
-
-%Number of ripples per threshold.
 ripple=sum(s17);
+error('stop')
+%Number of ripples per threshold.
 % ripple2=sum(s217);
-
 
  % Monopolar signals only
 %Ro=[200 500];
 
 %for i=1:length(Ro)
 %i=1;
-    
-% for level=1:length(ripple)-1;
- for level=1:1  
+%   error('stop here')  
+for level=1:length(ripple)-1;
+ %for level=1:1  
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   %Get p and q.

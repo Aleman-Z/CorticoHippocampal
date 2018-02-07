@@ -52,7 +52,6 @@ AV=max(av.');
 if length(ajal)>500
 ajal=ajal(end-499:end);
 ind=ind(end-499:end);
-end
 dex=I(ind);
 
 ran_nl=dex.'
@@ -92,7 +91,7 @@ narrow_colorbar()
 title('High Gamma NO Learning')
 
 win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
-win2=[(min(win2)) (max(win2))];
+win2=[(min(win2)) round(max(win2))];
 ylim(win2)
 
 %%

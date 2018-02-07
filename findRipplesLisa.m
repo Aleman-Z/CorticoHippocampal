@@ -49,10 +49,10 @@ TRMax = [];
 TRMaxValue = [];
 
 i = 0;
-h = waitbar(0, 'Find Ripples...');
+% % % % % % % % h = waitbar(0, 'Find Ripples...');
 
 while ChStart < EEGEnd
-  waitbar(i/nChunks, h);
+% % % % % % % % % %   waitbar(i/nChunks, h);
 
   t1 = find(timestamps >= ChStart, 1);
   t2 = find(timestamps >= ChEnd, 1);
@@ -124,7 +124,7 @@ while ChStart < EEGEnd
 
   ChEnd = min(ChStart + LChunk, EEGEnd);
 end
-close(h);
+% % % % % % % % % close(h);
 i = 2;
 
 

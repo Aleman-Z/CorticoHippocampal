@@ -2,7 +2,10 @@ addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys dat
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 
+%%
+Rat=26;
 
+if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
 %    {'rat26_Base_II_2016-03-24_09-47-13'                }
@@ -31,23 +34,68 @@ labelconditions=[
      'Foraging 1'
      'Foraging 2'
     ];
+
+
+else
+nFF=[
+    {'rat27_nl_base_2016-03-28_15-01-17'                   }
+    {'rat27_NL_baseline_2016-02-26_12-50-26'               }
+    {'rat27_nl_base_III_2016-03-30_14-36-57'               }
+    
+    {'rat27_for_2016-03-21_15-03-05'                       }
+    {'Rat27_for_II_2016-03-23_15-06-59'                    }
+    
+    %{'rat27_novelty_II_2016-04-13_14-37-58'                }  %NO .MAT files found. 
+    %{'rat27_novelty_II_2016-04-13_16-29-42'                } %No (complete).MAT files found.
+    {'rat27_novelty_I_2016-04-11_14-34-55'                 }
+    {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
+    {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
+%     {'rat27_plusmaze_dis_2016-03-10_14-35-18'              }
+%     {'rat27_plusmaze_dis_II_2016-03-16_14-36-07'           }
+%     {'rat27_plusmaze_dis_II_2016-03-18_14-46-24'           }
+%     {'rat27_plusmaze_jit_2016-03-08_14-46-31'              }
+%     {'rat27_plusmaze_jit_II_2016-03-16_15-02-27'           }
+%     {'rat27_plusmaze_swrd_qPCR_2016-04-15_14-28-41'        }
+%     {'rat27_watermaze_dis_morning_2016-04-06_10-18-36'     }
+%     {'rat27_watermaze_jitter_afternoon_2016-04-06_15-41-51'}  
+    ]
+
+labelconditions=[
+    {'Foraging 1' }
+    
+     'Foraging 2'
+     'Novelty_1'
+     'PlusMaze 1'
+    'PlusMaze 2'
+    
+     
+    ];
+
+    
+end
+
 %%
-cd('/home/raleman/Documents/internship/26')
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 addpath /home/raleman/Documents/internship/fieldtrip-master/
 InitFieldtrip()
 
-cd('/home/raleman/Documents/internship/26')
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+clc
 %% Select experiment to perform. 
 inter=1;
 granger=0;
 %
-%for iii=3:length(nFF)
+
+% for iii=7:length(nFF)
 for iii=4:4
+
+
+%for iii=3:3
     
- clearvars -except nFF iii labelconditions inter granger 
+ clearvars -except nFF iii labelconditions inter granger Rat 
 %for iii=1:4
 
-cd('/home/raleman/Documents/internship/26')
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(nFF{iii})
 
 art=0;
@@ -61,7 +109,7 @@ ro=Ro;
 if ro==1200 && inter==0 || granger==1
 run('newest_load_data.m')
 else
-run('newest_load_data_only_ripple.m')
+run('newest_load_data_only_ripple_chtm.m')
 end
 % Rearrange (clean)
 
@@ -110,27 +158,38 @@ sig2{6}=S9;
 sig2{7}=V6;
  
 % ripple=length(M);
-
-%Number of ripples per threshold.
-ripple=sum(s17);
+% ripple=sum(s172);
+ripple=ripple2;
+%Number of ripples per CHTMeshold.
 % ripple2=sum(s217);
-
 
  % Monopolar signals only
 %Ro=[200 500];
 
 %for i=1:length(Ro)
 %i=1;
-    
- %for level=1:length(ripple);
- for level=1:length(ripple)-1;
-   
+%   error('stop here')  
+%%
+for level=2:length(ripple)-1;
+ %for level=1:1  
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   %Get p and q.
   %Get averaged time signal. 
-[p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),thr(level+1));
+[p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 % SUS=SU(:,level).';
+av=cat(1,p{1:end});
+av=av(1:3:end,:); %Only Hippocampus
+AV=max(av.');
+[B I]= maxk(AV,1000);
+[ajal ind]=unique(B);
+if length(ajal)>500
+ajal=ajal(end-499:end);
+ind=ind(end-499:end);
+end
+dex=I(ind);
+
+
 
 if ro==1200 && inter==0 || granger==1
 SUS=SU{level}.';
@@ -152,7 +211,7 @@ end
 %timecell are the time labels. 
 %Q is the envelope of the Bandpassed signal.  
 
-% [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),thr2(level+1));
+% [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),CHTM2(level+1));
 
 %close all
 %P1 bandpassed
@@ -184,7 +243,8 @@ else
     
 end
 
-
+% ran=I.'; % Select ripples with highest magnitudes. 
+ran=dex.';
 % 
 % ran=randi(length(p),100,1);
 %load(strcat('randnum2_',num2str(level),'.mat'))
@@ -219,7 +279,7 @@ P2=avg_samples(p,timecell);
 % save(strcat('randnum2_',num2str(level)),'ran')
 
 %for w=1:size(P2,1)-1
-for w=1:size(P2,1)
+for w=1:size(P2,1)    %Brain region 
 % %     error('stop here')
 % run('plot_no_ripples.m')
 % string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
@@ -240,8 +300,9 @@ for w=1:size(P2,1)
 %%
 
 if iii>=4 && inter==1
-run('plot_inter_conditions.m')
-string=strcat('NEW2_inter_conditions_',label1{2*w-1},'_',num2str(level),'.png');
+run('plot_inter_conditions_27.m')
+string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
+cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 saveas(gcf,string)
 end
 
@@ -251,10 +312,11 @@ string=strcat('NEW2_pre_post_',label1{2*w-1},'_',num2str(level),'.png');
 saveas(gcf,string)
 end
 
-if ro==1200 && inter==0 && granger==0
+%&& granger==0
+if ro==1200 && inter==0 
 run('plot_both.m')
 % string=strcat('NEW2_between_',label1{2*w-1},'_',num2str(level),'.png');
- string=strcat('NEW2_NoRip_',label1{2*w-1},'_',num2str(level),'.png');
+ string=strcat('NoRipple_',label1{2*w-1},'_',num2str(level),'.png');
  saveas(gcf,string)
 end
 
@@ -263,7 +325,7 @@ close all
 if w==1 && granger==1
 % allscreen()    
 % [granger]=barplot_GC(cut(q),cut(timecell),[100:20:300])
-% title(strcat('Time-Frequency Granger Causality (Bandpassed: 100-300 Hz)',' THR:',num2str(thr(level))))
+% title(strcat('Time-Frequency Granger Causality (Bandpassed: 100-300 Hz)',' CHTM:',num2str(CHTM(level))))
 % 
 % string=strcat('TFGC_','Bandpass_',num2str(level),'.png');
 % saveas(gcf,string)
@@ -273,7 +335,7 @@ if w==1 && granger==1
 allscreen()    
 [coh]=barplot_COH(q,timecell,[100:2:300])
 title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
-string=strcat('NEW_TFCOH_','Bandpass_Ripple_',num2str(level),'.png');
+string=strcat('COH_','Bandpass_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
@@ -415,7 +477,7 @@ end
 
   
 %   [Fxy3, Fyx3]=BS(p,q);
-%   BS_thr(Fxy3,Fyx3,0.1);
+%   BS_CHTM(Fxy3,Fyx3,0.1);
   
 
   
@@ -429,7 +491,7 @@ end
  
  
  %cd Nuevo
-%cd Spectrograms_Threshold_45
+%cd Spectrograms_CHTMeshold_45
 %cd testGC
 % cd ARorder
 
@@ -448,7 +510,7 @@ end
 % % % % % % % % % % % % % % % % % % % string=strcat(num2str(ro),'_GC_','Monopolar','Widepass','.png');
 
 %cd Nuevo
-%cd Spectrograms_Threshold_45
+%cd Spectrograms_CHTMeshold_45
 %cd testGC
 %cd ARorder
 
@@ -464,7 +526,7 @@ end
 % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % string=strcat(num2str(ro),'_GC_','Monopolar','Envelope','.png');
 % % % % % % % % % % % % % % % % %cd Nuevo
-% % % % % % % % % % % % % % % % %cd Spectrograms_Threshold_45
+% % % % % % % % % % % % % % % % %cd Spectrograms_CHTMeshold_45
 % % % % % % % % % % % % % % % % %cd testGC
 % % % % % % % % % % % % % % % % %cd ARorder
 % % % % % % % % % % % % % % % % fig=gcf;
@@ -501,4 +563,5 @@ end
 % mtit(strcat('(+/-',num2str(ro),'ms)'),'fontsize',14,'color',[1 0 0],'position',[.5 0.5 ])
 
 end
+%%
 end
