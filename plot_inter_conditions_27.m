@@ -120,6 +120,18 @@ ylim(win2)
 %% Time Frequency plots
 % Calculate Freq1 and Freq2
 toy = [-1.2:.01:1.2];
+
+if length(p)>length(p_nl)
+p=p(1:length(p_nl));        
+timecell=timecell(1:length(p_nl));
+end
+
+if length(p)<length(p_nl)
+p_nl=p_nl(1:length(p));
+timecell_nl=timecell_nl(1:length(p));
+end
+
+
 freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10,toy);
 freq2=justtesting(p,timecell,[1:0.5:30],w,0.5,toy);
 % Calculate zlim
@@ -174,6 +186,19 @@ title(strcat(labelconditions{iii-3},' vs No Learning'))
 %%
 %Calculate Freq3 and Freq4
 toy=[-1:.01:1];
+
+if length(q)>length(q_nl)
+q=q(1:length(q_nl));        
+timecell=timecell(1:length(q_nl));
+end
+
+if length(q)<length(q_nl)
+q_nl=q_nl(1:length(q));
+timecell_nl=timecell_nl(1:length(q));
+end
+
+
+
 freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w,toy);
 freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
 

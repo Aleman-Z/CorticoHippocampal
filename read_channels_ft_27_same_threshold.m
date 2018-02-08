@@ -3,7 +3,7 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 
 %%
-Rat=26;
+Rat=27;
 
 if Rat==26
 nFF=[
@@ -86,8 +86,10 @@ inter=1;
 granger=0;
 %
 
-% for iii=7:length(nFF)
-for iii=4:4
+ %for iii=7:length(nFF)
+for iii=8:8
+
+ %for iii=4:4
 
 
 %for iii=3:3
@@ -112,7 +114,7 @@ else
 run('newest_load_data_only_ripple_chtm.m')
 end
 % Rearrange (clean)
-
+error('stop me')
 %Make labels
 label1=cell(7,1);
 label1{1}='Hippo';
@@ -170,7 +172,7 @@ ripple=ripple2;
 %i=1;
 %   error('stop here')  
 %%
-for level=2:length(ripple)-1;
+for level=3:length(ripple)-1;
  %for level=1:1  
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
@@ -279,7 +281,7 @@ P2=avg_samples(p,timecell);
 % save(strcat('randnum2_',num2str(level)),'ran')
 
 %for w=1:size(P2,1)-1
-for w=1:size(P2,1)    %Brain region 
+for w=2:size(P2,1)    %Brain region 
 % %     error('stop here')
 % run('plot_no_ripples.m')
 % string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
@@ -302,7 +304,8 @@ for w=1:size(P2,1)    %Brain region
 if iii>=4 && inter==1
 run('plot_inter_conditions_27.m')
 string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
-cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
+%cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
+cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3')
 saveas(gcf,string)
 end
 

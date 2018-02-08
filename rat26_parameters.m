@@ -58,15 +58,22 @@ art=0;
 Ro=[1200];
 ro=Ro;
 
-run('newest_load_data_only_ripple.m')
+%run('newest_load_data_only_ripple.m')
+run('newest_load_data_only_ripple_chtm.m')
+
 % Rearrange (clean)
 
 
-Rfreq(iii,:)=RipFreq;
-MeanTHR(iii,:)=mean(THR);    
-SumS17(iii,:)=sum(s17);
-TimeA(iii,:)=timeasleep;
+% % % Rfreq(iii,:)=RipFreq;
+% % Rfreq(iii,:)=RipFreq2;
+% % 
+% % %MeanTHR(iii,:)=mean(THR);    
+% % MeanTHR(iii,:)=CHTM;    
+% % %SumS17(iii,:)=sum(s17);
+% % SumS17(iii,:)=sum(s172);
 
+
+TimeA(iii,:)=timeasleep;
 Rfreq2(iii,:)=RipFreq2;
 MeanTHR2(iii,:)=CHTM;    
 SumS172(iii,:)=sum(s172);
