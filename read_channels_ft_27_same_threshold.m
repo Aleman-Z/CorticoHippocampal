@@ -3,7 +3,7 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 
 %%
-Rat=27;
+Rat=26;
 
 if Rat==26
 nFF=[
@@ -28,11 +28,14 @@ nFF=[
     ];
 
 labelconditions=[
-    {'PlusMaze'}
+    {'Baseline_1' 
+     'Baseline_2'}
+     'Baseline_3'
+     'PlusMaze'
      'Novelty_1'
-     'Novelty 2'
-     'Foraging 1'
-     'Foraging 2'
+     'Novelty_2'
+     'Foraging_1'
+     'Foraging_2'
     ];
 
 
@@ -61,12 +64,16 @@ nFF=[
     ]
 
 labelconditions=[
-    {'Foraging 1' }
+    { 
+    'Baseline_1'}
+    'Baseline_2'
+    'Baseline_3'
+    'Foraging_1' 
     
-     'Foraging 2'
+     'Foraging_2'
      'Novelty_1'
-     'PlusMaze 1'
-    'PlusMaze 2'
+     'PlusMaze_1'
+    'PlusMaze_2'
     
      
     ];
@@ -74,7 +81,7 @@ labelconditions=[
     
 end
 
-%%
+%% Go to main directory
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 addpath /home/raleman/Documents/internship/fieldtrip-master/
 InitFieldtrip()
@@ -87,9 +94,9 @@ granger=0;
 %
 
  %for iii=7:length(nFF)
-for iii=8:8
+%for iii=1:length(nFF)
 
- %for iii=4:4
+ for iii=4:4
 
 
 %for iii=3:3
@@ -102,13 +109,14 @@ cd(nFF{iii})
 
 art=0;
 
-Ro=[1200];
-ro=Ro;
+%Select length of window in seconds:
+ro=[1200];
 
 %run('load_data.m')
 %run('new_load_data.m')
 % error('stop')
-if ro==1200 && inter==0 || granger==1
+%if ro==1200 && inter==0 || granger==1
+if ro==1200 && inter==0 && granger==0
 run('newest_load_data.m')
 else
 run('newest_load_data_only_ripple_chtm.m')
@@ -172,8 +180,8 @@ ripple=ripple2;
 %i=1;
 %   error('stop here')  
 %%
-for level=1:length(ripple)-1;
- %for level=1:1  
+%for level=1:length(ripple)-1;    
+ for level=1:2  
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   %Get p and q.
@@ -193,7 +201,9 @@ dex=I(ind);
 
 
 
-if ro==1200 && inter==0 || granger==1
+%if ro==1200 && inter==0 || granger==1
+if ro==1200 && inter==0 && granger==0
+
 SUS=SU{level}.';
 % SUS2=SU2(:,level).';
 SUS2=SU2{level}.';
@@ -223,27 +233,27 @@ end
 %Finding .mat files 
 Files=dir(fullfile(cd,'*.mat'));
 
-if ro==1200 
-    if sum(strcmp({Files.name}, strcat('randnum2_',num2str(level),'.mat')))
-      load(strcat('randnum2_',num2str(level),'.mat'))
-    else
-
-      ran=randi(length(p),100,1);
-      save(strcat('randnum2_',num2str(level)),'ran')
-
-    end
-
-else
-     if sum(strcmp({Files.name}, strcat('randnum17_',num2str(level),'.mat')))
-      load(strcat('randnum17_',num2str(level),'.mat'))
-    else
-
-      ran=randi(length(p),100,1);
-      save(strcat('randnum17_',num2str(level)),'ran')
-
-    end
-    
-end
+% % % % % % % % if ro==1200 
+% % % % % % % %     if sum(strcmp({Files.name}, strcat('randnum2_',num2str(level),'.mat')))
+% % % % % % % %       load(strcat('randnum2_',num2str(level),'.mat'))
+% % % % % % % %     else
+% % % % % % % % 
+% % % % % % % %       ran=randi(length(p),100,1);
+% % % % % % % %       save(strcat('randnum2_',num2str(level)),'ran')
+% % % % % % % % 
+% % % % % % % %     end
+% % % % % % % % 
+% % % % % % % % else
+% % % % % % % %      if sum(strcmp({Files.name}, strcat('randnum17_',num2str(level),'.mat')))
+% % % % % % % %       load(strcat('randnum17_',num2str(level),'.mat'))
+% % % % % % % %     else
+% % % % % % % % 
+% % % % % % % %       ran=randi(length(p),100,1);
+% % % % % % % %       save(strcat('randnum17_',num2str(level)),'ran')
+% % % % % % % % 
+% % % % % % % %     end
+% % % % % % % %     
+% % % % % % % % end
 
 % ran=I.'; % Select ripples with highest magnitudes. 
 ran=dex.';
@@ -281,7 +291,9 @@ P2=avg_samples(p,timecell);
 % save(strcat('randnum2_',num2str(level)),'ran')
 
 %for w=1:size(P2,1)-1
-for w=1:size(P2,1)    %Brain region 
+
+%%%%for w=1:size(P2,1)    %Brain region 
+for w=1:1    
 % %     error('stop here')
 % run('plot_no_ripples.m')
 % string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
@@ -305,18 +317,29 @@ if iii>=4 && inter==1
 run('plot_inter_conditions_27.m')
 string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
-cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
+%cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
+%cd('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/')
+
+
+if Rat==26
+    cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3}))
+end
+
+if Rat==27
+    cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
+end
+
 saveas(gcf,string)
 end
 
 if ro==1700
-run('plot_pre_post.m')
-string=strcat('NEW2_pre_post_',label1{2*w-1},'_',num2str(level),'.png');
-saveas(gcf,string)
+    run('plot_pre_post.m')
+    string=strcat('NEW2_pre_post_',label1{2*w-1},'_',num2str(level),'.png');
+    saveas(gcf,string)
 end
 
 %&& granger==0
-if ro==1200 && inter==0 
+if ro==1200 && inter==0 && granger==0
 run('plot_both.m')
 % string=strcat('NEW2_between_',label1{2*w-1},'_',num2str(level),'.png');
  string=strcat('NoRipple_',label1{2*w-1},'_',num2str(level),'.png');
@@ -334,6 +357,11 @@ if w==1 && granger==1
 % saveas(gcf,string)
 % close all
 
+if Rat==27
+% cd( strcat('/home/raleman/Dropbox/SWR/Connectivity_measures/',labelconditions{iii}))
+cd( strcat('/home/raleman/Dropbox/SWR_2/rat_27/Connectivity measures/',labelconditions{iii}))
+end
+
 
 allscreen()    
 [coh]=barplot_COH(q,timecell,[100:2:300])
@@ -342,12 +370,12 @@ string=strcat('COH_','Bandpass_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
-allscreen()    
-[coh]=barplot_COH(SUS,SUStimecell,[100:2:300])
-title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
-string=strcat('NEW_TFCOH_','Bandpass_NoRipple_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % allscreen()    
+% % % % % % % % [coh]=barplot_COH(SUS,SUStimecell,[100:2:300])
+% % % % % % % % title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
+% % % % % % % % string=strcat('NEW_TFCOH_','Bandpass_NoRipple_',num2str(level),'.png');
+% % % % % % % % saveas(gcf,string)
+% % % % % % % % close all
 
 % allscreen()
 % [granger]=barplot_GC(cut(p),cut(timecell),[2:2:30])
@@ -359,60 +387,61 @@ close all
 allscreen()
 [coh]=barplot_COH(p,timecell,[1:1:30])
 title('Time-Frequency Coherence (Wideband)')
-string=strcat('NEW_TFCOH_','Wideband_Ripple_',num2str(level),'.png');
+string=strcat('COH_','Wideband_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
 
-allscreen()
-[coh]=barplot_COH(SUS2,SUS2timecell,[1:1:30])
-title('Time-Frequency Coherence (Wideband)')
-string=strcat('NEW_TFCOH_','Wideband_NoRipple_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % % % % % % % allscreen()
+% % % % % % % % % % % % % % [coh]=barplot_COH(SUS2,SUS2timecell,[1:1:30])
+% % % % % % % % % % % % % % title('Time-Frequency Coherence (Wideband)')
+% % % % % % % % % % % % % % string=strcat('NEW_TFCOH_','Wideband_NoRipple_',num2str(level),'.png');
+% % % % % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % % % % close all
 
 
 %allscreen()
-gc(Q,timecell,'Envelope',ro)
-string=strcat('NEW_GC_','Envelope_Ripples_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % % % % % % % gc(Q,timecell,'Envelope',ro)
+% % % % % % % % % % % % % % string=strcat('NEW_GC_','Envelope_Ripples_',num2str(level),'.png');
+% % % % % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % % % % close all
 
 %Here onwards (2)
 
 %allscreen()
-gc(SUQ2,SUQ2timecell,'Envelope',ro)
-string=strcat('NEW_GC_','Envelope_NoRipples_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % % % % % % % % % % % % % gc(SUQ2,SUQ2timecell,'Envelope',ro)
+% % % % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Envelope_NoRipples_',num2str(level),'.png');
+% % % % % % % % % % % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % % % % % % % % % % close all
 
 
 %allscreen()
 gc(p,timecell,'Widepass',ro)
-string=strcat('NEW_GC_','Widepass_Ripples_',num2str(level),'.png');
+string=strcat('GC_','Widepass_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
 %allscreen()
-gc(SUS2,SUS2timecell,'Widepass',ro)
-string=strcat('NEW_GC_','Widepass_No_Ripples_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % % % % % % % % % % % % gc(SUS2,SUS2timecell,'Widepass',ro)
+% % % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Widepass_No_Ripples_',num2str(level),'.png');
+% % % % % % % % % % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % % % % % % % % % close all
 
 
 %allscreen()
 gc(q,timecell,'Bandpassed',ro)
-string=strcat('NEW_GC_','Bandpassed_Ripples_',num2str(level),'.png');
+string=strcat('GC_','Bandpassed_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
 %allscreen()
-gc(SUS,SUStimecell,'Bandpassed',ro)
-string=strcat('NEW_GC_','Bandpassed_NoRipples_',num2str(level),'.png');
-saveas(gcf,string)
-close all
+% % % % % % % % % % % % % % % % % % gc(SUS,SUStimecell,'Bandpassed',ro)
+% % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Bandpassed_NoRipples_',num2str(level),'.png');
+% % % % % % % % % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % % % % % % % % close all
 
-w=size(P2,1);
+%w=size(P2,1);
+
 end
 
 
