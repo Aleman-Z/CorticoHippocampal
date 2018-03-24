@@ -54,8 +54,16 @@ i = 0;
 while ChStart < EEGEnd
 % % % % % % % % % %   waitbar(i/nChunks, h);
 
-  t1 = find(timestamps >= ChStart, 1);
-  t2 = find(timestamps >= ChEnd, 1);
+vecount=[1:length(timestamps)].';
+
+t1=vecount(timestamps >= ChStart);
+t1=t1(1); 
+
+t2=vecount(timestamps >= ChEnd);
+t2=t2(1); 
+
+%   t1 = find(timestamps >= ChStart, 1);
+%   t2 = find(timestamps >= ChEnd, 1);
   t = timestamps(t1:t2);
   eeg = Filt_EEG(t1:t2);
   
@@ -74,8 +82,14 @@ while ChStart < EEGEnd
   
   
   %finding peaks
-  upPeaksIdx = find(de1 < 0 & de2 > 0);
-  downPeaksIdx = find(de1 > 0 & de2 < 0);
+
+  vecount=vecount.';
+  
+  upPeaksIdx=vecount(de1 < 0 & de2 > 0);
+  downPeaksIdx = vecount(de1 > 0 & de2 < 0);
+  
+%   upPeaksIdx = find(de1 < 0 & de2 > 0);
+%   downPeaksIdx = find(de1 > 0 & de2 < 0);
   
   PeaksIdx = [upPeaksIdx downPeaksIdx];
   PeaksIdx = sort(PeaksIdx);
@@ -84,8 +98,10 @@ while ChStart < EEGEnd
   Peaks = abs(Peaks);
   
   %when a peaks is above threshold, we detect a ripple
-  
-  RippleDetectIdx = find(Peaks > DetectThreshold);
+    vecount2=[1:length(Peaks)];
+  RippleDetectIdx=vecount2(Peaks > DetectThreshold);
+%   RippleDetectIdx = find(Peaks > DetectThreshold);
+
   DetectDiff = [0 diff(RippleDetectIdx)];
   RippleDetectIdx = RippleDetectIdx(DetectDiff > 2);
   RippleDetectIdx = RippleDetectIdx(RippleDetectIdx < length(Peaks)-Q1+1);

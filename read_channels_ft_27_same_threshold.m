@@ -3,8 +3,9 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 
 %%
-Rat=26;
+%Rat=26;
 
+for Rat=26:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -27,11 +28,21 @@ nFF=[
     
     ];
 
+% labelconditions=[
+%     {'Baseline_1' 
+%      'Baseline_2'}
+%      'Baseline_3'
+%      'PlusMaze'
+%      'Novelty_1'
+%      'Novelty_2'
+%      'Foraging_1'
+%      'Foraging_2'
+%     ];
+
 labelconditions=[
-    {'Baseline_1' 
-     'Baseline_2'}
-     'Baseline_3'
-     'PlusMaze'
+    {'PlusMaze'
+                }
+     
      'Novelty_1'
      'Novelty_2'
      'Foraging_1'
@@ -91,12 +102,12 @@ clc
 %% Select experiment to perform. 
 inter=1;
 granger=0;
-%
+%%
 
  %for iii=7:length(nFF)
 %for iii=1:length(nFF)
 
- for iii=4:4
+ for iii=4:length(nFF)
 
 
 %for iii=3:3
@@ -107,7 +118,7 @@ granger=0;
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(nFF{iii})
 
-art=0;
+% art=0;
 
 %Select length of window in seconds:
 ro=[1200];
@@ -119,7 +130,8 @@ ro=[1200];
 if ro==1200 && inter==0 && granger==0
 run('newest_load_data.m')
 else
-run('newest_load_data_only_ripple_chtm.m')
+[sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple;    
+%run('newest_load_data_only_ripple_chtm.m')
 end
 % Rearrange (clean)
 
@@ -142,34 +154,34 @@ label2{5}='Monopolar';
 label2{6}='Bipolar';
 label2{7}='Monopolar';
 
-sig1=cell(7,1);
-
-sig1{1}=Mono17;
-sig1{2}=Bip17;
-sig1{3}=Mono12;
-sig1{4}=Bip12;
-sig1{5}=Mono9;
-sig1{6}=Bip9;
-sig1{7}=Mono6;
-
-
-sig2=cell(7,1);
-
-sig2{1}=V17;
-sig2{2}=S17;
-sig2{3}=V12;
-% sig2{4}=R12;
-sig2{4}=S12;
-%sig2{6}=SSS12;
-sig2{5}=V9;
-% sig2{7}=R9;
-sig2{6}=S9;
-%sig2{10}=SSS9;
-sig2{7}=V6;
- 
-% ripple=length(M);
-% ripple=sum(s172);
-ripple=ripple2;
+% % % % % % % % % % % % % % % % % % % % sig1=cell(7,1);
+% % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % sig1{1}=Mono17;
+% % % % % % % % % % % % % % % % % % % % sig1{2}=Bip17;
+% % % % % % % % % % % % % % % % % % % % sig1{3}=Mono12;
+% % % % % % % % % % % % % % % % % % % % sig1{4}=Bip12;
+% % % % % % % % % % % % % % % % % % % % sig1{5}=Mono9;
+% % % % % % % % % % % % % % % % % % % % sig1{6}=Bip9;
+% % % % % % % % % % % % % % % % % % % % sig1{7}=Mono6;
+% % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % sig2=cell(7,1);
+% % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % sig2{1}=V17;
+% % % % % % % % % % % % % % % % % % % % sig2{2}=S17;
+% % % % % % % % % % % % % % % % % % % % sig2{3}=V12;
+% % % % % % % % % % % % % % % % % % % % % sig2{4}=R12;
+% % % % % % % % % % % % % % % % % % % % sig2{4}=S12;
+% % % % % % % % % % % % % % % % % % % % %sig2{6}=SSS12;
+% % % % % % % % % % % % % % % % % % % % sig2{5}=V9;
+% % % % % % % % % % % % % % % % % % % % % sig2{7}=R9;
+% % % % % % % % % % % % % % % % % % % % sig2{6}=S9;
+% % % % % % % % % % % % % % % % % % % % %sig2{10}=SSS9;
+% % % % % % % % % % % % % % % % % % % % sig2{7}=V6;
+% % % % % % % % % % % % % % % % % % % %  
+% % % % % % % % % % % % % % % % % % % % % ripple=length(M);
+% % % % % % % % % % % % % % % % % % % % % ripple=sum(s172);
+% % % % % % % % % % % % % % % % % % % % ripple=ripple2;
 %Number of ripples per CHTMeshold.
 % ripple2=sum(s217);
 
@@ -180,19 +192,23 @@ ripple=ripple2;
 %i=1;
 %   error('stop here')  
 %%
+ripple=ripple2;
 %for level=1:length(ripple)-1;    
- for level=1:2  
+ for level=1:1
 %   allscreen()
   %[p,q,timecell,cfs,f]=getwin(carajo,veamos,sig1,sig2,label1,label2,ro);
   %Get p and q.
-  %Get averaged time signal. 
+  %Get averaged time signal.
 [p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 % SUS=SU(:,level).';
-av=cat(1,p{1:end});
+ av=cat(1,p{1:end});
+%av=cat(1,q{1:end});
+
 av=av(1:3:end,:); %Only Hippocampus
-AV=max(av.');
-[B I]= maxk(AV,1000);
-[ajal ind]=unique(B);
+%AV=max(av.');
+%[B I]= maxk(AV,1000);
+[B I]= maxk(max(av.'),1000); %Look for the 1000 ripples with highest amplitude. THIS SHOULD BE MEAN instead of Max since some peaks go downwards and no upwards. 
+[ajal ind]=unique(B); %Repeated ripples, which are very close to each other. 
 if length(ajal)>500
 ajal=ajal(end-499:end);
 ind=ind(end-499:end);
@@ -292,8 +308,17 @@ P2=avg_samples(p,timecell);
 
 %for w=1:size(P2,1)-1
 
-%%%%for w=1:size(P2,1)    %Brain region 
-for w=1:1    
+%%%%for w=1:size(P2,1)    %Brain region
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+cd(nFF{3})
+
+%run('newest_load_data_nl.m')
+%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl;
+ripple3=ripple_nl;
+
+
+for w=1:3    
 % %     error('stop here')
 % run('plot_no_ripples.m')
 % string=strcat('NEW_SPEC_',label1{2*w-1},'_','NORIP',num2str(level),'.png');
@@ -314,15 +339,19 @@ for w=1:1
 %%
 
 if iii>=4 && inter==1
-run('plot_inter_conditions_27.m')
-string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
+% run('plot_inter_conditions_27.m')
+% error('Stop here')
+plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
+string=strcat('TESTIntra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/')
 
 
 if Rat==26
+    %cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3},'/test'))
     cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3}))
+
 end
 
 if Rat==27
@@ -596,4 +625,5 @@ end
 
 end
 %%
+end
 end

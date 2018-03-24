@@ -1,53 +1,63 @@
 %This one requires running data from Non Learning condition
-
-cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-
-cd(nFF{3})
-
-run('newest_load_data_nl.m')
-
+function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM)
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %run('newest_load_data_nl.m')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2]=newest_only_ripple_nl;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ripple3=ripple_nl;
+ripple3=ripple_nl;
 %ran=randi(length(p),100,1);
-sig1_nl=cell(7,1);
 
-sig1_nl{1}=Mono17_nl;
-sig1_nl{2}=Bip17_nl;
-sig1_nl{3}=Mono12_nl;
-sig1_nl{4}=Bip12_nl;
-sig1_nl{5}=Mono9_nl;
-sig1_nl{6}=Bip9_nl;
-sig1_nl{7}=Mono6_nl;
-
-
-sig2_nl=cell(7,1);
-
-sig2_nl{1}=V17_nl;
-sig2_nl{2}=S17_nl;
-sig2_nl{3}=V12_nl;
-% sig2{4}=R12;
-sig2_nl{4}=S12_nl;
-%sig2{6}=SSS12;
-sig2_nl{5}=V9_nl;
-% sig2{7}=R9;
-sig2_nl{6}=S9_nl;
-%sig2{10}=SSS9;
-sig2_nl{7}=V6_nl;
- 
-% ripple=length(M);
-
-%Number of ripples per threshold.
-ripple_nl=sum(s17_nl);
+% % % % % % % sig1_nl=cell(7,1);
+% % % % % % % 
+% % % % % % % sig1_nl{1}=Mono17_nl;
+% % % % % % % sig1_nl{2}=Bip17_nl;
+% % % % % % % sig1_nl{3}=Mono12_nl;
+% % % % % % % sig1_nl{4}=Bip12_nl;
+% % % % % % % sig1_nl{5}=Mono9_nl;
+% % % % % % % sig1_nl{6}=Bip9_nl;
+% % % % % % % sig1_nl{7}=Mono6_nl;
+% % % % % % % 
+% % % % % % % 
+% % % % % % % sig2_nl=cell(7,1);
+% % % % % % % 
+% % % % % % % sig2_nl{1}=V17_nl;
+% % % % % % % sig2_nl{2}=S17_nl;
+% % % % % % % sig2_nl{3}=V12_nl;
+% % % % % % % % sig2{4}=R12;
+% % % % % % % sig2_nl{4}=S12_nl;
+% % % % % % % %sig2{6}=SSS12;
+% % % % % % % sig2_nl{5}=V9_nl;
+% % % % % % % % sig2{7}=R9;
+% % % % % % % sig2_nl{6}=S9_nl;
+% % % % % % % %sig2{10}=SSS9;
+% % % % % % % sig2_nl{7}=V6_nl;
+% % % % % % %  
+% % % % % % % % ripple=length(M);
+% % % % % % % 
+% % % % % % % %Number of ripples per threshold.
+% % % % % % % ripple_nl=sum(s17_nl);
 
 % [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),thr_nl(level+1));
 [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 
-load(strcat('randnum2_',num2str(level),'.mat'))
-ran_nl=ran;
-%ran_nl=randi(length(p_nl),100,1);
+% % % % % load(strcat('randnum2_',num2str(level),'.mat'))
+% % % % % ran_nl=ran;
+
 
 av=cat(1,p_nl{1:end});
+%av=cat(1,q_nl{1:end});
 av=av(1:3:end,:); %Only Hippocampus
-AV=max(av.');
-[B I]= maxk(AV,1000);
+
+%AV=max(av.');
+%[B I]= maxk(AV,1000);
+
+%AV=max(av.');
+[B I]= maxk(max(av.'),1000);
+
 [ajal ind]=unique(B);
 if length(ajal)>500
 ajal=ajal(end-499:end);
@@ -55,7 +65,7 @@ ind=ind(end-499:end);
 end
 dex=I(ind);
 
-ran_nl=dex.'
+ran_nl=dex.';
 
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
@@ -104,6 +114,7 @@ xlim([-1,1])
 grid minor
 narrow_colorbar()
 title(strcat('Wide Band',{' '},labelconditions{iii-3}))
+%title(strcat('Wide Band',{' '},labelconditions{iii}))
 ylim(win1)
 
 %%
@@ -115,6 +126,7 @@ grid minor
 narrow_colorbar()
 %title('High Gamma RIPPLE')
 title(strcat('High Gamma',{' '},labelconditions{iii-3}))
+%title(strcat('High Gamma',{' '},labelconditions{iii}))
 ylim(win2)
 
 %% Time Frequency plots
@@ -134,34 +146,62 @@ end
 
 freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10,toy);
 freq2=justtesting(p,timecell,[1:0.5:30],w,0.5,toy);
-% Calculate zlim
+% 
+% FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
+% FREQ2=justtesting(p,timecell,[0.5:0.5:30],w,0.5,toy);
 
+
+% Calculate zlim
+%%
+cfg=[];
+cfg.baseline=[-1 -0.5];
+%cfg.baseline='yes';
+cfg.baselinetype ='db';
+
+freq10=ft_freqbaseline(cfg,freq1);
+freq20=ft_freqbaseline(cfg,freq2);
+
+% Freq10=ft_freqbaseline(cfg,FREQ1);
+% Freq20=ft_freqbaseline(cfg,FREQ2);
+
+%%
 cfg              = [];
 cfg.channel      = freq1.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq1);
-[zmin2 zmax2] = ft_getminmax(cfg, freq2);
+[ zmin1, zmax1] = ft_getminmax(cfg, freq10);
+[zmin2, zmax2] = ft_getminmax(cfg, freq20);
 
 zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
 
+zlim=[-max(abs(zlim)) max(abs(zlim))];
+
 %%
 cfg              = [];
- cfg.zlim=zlim;
+cfg.zlim=zlim;% Uncomment this!
 cfg.channel      = freq1.label{w};
 cfg.colormap=colormap(jet(256));
 
+% % cfg.baseline       = 'yes';
+% % % cfg.baseline       = [ -0.1];
+% % 
+% % cfg.baselinetype   =  'absolute'; 
+% % cfg.renderer       = [];
+% % %cfg.renderer       = 'painters', 'zbuffer', ' opengl' or 'none' (default = [])
+% %     cfg.colorbar       = 'yes';
+
 %%
 subplot(3,4,5)
-ft_singleplotTFR(cfg, freq1); 
+ft_singleplotTFR(cfg, freq10); 
 % freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10)
 title('Wide Band NO Learning')
 xlim([-1 1])
 %%
 subplot(3,4,6)
-ft_singleplotTFR(cfg, freq2); 
+ft_singleplotTFR(cfg, freq20); 
 
 % freq2=justtesting(p,timecell,[1:0.5:30],w,0.5)
 %title('Wide Band RIPPLE')
 title(strcat('Wide Band',{' '},labelconditions{iii-3}))
+%title(strcat('Wide Band',{' '},labelconditions{iii}))
 
 xlim([-1 1])
 
@@ -182,6 +222,7 @@ grid minor
 ft_singleplotTFR(cfg, stats);
 % title('Condition vs No Learning')
 title(strcat(labelconditions{iii-3},' vs No Learning'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
 
 %%
 %Calculate Freq3 and Freq4
@@ -201,15 +242,26 @@ end
 
 freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w,toy);
 freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
+%%
+cfg=[];
+cfg.baseline=[-1 -0.5];
+%cfg.baseline='yes';
+cfg.baselinetype='db';
+freq30=ft_freqbaseline(cfg,freq3);
+freq40=ft_freqbaseline(cfg,freq4);
 
+
+%%
 % Calculate zlim
 
 cfg              = [];
 cfg.channel      = freq3.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-[zmin2 zmax2] = ft_getminmax(cfg, freq4);
+[ zmin1, zmax1] = ft_getminmax(cfg, freq30);
+[zmin2, zmax2] = ft_getminmax(cfg, freq40);
 
 zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+
+ zlim=[-max(abs(zlim)) max(abs(zlim))];
 
 %%
 cfg              = [];
@@ -219,7 +271,7 @@ cfg.colormap=colormap(jet(256));
 
 %%
 subplot(3,4,7)
-ft_singleplotTFR(cfg, freq3); 
+ft_singleplotTFR(cfg, freq30); 
 % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
 title('High Gamma NO Learning')
 %%
@@ -228,8 +280,9 @@ subplot(3,4,8)
 % freq4=barplot2_ft(q,timecell,[100:1:300],w)
 %freq=justtesting(q,timecell,[100:1:300],w,0.5)
 %title('High Gamma RIPPLE')
-ft_singleplotTFR(cfg, freq4); 
+ft_singleplotTFR(cfg, freq40); 
 title(strcat('High Gamma',{' '},labelconditions{iii-3}))
+%title(strcat('High Gamma',{' '},labelconditions{iii}))
 
 %%
 
@@ -247,30 +300,67 @@ grid minor
 ft_singleplotTFR(cfg, stats1);
 %title('Ripple vs No Ripple')
 title(strcat(labelconditions{iii-3},' vs No Learning'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
+%% EXTRA STATISTICS
+[stats1]=stats_between_trials(freq30,freq40,label1,w);
+% %
+ subplot(3,4,11)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
+%%
+[stats1]=stats_between_trials(freq10,freq20,label1,w);
+% %
+ subplot(3,4,9)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
 
-%% Baseline parameters
-mtit('No Learning:','fontsize',14,'color',[1 0 0],'position',[.1 0.25 ])
+%%
+% %% Baseline parameters
+% mtit('No Learning:','fontsize',14,'color',[1 0 0],'position',[.1 0.25 ])
+% 
+% mtit(strcat('Events:',num2str(ripple3(level))),'fontsize',14,'color',[1 0 0],'position',[.1 0.10 ])
+% labelthr=strcat('Thr:',num2str(round(CHTM2(level+1))));
+% mtit(strcat(labelthr),'fontsize',14,'color',[1 0 0],'position',[.1 0.15 ])
+% 
+% mtit(strcat(label1{2*w-1},' (',label2{1},')'),'fontsize',14,'color',[1 0 0],'position',[.1 0.2 ])
+% 
+% 
+% mtit(strcat('Rip/sec:',num2str(RipFreq3(level))),'fontsize',14,'color',[1 0 0],'position',[.1 0.05 ])
+% 
+% 
+% mtit(cell2mat(strcat({'Sleep:'},{num2str(timeasleep2)},{' '},{'min'})),'fontsize',14,'color',[1 0 0],'position',[.1 0.005 ])
+% 
+% %% Condition
+% mtit(labelconditions{iii-3},'fontsize',14,'color',[1 0 0],'position',[.65 0.25 ])
+% 
+% mtit(strcat('Events:',num2str(ripple(level))),'fontsize',14,'color',[1 0 0],'position',[.65 0.10 ])
+% labelthr=strcat('Thr:',num2str(round(CHTM(level+1))));
+% mtit(strcat(labelthr),'fontsize',14,'color',[1 0 0],'position',[.65 0.15 ])
+% 
+% mtit(strcat(label1{2*w-1},' (',label2{1},')'),'fontsize',14,'color',[1 0 0],'position',[.65 0.2 ])
+% 
+% mtit(strcat('Rip/sec:',num2str(RipFreq2(level))),'fontsize',14,'color',[1 0 0],'position',[.65 0.05 ])
+% 
+% mtit(cell2mat(strcat({'Sleep:'},{num2str(timeasleep)},{' '},{'min'})),'fontsize',14,'color',[1 0 0],'position',[.65 0.005 ])
 
-mtit(strcat('Events:',num2str(ripple3(level))),'fontsize',14,'color',[1 0 0],'position',[.1 0.10 ])
-labelthr=strcat('Thr:',num2str(round(CHTM2(level+1))));
-mtit(strcat(labelthr),'fontsize',14,'color',[1 0 0],'position',[.1 0.15 ])
-
-mtit(strcat(label1{2*w-1},' (',label2{1},')'),'fontsize',14,'color',[1 0 0],'position',[.1 0.2 ])
-
-
-mtit(strcat('Rip/sec:',num2str(RipFreq3(level))),'fontsize',14,'color',[1 0 0],'position',[.1 0.05 ])
-
-mtit(cell2mat(strcat({'Sleep:'},{num2str(timeasleep2)},{' '},{'min'})),'fontsize',14,'color',[1 0 0],'position',[.1 0.005 ])
-
-%% Condition
-mtit(labelconditions{iii-3},'fontsize',14,'color',[1 0 0],'position',[.65 0.25 ])
-
-mtit(strcat('Events:',num2str(ripple(level))),'fontsize',14,'color',[1 0 0],'position',[.65 0.10 ])
-labelthr=strcat('Thr:',num2str(round(CHTM(level+1))));
-mtit(strcat(labelthr),'fontsize',14,'color',[1 0 0],'position',[.65 0.15 ])
-
-mtit(strcat(label1{2*w-1},' (',label2{1},')'),'fontsize',14,'color',[1 0 0],'position',[.65 0.2 ])
-
-mtit(strcat('Rip/sec:',num2str(RipFreq2(level))),'fontsize',14,'color',[1 0 0],'position',[.65 0.05 ])
-
-mtit(cell2mat(strcat({'Sleep:'},{num2str(timeasleep)},{' '},{'min'})),'fontsize',14,'color',[1 0 0],'position',[.65 0.005 ])
+end

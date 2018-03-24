@@ -1,7 +1,13 @@
 function[C6,tiempo]=reduce_data(data6m,transitions)
 % Extract only NREM signals. (1 for awake, 3 for NREM)
 fs=20000; %Sampling frequency of acquisition.  
-c=find(transitions(:,1)==3); 
+% c=find(transitions(:,1)==3); 
+%Avoid using find to increase speed. 
+nV=transitions(:,1);
+nV=(nV==3); %LOOK FOR NREM Only
+n1=[1:length(nV)].';
+c=n1(nV);
+
 newtrans=transitions(c,2:3); %Only use the NREM times. 
 transamp=newtrans.*(fs); %Convert from seconds to samples 
 

@@ -5,7 +5,10 @@ function[V6,tiempo]=save_samples(x,transitions)
 [C6,tiempo]=reduce_data(data6m,transitions);
 clear data6m
 A=cellfun('length',C6);
-fA=find(A<2);
+
+%Ignore very short periods labelled as NREM sleep. 
+%fA=find(A<2);
+fA=A(A<2);
 
 if length(fA)~=0
 C6(fA)=[];

@@ -1,6 +1,8 @@
-
+function [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl
 %{
 LOAD DATA, easy and quick. 
+timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60; % In minutes
+RipFreq3=sum(s17_nl)/(timeasleep2*(60));
 
 The V signals are the monopolar recordings of the 4 channels. 
 
@@ -296,4 +298,39 @@ carajo_nl{:,:,ind}=swr17_nl(veamos_nl{:,ind},:,ind);
 
 % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
 % carajo2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
+end
+
+sig1_nl=cell(7,1);
+
+sig1_nl{1}=Mono17_nl;
+sig1_nl{2}=Bip17_nl;
+sig1_nl{3}=Mono12_nl;
+sig1_nl{4}=Bip12_nl;
+sig1_nl{5}=Mono9_nl;
+sig1_nl{6}=Bip9_nl;
+sig1_nl{7}=Mono6_nl;
+
+
+sig2_nl=cell(7,1);
+
+sig2_nl{1}=V17_nl;
+sig2_nl{2}=S17_nl;
+sig2_nl{3}=V12_nl;
+% sig2{4}=R12;
+sig2_nl{4}=S12_nl;
+%sig2{6}=SSS12;
+sig2_nl{5}=V9_nl;
+% sig2{7}=R9;
+sig2_nl{6}=S9_nl;
+%sig2{10}=SSS9;
+sig2_nl{7}=V6_nl;
+ 
+% ripple=length(M);
+
+%Number of ripples per threshold.
+ripple_nl=sum(s17_nl);
+
+
+
+
 end

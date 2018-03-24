@@ -1,4 +1,4 @@
-cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
 
 % getdir=dir;
 % A_cell = struct2cell(getdir);
@@ -12,11 +12,54 @@ nF = {d(isub).name}';
 nF(ismember(nF,{'.','..'})) = [];
 
 %%
-cd('/home/raleman/Documents/internship/27')
+cd('/home/raleman/Documents/internship/24')
 %%
 for i=1:length(nFF)
     mkdir([nFF{i}])
 end
+
+%% Rat 24
+
+ nFF=[  
+    {'rat24_nl_baseline_2016-03-02_14-07-36'                   }
+    {'rat24_NL_base_2016-03-25_11-09-01'                       }
+    {'rat24_nl_base_III_2016-03-29_10-26-01'                   }
+    {'rat24_nl_base_IV_2016-04-08_10-21-56'                    } 
+    
+    {'rat24_plusmaze_base_2016-03-09_15-05-09'                 }
+    {'rat24_plusmaze_base_II_2016-03-17_14-38-18'              }    
+    {'Rat24_novelty_I_2016-04-11_10-20-04'                     }
+    {'rat24_for_2016-03-11_14-41-15'                           }
+    {'rat24_for_II_2016-03-19_10-28-06'                        }
+    {'rat24_novelty_II_2016-04-12_14-20-41'                    }
+    
+   % {'rat24_plusmaze_jit_2016-03-15_15-05-58'                  }
+   % {'rat24_plusmaze_swrd_qPCR_2016-04-14_09-52-33'            }
+   % {'rat24_plusmaze_swrdis_2016-03-07_14-51-14'               }
+   % {'rat24_watermaze_disruption_afternoon_2016-04-05_15-52-56'}
+   % {'rat24_watermaze_jit_morning_2016-04-05_10-01-03'         }
+]
+
+%% Rat 21
+nFF=[
+   %{'1117 ripples'                                }
+   %{'2015-11-26_13-50-35'                         }
+    {'2015-11-27_13-50-07 5h baseline'             }
+    %{'day1jittercondition_2015-11-30_10-39-45'     }
+    {'disruptionday1'                              }
+    {'rat21 baselin2015-12-11_12-52-58'            }
+    {'rat21 post t-maze 2015-12-14_13-30-52'       }
+    {'rat21_learningbaseline2_2015-12-10_15-24-17' }
+    %{'rat21dis2_2015-12-20_11-12-35'               }
+    {'rat21dismorningday2_2015-12-08_10-30-32'     }
+   %{'rat21jitterafternoonday2_2015-12-08_15-49-21'}
+   %{'rat21jittertmaze_2015-12-18_11-37-11'        }
+    {'rat21t_maze_2015-12-14_13-29-07'             }
+    {'rat21tmazedis_2015-12-16_15-34-36'           }
+    {'rat21with45minlearning_2015-12-02_14-25-12'  }
+    ]
+
+
 %%
 % d = dir(cd);
 % isub = [d(:).isdir]; %# returns logical vector
@@ -61,13 +104,15 @@ end
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 %cd('/home/raleman/Documents/internship')
-cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
 %%
-cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
 
 %iii=8
-for iii=4:length(nFF)
-    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+for iii=10:10
+
+%for iii=2:length(nFF)
+    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
 
     cd(nFF{iii})
     %clear all
@@ -95,50 +140,50 @@ for iii=4:length(nFF)
     [V6,~]=save_samples('100_CH22_2.continuous',transitions);
 
     
-    cd('/home/raleman/Documents/internship/27')
+    cd('/home/raleman/Documents/internship/24')
     cd(nFF{iii})
     save('V6.mat','V6')
     clear V6
     
     %
-    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
     cd(nFF{iii})
 
     'Channel 9'
     
 %    [V9,~]=save_samples('100_CH9_merged.continuous',transitions);
-    [V9,~]=save_samples('100_CH9_2.continuous',transitions);
+    [V9,~]=save_samples('100_CH11_2.continuous',transitions);
 
     
-    cd('/home/raleman/Documents/internship/27')
+    cd('/home/raleman/Documents/internship/24')
     cd(nFF{iii})
     save('V9.mat','V9')
     clear V9
 %
-    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+    cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
     cd(nFF{iii})
 
     'Channel 12'
     
 %    [V12,tiempo]=save_samples('100_CH12_merged.continuous',transitions);
-    [V12,tiempo]=save_samples('100_CH12_2.continuous',transitions);
+    [V12,~]=save_samples('100_CH12_2.continuous',transitions);
 
     
-    cd('/home/raleman/Documents/internship/27')
+    cd('/home/raleman/Documents/internship/24')
     cd(nFF{iii})
     save('V12.mat','V12')
     clear V12
     
-cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
 cd(nFF{iii})
 
 'Channel 17'
 
 %[V17,~]=save_samples('100_CH13_merged.continuous',transitions);
-[V17,~]=save_samples('100_CH13_2.continuous',transitions);
+[V17,~]=save_samples('100_CH17_2.continuous',transitions);
 
 
-cd('/home/raleman/Documents/internship/27')
+cd('/home/raleman/Documents/internship/24')
 cd(nFF{iii})
 save('V17.mat','V17')
 clear V17
@@ -150,7 +195,7 @@ clear V17
 %clear all
 clearvars -except nFF
 
-a=dir(fullfile(cd,'*.mat'))
+a=dir(fullfile(cd,'*.mat'));
 
 for ii=1:length(a)
 load(a(ii).name)
@@ -168,7 +213,7 @@ save('S12.mat','S12')
 save('S17.mat','S17')
 
 
-% end
+end
 % END OF CODE
 
 %% Reading data
