@@ -186,7 +186,8 @@ signal2_nl=cellfun(@(equis) times((1/0.195), equis)  ,Mono17_nl,'UniformOutput',
 ti_nl=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal_nl,'UniformOutput',false);
 
 %Find ripples
-for k=1:rep-1
+%for k=1:rep-1
+for k=1:rep-2
 [S2x_nl,E2x_nl,M2x_nl] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', CHTM2(k+1), (CHTM2(k+1))*(1/2), [] ), signal_nl,ti_nl,'UniformOutput',false);    
 swr17_nl(:,:,k)=[S2x_nl E2x_nl M2x_nl];
 s17_nl(:,k)=cellfun('length',S2x_nl);
