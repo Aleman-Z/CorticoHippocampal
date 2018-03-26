@@ -5,7 +5,7 @@ addpath('/home/raleman/Documents/internship')
 %%
 %Rat=26;
 
-for Rat=26:27
+for Rat=27:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -108,7 +108,7 @@ inter=1;
 granger=0;
 %Select length of window in seconds:
 ro=[1200];
-
+coher=0;
 %%
 
 %Make labels
@@ -132,10 +132,10 @@ label2{7}='Monopolar';
 
 %%
 
- for iii=4:length(nFF)
+ for iii=6:length(nFF)
 
     
- clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher
 
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(nFF{iii})
@@ -243,7 +243,7 @@ cd(nFF{3})
 ripple3=ripple_nl;
 
 
-for w=1:3    
+for w=2:3    
 
 %%
 
@@ -286,99 +286,78 @@ end
 
 close all
 
-if w==1 && granger==1
-% allscreen()    
-% [granger]=barplot_GC(cut(q),cut(timecell),[100:20:300])
-% title(strcat('Time-Frequency Granger Causality (Bandpassed: 100-300 Hz)',' CHTM:',num2str(CHTM(level))))
-% 
-% string=strcat('TFGC_','Bandpass_',num2str(level),'.png');
-% saveas(gcf,string)
-% close all
+%if w==1 && granger==1
 
-if Rat==27
-% cd( strcat('/home/raleman/Dropbox/SWR/Connectivity_measures/',labelconditions{iii}))
-cd( strcat('/home/raleman/Dropbox/SWR_2/rat_27/Connectivity measures/',labelconditions{iii}))
+if w==2 && coher==1
+    allscreen()    
+    [coh]=barplot_COH(q,timecell,[100:2:300])
+    title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
+    string=strcat('COH_','Bandpass_Ripple_',num2str(level),'.png');
+    saveas(gcf,string)
+    close all
+
+    allscreen()
+    [coh]=barplot_COH(p,timecell,[1:1:30])
+    title('Time-Frequency Coherence (Wideband)')
+    string=strcat('COH_','Wideband_Ripple_',num2str(level),'.png');
+    saveas(gcf,string)
+    close all
+
 end
 
+if  w==2 && granger==1
 
-allscreen()    
-[coh]=barplot_COH(q,timecell,[100:2:300])
-title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
-string=strcat('COH_','Bandpass_Ripple_',num2str(level),'.png');
+if Rat==26
+    %cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3},'/test'))
+    cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3}))
+
+end
+
+if Rat==27
+    cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
+end
+    
+        
+% if Rat==27
+% % cd( strcat('/home/raleman/Dropbox/SWR/Connectivity_measures/',labelconditions{iii}))
+% cd( strcat('/home/raleman/Dropbox/SWR_2/rat_27/Connectivity measures/',labelconditions{iii}))
+% end
+
+
+%Wideband
+[gran,gran1]=gc_paper(p,timecell,'Widepass',ro);
+[p_nl,q_nl,timecell_nl]=gc_no_learning(level,ro,label1,label2,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2);
+[gran_nl,gran1_nl]=gc_paper(p_nl,timecell_nl,'Widepass',ro);
+
+granger_paper(gran,gran_nl,labelconditions{iii-3})
+string=strcat('GC_','Widepass_Ripples_NP_',num2str(level),'.png');
+
 saveas(gcf,string)
 close all
 
-% % % % % % % % allscreen()    
-% % % % % % % % [coh]=barplot_COH(SUS,SUStimecell,[100:2:300])
-% % % % % % % % title('Time-Frequency Coherence (Bandpassed: 100-300 Hz)')
-% % % % % % % % string=strcat('NEW_TFCOH_','Bandpass_NoRipple_',num2str(level),'.png');
-% % % % % % % % saveas(gcf,string)
-% % % % % % % % close all
+granger_paper(gran1,gran1_nl,labelconditions{iii-3})
+string=strcat('GC_','Widepass_Ripples_P_',num2str(level),'.png');
 
-% allscreen()
-% [granger]=barplot_GC(cut(p),cut(timecell),[2:2:30])
-% title('Time-Frequency Granger Causality (Wideband)')
-% string=strcat('TFGC_','Wideband_',num2str(level),'.png');
-% saveas(gcf,string)
-% close all
-
-allscreen()
-[coh]=barplot_COH(p,timecell,[1:1:30])
-title('Time-Frequency Coherence (Wideband)')
-string=strcat('COH_','Wideband_Ripple_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
+%Bandpassed
 
-% % % % % % % % % % % % % % allscreen()
-% % % % % % % % % % % % % % [coh]=barplot_COH(SUS2,SUS2timecell,[1:1:30])
-% % % % % % % % % % % % % % title('Time-Frequency Coherence (Wideband)')
-% % % % % % % % % % % % % % string=strcat('NEW_TFCOH_','Wideband_NoRipple_',num2str(level),'.png');
-% % % % % % % % % % % % % % saveas(gcf,string)
-% % % % % % % % % % % % % % close all
+[gran,gran1]=gc_paper(q,timecell,'Bandpassed',ro);
+% [p_nl,q_nl,timecell_nl]=gc_no_learning(level,ro,label1,label2,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2);
+[gran_nl,gran1_nl]=gc_paper(q_nl,timecell_nl,'Bandpassed',ro);
 
+granger_paper(gran,gran_nl,labelconditions{iii-3})
+string=strcat('GC_','Bandpassed_Ripples_NP_',num2str(level),'.png');
 
-%allscreen()
-% % % % % % % % % % % % % % gc(Q,timecell,'Envelope',ro)
-% % % % % % % % % % % % % % string=strcat('NEW_GC_','Envelope_Ripples_',num2str(level),'.png');
-% % % % % % % % % % % % % % saveas(gcf,string)
-% % % % % % % % % % % % % % close all
-
-%Here onwards (2)
-
-%allscreen()
-% % % % % % % % % % % % % % % % % % % % gc(SUQ2,SUQ2timecell,'Envelope',ro)
-% % % % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Envelope_NoRipples_',num2str(level),'.png');
-% % % % % % % % % % % % % % % % % % % % saveas(gcf,string)
-% % % % % % % % % % % % % % % % % % % % close all
-
-
-%allscreen()
-gc(p,timecell,'Widepass',ro)
-string=strcat('GC_','Widepass_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
 
-%allscreen()
-% % % % % % % % % % % % % % % % % % % gc(SUS2,SUS2timecell,'Widepass',ro)
-% % % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Widepass_No_Ripples_',num2str(level),'.png');
-% % % % % % % % % % % % % % % % % % % saveas(gcf,string)
-% % % % % % % % % % % % % % % % % % % close all
+granger_paper(gran1,gran1_nl,labelconditions{iii-3})
+string=strcat('GC_','Bandpassed_Ripples_P_',num2str(level),'.png');
 
-
-%allscreen()
-gc(q,timecell,'Bandpassed',ro)
-string=strcat('GC_','Bandpassed_Ripples_',num2str(level),'.png');
 saveas(gcf,string)
 close all
-
-%allscreen()
-% % % % % % % % % % % % % % % % % % gc(SUS,SUStimecell,'Bandpassed',ro)
-% % % % % % % % % % % % % % % % % % string=strcat('NEW_GC_','Bandpassed_NoRipples_',num2str(level),'.png');
-% % % % % % % % % % % % % % % % % % saveas(gcf,string)
-% % % % % % % % % % % % % % % % % % close all
-
-%w=size(P2,1);
 
 end
 
