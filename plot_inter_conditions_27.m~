@@ -391,20 +391,20 @@ set(gca,'clim',climdb,'ydir','normal','xlim',[-1 1])
 c4=colorbar();
 
 h4 = get(H4, 'position'); % get axes position
-hn4= get(Hc4, 'Position'); % Colorbar Width for c1
+hn3= get(Hc3, 'Position'); % Colorbar Width for c1
 
 
-x4 = get(ax4, 'position'); % get axes position
-cw4= get(c4, 'Position'); % Colorbar Width for c1
+x3 = get(ax3, 'position'); % get axes position
+cw3= get(c3, 'Position'); % Colorbar Width for c1
 
 
-cw4(3)=hn4(3);
-cw4(1)=hn4(1);
-set(c4,'Position',cw4)
+cw3(3)=hn3(3);
+cw3(1)=hn3(1);
+set(c3,'Position',cw3)
  
 
-x4(3)=h4(3);
-set(ax4,'Position',x4)
+x3(3)=h3(3);
+set(ax3,'Position',x3)
 
 
 
@@ -434,37 +434,37 @@ ft_singleplotTFR(cfg, stats1);
 title(strcat(labelconditions{iii-3},' vs No Learning'))
 %title(strcat(labelconditions{iii},' vs No Learning'))
 %% EXTRA STATISTICS
-% % [stats1]=stats_between_trials(achis3,achis4,label1,w);
-% % % %
-% %  subplot(3,4,11)
-% % cfg = [];
-% % cfg.channel = label1{2*w-1};
-% % cfg.parameter = 'stat';
-% % cfg.maskparameter = 'mask';
-% % cfg.zlim = 'maxabs';
-% % cfg.colorbar       = 'yes';
-% % cfg.colormap=colormap(jet(256));
-% % grid minor
-% % ft_singleplotTFR(cfg, stats1);
-% % %title('Ripple vs No Ripple')
-% % title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
-% % %title(strcat(labelconditions{iii},' vs No Learning'))
-% % %%
-% % [stats1]=stats_between_trials(freq10,freq20,label1,w);
-% % % %
-% %  subplot(3,4,9)
-% % cfg = [];
-% % cfg.channel = label1{2*w-1};
-% % cfg.parameter = 'stat';
-% % cfg.maskparameter = 'mask';
-% % cfg.zlim = 'maxabs';
-% % cfg.colorbar       = 'yes';
-% % cfg.colormap=colormap(jet(256));
-% % grid minor
-% % ft_singleplotTFR(cfg, stats1);
-% % %title('Ripple vs No Ripple')
-% % title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
-% % %title(strcat(labelconditions{iii},' vs No Learning'))
+[stats1]=stats_between_trials(freq30,freq40,label1,w);
+% %
+ subplot(3,4,11)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
+%%
+[stats1]=stats_between_trials(freq10,freq20,label1,w);
+% %
+ subplot(3,4,9)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
 
 %%
 % %% Baseline parameters

@@ -1,11 +1,19 @@
+acer=0;
+
+%%
+if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
-
+else
+addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
+addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
+   
+end
 %%
 %Rat=26;
 
-for Rat=27:27
+for Rat=26:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -97,18 +105,29 @@ labelconditions=[
 end
 
 %% Go to main directory
-cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-addpath /home/raleman/Documents/internship/fieldtrip-master/
-InitFieldtrip()
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    addpath /home/raleman/Documents/internship/fieldtrip-master/
+    InitFieldtrip()
 
-cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-clc
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    clc
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+    addpath D:\internship\fieldtrip-master
+    InitFieldtrip()
+
+    % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    cd(strcat('D:\internship\',num2str(Rat)))
+    clc
+end
 %% Select experiment to perform. 
 inter=1;
 granger=0;
 %Select length of window in seconds:
 ro=[1200];
 coher=0;
+selectripples=1;
 %%
 
 %Make labels
@@ -132,12 +151,16 @@ label2{7}='Monopolar';
 
 %%
 
- for iii=6:length(nFF)
+ for iii=4:length(nFF)
 
     
- clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
 
-cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(nFF{iii})
 
 
@@ -150,42 +173,25 @@ cd(nFF{iii})
 if ro==1200 && inter==0 && granger==0
 run('newest_load_data.m')
 else
-[sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 end
 
-ripple=ripple2;
+% ripple=ripple2;
      
   %Get p and q.
   %Get averaged time signal.
 [p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 % SUS=SU(:,level).';
- av=cat(1,p{1:end});
-%av=cat(1,q{1:end});
 
-av=av(1:3:end,:); %Only Hippocampus
-%AV=max(av.');
-%[B I]= maxk(AV,1000);
-%[B I]= maxk(max(av.'),1000); %Look for the 1000 ripples with highest amplitude. THIS SHOULD BE MEAN instead of Max since some peaks go downwards and no upwards. 
+if selectripples==1
 
-[ach]=max(av.');
-achinga=sort(ach,'descend');
-achinga=achinga(1:1000);
-B=achinga;
-I=nan(1,length(B));
-for hh=1:length(achinga)
-   % I(hh)= min(find(ach==achinga(hh)));
-I(hh)= find(ach==achinga(hh),1,'first');
+[ran]=rip_select(p);
+    % 
+    p=p([ran]);
+    q=q([ran]);
+    Q=Q([ran]);
+    timecell=timecell([ran]);
 end
-
-
-
-[ajal ind]=unique(B); %Repeated ripples, which are very close to each other. 
-if length(ajal)>500
-ajal=ajal(end-499:end);
-ind=ind(end-499:end);
-end
-dex=I(ind);
-
 
 
 %if ro==1200 && inter==0 || granger==1
@@ -217,26 +223,25 @@ end
 %P2 widepassdw
 % error('stop here please')
 
-%Finding .mat files 
-Files=dir(fullfile(cd,'*.mat'));
 
 
 % ran=I.'; % Select ripples with highest magnitudes. 
-ran=dex.';
-% 
-p=p([ran]);
-q=q([ran]);
-Q=Q([ran]);
-timecell=timecell([ran]);
- 
+
+
+%Finding .mat files 
+Files=dir(fullfile(cd,'*.mat'));
 
 P1=avg_samples(q,timecell);
 P2=avg_samples(p,timecell);
 
 %%%%for w=1:size(P2,1)    %Brain region
-cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
 cd(nFF{3})
-
+%%
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
@@ -246,26 +251,43 @@ ripple3=ripple_nl;
 for w=2:3    
 
 %%
-
 if iii>=4 && inter==1
 % run('plot_inter_conditions_27.m')
-% error('Stop here')
-plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
-string=strcat('TESTIntra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
+error('Stop here')
+
+plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer)
+%plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
+string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/')
 
 
-if Rat==26
-    %cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3},'/test'))
-    cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3}))
+% %if Rat==26
+%     %cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3},'/test'))
+%    if acer==0
+%     cd(strcat('/home/raleman/Dropbox/SWR/NoLearning_vs_Conditions_2/',labelconditions{iii-3}))
+%    else
+%     cd(strcat('C:\Users\Welt Meister\Dropbox\1000\',num2str(Rat)))   
+%    end
 
-end
+%end
 
-if Rat==27
-    cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
+%if Rat==27
+    if acer==0
+      %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
+      cd(strcat('/home/raleman/Dropbox/1000/',num2str(Rat)))
+
+    else
+      cd(strcat('C:\Users\Welt Meister\Dropbox\1000\',num2str(Rat)))   
+    end
+        
+%end
+
+if exist(labelconditions{iii-3})~=7
+(mkdir(labelconditions{iii-3}))
 end
+cd((labelconditions{iii-3}))
 
 saveas(gcf,string)
 end

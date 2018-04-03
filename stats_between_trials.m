@@ -12,7 +12,7 @@ cfg.channel          = label1{2*w-1};  % only one channel at the time, you shoul
 
 cfg.alpha            = 0.05 / length(freq1.label);
 cfg.correcttail      = 'prob';
-cfg.numrandomization = 1000;  % this value won't change the statistics. Use a higher value to have a more accurate p-value
+cfg.numrandomization = 500;  % this value won't change the statistics. Use a higher value to have a more accurate p-value
 
 % design  = zeros(2, n_trl * 2);
 % design(1, 1:n_trl) = 1;
@@ -21,8 +21,10 @@ cfg.numrandomization = 1000;  % this value won't change the statistics. Use a hi
 
 design = zeros(1,size(freq1.powspctrm,1) + size(freq2.powspctrm,1));
 design(1,1:size(freq1.powspctrm,1)) = 1;
+
 design(1,(size(freq1.powspctrm,1)+1):(size(freq1.powspctrm,1)+...
-  size(freq1.powspctrm,1))) = 2;
+  size(freq2.powspctrm,1))) = 2;
+
 
 cfg.design = design;
 cfg.ivar = 1;
