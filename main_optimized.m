@@ -235,12 +235,27 @@ P1=avg_samples(q,timecell);
 P2=avg_samples(p,timecell);
 
 %%%%for w=1:size(P2,1)    %Brain region
+%%% Go to baseline
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
-cd(nFF{3})
+%% Get average baseline 
+% for k=1:3
+%  cd(nFF{k})    
+% [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+% ripple3=ripple_nl;
+% 
+% if acer==0
+%     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+% else
+%     cd(strcat('D:\internship\',num2str(Rat)))
+% end
+% 
+% end
+%%
+cd(nFF{3}) %Best (Longest) baseline recorded 
 %%
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
@@ -253,7 +268,7 @@ for w=2:3
 %%
 if iii>=4 && inter==1
 % run('plot_inter_conditions_27.m')
-error('Stop here')
+% error('Stop here')
 
 plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer)
 %plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);

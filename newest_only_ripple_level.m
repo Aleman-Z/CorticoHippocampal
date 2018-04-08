@@ -65,7 +65,9 @@ rep=5; %Number of thresholds+1
 
 %%
 
-chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.         
+chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
+%Median is used to account for any artifact/outlier. 
+
 % chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
 CHTM=floor([chtm chtm/2 chtm/4 chtm/8 chtm/16]);
 

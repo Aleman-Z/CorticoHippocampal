@@ -23,7 +23,7 @@ design = zeros(1,size(freq1.powspctrm,1) + size(freq2.powspctrm,1));
 design(1,1:size(freq1.powspctrm,1)) = 1;
 
 design(1,(size(freq1.powspctrm,1)+1):(size(freq1.powspctrm,1)+...
-  size(freq2.powspctrm,1))) = 2;
+  size(freq1.powspctrm,1))) = 2;
 
 
 cfg.design = design;

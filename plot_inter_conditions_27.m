@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer)
+function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer,timecell_nl,P1_nl,P2_nl,p_nl,q_nl)
 %function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples)
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -10,7 +10,9 @@ function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,labe
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2]=newest_only_ripple_nl;
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ripple3=ripple_nl;
-ripple3=ripple_nl;
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ripple3=ripple_nl;
+
 %ran=randi(length(p),100,1);
 
 % % % % % % % sig1_nl=cell(7,1);
@@ -44,61 +46,62 @@ ripple3=ripple_nl;
 % % % % % % % ripple_nl=sum(s17_nl);
 
 % [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),thr_nl(level+1));
-[p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 
-% % % % % load(strcat('randnum2_',num2str(level),'.mat'))
-% % % % % ran_nl=ran;
-if selectripples==1
-
-[ran_nl]=rip_select(p);
-% av=cat(1,p_nl{1:end});
-% %av=cat(1,q_nl{1:end});
-% av=av(1:3:end,:); %Only Hippocampus
-% 
-% %AV=max(av.');
-% %[B I]= maxk(AV,1000);
-% 
-% %AV=max(av.');
-% %[B I]= maxk(max(av.'),1000);
-% 
-% 
-% [ach]=max(av.');
-% achinga=sort(ach,'descend');
-% achinga=achinga(1:1000);
-% B=achinga;
-% I=nan(1,length(B));
-% for hh=1:length(achinga)
-%    % I(hh)= min(find(ach==achinga(hh)));
-% I(hh)= find(ach==achinga(hh),1,'first');
-% end
-% 
-% 
-% [ajal ind]=unique(B);
-% if length(ajal)>500
-% ajal=ajal(end-499:end);
-% ind=ind(end-499:end);
-% end
-% dex=I(ind);
-% ran_nl=dex.';
-
-p_nl=p_nl([ran_nl]);
-q_nl=q_nl([ran_nl]);
-timecell_nl=timecell_nl([ran_nl]);
-
-
-end
+% % % % % % % % % % % % % % [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+% % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % load(strcat('randnum2_',num2str(level),'.mat'))
+% % % % % % % % % % % % % % % % % % % ran_nl=ran;
+% % % % % % % % % % % % % % if selectripples==1
+% % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % [ran_nl]=rip_select(p);
+% % % % % % % % % % % % % % % av=cat(1,p_nl{1:end});
+% % % % % % % % % % % % % % % %av=cat(1,q_nl{1:end});
+% % % % % % % % % % % % % % % av=av(1:3:end,:); %Only Hippocampus
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % %AV=max(av.');
+% % % % % % % % % % % % % % % %[B I]= maxk(AV,1000);
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % %AV=max(av.');
+% % % % % % % % % % % % % % % %[B I]= maxk(max(av.'),1000);
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % [ach]=max(av.');
+% % % % % % % % % % % % % % % achinga=sort(ach,'descend');
+% % % % % % % % % % % % % % % achinga=achinga(1:1000);
+% % % % % % % % % % % % % % % B=achinga;
+% % % % % % % % % % % % % % % I=nan(1,length(B));
+% % % % % % % % % % % % % % % for hh=1:length(achinga)
+% % % % % % % % % % % % % % %    % I(hh)= min(find(ach==achinga(hh)));
+% % % % % % % % % % % % % % % I(hh)= find(ach==achinga(hh),1,'first');
+% % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % [ajal ind]=unique(B);
+% % % % % % % % % % % % % % % if length(ajal)>500
+% % % % % % % % % % % % % % % ajal=ajal(end-499:end);
+% % % % % % % % % % % % % % % ind=ind(end-499:end);
+% % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % dex=I(ind);
+% % % % % % % % % % % % % % % ran_nl=dex.';
+% % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % p_nl=p_nl([ran_nl]);
+% % % % % % % % % % % % % % q_nl=q_nl([ran_nl]);
+% % % % % % % % % % % % % % timecell_nl=timecell_nl([ran_nl]);
+% % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % end
 
 
 %Need: P1, P2 ,p, q. 
-P1_nl=avg_samples(q_nl,timecell_nl);
-P2_nl=avg_samples(p_nl,timecell_nl);
-if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-
-else
-    cd(strcat('D:\internship\',num2str(Rat)))    
-end
-cd(nFF{iii})
+% % % % % % % % % % % % % P1_nl=avg_samples(q_nl,timecell_nl);
+% % % % % % % % % % % % % P2_nl=avg_samples(p_nl,timecell_nl);
+% % % if acer==0
+% % %     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+% % % 
+% % % else
+% % %     cd(strcat('D:\internship\',num2str(Rat)))    
+% % % end
+% % % cd(nFF{iii})
 
 %%
 %Plot both: No ripples and Ripples. 
@@ -182,8 +185,8 @@ cfg.baseline=[-1 -0.5];
 %cfg.baseline='yes';
 cfg.baselinetype ='db';
 
-% % % % % % freq10=ft_freqbaseline(cfg,freq1);
-% % % % % % freq20=ft_freqbaseline(cfg,freq2);
+freq10=ft_freqbaseline(cfg,freq1);
+freq20=ft_freqbaseline(cfg,freq2);
 
 [achis]=baseline_norm(freq1,w);
 [achis2]=baseline_norm(freq2,w);
@@ -325,8 +328,8 @@ cfg=[];
 cfg.baseline=[-1 -0.5];
 %cfg.baseline='yes';
  cfg.baselinetype='db';
-% freq30=ft_freqbaseline(cfg,freq3);
-% freq40=ft_freqbaseline(cfg,freq4);
+freq30=ft_freqbaseline(cfg,freq3);
+freq40=ft_freqbaseline(cfg,freq4);
 [achis3]=baseline_norm(freq3,w);
 [achis4]=baseline_norm(freq4,w);
 climdb=[-3 3];
@@ -434,37 +437,39 @@ ft_singleplotTFR(cfg, stats1);
 title(strcat(labelconditions{iii-3},' vs No Learning'))
 %title(strcat(labelconditions{iii},' vs No Learning'))
 %% EXTRA STATISTICS
-% % [stats1]=stats_between_trials(achis3,achis4,label1,w);
-% % % %
-% %  subplot(3,4,11)
-% % cfg = [];
-% % cfg.channel = label1{2*w-1};
-% % cfg.parameter = 'stat';
-% % cfg.maskparameter = 'mask';
-% % cfg.zlim = 'maxabs';
-% % cfg.colorbar       = 'yes';
-% % cfg.colormap=colormap(jet(256));
-% % grid minor
-% % ft_singleplotTFR(cfg, stats1);
-% % %title('Ripple vs No Ripple')
-% % title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+[stats1]=stats_between_trials(freq30,freq40,label1,w);
+% %
+ subplot(3,4,11)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
 % % %title(strcat(labelconditions{iii},' vs No Learning'))
 % % %%
-% % [stats1]=stats_between_trials(freq10,freq20,label1,w);
-% % % %
-% %  subplot(3,4,9)
-% % cfg = [];
-% % cfg.channel = label1{2*w-1};
-% % cfg.parameter = 'stat';
-% % cfg.maskparameter = 'mask';
-% % cfg.zlim = 'maxabs';
-% % cfg.colorbar       = 'yes';
-% % cfg.colormap=colormap(jet(256));
-% % grid minor
-% % ft_singleplotTFR(cfg, stats1);
-% % %title('Ripple vs No Ripple')
-% % title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
-% % %title(strcat(labelconditions{iii},' vs No Learning'))
+
+
+[stats1]=stats_between_trials(freq10,freq20,label1,w);
+% %
+ subplot(3,4,9)
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
+%title(strcat(labelconditions{iii},' vs No Learning'))
 
 %%
 % %% Baseline parameters

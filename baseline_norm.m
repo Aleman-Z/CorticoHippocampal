@@ -1,11 +1,11 @@
 
-function [achis]=baseline_norm(freq3,w)
+function [achis]=baseline_norm(freq1,w)
 
 %%Average trials
-TF=freq3.powspctrm;
+TF=freq1.powspctrm;
 TF=squeeze(mean(TF,1));
 TF=squeeze(TF(w,:,:));
-TFt=freq3.time;
+TFt=freq1.time;
 
 
 tind=([-1 -0.5]);
