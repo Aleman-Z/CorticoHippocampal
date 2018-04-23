@@ -384,10 +384,10 @@ string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 %if Rat==27
     if acer==0
       %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
-      cd(strcat('/home/raleman/Dropbox/CombinedBaseline/',num2str(Rat)))
+      cd(strcat('/home/raleman/Dropbox/CombinedBaseline1000/',num2str(Rat)))
 
     else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\CombinedBaseline\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\CombinedBaseline1000\',num2str(Rat)))   
     end
         
 %end

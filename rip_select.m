@@ -54,10 +54,10 @@ function [ran]=rip_select(p)
 %         ind=ind(1:1000);
 % end
 I=I(2:end);
-if length(I)>500
+if length(I)>1000
 %         ajal=ajal(end-999:end);
 %         ind=ind(end-999:end);
-        I=I(1:500);
+        I=I(1:1000);
 end
 
 

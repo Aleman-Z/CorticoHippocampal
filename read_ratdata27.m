@@ -1,4 +1,4 @@
-cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_24')
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 
 % getdir=dir;
 % A_cell = struct2cell(getdir);
@@ -94,7 +94,7 @@ for i=1:length(nFF)
     mkdir([nFF{i}])
 end
  %%
- cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_27')
+ cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 
  %%
  Files=dir(fullfile(cd,'*.mat')) 
@@ -137,7 +137,8 @@ for iii=10:10
      'Channel 6'  
 %   
 %    [V6,~]=save_samples('100_CH22_merged.continuous',transitions);
-    [V6,~]=save_samples('100_CH22_2.continuous',transitions);
+%    [V6,~]=save_samples('100_CH22_2.continuous',transitions);
+    [V6,~]=save_samples('100_CH6.continuous',transitions);
 
     
     cd('/home/raleman/Documents/internship/24')
@@ -151,8 +152,8 @@ for iii=10:10
 
     'Channel 9'
     
-%    [V9,~]=save_samples('100_CH9_merged.continuous',transitions);
-    [V9,~]=save_samples('100_CH11_2.continuous',transitions);
+   [V9,~]=save_samples('100_CH9_merged.continuous',transitions);
+%     [V9,~]=save_samples('100_CH9_2.continuous',transitions);
 
     
     cd('/home/raleman/Documents/internship/24')

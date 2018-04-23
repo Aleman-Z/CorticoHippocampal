@@ -64,8 +64,15 @@ Bip17=cellfun(@(equis) filtfilt(b1,a1,equis), S17 ,'UniformOutput',false);
 rep=5; %Number of thresholds+1
 
 %%
+[NC]=epocher(Bip17,2);
+% ncmax=max(NC)*(1/0.195);
+% chtm=median(ncmax);
 
-chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
+ncmax=quantile(NC,0.999)*(1/0.195);
+chtm=median(ncmax);
+
+
+%chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
 %Median is used to account for any artifact/outlier. 
 
 % chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
@@ -80,7 +87,7 @@ ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal,'U
 % for k=1:rep-1
 % for k=1:rep-2
 k=level;
-[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', CHTM(k+1), (CHTM(k+1))*(1/2), [] ), signal,ti,'UniformOutput',false);    
+[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', CHTM(k+1), (CHTM(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
 swr172(:,:,1)=[S2x E2x M2x];
 s172(:,1)=cellfun('length',S2x);
 k
