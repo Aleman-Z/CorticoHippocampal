@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level)
+function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -43,7 +43,14 @@ fn=1000; % New sampling frequency.
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
 
-% Bandpass filtering:
+%LPF 300 Hz:
+Wn1=[320/(fn/2)]; % Cutoff=500 Hz
+[b2,a2] = butter(3,Wn1); %Filter coefficients
+
+V6=cellfun(@(equis) filtfilt(b2,a2,equis), V6 ,'UniformOutput',false);
+V9=cellfun(@(equis) filtfilt(b2,a2,equis), V9 ,'UniformOutput',false);
+V12=cellfun(@(equis) filtfilt(b2,a2,equis), V12 ,'UniformOutput',false);
+V17=cellfun(@(equis) filtfilt(b2,a2,equis), V17 ,'UniformOutput',false);
 
 %
 Mono6=cellfun(@(equis) filtfilt(b1,a1,equis), V6 ,'UniformOutput',false);
@@ -64,11 +71,10 @@ Bip17=cellfun(@(equis) filtfilt(b1,a1,equis), S17 ,'UniformOutput',false);
 rep=5; %Number of thresholds+1
 
 %%
-[NC]=epocher(Bip17,2);
-% ncmax=max(NC)*(1/0.195);
+[NC]=epocher(Mono17,2);
+ncmax=max(NC)*(1/0.195);
 % chtm=median(ncmax);
-
-ncmax=quantile(NC,0.999)*(1/0.195);
+% ncmax=quantile(NC,0.999)*(1/0.195);
 chtm=median(ncmax);
 
 

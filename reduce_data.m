@@ -23,7 +23,7 @@ tiempo=nan(length(transamp),1); %Time duration per epoch
 %Extract signals per channel and time  
 for i=1:length(transamp)
 probemos=transamp(i,:);
-C6{i}=data6m(round(probemos(1)):round(probemos(2))).*(0.195); % Open Ephys BitVolt CORRECTION FACTOR 
+C6{i}=data6m(round(probemos(1)):floor(probemos(2))).*(0.195); % Open Ephys BitVolt CORRECTION FACTOR 
 % C9{i}=data9m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR
 % C12{i}=data12m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR
 % C17{i}=data17m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR

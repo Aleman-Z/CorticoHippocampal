@@ -161,32 +161,34 @@ label2{7}='Monopolar';
     
  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
 
+myColorMap = jet(3);
+
 
  for level=1:1
-     
-for w=1:4
-myColorMap = jet(8);
+
+for iii=1:length(nFF)
+  
+
 % colormap(myColorMap);
-NCount=nan(length(nFF),1);
+% NCount=nan(length(nFF),1);
 
-    for iii=1:length(nFF)
-
+   
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-%  error('stop')   
+    
     cd(nFF{iii})
     %Get averaged time signal.
-
-lepoch=2;
+for w=1:3
+ %error('stop')
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 if Rat==26
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);    
 else
- [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
+ [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);     
 end
 
 %%
@@ -222,14 +224,13 @@ if Rat==26 %Noise peak was only observed in Rat 26
     NC=NC.';
     end
 end
-%Equal number of epochs.
-
+%Equal number of epochs. 
+%NC=NC(:,end-1845+1:end);
 if  Rat==26
     NC=NC(:,end-1845+1:end);
 else
     NC=NC(:,end-2500+1:end);
 end
-% % % % % % NC=NC(:,end-1845+1:end);
 
  [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
 %[pxx,f]=pwelch(NC,[],[],[],1000);
@@ -237,8 +238,8 @@ end
 %hann(length(NC))
 px=mean(pxx,2);
 
-%plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
-semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
+%plot(f,10*log10(px),'Color',myColorMap(w,:),'LineWidth',1.5)
+semilogy(f,(px)/sum(px),'Color',myColorMap(w,:),'LineWidth',1.5)
 
 hold on
 xlim([0 300])
@@ -311,20 +312,19 @@ title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 % % % % saveas(gcf,string)
 % % % % close all
 labelconditions{iii};
-    end
+end
 
-L = line(nan(8), nan(8),'LineStyle','none'); % 'nan' creates 'invisible' data
+L = line(nan(3), nan(3),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
     'Marker','s'); 
-legend(L, labelconditions)
+legend(L, label1(1:2:5))
 %         set(gca,'Color','w')
 grid on
 set(gca,'Color','k')
 ax=gca;
 ax.GridColor=[ 1,1,1];
-%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
-string=strcat('300hz_intra_',label1{2*w-1},'.png');
+string=strcat('300hz_intra_',labelconditions{iii},'.png');
 
     cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
 % if exist(labelconditions{iii})~=7
@@ -334,10 +334,10 @@ string=strcat('300hz_intra_',label1{2*w-1},'.png');
 fig=gcf;
 fig.InvertHardcopy='off';
 saveas(gcf,string)
-% 
-% xlim([0 50]);
-% string=strcat('50hz_intra_',label1{2*w-1},'.png');
-% saveas(gcf,string)
+
+xlim([0 50]);
+string=strcat('50hz_intra_',labelconditions{iii},'.png');
+saveas(gcf,string)
 
 close all
 
