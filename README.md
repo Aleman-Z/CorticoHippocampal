@@ -13,8 +13,8 @@ time_of_sleep: Gives information per condition about amount of sleep, number of 
  
 plot_number_ripples: Plots information obtained from the above function. 
 
--Scatter Plots
+-Scatter Plots:
 psd_ripples: Generates scatter plots to show difference between spectral power among conditions wrt the hippocampal power. 
 
--Spectrograms and GC. 
+-Spectrograms and GC:
 main_optimized_ab: Main analysis. 
