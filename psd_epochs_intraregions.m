@@ -326,7 +326,14 @@ ax=gca;
 ax.GridColor=[ 1,1,1];
 string=strcat('300hz_intra_',labelconditions{iii},'.png');
 
+if acer==0
     cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
+else
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_notch\',num2str(Rat)))   
+end
+
+
+%    cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
 % if exist(labelconditions{iii})~=7
 % (mkdir(labelconditions{iii}))
 % end
