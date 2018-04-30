@@ -1,4 +1,4 @@
-function [filt] = ft_notch(dat, Fs, Fl, varargin)
+function [filt] = ft_notch(dat, Fs, Fl,fwidth,nwidth, varargin)
 
 % FT_PREPROC_DFTFILTER reduces power line noise (50 or 60Hz) via two 
 % alternative methods:
@@ -93,8 +93,8 @@ Neighwidth = ft_getopt(varargin, 'dftneighbourwidth', [2 2 2]);
  Flreplace='neighbour';
 % determine the size of the data
 [nchans, nsamples] = size(dat);
-Flwidth =ones(1,length(Fl))*.5;
-Neighwidth =ones(1,length(Fl))*0.5; 
+Flwidth =ones(1,length(Fl))*fwidth;
+Neighwidth =ones(1,length(Fl))*nwidth; 
 % set the default filter frequency
 if nargin<3 || isempty(Fl)
   Fl = 50;

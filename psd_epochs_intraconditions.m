@@ -177,9 +177,9 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-%  error('stop')   
     cd(nFF{iii})
     %Get averaged time signal.
+  error('stop')   
 
 lepoch=2;
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
@@ -210,7 +210,7 @@ Fsample=1000;
 Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
 
 if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
-[NC] = ft_notch(NC.', Fsample,Fline);
+[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
 NC=NC.';
 end
 
@@ -218,7 +218,7 @@ if Rat==26 %Noise peak was only observed in Rat 26
     if w==4  % Reference 
      Fline=[208 209];
 
-    [NC] = ft_notch(NC.', Fsample,Fline);
+    [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
     NC=NC.';
     end
 end
@@ -231,8 +231,8 @@ else
 end
 % % % % % % NC=NC(:,end-1845+1:end);
 
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
+% [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
+[pxx,f]=pwelch(NC,[],[],[],1000);
 
 %hann(length(NC))
 px=mean(pxx,2);
@@ -324,7 +324,6 @@ set(gca,'Color','k')
 ax=gca;
 ax.GridColor=[ 1,1,1];
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
-string=strcat('300hz_intra_',label1{2*w-1},'.png');
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
 else
@@ -336,7 +335,13 @@ end
 % cd((labelconditions{iii}))
 fig=gcf;
 fig.InvertHardcopy='off';
+
+string=strcat('300hz_intra_',label1{2*w-1},'.png');
 saveas(gcf,string)
+
+string=strcat('300hz_intra_',label1{2*w-1},'.fig');
+saveas(gcf,string)
+
 % 
 % xlim([0 50]);
 % string=strcat('50hz_intra_',label1{2*w-1},'.png');

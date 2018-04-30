@@ -324,7 +324,6 @@ grid on
 set(gca,'Color','k')
 ax=gca;
 ax.GridColor=[ 1,1,1];
-string=strcat('300hz_intra_',labelconditions{iii},'.png');
 
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
@@ -340,10 +339,16 @@ end
 % cd((labelconditions{iii}))
 fig=gcf;
 fig.InvertHardcopy='off';
+string=strcat('300hz_intra_',labelconditions{iii},'.png');
 saveas(gcf,string)
+string=strcat('300hz_intra_',labelconditions{iii},'.fig');
+saveas(gcf,string)
+
 
 xlim([0 50]);
 string=strcat('50hz_intra_',labelconditions{iii},'.png');
+saveas(gcf,string)
+string=strcat('50hz_intra_',labelconditions{iii},'.figs');
 saveas(gcf,string)
 
 close all
