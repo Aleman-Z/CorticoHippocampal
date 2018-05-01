@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %
 if acer==0
@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=26:27
+for Rat=26:26
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -111,6 +111,8 @@ end
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     addpath /home/raleman/Documents/internship/fieldtrip-master/
+cd /home/raleman/Documents/internship/fieldtrip-master
+
     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -118,6 +120,7 @@ if acer==0
 else
     cd(strcat('D:\internship\',num2str(Rat)))
     addpath D:\internship\fieldtrip-master
+    cd D:\internship\fieldtrip-master
     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -159,12 +162,12 @@ label2{7}='Monopolar';
 
  
     
- clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
+ %clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
 
 
  for level=1:1
      
-for w=1:4
+for w=2:3
 myColorMap = jet(8);
 % colormap(myColorMap);
 NCount=nan(length(nFF),1);
@@ -179,7 +182,7 @@ end
 
     cd(nFF{iii})
     %Get averaged time signal.
-  error('stop')   
+  %error('stop')   
 
 lepoch=2;
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    

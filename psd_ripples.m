@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %%
 if acer==0
@@ -175,10 +175,10 @@ end
 
     
     cd(nFF{iii})
-
+lepoch=2;
     %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 p_h=ps_rip(q,1);
@@ -190,10 +190,16 @@ p_par=ps_rip(q,w);
 
 
 %GET NO Learning 1
+if acer==0
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
+end
+
 cd(nFF{1})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_1,q_1,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 p1_h=ps_rip(q_1,1);
@@ -205,10 +211,17 @@ p1_par=ps_rip(q_1,w);
 
 
 %GET NO Learning 2
+if acer==0
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+%cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(nFF{2})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_2,q_2,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 p2_h=ps_rip(q_2,1);
@@ -221,10 +234,17 @@ p2_par=ps_rip(q_2,w);
 %error('stop')
 
 %GET NO Learning 3
+%cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+if acer==0
 cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
+end
+
 cd(nFF{3})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_3,q_3,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 p3_h=ps_rip(q_3,1);

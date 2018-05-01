@@ -1,5 +1,4 @@
 function InitFieldtrip(varargin)
-cd /home/raleman/Documents/internship/fieldtrip-master
 cfg             = [];
 cfg.ntrials     = 500;
 cfg.triallength = 1;
