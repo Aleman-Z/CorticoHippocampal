@@ -81,80 +81,80 @@ Wn1=[320/(fn/2)]; % Cutoff=500 Hz
 
 
 %REDUCE ATTENUATION
-if notch==1
-atten=0.12;
-
-%Notch filter bank
-Ws=[49.5/(fn/2) 51/(fn/2)]; % Cutoff=50 Hz
-Wp=[46/(fn/2) 53/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B1,A1] = butter(n,Wn,'stop'); %Filter coefficients
-H1=dfilt.df2t(B1,A1);
-
-Ws=[99.5/(fn/2) 101/(fn/2)]; % Cutoff=500 Hz
-Wp=[96/(fn/2) 103/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B2,A2] = butter(n,Wn,'stop'); %Filter coefficients
-H2=dfilt.df2t(B2,A2);
-
-Ws=[149/(fn/2) 151/(fn/2)]; % Cutoff=500 Hz
-Wp=[146/(fn/2) 153/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B3,A3] = butter(n,Wn,'stop'); %Filter coefficients
-H3=dfilt.df2t(B3,A3);
-
-Ws=[198/(fn/2) 201/(fn/2)]; % Cutoff=500 Hz
-Wp=[196/(fn/2) 203/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B4,A4] = butter(n,Wn,'stop'); %Filter coefficients
-H4=dfilt.df2t(B4,A4);
-
-
-Ws=[249.5/(fn/2) 251/(fn/2)]; % Cutoff=500 Hz
-Wp=[246/(fn/2) 253/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B5,A5] = butter(n,Wn,'stop'); %Filter coefficients
-H5=dfilt.df2t(B5,A5);
-
-Ws=[299.5/(fn/2) 301/(fn/2)]; % Cutoff=500 Hz
-Wp=[296/(fn/2) 303/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B6,A6] = butter(n,Wn,'stop'); %Filter coefficients
-H6=dfilt.df2t(B6,A6);
-
-Hcas=dfilt.cascade(H1,H2,H3,H4,H5,H6);
-Hcas.PersistentMemory=1;
-
-%Reference filter
-Ws=[205/(fn/2) 208/(fn/2)]; % Cutoff=500 Hz
-Wp=[203/(fn/2) 209/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B100,A100] = butter(n,Wn,'stop'); %Filter coefficients
-H100=dfilt.df2t(B100,A100);
-% % % % % % % % 
-%Parietal and PFC filters for 66Hz artifacts and harmonics. 
-Ws=[65/(fn/2) 67/(fn/2)]; % Cutoff=500 Hz
-Wp=[63/(fn/2) 69/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B7,A7] = butter(n,Wn,'stop'); %Filter coefficients
-H7=dfilt.df2t(B7,A7);
-% % % % % % % % 
-Ws=[131/(fn/2) 135/(fn/2)]; % Cutoff=500 Hz
-Wp=[129/(fn/2) 136/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B8,A8] = butter(n,Wn,'stop'); %Filter coefficients
-H8=dfilt.df2t(B8,A8);
-% % % % % % % % 
-Ws=[265/(fn/2) 268/(fn/2)]; % Cutoff=500 Hz
-Wp=[263/(fn/2) 269/(fn/2)]; % Cutoff=50 Hz
-[n,Wn] = buttord(Wp,Ws,.1,atten);
-[B9,A9] = butter(n,Wn,'stop'); %Filter coefficients
-H9=dfilt.df2t(B9,A9);
-% % % % % % 
-Hcas2=dfilt.cascade(H1,H2,H3,H4,H5,H6,H7,H8,H9);
-Hcas2.PersistentMemory=1;
-
-end
+% if notch==1
+% atten=0.12;
+% 
+% %Notch filter bank
+% Ws=[49.5/(fn/2) 51/(fn/2)]; % Cutoff=50 Hz
+% Wp=[46/(fn/2) 53/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B1,A1] = butter(n,Wn,'stop'); %Filter coefficients
+% H1=dfilt.df2t(B1,A1);
+% 
+% Ws=[99.5/(fn/2) 101/(fn/2)]; % Cutoff=500 Hz
+% Wp=[96/(fn/2) 103/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B2,A2] = butter(n,Wn,'stop'); %Filter coefficients
+% H2=dfilt.df2t(B2,A2);
+% 
+% Ws=[149/(fn/2) 151/(fn/2)]; % Cutoff=500 Hz
+% Wp=[146/(fn/2) 153/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B3,A3] = butter(n,Wn,'stop'); %Filter coefficients
+% H3=dfilt.df2t(B3,A3);
+% 
+% Ws=[198/(fn/2) 201/(fn/2)]; % Cutoff=500 Hz
+% Wp=[196/(fn/2) 203/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B4,A4] = butter(n,Wn,'stop'); %Filter coefficients
+% H4=dfilt.df2t(B4,A4);
+% 
+% 
+% Ws=[249.5/(fn/2) 251/(fn/2)]; % Cutoff=500 Hz
+% Wp=[246/(fn/2) 253/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B5,A5] = butter(n,Wn,'stop'); %Filter coefficients
+% H5=dfilt.df2t(B5,A5);
+% 
+% Ws=[299.5/(fn/2) 301/(fn/2)]; % Cutoff=500 Hz
+% Wp=[296/(fn/2) 303/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B6,A6] = butter(n,Wn,'stop'); %Filter coefficients
+% H6=dfilt.df2t(B6,A6);
+% 
+% Hcas=dfilt.cascade(H1,H2,H3,H4,H5,H6);
+% Hcas.PersistentMemory=1;
+% 
+% %Reference filter
+% Ws=[205/(fn/2) 208/(fn/2)]; % Cutoff=500 Hz
+% Wp=[203/(fn/2) 209/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B100,A100] = butter(n,Wn,'stop'); %Filter coefficients
+% H100=dfilt.df2t(B100,A100);
+% % % % % % % % % 
+% %Parietal and PFC filters for 66Hz artifacts and harmonics. 
+% Ws=[65/(fn/2) 67/(fn/2)]; % Cutoff=500 Hz
+% Wp=[63/(fn/2) 69/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B7,A7] = butter(n,Wn,'stop'); %Filter coefficients
+% H7=dfilt.df2t(B7,A7);
+% % % % % % % % % 
+% Ws=[131/(fn/2) 135/(fn/2)]; % Cutoff=500 Hz
+% Wp=[129/(fn/2) 136/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B8,A8] = butter(n,Wn,'stop'); %Filter coefficients
+% H8=dfilt.df2t(B8,A8);
+% % % % % % % % % 
+% Ws=[265/(fn/2) 268/(fn/2)]; % Cutoff=500 Hz
+% Wp=[263/(fn/2) 269/(fn/2)]; % Cutoff=50 Hz
+% [n,Wn] = buttord(Wp,Ws,.1,atten);
+% [B9,A9] = butter(n,Wn,'stop'); %Filter coefficients
+% H9=dfilt.df2t(B9,A9);
+% % % % % % % 
+% Hcas2=dfilt.cascade(H1,H2,H3,H4,H5,H6,H7,H8,H9);
+% Hcas2.PersistentMemory=1;
+% 
+% end
 
 
 %Load Sleeping stage classification
@@ -185,6 +185,7 @@ V17=load('data17m.mat');
 V17=V17.data17m;
 V17=filtfilt(b2,a2,V17);
 %NO NEED OF NOTCH FILTER FOR HIPPOCAMPUS
+%UPDATE: Actually does need one!
 %V17=flipud(filter(Hcas,flipud(filter(Hcas,V17))));
 
 if notch==1
