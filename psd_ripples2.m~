@@ -178,10 +178,12 @@ lepoch=2;
     %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
-
 [p,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p_h=ps_rip(q,1); %Should always be bandpassed. Thus q. 
-p_par=ps_rip(q,w);
+
+[p_h,p_par]=ps_rip2(q,w);%Should always be bandpassed. Thus q. 
+
+% p_h=ps_rip(q,1); 
+% p_par2=ps_rip(q,w);
 % [ran]=rip_select(p_h);
 % p_h=p_h(ran);
 % [ran]=rip_select(p_par);
@@ -201,8 +203,11 @@ cd(nFF{1})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_1,q_1,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p1_h=ps_rip(q_1,1);
-p1_par=ps_rip(q_1,w);
+% p1_h=ps_rip(q_1,1);
+% p1_par=ps_rip(q_1,w);
+[p1_h,p1_par]=ps_rip2(q_1,w);%Should always be bandpassed. Thus q. 
+
+
 % [ran]=rip_select(p1_h);
 % p1_h=p1_h(ran);
 % [ran]=rip_select(p1_par);
@@ -223,8 +228,10 @@ cd(nFF{2})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_2,q_2,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p2_h=ps_rip(q_2,1);
-p2_par=ps_rip(q_2,w);
+% p2_h=ps_rip(q_2,1);
+% p2_par=ps_rip(q_2,w);
+[p2_h,p2_par]=ps_rip2(q_2,w);%Should always be bandpassed. Thus q. 
+
 % [ran]=rip_select(p2_h);
 % p2_h=p2_h(ran);
 % [ran]=rip_select(p2_par);
@@ -246,8 +253,10 @@ cd(nFF{3})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_3,q_3,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p3_h=ps_rip(q_3,1);
-p3_par=ps_rip(q_3,w);
+[p1_h,p1_par]=ps_rip2(q_1,w);%Should always be bandpassed. Thus q. 
+
+% p3_h=ps_rip(q_3,1);
+% p3_par=ps_rip(q_3,w);
 % [ran]=rip_select(p3_h);
 % p3_h=p3_h(ran);
 % [ran]=rip_select(p3_par);

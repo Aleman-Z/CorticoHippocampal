@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=26:26
+for Rat=26:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -178,10 +178,12 @@ lepoch=2;
     %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
-
 [p,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p_h=ps_rip(q,1); %Should always be bandpassed. Thus q. 
-p_par=ps_rip(q,w);
+
+[p_h,p_par]=ps_rip3(q,p,w);%Should always be bandpassed. Thus q. 
+
+% p_h=ps_rip(q,1); 
+% p_par2=ps_rip(q,w);
 % [ran]=rip_select(p_h);
 % p_h=p_h(ran);
 % [ran]=rip_select(p_par);
@@ -201,8 +203,11 @@ cd(nFF{1})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_1,q_1,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p1_h=ps_rip(q_1,1);
-p1_par=ps_rip(q_1,w);
+% p1_h=ps_rip(q_1,1);
+% p1_par=ps_rip(q_1,w);
+[p1_h,p1_par]=ps_rip3(q_1,p_1,w);%Should always be bandpassed. Thus q. 
+
+
 % [ran]=rip_select(p1_h);
 % p1_h=p1_h(ran);
 % [ran]=rip_select(p1_par);
@@ -223,8 +228,10 @@ cd(nFF{2})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_2,q_2,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p2_h=ps_rip(q_2,1);
-p2_par=ps_rip(q_2,w);
+% p2_h=ps_rip(q_2,1);
+% p2_par=ps_rip(q_2,w);
+[p2_h,p2_par]=ps_rip3(q_2,p_2,w);%Should always be bandpassed. Thus q. 
+
 % [ran]=rip_select(p2_h);
 % p2_h=p2_h(ran);
 % [ran]=rip_select(p2_par);
@@ -246,40 +253,200 @@ cd(nFF{3})
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 [p_3,q_3,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-p3_h=ps_rip(q_3,1);
-p3_par=ps_rip(q_3,w);
+[p3_h,p3_par]=ps_rip3(q_3,p_3,w);%Should always be bandpassed. Thus q. 
+
+% p3_h=ps_rip(q_3,1);
+% p3_par=ps_rip(q_3,w);
 % [ran]=rip_select(p3_h);
 % p3_h=p3_h(ran);
 % [ran]=rip_select(p3_par);
 % p3_par=p3_par(ran);
+%% Preprocessing 
 
+%Same
+P_h=p_h;
+P_par=p_par;
+
+P1_h=p1_h;
+P1_par=p1_par;
+
+P2_h=p2_h;
+P2_par=p2_par;
+
+P3_h=p3_h;
+P3_par=p3_par;
+%% Median normalization 
+
+P_h=(P_h)-median(P_h);
+P1_h=(P1_h)-median(P1_h);
+P2_h=(P2_h)-median(P2_h);
+P3_h=(P3_h)-median(P3_h);
+
+P_par=(P_par)-median(P_par);
+P1_par=(P1_par)-median(P1_par);
+P2_par=(P2_par)-median(P2_par);
+P3_par=(P3_par)-median(P3_par);
+%%
+%%
+ scatter(P_h,P_par,'filled','r');
+%scatter(P_h,P_par,'r');
+
+hold on
+ scatter(P1_h,P1_par,'filled','b');
+%scatter(P1_h,P1_par,'b');
+% 
+scatter(P2_h,P2_par,'filled','g');
+
+%scatter(P2_h,P2_par,'g');
+
+ scatter(P3_h,P3_par,'filled','y');
+%scatter(P3_h,P3_par,'y');
+
+h1=lsline;
+
+L(:,:) = [h1(1).XData.' h1(1).YData.'];
+plot(L(:,1),L(:,2),'r')
+
+L(:,:) = [h1(2).XData.' h1(2).YData.'];
+plot(L(:,1),L(:,2),'b')
+
+L(:,:) = [h1(3).XData.' h1(3).YData.'];
+plot(L(:,1),L(:,2),'g')
+
+L(:,:) = [h1(4).XData.' h1(4).YData.'];
+plot(L(:,1),L(:,2),'y')
+legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+
+set(gca,'Color','k')
+
+xlabel('Hippocampal Power')
+% ylabel(strcat(label1{2*w-1},{' '},'Power'))
+grid minor
+ alpha(.5)
+
+title('Wideband signal vs Bandpassed HPC')
 
 
 %%
-scatter(p_h,p_par,'filled');
-hold on
-scatter(p1_h,p1_par,'filled');
-scatter(p2_h,p2_par,'filled');
-scatter(p3_h,p3_par,'filled');
-legend('Learning','Baseline 1','Baseline 2','Baseline 3')
-xlabel('Hippocampal Power')
-ylabel(strcat(label1{2*w-1},{' '},'Power'))
-grid minor
-alpha(.3)
-title('Wideband signals')
+% scatter(p_h,p_par,'filled');
+% hold on
+% scatter(p1_h,p1_par,'filled');
+% scatter(p2_h,p2_par,'filled');
+% scatter(p3_h,p3_par,'filled');
+% legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+% xlabel('Hippocampal Power')
+% ylabel(strcat(label1{2*w-1},{' '},'Power'))
+% grid minor
+% alpha(.3)
+% title('Wideband signals')
 %%
 %error('stop')
-
+%%
 string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/scatter_widepassed/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter_Wide/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
 cd((labelconditions{iii-3}))
 
 saveas(gcf,string)
+string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.fig');
+saveas(gcf,string)
+
 close all
+
+%% WITHOUT OUTLIERS
+ajalas=isoutlier(p_h);
+ajalas=not(ajalas);
+P_h=p_h(ajalas);
+P_par=p_par(ajalas);
+
+
+ajalas=isoutlier(p1_h);
+ajalas=not(ajalas);
+P1_h=p1_h(ajalas);
+P1_par=p1_par(ajalas);
+
+ajalas=isoutlier(p2_h);
+ajalas=not(ajalas);
+P2_h=p2_h(ajalas);
+P2_par=p2_par(ajalas);
+
+ajalas=isoutlier(p3_h);
+ajalas=not(ajalas);
+P3_h=p3_h(ajalas);
+P3_par=p3_par(ajalas);
+%% Median normalization 
+
+P_h=(P_h)-median(P_h);
+P1_h=(P1_h)-median(P1_h);
+P2_h=(P2_h)-median(P2_h);
+P3_h=(P3_h)-median(P3_h);
+
+P_par=(P_par)-median(P_par);
+P1_par=(P1_par)-median(P1_par);
+P2_par=(P2_par)-median(P2_par);
+P3_par=(P3_par)-median(P3_par);
+%%
+%%
+ scatter(P_h,P_par,'filled','r');
+%scatter(P_h,P_par,'r');
+
+hold on
+ scatter(P1_h,P1_par,'filled','b');
+%scatter(P1_h,P1_par,'b');
+% 
+scatter(P2_h,P2_par,'filled','g');
+
+%scatter(P2_h,P2_par,'g');
+
+ scatter(P3_h,P3_par,'filled','y');
+%scatter(P3_h,P3_par,'y');
+
+h1=lsline;
+
+L(:,:) = [h1(1).XData.' h1(1).YData.'];
+plot(L(:,1),L(:,2),'r')
+
+L(:,:) = [h1(2).XData.' h1(2).YData.'];
+plot(L(:,1),L(:,2),'b')
+
+L(:,:) = [h1(3).XData.' h1(3).YData.'];
+plot(L(:,1),L(:,2),'g')
+
+L(:,:) = [h1(4).XData.' h1(4).YData.'];
+plot(L(:,1),L(:,2),'y')
+legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+
+set(gca,'Color','k')
+
+xlabel('Hippocampal Power')
+% ylabel(strcat(label1{2*w-1},{' '},'Power'))
+grid minor
+ alpha(.5)
+
+
+title('Wideband signal vs Bandpassed HPC')
+
+ %%
+string=strcat('Scatter_No_Outlier_',label1{2*w-1},'_',num2str(level),'.png');
+
+    cd(strcat('/home/raleman/Dropbox/New_Scatter_Wide/',num2str(Rat)))
+if exist(labelconditions{iii-3})~=7
+(mkdir(labelconditions{iii-3}))
+end
+cd((labelconditions{iii-3}))
+
+saveas(gcf,string)
+string=strcat('Scatter_No_Outlier_',label1{2*w-1},'_',num2str(level),'.fig');
+saveas(gcf,string)
+
+close all
+
+
+
+
 end
 
 end
