@@ -19,6 +19,17 @@ plot_number_ripples: Plots information obtained from the above function.
 --------------
 psd_ripples: Generates scatter plots to show difference between spectral power among conditions wrt the hippocampal power. 
 
+psd_ripples2: Same but using bandpassed signals of PAR and PFC.
+
+psd_ripples3: Same but using Wideband signals of PAR and PFC.
+
+
 -SPECTROGRAMS AND GC
 --------------------
 main_optimized_ab: Main analysis. 
+
+-HISTOGRAMS
+----------------
+ripple_amplitude: Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
+
+between_ripples: Histogram of time between ripples for different conditions. 
