@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=27:27
+for Rat=26:26
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -130,6 +130,8 @@ ro=[1200];
 coher=0;
 selectripples=0;
 mergebaseline=0;
+notch=1;
+nrem=3;
 %%
 
 %Make labels
@@ -153,17 +155,17 @@ label2{7}='Monopolar';
 
 %%
 
- for iii=1:length(nFF)
+for iii=4:length(nFF)
 
     
-%  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 ch_26 ch_27 sl_26 sl_27
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
 
 
 
 %for level=1:length(ripple)-1;    
  for level=1:1
      
-for w=1:1
+for w=2:3
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -173,29 +175,112 @@ end
 
     
     cd(nFF{iii})
-  %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 lepoch=2;
-notch=1;
-nrem=3;
-
-%error('stop here')
+    %Get averaged time signal.
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
-if Rat==26
-nr_26(iii,level)=ripple;
-co_26(iii,level)=RipFreq2;
-sl_26(iii,level)=timeasleep;
-ch_26(iii,level)=CHTM(1);
+[p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+p_h=ps_rip(q,1);
+p_par=ps_rip(q,w);
+% [ran]=rip_select(p_h);
+% p_h=p_h(ran);
+% [ran]=rip_select(p_par);
+% p_par=p_par(ran);
 
+
+%GET NO Learning 1
+if acer==0
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-nr_27(iii,level)=ripple;
-co_27(iii,level)=RipFreq2;
-sl_27(iii,level)=timeasleep;
-ch_27(iii,level)=CHTM(1);
-
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
 end
 
+cd(nFF{1})
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+
+[p_1,q_1,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+p1_h=ps_rip(q_1,1);
+p1_par=ps_rip(q_1,w);
+% [ran]=rip_select(p1_h);
+% p1_h=p1_h(ran);
+% [ran]=rip_select(p1_par);
+% p1_par=p1_par(ran);
+
+
+%GET NO Learning 2
+if acer==0
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+%cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+cd(nFF{2})
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+
+[p_2,q_2,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+p2_h=ps_rip(q_2,1);
+p2_par=ps_rip(q_2,w);
+% [ran]=rip_select(p2_h);
+% p2_h=p2_h(ran);
+% [ran]=rip_select(p2_par);
+% p2_par=p2_par(ran);
+
+%error('stop')
+
+%GET NO Learning 3
+%cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+if acer==0
+cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+% cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))    
+cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(nFF{3})
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+
+[p_3,q_3,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+p3_h=ps_rip(q_3,1);
+p3_par=ps_rip(q_3,w);
+% [ran]=rip_select(p3_h);
+% p3_h=p3_h(ran);
+% [ran]=rip_select(p3_par);
+% p3_par=p3_par(ran);
+
+
+
+
+scatter(p_h,p_par,'filled');
+hold on
+scatter(p1_h,p1_par,'filled');
+scatter(p2_h,p2_par,'filled');
+scatter(p3_h,p3_par,'filled');
+legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+xlabel('Hippocampal Power')
+ylabel(strcat(label1{2*w-1},{' '},'Power'))
+grid minor
+alpha(.3)
+title('Wideband signals')
+
+%error('stop')
+
+string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.png');
+
+    cd(strcat('/home/raleman/Dropbox/scatter_widepassed/',num2str(Rat)))
+if exist(labelconditions{iii-3})~=7
+(mkdir(labelconditions{iii-3}))
+end
+cd((labelconditions{iii-3}))
+
+saveas(gcf,string)
+close all
 end
 
 end
