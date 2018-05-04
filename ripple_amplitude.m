@@ -189,7 +189,6 @@ q=q(ran);
         FF(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
 
-
 histogram(FF(not(isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
