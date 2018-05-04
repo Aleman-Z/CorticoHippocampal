@@ -189,12 +189,12 @@ q=q(ran);
         FF(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
 
-histogram(FF(not(isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
+histogram(FF(not(Isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
 hold on
 
-pd = fitdist(FF(not(isoutlier(FF))),'Normal');
+pd = fitdist(FF(not(Isoutlier(FF))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','--')
 
@@ -223,8 +223,8 @@ q=q(ran);
     end
 
 
-histogram(F(not(isoutlier(F))),'Normalization','probability','BinWidth',0.5)
-pd = fitdist(F(not(isoutlier(F))),'Normal');
+histogram(F(not(Isoutlier(F))),'Normalization','probability','BinWidth',0.5)
+pd = fitdist(F(not(Isoutlier(F))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','-')
 
@@ -296,17 +296,17 @@ q=q(ran);
         F(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
     
-histogram(FF(not(isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
+histogram(FF(not(Isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
 hold on
-pd = fitdist(FF(not(isoutlier(FF))),'Normal');
+pd = fitdist(FF(not(Isoutlier(FF))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','--')
 
 
-histogram(F(not(isoutlier(F))),'Normalization','probability','BinWidth',0.5)
-pd = fitdist(F(not(isoutlier(F))),'Normal');
+histogram(F(not(Isoutlier(F))),'Normalization','probability','BinWidth',0.5)
+pd = fitdist(F(not(Isoutlier(F))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','-')
 
@@ -377,17 +377,17 @@ q=q(ran);
 % hold on
 % 
 % histogram(F,'Normalization','probability','BinWidth',0.5)
-histogram(FF(not(isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
+histogram(FF(not(Isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
 hold on
-pd = fitdist(FF(not(isoutlier(FF))),'Normal');
+pd = fitdist(FF(not(Isoutlier(FF))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','--')
 
 
-histogram(F(not(isoutlier(F))),'Normalization','probability','BinWidth',0.5)
-pd = fitdist(F(not(isoutlier(F))),'Normal');
+histogram(F(not(Isoutlier(F))),'Normalization','probability','BinWidth',0.5)
+pd = fitdist(F(not(Isoutlier(F))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','-')
 
