@@ -1,6 +1,6 @@
 acer=0;
 
-%
+%%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
@@ -48,12 +48,10 @@ nFF=[
 %     ];
 
 labelconditions=[
-    { 
-    
-    'Baseline_1'}
-    'Baseline_2'
-    'Baseline_3'
-     'PlusMaze'    
+    {    
+     'PlusMaze'
+                }
+     
      'Novelty_1'
      'Novelty_2'
      'Foraging_1'
@@ -89,10 +87,10 @@ nFF=[
 
 labelconditions=[
     { 
-    'Baseline_1'}
-    'Baseline_2'
-    'Baseline_3'
-    'PlusMaze_1'
+    %'Baseline_1'}
+    %'Baseline_2'
+    %'Baseline_3'
+    'PlusMaze_1'} 
     'PlusMaze_2'
     
     'Foraging_1'
@@ -130,16 +128,18 @@ granger=0;
 %Select length of window in seconds:
 ro=[1200];
 coher=0;
-selectripples=1;
-mergebaseline=1;
+selectripples=0;
+mergebaseline=0;
+notch=1;
 nrem=3;
-notch=0;
+myColorMap = jet(8);
+
 %%
 
 %Make labels
 label1=cell(7,1);
-label1{1}='Hippocampus';
-label1{2}='Hippocampus';
+label1{1}='Hippo';
+label1{2}='Hippo';
 label1{3}='Parietal';
 label1{4}='Parietal';
 label1{5}='PFC';
@@ -157,19 +157,17 @@ label2{7}='Monopolar';
 
 %%
 
- 
+for iii=1:length(nFF)
+
     
- clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
 
 
+
+%for level=1:length(ripple)-1;    
  for level=1:1
      
-for w=1:3
-myColorMap = jet(8);
-% colormap(myColorMap);
-NCount=nan(length(nFF),1);
-
-    for iii=1:length(nFF)
+for w=1:1
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -177,154 +175,68 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-    
-    cd(nFF{iii})
-    %Get averaged time signal.
-%error('stop')
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w);    
+cd(nFF{iii})
+lepoch=2;
 
-%%
-% for w=1:3
-f_signal=sig2{2*w-1};
-[NC]=epocher(f_signal,2);
-av=mean(NC,1);
-av=artifacts(av,10);
-%Limits artifacts to a maximum of 10
-if sum(av)>=10
-av=artifacts(av,20);    
-end
-av=not(av);
-%Removing artifacts.
-NC=NC(:,av);
-
-NCount(iii,1)=size(NC,2);
-
-%Notch filter
-Fsample=1000;
-Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-
-if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
-[NC] = ft_preproc_dftfilter(NC.', Fsample,Fline);
-NC=NC.';
-end
-
-if w==4  % Reference 
- Fline=[208 209];
-
-[NC] = ft_preproc_dftfilter(NC.', Fsample,Fline);
-NC=NC.';
-end
-
-%Equal number of epochs. 
-NC=NC(:,end-1845+1:end);
-
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
-
-%hann(length(NC))
-px=mean(pxx,2);
-
-plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
-hold on
-xlim([0 300])
-% if w==1
-%  xlim([0 300])
-% else
-%  xlim([0 300])  
-% end
-
-%ylim([-40 30])
-grid minor
-xlabel('Frequency (Hz)')
-ylabel('10 Log(x)')
-%end
-%legend('HPC','PAR','PFC')
-title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-%%
 % error('stop')
 
+%Get averaged time signal.
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+
+%%
+DEMAIS=DEMAIS(2:end);
+ripple=ripple(2:end);
+y1=y1(2:end);
+
+%%
+plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
+xlabel('Threshold value (uV)')
+ylabel('Ripples per second')
+grid minor
+
+hold on
+plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
+title('Rate of ripples per Threshold value')
+
 %%
 
-% [f,Y] = freqlog(NC);
-% Ym=mean(Y,2);
-% plot(f*(1000/2),Ym)
-
-% [~,F]=frequency(f_signal{1});  
-% F=F*0;
-% 
-% for kk=1:length(f_signal)
-%   [~,F_c]=frequency(f_signal{kk});  
-%   F=F+F_c;
-% end
-
-
-%
-% % [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-% % 
-% %  [~,F]=frequency(p{1}(w,:));  
-% %   F=F*0;
-% % for kk=1:length(p)
-% %   [f,F_c]=frequency(p{kk}(w,:));  
-% %   F=F+F_c;
-% % end
-% % F=F./length(p);
-
-% % % % % % % % % % % plot(f,F);
-% % figure()
-% % stem(f,2*abs(Y(1:NFFT/2+1)))
-% % % % % % % % % % % % % % % % % grid minor;
-% % % % % % % % % % % % % % % % % title(strcat('Power Spectrum of',{' '},label1{2*w-1}))
-% % % % % % % % % % % % % % % % % xlabel('Frequency (Hz)')
-% % % % % % % % % % % % % % % % % ylabel('|Y(f)|')
-% % % % % % % % % % % % % % % % % xlim([0 300])
 
 
 
-%error('stop')
+
+end
+
+end
 
 
-% % % % string=strcat('Power_Spectrum_',label1{2*w-1},'_',num2str(level),'.png');
-% % % % 
-% % % %     cd(strcat('/home/raleman/Dropbox/Power_plots/',num2str(Rat)))
-% % % % if exist(labelconditions{iii})~=7
-% % % % (mkdir(labelconditions{iii}))
-% % % % end
-% % % % cd((labelconditions{iii}))
-% % % % 
-% % % % saveas(gcf,string)
-% % % % close all
-labelconditions{iii};
-    end
+end
 
-L = line(nan(8), nan(8),'LineStyle','none'); % 'nan' creates 'invisible' data
-set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
-    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
-    'Marker','s'); 
-legend(L, labelconditions)
-%         set(gca,'Color','w')
-grid on
+
+set(gca, 'XDir','reverse')
+h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
+set(h,'Location','Northwest')
+
 set(gca,'Color','k')
-ax=gca;
-ax.GridColor=[ 1,1,1];
-string=strcat('Power_300_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 
-    cd(strcat('/home/raleman/Dropbox/Power_plots/',num2str(Rat)))
-% if exist(labelconditions{iii})~=7
-% (mkdir(labelconditions{iii}))
-% end
-% cd((labelconditions{iii}))
-fig=gcf
+error('stop')
+
+string=strcat('Ripples_per_condition_scaled','.png');
+
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Threshold/',num2str(Rat)))
+else    
+    cd(strcat('C:\Users\Welt Meister\Dropbox\Threshold/',num2str(Rat)))
+end
+
+
 saveas(gcf,string)
+string=strcat('Ripples_per_condition_scaled','.fig');
+
+saveas(gcf,string)
+
 close all
 
-
-
-
-end
-
-
-end
 %%
 end
 %end

@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 
 %
 if acer==0
@@ -186,15 +186,21 @@ end
 
 lepoch=2;
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-if Rat==26
+
+%if Rat==26
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+%else
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
+%end
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
-else
- [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
-end
+
 
 %%
 % for w=1:3
 f_signal=sig2{2*w-1};
+%Amplitude normalization
+f_signal=median(f_signal);
+
 [NC]=epocher(f_signal,2);
 av=mean(NC,1);
 av=artifacts(av,10);
