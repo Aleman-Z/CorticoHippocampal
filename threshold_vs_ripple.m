@@ -182,7 +182,7 @@ lepoch=2;
 
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 %%
 DEMAIS=DEMAIS(2:end);
