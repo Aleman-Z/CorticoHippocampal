@@ -13,7 +13,9 @@ end
 %%
 %Rat=26;
 
-for Rat=26:26
+for Rat=3:3
+rats=[26 27 21];
+Rat=rats(Rat);    
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -61,7 +63,8 @@ labelconditions=[
     ];
 
 
-else
+end
+if Rat==27
 nFF=[
     {'rat27_nl_base_2016-03-28_15-01-17'                   }
     {'rat27_NL_baseline_2016-02-26_12-50-26'               }
@@ -106,6 +109,34 @@ labelconditions=[
 
     
 end
+
+if Rat==21
+ 
+ nFF=[  
+    {'2015-11-27_13-50-07 5h baseline'             }
+    {'rat21 baselin2015-12-11_12-52-58'            }
+    {'rat21_learningbaseline2_2015-12-10_15-24-17' }
+    {'rat21with45minlearning_2015-12-02_14-25-12'  }
+    %{'rat21t_maze_2015-12-14_13-29-07'             }
+    {'rat21 post t-maze 2015-12-14_13-30-52'       }
+    
+];
+
+%%
+labelconditions=[
+    {    
+     'Learning Baseline'
+                }
+     
+     '45minLearning'
+     'Novelty_2'
+     't-maze'
+     'Post t-maze'
+    ];
+    
+end
+ 
+
 
 %% Go to main directory
 if acer==0
@@ -167,8 +198,13 @@ label2{7}='Monopolar';
 
  for level=1:1
      
-for w=2:3
-myColorMap = jet(8);
+for w=1:1
+
+if Rat==21
+myColorMap = jet(5);
+else
+myColorMap = jet(8);    
+end
 % colormap(myColorMap);
 NCount=nan(length(nFF),1);
 
@@ -187,19 +223,23 @@ end
 lepoch=2;
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 
+
+[sig2]=nrem_newest_power(nrem,notch);
 %if Rat==26
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
 %else
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
 %end
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+
+% error('stop')
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
 
 
 %%
 % for w=1:3
 f_signal=sig2{2*w-1};
 %Amplitude normalization
-f_signal=median(f_signal);
+%f_signal=median(f_signal);
 
 [NC]=epocher(f_signal,2);
 av=mean(NC,1);
@@ -233,23 +273,25 @@ if Rat==26 %Noise peak was only observed in Rat 26
 end
 %Equal number of epochs.
 
-if  Rat==26
-    NC=NC(:,end-1845+1:end);
-else
-    NC=NC(:,end-2500+1:end);
-end
+% if  Rat==26
+%     NC=NC(:,end-1845+1:end);
+% else
+%     NC=NC(:,end-2500+1:end);
+% end
+% NC=zscore(NC);
 % % % % % % NC=NC(:,end-1845+1:end);
 
-% [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-[pxx,f]=pwelch(NC,[],[],[],1000);
+ [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
+%[pxx,f]=pwelch(NC,[],[],[],1000);
 
 %hann(length(NC))
 px=mean(pxx,2);
 
 %plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
-
 hold on
+semilogy(f, [(px.' - 1*std(pxx.')/sqrt(length(pxx.')))/sum(px); (px.'+1*std(pxx.')/sqrt(length(pxx.')))/sum(px)], 'Color',myColorMap(iii,:),'LineWidth',1.5,'LineStyle','-');
+
 xlim([0 300])
 % if w==1
 %  xlim([0 300])
@@ -326,17 +368,21 @@ L = line(nan(8), nan(8),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
     'Marker','s'); 
+
+error('stop')
+
 legend(L, labelconditions)
 %         set(gca,'Color','w')
 grid on
 set(gca,'Color','k')
 ax=gca;
 ax.GridColor=[ 1,1,1];
+
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_notch/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power_new/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_notch\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_new\',num2str(Rat)))   
 end
 % if exist(labelconditions{iii})~=7
 % (mkdir(labelconditions{iii}))
@@ -352,9 +398,9 @@ string=strcat('300hz_intra_',label1{2*w-1},'.fig');
 saveas(gcf,string)
 
 % 
-% xlim([0 50]);
-% string=strcat('50hz_intra_',label1{2*w-1},'.png');
-% saveas(gcf,string)
+xlim([0 50]);
+string=strcat('50hz_intra_',label1{2*w-1},'.png');
+saveas(gcf,string)
 
 close all
 

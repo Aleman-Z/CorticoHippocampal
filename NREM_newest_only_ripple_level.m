@@ -52,7 +52,7 @@ Mono17=filtfilt(b1,a1,V17);
 'Loaded channels'
 
 %Total amount of time spent sleeping:
-timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
+timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 
 
 'Bandpass performed'
