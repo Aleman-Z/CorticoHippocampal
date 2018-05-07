@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=3:3
+for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -198,7 +198,7 @@ label2{7}='Monopolar';
 
  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -286,7 +286,7 @@ end
 
 %hann(length(NC))
 px=mean(pxx,2);
-
+% error('stop')
 %plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 hold on
@@ -364,7 +364,7 @@ title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 labelconditions{iii};
     end
 
-L = line(nan(8), nan(8),'LineStyle','none'); % 'nan' creates 'invisible' data
+L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
     'Marker','s'); 
