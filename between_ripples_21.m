@@ -91,7 +91,7 @@ label2{7}='Monopolar';
 
 %%
 
-for iii=5:length(nFF)
+for iii=3:length(nFF)
 
     
  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
