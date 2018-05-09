@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=26:27
+for Rat=27:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -288,6 +288,7 @@ P2_par=(P2_par)-median(P2_par);
 P3_par=(P3_par)-median(P3_par);
 %%
 %%
+
  scatter(P_h,P_par,'filled','r');
 %scatter(P_h,P_par,'r');
 
@@ -301,7 +302,6 @@ scatter(P2_h,P2_par,'filled','g');
 
  scatter(P3_h,P3_par,'filled','y');
 %scatter(P3_h,P3_par,'y');
-
 h1=lsline;
 
 L(:,:) = [h1(1).XData.' h1(1).YData.'];
