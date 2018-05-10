@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 
 %%
 if acer==0
@@ -110,12 +110,14 @@ else
 end
 
     
-    cd(nFF{iii})
+cd(nFF{iii})
 lepoch=2;
-    %Get averaged time signal.
+% error('stop')
+%Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
-[p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+[sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,~]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
+[~,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+clear sig1 sig2 ripple carajo veamos
 % error('stop')
 
 [ran]=rip_select(q);
@@ -124,7 +126,7 @@ q=q(ran);
     for j=1:length(q)
         FF(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
-
+clear q
 histogram(FF(not(Isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
@@ -134,6 +136,7 @@ pd = fitdist(FF(not(Isoutlier(FF))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','--')
 
+clear q p sig1 sig2 timecell pd
 
 
 %GET NO Learning 1
@@ -148,7 +151,10 @@ cd(nFF{1})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
-[p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+[~,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+
+clear  p sig1 sig2 timecell
+
 % error('stop')
 
 [ran]=rip_select(q);
@@ -157,12 +163,14 @@ q=q(ran);
     for j=1:length(q)
         F(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
-
+clear q
 
 histogram(F(not(Isoutlier(F))),'Normalization','probability','BinWidth',0.5)
 pd = fitdist(F(not(Isoutlier(F))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','-')
+
+clear q p sig1 sig2 timecell pd
 
 % consig=carajo{1};
 % consig=consig(:,2);
@@ -222,8 +230,10 @@ cd(nFF{2})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
-[p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+[~,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 % error('stop')
+
+clear sig1 sig2 timecell 
 
 [ran]=rip_select(q);
 q=q(ran);
@@ -231,7 +241,7 @@ q=q(ran);
     for j=1:length(q)
         F(j,1) = (max(q{j}(1,:))-median(q{j}(1,:)))/std(q{j}(1,:));         
     end
-    
+clear q    
 histogram(FF(not(Isoutlier(FF))),'Normalization','probability','BinWidth',0.5)
 xlim([0 20])
 grid minor
@@ -239,7 +249,7 @@ hold on
 pd = fitdist(FF(not(Isoutlier(FF))),'Normal');
 y = pdf(pd,0:0.5:30);
 plot(0:0.5:30,y/2,'LineWidth',1.5,'Color','k','LineStyle','--')
-
+clear y pd
 
 histogram(F(not(Isoutlier(F))),'Normalization','probability','BinWidth',0.5)
 pd = fitdist(F(not(Isoutlier(F))),'Normal');
