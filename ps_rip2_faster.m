@@ -175,19 +175,26 @@ end
 %     error('stop')
 cd(nFF{iii})
 lepoch=2;
-    %Get averaged time signal.
+%  error('stop')   
+%Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,~,~]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 [~,q,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 clear sig1 sig2 carajo
 [p_h,p_par]=ps_rip2(q,w);%Should always be bandpassed. Thus q. 
 
-% p_h=ps_rip(q,1); 
-% p_par2=ps_rip(q,w);
-% [ran]=rip_select(p_h);
-% p_h=p_h(ran);
-% [ran]=rip_select(p_par);
-% p_par=p_par(ran);
+p_h=(p_h)-median(p_h);
+p_par=(p_par)-median(p_par);
+
+scatter(p_h,p_par,'filled','r');
+hold on
+
+ajalas=isoutlier(p_h);
+ajalas=not(ajalas);
+P_h=p_h(ajalas);
+P_par=p_par(ajalas);
+
+clear p_h p_par q
 
 
 %GET NO Learning 1
@@ -200,18 +207,26 @@ end
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 cd(nFF{1})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
+[sig1,sig2,ripple,carajo,veamos,CHTM,~,~]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
+[~,q_1,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
 
-[p_1,q_1,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-% p1_h=ps_rip(q_1,1);
-% p1_par=ps_rip(q_1,w);
+clear sig1 sig2 carajo veamos
 [p1_h,p1_par]=ps_rip2(q_1,w);%Should always be bandpassed. Thus q. 
 
+p1_h=(p1_h)-median(p1_h);
+p1_par=(p1_par)-median(p1_par);
 
-% [ran]=rip_select(p1_h);
-% p1_h=p1_h(ran);
-% [ran]=rip_select(p1_par);
-% p1_par=p1_par(ran);
+scatter(p1_h,p1_par,'filled','b');
+hold on
+
+ajalas=isoutlier(p1_h);
+ajalas=not(ajalas);
+P1_h=p1_h(ajalas);
+P1_par=p1_par(ajalas);
+
+clear p1_h p1_par q_1
+
+
 
 
 %GET NO Learning 2
@@ -227,17 +242,25 @@ cd(nFF{2})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
-[p_2,q_2,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-% p2_h=ps_rip(q_2,1);
-% p2_par=ps_rip(q_2,w);
+[~,q_2,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+
+clear sig1 sig2 carajo veamos
 [p2_h,p2_par]=ps_rip2(q_2,w);%Should always be bandpassed. Thus q. 
 
-% [ran]=rip_select(p2_h);
-% p2_h=p2_h(ran);
-% [ran]=rip_select(p2_par);
-% p2_par=p2_par(ran);
+p2_h=(p2_h)-median(p2_h);
+p2_par=(p2_par)-median(p2_par);
 
-%error('stop')
+hold on
+scatter(p2_h,p2_par,'filled','g');
+
+ajalas=isoutlier(p2_h);
+ajalas=not(ajalas);
+P2_h=p2_h(ajalas);
+P2_par=p2_par(ajalas);
+
+clear p2_h p2_par q_2
+
+
 
 %GET NO Learning 3
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -252,56 +275,26 @@ cd(nFF{3})
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
-[p_3,q_3,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+[~,q_3,~,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+
+clear sig1 sig2 carajo veamos
 [p3_h,p3_par]=ps_rip2(q_3,w);%Should always be bandpassed. Thus q. 
 
-% p3_h=ps_rip(q_3,1);
-% p3_par=ps_rip(q_3,w);
-% [ran]=rip_select(p3_h);
-% p3_h=p3_h(ran);
-% [ran]=rip_select(p3_par);
-% p3_par=p3_par(ran);
-%% Preprocessing 
-
-%Same
-P_h=p_h;
-P_par=p_par;
-
-P1_h=p1_h;
-P1_par=p1_par;
-
-P2_h=p2_h;
-P2_par=p2_par;
-
-P3_h=p3_h;
-P3_par=p3_par;
-%% Median normalization 
-
-P_h=(P_h)-median(P_h);
-P1_h=(P1_h)-median(P1_h);
-P2_h=(P2_h)-median(P2_h);
-P3_h=(P3_h)-median(P3_h);
-
-P_par=(P_par)-median(P_par);
-P1_par=(P1_par)-median(P1_par);
-P2_par=(P2_par)-median(P2_par);
-P3_par=(P3_par)-median(P3_par);
-%%
-%%
-
- scatter(P_h,P_par,'filled','r');
-%scatter(P_h,P_par,'r');
+p3_h=(p3_h)-median(p3_h);
+p3_par=(p3_par)-median(p3_par);
 
 hold on
- scatter(P1_h,P1_par,'filled','b');
-%scatter(P1_h,P1_par,'b');
-% 
-scatter(P2_h,P2_par,'filled','g');
+scatter(p3_h,p3_par,'filled','y');
 
-%scatter(P2_h,P2_par,'g');
+ajalas=isoutlier(p3_h);
+ajalas=not(ajalas);
+P3_h=p3_h(ajalas);
+P3_par=p3_par(ajalas);
 
- scatter(P3_h,P3_par,'filled','y');
-%scatter(P3_h,P3_par,'y');
+clear p3_h p3_par q_3
+
+
+
 h1=lsline;
 
 L(:,:) = [h1(1).XData.' h1(1).YData.'];
@@ -315,12 +308,39 @@ plot(L(:,1),L(:,2),'g')
 
 L(:,:) = [h1(4).XData.' h1(4).YData.'];
 plot(L(:,1),L(:,2),'y')
-legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+
+legend(labelconditions{iii-3},'Baseline 1','Baseline 2','Baseline 3')
+
+%Slopes
+ve1=(h1(1).YData(2)-h1(1).YData(1))/(h1(1).XData(2)-h1(1).XData(1));
+ve1=num2str(ve1);
+
+ve2=(h1(2).YData(2)-h1(2).YData(1))/(h1(2).XData(2)-h1(2).XData(1));
+ve2=num2str(ve2);
+
+ve3=(h1(3).YData(2)-h1(3).YData(1))/(h1(3).XData(2)-h1(3).XData(1));
+ve3=num2str(ve3);
+
+ve4=(h1(4).YData(2)-h1(4).YData(1))/(h1(4).XData(2)-h1(4).XData(1));
+ve4=num2str(ve4);
+
+ve1=strcat(labelconditions{iii-3},{':  '},ve1);
+ve2=strcat('Baseline_1',{':  '},ve2);
+ve3=strcat('Baseline_2',{':  '},ve3);
+ve4=strcat('Baseline_3',{':  '},ve4);
+
+txt1=[ve1;ve2;ve3;ve4];
+
+dim = [.6 .5 .3 .22];
+% str = strcat('Rate of occurence for',{' '},'Baseline 3',':',{' '},num2str(RipFreq2),{' '});
+str=txt1;
+annotation('textbox',dim,'String',str)
+%End of slopes
 
 set(gca,'Color','k')
 
 xlabel('Hippocampal Power')
-% ylabel(strcat(label1{2*w-1},{' '},'Power'))
+ylabel(strcat(label1{2*w-1},{' '},'Power'))
 grid minor
  alpha(.5)
 
@@ -328,23 +348,9 @@ title('Bandpassed signals')
 
 
 %%
-% scatter(p_h,p_par,'filled');
-% hold on
-% scatter(p1_h,p1_par,'filled');
-% scatter(p2_h,p2_par,'filled');
-% scatter(p3_h,p3_par,'filled');
-% legend('Learning','Baseline 1','Baseline 2','Baseline 3')
-% xlabel('Hippocampal Power')
-% ylabel(strcat(label1{2*w-1},{' '},'Power'))
-% grid minor
-% alpha(.3)
-% title('Wideband signals')
-%%
-%error('stop')
-%%
 string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
@@ -357,26 +363,26 @@ saveas(gcf,string)
 close all
 
 %% WITHOUT OUTLIERS
-ajalas=isoutlier(p_h);
-ajalas=not(ajalas);
-P_h=p_h(ajalas);
-P_par=p_par(ajalas);
+% ajalas=isoutlier(p_h);
+% ajalas=not(ajalas);
+% P_h=p_h(ajalas);
+% P_par=p_par(ajalas);
 
 
-ajalas=isoutlier(p1_h);
-ajalas=not(ajalas);
-P1_h=p1_h(ajalas);
-P1_par=p1_par(ajalas);
+% ajalas=isoutlier(p1_h);
+% ajalas=not(ajalas);
+% P1_h=p1_h(ajalas);
+% P1_par=p1_par(ajalas);
 
-ajalas=isoutlier(p2_h);
-ajalas=not(ajalas);
-P2_h=p2_h(ajalas);
-P2_par=p2_par(ajalas);
+% ajalas=isoutlier(p2_h);
+% ajalas=not(ajalas);
+% P2_h=p2_h(ajalas);
+% P2_par=p2_par(ajalas);
 
-ajalas=isoutlier(p3_h);
-ajalas=not(ajalas);
-P3_h=p3_h(ajalas);
-P3_par=p3_par(ajalas);
+% ajalas=isoutlier(p3_h);
+% ajalas=not(ajalas);
+% P3_h=p3_h(ajalas);
+% P3_par=p3_par(ajalas);
 %% Median normalization 
 
 P_h=(P_h)-median(P_h);
@@ -417,12 +423,38 @@ plot(L(:,1),L(:,2),'g')
 
 L(:,:) = [h1(4).XData.' h1(4).YData.'];
 plot(L(:,1),L(:,2),'y')
-legend('Learning','Baseline 1','Baseline 2','Baseline 3')
+legend(labelconditions{iii-3},'Baseline 1','Baseline 2','Baseline 3')
+
+%Slopes
+ve1=(h1(1).YData(2)-h1(1).YData(1))/(h1(1).XData(2)-h1(1).XData(1));
+ve1=num2str(ve1);
+
+ve2=(h1(2).YData(2)-h1(2).YData(1))/(h1(2).XData(2)-h1(2).XData(1));
+ve2=num2str(ve2);
+
+ve3=(h1(3).YData(2)-h1(3).YData(1))/(h1(3).XData(2)-h1(3).XData(1));
+ve3=num2str(ve3);
+
+ve4=(h1(4).YData(2)-h1(4).YData(1))/(h1(4).XData(2)-h1(4).XData(1));
+ve4=num2str(ve4);
+
+ve1=strcat(labelconditions{iii-3},{':  '},ve1);
+ve2=strcat('Baseline_1',{':  '},ve2);
+ve3=strcat('Baseline_2',{':  '},ve3);
+ve4=strcat('Baseline_3',{':  '},ve4);
+
+txt1=[ve1;ve2;ve3;ve4];
+
+dim = [.6 .5 .3 .22];
+% str = strcat('Rate of occurence for',{' '},'Baseline 3',':',{' '},num2str(RipFreq2),{' '});
+str=txt1;
+annotation('textbox',dim,'String',str)
+%End of slopes
 
 set(gca,'Color','k')
 
 xlabel('Hippocampal Power')
-% ylabel(strcat(label1{2*w-1},{' '},'Power'))
+ylabel(strcat(label1{2*w-1},{' '},'Power'))
 grid minor
  alpha(.5)
 
@@ -430,7 +462,7 @@ title('Bandpassed signals')
 %%
 string=strcat('Scatter_No_Outlier_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
