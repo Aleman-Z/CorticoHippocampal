@@ -289,17 +289,17 @@ timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
 rep=5; %Number of thresholds+1
 
 %%
-% % [NC]=epocher(Mono17,lepoch);
-% % % ncmax=max(NC)*(1/0.195);
-% % % chtm=median(ncmax);
-% % 
-% % %ncmax=quantile(NC,0.999)*(1/0.195);
-% % ncmax=max(NC)*(1/0.195);
-% % 
-% % chtm=median(ncmax);
+[NC]=epocher(Mono17,lepoch);
+% ncmax=max(NC)*(1/0.195);
+% chtm=median(ncmax);
+
+%ncmax=quantile(NC,0.999)*(1/0.195);
+ncmax=max(NC)*(1/0.195);
+
+chtm=median(ncmax);
 
 'threshold'
-chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
+%chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
 %Median is used to account for any artifact/outlier. 
 
 % chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
@@ -323,12 +323,6 @@ for j=1:length(ti)
     S=S2x{j};
     E=E2x{j};
 
- s172(:,1)=cellfun('length',S2x);
-
-% end
-
-RipFreq2=sum(s172)/(timeasleep*(60));
-
 % mono17=Mono17{j};
 % bip17=Bip17{j};
 % mono12=Mono12{j};
@@ -350,8 +344,8 @@ RipFreq2=sum(s172)/(timeasleep*(60));
 % v6=V6{j};
     %%
 'Aqui andamos:'    
-% j/length(ti)*100
-% j/length(ti)*100
+j/length(ti)*100
+j/length(ti)*100
 
     for L=1:length(S)
     caco=caco (( not(caco>=S(L) & caco<= E(L) )));
@@ -385,42 +379,29 @@ RipFreq2=sum(s172)/(timeasleep*(60));
 %     %sig2{10}=SSS9;
 %     v6=v6(( not(caco>=S(L) & caco<= E(L) )),:);
 
-    V17{j}=V17{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    S17{j}=S17{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    V12{j}=V12{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    % sig2{4}=R12;
-    S12{j}=S12{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    %sig2{6}=SSS12;
-    V9{j}=V9{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    % sig2{7}=R9;
-    S9{j}=S9{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    %sig2{10}=SSS9;
-    V6{j}=V6{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-
-
-    [j/length(ti)*100 L/length(S)*100 level RipFreq2]
+    L/length(S)*100
     end
 ti{j,1}=caco;
 % cao{j,1}=cao;
-% Mono17{j,1}=mono17;
-% Bip17{j,1}=bip17;
-% Mono12{j,1}=mono12;
-% Bip12{j,1}=bip12;
-% Mono9{j,1}=mono9;
-% Bip9{j,1}=bip9;
-% Mono6{j,1}=mono6;
+Mono17{j,1}=mono17;
+Bip17{j,1}=bip17;
+Mono12{j,1}=mono12;
+Bip12{j,1}=bip12;
+Mono9{j,1}=mono9;
+Bip9{j,1}=bip9;
+Mono6{j,1}=mono6;
 
-% V17{j,1}=v17;
-% S17{j,1}=s17;
-% V12{j,1}=v12;
-% % sig2{4}=R12;
-% S12{j,1}=s12;
-% %sig2{6}=SSS12;
-% V9{j,1}=v9;
-% % sig2{7}=R9;
-% S9{j,1}=s9;
-% %sig2{10}=SSS9;
-% V6{j,1}=v6;
+V17{j,1}=v17;
+S17{j,1}=s17;
+V12{j,1}=v12;
+% sig2{4}=R12;
+S12{j,1}=s12;
+%sig2{6}=SSS12;
+V9{j,1}=v9;
+% sig2{7}=R9;
+S9{j,1}=s9;
+%sig2{10}=SSS9;
+V6{j,1}=v6;
 
 end
 
