@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %%
 if acer==0
@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=27:27
+for Rat=26:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -126,7 +126,7 @@ end
 inter=1;
 granger=0;
 %Select length of window in seconds:
-ro=[1200];
+ro=[200];
 coher=0;
 selectripples=0;
 mergebaseline=0;
@@ -189,7 +189,7 @@ p_par=(p_par)-median(p_par);
 scatter(p_h,p_par,'filled','r');
 hold on
 
-ajalas=isoutlier(p_h);
+ajalas=Isoutlier(p_h);
 ajalas=not(ajalas);
 P_h=p_h(ajalas);
 P_par=p_par(ajalas);
@@ -219,7 +219,7 @@ p1_par=(p1_par)-median(p1_par);
 scatter(p1_h,p1_par,'filled','b');
 hold on
 
-ajalas=isoutlier(p1_h);
+ajalas=Isoutlier(p1_h);
 ajalas=not(ajalas);
 P1_h=p1_h(ajalas);
 P1_par=p1_par(ajalas);
@@ -253,7 +253,7 @@ p2_par=(p2_par)-median(p2_par);
 hold on
 scatter(p2_h,p2_par,'filled','g');
 
-ajalas=isoutlier(p2_h);
+ajalas=Isoutlier(p2_h);
 ajalas=not(ajalas);
 P2_h=p2_h(ajalas);
 P2_par=p2_par(ajalas);
@@ -286,7 +286,7 @@ p3_par=(p3_par)-median(p3_par);
 hold on
 scatter(p3_h,p3_par,'filled','y');
 
-ajalas=isoutlier(p3_h);
+ajalas=Isoutlier(p3_h);
 ajalas=not(ajalas);
 P3_h=p3_h(ajalas);
 P3_par=p3_par(ajalas);
@@ -350,7 +350,7 @@ title('Bandpassed signals')
 %%
 string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter200/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
@@ -363,23 +363,23 @@ saveas(gcf,string)
 close all
 
 %% WITHOUT OUTLIERS
-% ajalas=isoutlier(p_h);
+% ajalas=Isoutlier(p_h);
 % ajalas=not(ajalas);
 % P_h=p_h(ajalas);
 % P_par=p_par(ajalas);
 
 
-% ajalas=isoutlier(p1_h);
+% ajalas=Isoutlier(p1_h);
 % ajalas=not(ajalas);
 % P1_h=p1_h(ajalas);
 % P1_par=p1_par(ajalas);
 
-% ajalas=isoutlier(p2_h);
+% ajalas=Isoutlier(p2_h);
 % ajalas=not(ajalas);
 % P2_h=p2_h(ajalas);
 % P2_par=p2_par(ajalas);
 
-% ajalas=isoutlier(p3_h);
+% ajalas=Isoutlier(p3_h);
 % ajalas=not(ajalas);
 % P3_h=p3_h(ajalas);
 % P3_par=p3_par(ajalas);
@@ -462,7 +462,7 @@ title('Bandpassed signals')
 %%
 string=strcat('Scatter_No_Outlier_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter200/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
