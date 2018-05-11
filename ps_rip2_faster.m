@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=27:27
+for Rat=26:27
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -126,7 +126,7 @@ end
 inter=1;
 granger=0;
 %Select length of window in seconds:
-ro=[1200];
+ro=[200];
 coher=0;
 selectripples=0;
 mergebaseline=0;
@@ -350,7 +350,7 @@ title('Bandpassed signals')
 %%
 string=strcat('Scatter_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter200/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
@@ -462,7 +462,7 @@ title('Bandpassed signals')
 %%
 string=strcat('Scatter_No_Outlier_',label1{2*w-1},'_',num2str(level),'.png');
 
-    cd(strcat('/home/raleman/Dropbox/New_Scatter2/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/New_Scatter200/',num2str(Rat)))
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
