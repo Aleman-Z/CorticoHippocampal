@@ -7,7 +7,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 ---------------
 psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all conditions in a specific brain area. 
 
-psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
+psd_epochs_intraregions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
 
 -DATA DESCRIPTION
 -----------------
