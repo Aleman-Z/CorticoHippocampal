@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %
 if acer==0
@@ -394,7 +394,7 @@ end
 % L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
 L = line(nan(3), nan(3),'LineStyle','none'); % 'nan' creates 'invisible' data
 
-myColorMap=myColorMap(2:2:end,:);
+myColorMap=myColorMap(2:4,:);
 
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
@@ -437,10 +437,10 @@ saveas(gcf,string)
 
 % 
 % xlim([0 50]);
-xlim([100 200])
+xlim([0 15])
 
 % string=strcat('50hz_intra_',label1{2*w-1},'.png');
-string=strcat('1_15_Hz_',labelconditions{iii},'.png');
+string=strcat('0_15_Hz_',labelconditions{iii},'.png');
 saveas(gcf,string)
 
 close all
