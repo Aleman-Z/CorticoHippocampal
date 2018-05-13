@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch)
+function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=REMOVE_RIPPLES(level,nrem,notch,w,lepoch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -289,17 +289,17 @@ timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
 rep=5; %Number of thresholds+1
 
 %%
-[NC]=epocher(Mono17,lepoch);
-% ncmax=max(NC)*(1/0.195);
-% chtm=median(ncmax);
-
-%ncmax=quantile(NC,0.999)*(1/0.195);
-ncmax=max(NC)*(1/0.195);
-
-chtm=median(ncmax);
+% % [NC]=epocher(Mono17,lepoch);
+% % % ncmax=max(NC)*(1/0.195);
+% % % chtm=median(ncmax);
+% % 
+% % %ncmax=quantile(NC,0.999)*(1/0.195);
+% % ncmax=max(NC)*(1/0.195);
+% % 
+% % chtm=median(ncmax);
 
 'threshold'
-%chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
+chtm=median(cellfun(@max,Bip17))*(1/0.195); %Minimum maximum value among epochs.
 %Median is used to account for any artifact/outlier. 
 
 % chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
@@ -323,85 +323,78 @@ for j=1:length(ti)
     S=S2x{j};
     E=E2x{j};
 
-% mono17=Mono17{j};
-% bip17=Bip17{j};
-% mono12=Mono12{j};
-% bip12=Bip12{j};
-% mono9=Mono9{j};
-% bip9=Bip9{j};
-% mono6=Mono6{j};
+ s172(:,1)=cellfun('length',S2x);
 
-% v17=V17{j};
-% s17=S17{j};
-% v12=V12{j};
-% % sig2{4}=R12;
-% s12=S12{j};
-% %sig2{6}=SSS12;
-% v9=V9{j};
-% % sig2{7}=R9;
-% s9=S9{j};
-% %sig2{10}=SSS9;
-% v6=V6{j};
+% end
+
+RipFreq2=sum(s172)/(timeasleep*(60));
+
     %%
 'Aqui andamos:'    
-j/length(ti)*100
-j/length(ti)*100
-
+% j/length(ti)*100
+% j/length(ti)*100
+% CAO=cao;
     for L=1:length(S)
-    caco=caco (( not(caco>=S(L) & caco<= E(L) )));
-    cao=cao(( not(caco>=S(L) & caco<= E(L) )),:);
-       
-%     mono17=mono17(( not(caco>=S(L) & caco<= E(L) )),:);
-%     bip17=bip17(( not(caco>=S(L) & caco<= E(L) )),:);
-%     mono12=mono12(( not(caco>=S(L) & caco<= E(L) )),:);
-%     bip12=bip12(( not(caco>=S(L) & caco<= E(L) )),:);
-%     mono9=mono9(( not(caco>=S(L) & caco<= E(L) )),:);
-%     bip9=bip9(( not(caco>=S(L) & caco<= E(L) )),:);
-%     mono6=mono6(( not(caco>=S(L) & caco<= E(L) )),:);
-
-    Mono17{j}=Mono17{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Bip17{j}=Bip17{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Mono12{j}=Mono12{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Bip12{j}=Bip12{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Mono9{j}=Mono9{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Bip9{j}=Bip9{j}(( not(caco>=S(L) & caco<= E(L) )),:);
-    Mono6{j}=Mono6{j}(( not(caco>=S(L) & caco<= E(L) )),:);
+     
+% CAO(floor(S(L)*1000):round(E(L)*1000))=NaN;
+% [CAO] = fillmissing(CAO,'linear');
     
-%     v17=v17(( not(caco>=S(L) & caco<= E(L) )),:);
-%     s17=s17(( not(caco>=S(L) & caco<= E(L) )),:);
-%     v12=v12(( not(caco>=S(L) & caco<= E(L) )),:);
-%     % sig2{4}=R12;
-%     s12=s12(( not(caco>=S(L) & caco<= E(L) )),:);
-%     %sig2{6}=SSS12;
-%     v9=v9(( not(caco>=S(L) & caco<= E(L) )),:);
-%     % sig2{7}=R9;
-%     s9=s9(( not(caco>=S(L) & caco<= E(L) )),:);
-%     %sig2{10}=SSS9;
-%     v6=v6(( not(caco>=S(L) & caco<= E(L) )),:);
+    Mono17{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono17{j});
+    Bip17{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip17{j});
+    Mono12{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono12{j});
+    Bip12{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip12{j});
+    Mono9{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono9{j});
+    Bip9{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip9{j});
+    Mono6{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono6{j});
+    
 
-    L/length(S)*100
+    V17{j}(floor(S(L)*1000):round(E(L)*1000))=median(V17{j});
+    S17{j}(floor(S(L)*1000):round(E(L)*1000))=median(S17{j});
+    V12{j}(floor(S(L)*1000):round(E(L)*1000))=median(V12{j});
+    
+    S12{j}(floor(S(L)*1000):round(E(L)*1000))=median(S12{j});
+    
+    V9{j}(floor(S(L)*1000):round(E(L)*1000))=median(V9{j});
+    
+    S9{j}(floor(S(L)*1000):round(E(L)*1000))=median(S9{j});
+    
+    V6{j}(floor(S(L)*1000):round(E(L)*1000))=median(V6{j});
+
+%     Mono17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Bip17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Mono12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Bip12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Mono9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Bip9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     Mono6{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     V17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     S17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     V12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     S12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     V9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     S9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+%     V6{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
+% 
+%     
+%     Mono17{j}= fillmissing(Mono17{j},'linear');
+%     Bip17{j}= fillmissing(Bip17{j},'linear');
+%     Mono12{j}= fillmissing(Mono12{j},'linear');
+%     Bip12{j}= fillmissing(Bip12{j},'linear');
+%     Mono9{j}= fillmissing(Mono9{j},'linear');
+%     Bip9{j}= fillmissing(Bip9{j},'linear');
+%     Mono6{j}= fillmissing(Mono6{j},'linear');
+%     V17{j}= fillmissing(V17{j},'linear');
+%     S17{j}= fillmissing(S17{j},'linear');
+%     V12{j}= fillmissing(V12{j},'linear');
+%     S12{j}= fillmissing(S12{j},'linear');
+%     V9{j}= fillmissing(V9{j},'linear');
+%     S9{j}= fillmissing(S9{j},'linear');
+%     V6{j}= fillmissing(V6{j},'linear');
+
+       
+    
+    [j/length(ti)*100 L/length(S)*100 level RipFreq2]
     end
-ti{j,1}=caco;
-% cao{j,1}=cao;
-Mono17{j,1}=mono17;
-Bip17{j,1}=bip17;
-Mono12{j,1}=mono12;
-Bip12{j,1}=bip12;
-Mono9{j,1}=mono9;
-Bip9{j,1}=bip9;
-Mono6{j,1}=mono6;
-
-V17{j,1}=v17;
-S17{j,1}=s17;
-V12{j,1}=v12;
-% sig2{4}=R12;
-S12{j,1}=s12;
-%sig2{6}=SSS12;
-V9{j,1}=v9;
-% sig2{7}=R9;
-S9{j,1}=s9;
-%sig2{10}=SSS9;
-V6{j,1}=v6;
 
 end
 

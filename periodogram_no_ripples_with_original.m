@@ -208,9 +208,10 @@ end
 % colormap(myColorMap);
 NCount=nan(length(nFF),1);
 
+
 for iii=1:length(nFF)
 for level=1:3
-myColorMap = jet(6);    
+myColorMap = jet(9);    
     
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -233,69 +234,83 @@ lepoch=2;
 %else
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
 %end
+[Sig22]=nrem_newest_power(nrem,notch);
 
-%error('stop')
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+% error('stop')
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
+tic
+[sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=REMOVE_RIPPLES(level,nrem,notch,w,lepoch);
+toc
+% error('stop')
+[PPx,F,~]=generate_periodogram(Sig22,w,Rat,iii);
+[px,f,~]=generate_periodogram(sig2,w,Rat,iii);
 
-
+[NC]=generate_nc(Sig22,w,Rat,iii);
+[nc]=generate_nc(sig2,w,Rat,iii);
 %%
 % for w=1:3
-f_signal=sig2{2*w-1};
-%Amplitude normalization
-%f_signal=median(f_signal);
-
-[NC]=epocher(f_signal,2);
-av=mean(NC,1);
-av=artifacts(av,10);
-%Limits artifacts to a maximum of 10
-if sum(av)>=10
-av=artifacts(av,20);    
-end
-av=not(av);
-%Removing artifacts.
-NC=NC(:,av);
-
-NCount(iii,1)=size(NC,2);
-
-%Notch filter
-Fsample=1000;
-Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-
-if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
-[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-NC=NC.';
-end
-
-if Rat==26 %Noise peak was only observed in Rat 26
-    if w==4  % Reference 
-     Fline=[208 209];
-
-    [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-    NC=NC.';
-    end
-end
-%Equal number of epochs.
-
-% if  Rat==26
-%     NC=NC(:,end-1845+1:end);
-% else
-%     NC=NC(:,end-2500+1:end);
-% end
-% NC=zscore(NC);
-% % % % % % NC=NC(:,end-1845+1:end);
-
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
-
-%hann(length(NC))
-px=mean(pxx,2);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % f_signal=sig2{2*w-1};
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %Amplitude normalization
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %f_signal=median(f_signal);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [NC]=epocher(f_signal,2);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % av=mean(NC,1);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % av=artifacts(av,10);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %Limits artifacts to a maximum of 10
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % if sum(av)>=10
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % av=artifacts(av,20);    
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % av=not(av);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %Removing artifacts.
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % NC=NC(:,av);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % NCount(iii,1)=size(NC,2);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %Notch filter
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % Fsample=1000;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % NC=NC.';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % if Rat==26 %Noise peak was only observed in Rat 26
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     if w==4  % Reference 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %      Fline=[208 209];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     NC=NC.';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %Equal number of epochs.
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % if  Rat==26
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     NC=NC(:,end-1845+1:end);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % else
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %     NC=NC(:,end-2500+1:end);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % NC=zscore(NC);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % NC=NC(:,end-1845+1:end);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %  [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %[pxx,f]=pwelch(NC,[],[],[],1000);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %hann(length(NC))
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % px=mean(pxx,2);
 % error('stop')
 %plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 
 %semilogy(f,(px)/sum(px),'Color',myColorMap(level,:),'LineWidth',1.5)
 figure(1)
+%plot(F,(PPx)/sum(PPx),'Color',[1 0 1],'LineWidth',1.5)
+semilogy(F,(PPx),'Color',[1 0 1],'LineWidth',1.5)
+
 hold on
-plot(f,(px)/sum(px),'Color',myColorMap(level+1,:),'LineWidth',1.5)
+%plot(f,(px)/sum(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
+semilogy(f,(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
+
 xlim([100 200])
 hold on
 
@@ -313,7 +328,9 @@ hold on
 grid minor
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
-ylabel('Normalized Power')
+%ylabel('Normalized Power')
+ylabel('Power')
+
 
 %end
 %legend('HPC','PAR','PFC')
@@ -392,18 +409,18 @@ end
 % error('stop')
 
 % L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
-L = line(nan(3), nan(3),'LineStyle','none'); % 'nan' creates 'invisible' data
+L = line(nan(4), nan(4),'LineStyle','none'); % 'nan' creates 'invisible' data
+ 
+myColorMap=myColorMap(3:3:9,:);
 
-myColorMap=myColorMap(2:4,:);
-
-set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
-    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
+set(L, {'MarkerEdgeColor'}, num2cell([[1 0 1]; myColorMap ], 2),...
+    {'MarkerFaceColor'},num2cell([[1 0 1]; myColorMap ], 2),... % setting the markers to filled squares
     'Marker','s'); 
 % 
 % error('stop')
 
 %legend(L, labelconditions)
-legend(L, 'THR 1(Highest)','THR 2','THR 3 (Lowest)')
+legend(L, 'With Ripples','THR 1(Highest)','THR 2','THR 3 (Lowest)')
 
 
 %         set(gca,'Color','w')
@@ -412,11 +429,12 @@ set(gca,'Color','k')
 ax=gca;
 ax.GridColor=[ 1,1,1];
 
+error('stop')
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_levels/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power_NLevels/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_levels\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_NLevels\',num2str(Rat)))   
 end
 
 % if exist(labelconditions{iii})~=7
