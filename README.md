@@ -38,6 +38,14 @@ between_ripples.m: Histogram of time between ripples for different conditions.
 ------------------
 threshold_vs_ripple.m: Plots curves relating selected thresholds with the ripple rate they give. Useful for threshold selection. 
 
+-Periodogram_no_ripples_with_original
+------------------
+Plots the frequency spectrum of the signal with and without ripples for 3 different thresholds. 
+
+-Periodogram_with_coherence
+------------------
+Plots the frequency spectrum of the signal with and without ripples and shows the coherence between both signals. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
