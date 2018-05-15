@@ -44,7 +44,7 @@ Plots the frequency spectrum of the signal with and without ripples for 3 differ
 
 -Periodogram_with_coherence
 ------------------
-Plots the frequency spectrum of the signal with and without ripples and shows the coherence between both signals. 
+Plots the frequency spectrum of the signal with and without ripples and shows the coherence between both signals. Saves periodograms and time-domain epochs to be used by periodogram_coherence_conditions.  
 
 -Read data from Ophen Ephys
 ------------------
