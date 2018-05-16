@@ -50,6 +50,10 @@ Plots the frequency spectrum of the signal with and without ripples and shows th
 ------------------
 Plots the coherence for all conditions between the spectra with and without ripples. 
 
+-Periodogram_fit_line
+------------------
+Plots divergence of signal WITHOUT ripples with respect to the same signal WITH ripples. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
