@@ -54,6 +54,10 @@ Plots the coherence for all conditions between the spectra with and without ripp
 ------------------
 Plots divergence of signal WITHOUT ripples with respect to the same signal WITH ripples. 
 
+-Periodogram_fit_line_wrt_baseline
+------------------
+Plots divergence of signal WITHOUT and WITHOUT ripples with respect to the baselines.  
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
