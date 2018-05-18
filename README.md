@@ -62,6 +62,10 @@ Plots divergence of signal WITHOUT and WITHOUT ripples with respect to the basel
 ------------------
 Plots PCA scores for conditions with respect to the different Baselines. 
 
+-Periodogramming
+------------------
+Plots all conditions after ripple removal in same plot. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
