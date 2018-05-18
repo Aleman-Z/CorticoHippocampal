@@ -58,6 +58,10 @@ Plots divergence of signal WITHOUT ripples with respect to the same signal WITH 
 ------------------
 Plots divergence of signal WITHOUT and WITHOUT ripples with respect to the baselines.  
 
+-Periodogram_pca_baseline
+------------------
+Plots PCA scores for conditions with respect to the different Baselines. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
