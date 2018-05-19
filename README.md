@@ -66,6 +66,10 @@ Plots PCA scores for conditions with respect to the different Baselines.
 ------------------
 Plots all conditions after ripple removal in same plot. 
 
+-CPSD_plots
+------------------
+Plots coherence for all conditions and their Cross Power Spectral Density Phase. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
