@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:3
+for Rat=1:1
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -196,9 +196,9 @@ label2{7}='Monopolar';
  %clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
 
 
- for level=1:1
+%  for level=1:1
      
-for w=1:3
+for w=1:1
 
 if Rat==21
 myColorMap = jet(5);
@@ -208,207 +208,105 @@ end
 % colormap(myColorMap);
 NCount=nan(length(nFF),1);
 
-    for iii=1:length(nFF)
 
+for iii=1:length(nFF)
+%for level=2:2
+myColorMap = jet(24);    
+    
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-    cd(nFF{iii})
+ cd(nFF{iii})
     %Get averaged time signal.
   %error('stop')   
-
-lepoch=2;
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+S=load('powercoh.mat');
 
 
-[sig2]=nrem_newest_power(nrem,notch);
-%if Rat==26
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
-%else
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
-%end
-
-% error('stop')
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
 
 
-%%
-% for w=1:3
-f_signal=sig2{2*w-1};
-%Amplitude normalization
-%f_signal=median(f_signal);
+semilogy(S.F,(S.px/sum(S.px)),'Color',myColorMap(iii*3,:),'LineWidth',2)
 
-[NC]=epocher(f_signal,2);
-av=mean(NC,1);
-av=artifacts(av,10);
-%Limits artifacts to a maximum of 10
-if sum(av)>=10
-av=artifacts(av,20);    
-end
-av=not(av);
-%Removing artifacts.
-NC=NC(:,av);
-
-NCount(iii,1)=size(NC,2);
-
-%Notch filter
-Fsample=1000;
-Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-
-if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
-[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-NC=NC.';
-end
-
-if Rat==26 %Noise peak was only observed in Rat 26
-    if w==4  % Reference 
-     Fline=[208 209];
-
-    [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-    NC=NC.';
-    end
-end
-%Equal number of epochs.
-
-% if  Rat==26
-%     NC=NC(:,end-1845+1:end);
-% else
-%     NC=NC(:,end-2500+1:end);
-% end
-% NC=zscore(NC);
-% % % % % % NC=NC(:,end-1845+1:end);
-
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
-
-%hann(length(NC))
-px=mean(pxx,2);
-% error('stop')
-%plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
-semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 hold on
-semilogy(f, [(px.' - 1*std(pxx.')/sqrt(length(pxx.')))/sum(px); (px.'+1*std(pxx.')/sqrt(length(pxx.')))/sum(px)], 'Color',myColorMap(iii,:),'LineWidth',1.5,'LineStyle','-');
-
-xlim([0 300])
-
-% if w==1
-%  xlim([0 300])
-% else
-%  xlim([0 300])  
-% end
-
-%ylim([-40 30])
+%plot(f,(px)/sum(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
+% semilogy(f,(px/sum(px)),'Color',[1 0 0],'LineWidth',2)
+grid on
+ax=gca;
+ax.GridColor=[ 1,1,1];
+% AX=legend('With Ripples','No Ripples (THR 2)');
+% AX.Location= 'southwest';
+xlim([0 250])
 grid minor
 xlabel('Frequency (Hz)')
+
+
 %ylabel('10 Log(x)')
+%ylabel('Normalized Power')
 ylabel('Normalized Power')
 
 %end
 %legend('HPC','PAR','PFC')
-title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-%%
-% error('stop')
+title(strcat('Power after Ripple removal in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 
-%%
+% handxlabel1 = get(gca, 'XLabel');
+% set(handxlabel1, 'FontSize', 12, 'FontWeight', 'bold')
+% handylabel1 = get(gca, 'ylabel');
+% set(handylabel1, 'FontSize', 12, 'FontWeight', 'bold')
 
-% [f,Y] = freqlog(NC);
-% Ym=mean(Y,2);
-% plot(f*(1000/2),Ym)
 
-% [~,F]=frequency(f_signal{1});  
-% F=F*0;
+% handaxes2 = axes('Position', [0.6 0.6 0.3 0.3]);
 % 
-% for kk=1:length(f_signal)
-%   [~,F_c]=frequency(f_signal{kk});  
-%   F=F+F_c;
-% end
-
-
-%
-% % [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-% % 
-% %  [~,F]=frequency(p{1}(w,:));  
-% %   F=F*0;
-% % for kk=1:length(p)
-% %   [f,F_c]=frequency(p{kk}(w,:));  
-% %   F=F+F_c;
-% % end
-% % F=F./length(p);
-
-% % % % % % % % % % % plot(f,F);
-% % figure()
-% % stem(f,2*abs(Y(1:NFFT/2+1)))
-% % % % % % % % % % % % % % % % % grid minor;
-% % % % % % % % % % % % % % % % % title(strcat('Power Spectrum of',{' '},label1{2*w-1}))
-% % % % % % % % % % % % % % % % % xlabel('Frequency (Hz)')
-% % % % % % % % % % % % % % % % % ylabel('|Y(f)|')
-% % % % % % % % % % % % % % % % % xlim([0 300])
-
-
-
-%error('stop')
-
-
-% % % % string=strcat('Power_Spectrum_',label1{2*w-1},'_',num2str(level),'.png');
-% % % % 
-% % % %     cd(strcat('/home/raleman/Dropbox/Power_plots/',num2str(Rat)))
-% % % % if exist(labelconditions{iii})~=7
-% % % % (mkdir(labelconditions{iii}))
-% % % % end
-% % % % cd((labelconditions{iii}))
-% % % % 
-% % % % saveas(gcf,string)
-% % % % close all
-labelconditions{iii};
-    end
-
-L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
-set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
-    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
-    'Marker','s'); 
+% 
+% G=area(fa,mean(va,2));
+% G.FaceColor=[1 1 0];
+% grid minor
+% 
+% %ylim([min(mean(va,2)) 1])
+% ylim([0.5 1])
+% xlim([0 250])
+% % xlabel('Frequency (Hz)')
+% % ylabel('Coherence')
+% xlabel('Frequency (Hz)','Color','w')
+% ylabel('Coherence','Color','w')
+% % title('With Ripples vs No Ripples (THR 2)')
+% set(gca,'xcolor','w') 
+% set(gca,'ycolor','w') 
+%  xticks([0 50 100 150 200])
+% 
+end
+legend(labelconditions)
+set(gca,'Color','k')
 
 error('stop')
 
-legend(L, labelconditions)
-%         set(gca,'Color','w')
-grid on
-set(gca,'Color','k')
-ax=gca;
-ax.GridColor=[ 1,1,1];
 
-%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_new/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_new\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
 end
-% if exist(labelconditions{iii})~=7
-% (mkdir(labelconditions{iii}))
-% end
-% cd((labelconditions{iii}))
+
 fig=gcf;
 fig.InvertHardcopy='off';
 
-string=strcat('300hz_intra_',label1{2*w-1},'.png');
+% string=strcat('300hz_intra_',label1{2*w-1},'.png');
+string=strcat('NoRipples_',labelconditions{iii},'.png');
 saveas(gcf,string)
 
-string=strcat('300hz_intra_',label1{2*w-1},'.fig');
-saveas(gcf,string)
-
-% 
-xlim([0 50]);
-string=strcat('50hz_intra_',label1{2*w-1},'.png');
+string=strcat('NoRipples_',labelconditions{iii},'.fig');
 saveas(gcf,string)
 
 close all
 
+%end
+% error('stop')
+
+%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 
 
-
-end
+% end
 
 
 end

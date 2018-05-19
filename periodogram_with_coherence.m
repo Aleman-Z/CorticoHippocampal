@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 
 %
 if acer==0
@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:3
+for Rat=3:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -209,7 +209,7 @@ end
 NCount=nan(length(nFF),1);
 
 
-for iii=1:length(nFF)
+for iii=2:length(nFF)
 for level=2:2
 myColorMap = jet(9);    
     
@@ -249,6 +249,7 @@ toc
 [nc]=generate_nc(sig2,w,Rat,iii);
 [va, fa]=mscohere(NC,nc,[],[],[],1000);
 
+save('powercoh.mat','PPx','F','px','f','NC','nc');
 %%
 % for w=1:3
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % f_signal=sig2{2*w-1};
@@ -347,7 +348,8 @@ G=area(fa,mean(va,2));
 G.FaceColor=[1 1 0];
 grid minor
 
-ylim([min(mean(va,2)) 1])
+%ylim([min(mean(va,2)) 1])
+ylim([0.5 1])
 xlim([0 250])
 % xlabel('Frequency (Hz)')
 % ylabel('Coherence')

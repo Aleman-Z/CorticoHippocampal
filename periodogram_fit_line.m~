@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:3
+for Rat=1:2
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -196,9 +196,9 @@ label2{7}='Monopolar';
  %clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
 
 
- for level=1:1
+%  for level=1:1
      
-for w=1:3
+for w=1:1
 
 if Rat==21
 myColorMap = jet(5);
@@ -208,210 +208,99 @@ end
 % colormap(myColorMap);
 NCount=nan(length(nFF),1);
 
-    for iii=1:length(nFF)
 
+
+% if Rat==26 | 27
+%     stt=4;
+% else
+%     stt=3;
+% end
+
+stt=1;
+%for condition=1:3
+
+for iii=stt:length(nFF)
+%for level=2:2
+myColorMap = jet(24);    
+
+% Current condition
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-    cd(nFF{iii})
+ cd(nFF{iii})
     %Get averaged time signal.
-  %error('stop')   
+S=load('powercoh.mat');
+S=struct2cell(S);
 
-lepoch=2;
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[SS,D]=scatter_analysis(S,S,3,6);
 
-
-[sig2]=nrem_newest_power(nrem,notch);
-%if Rat==26
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
-%else
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level,lepoch);     
-%end
-
-% error('stop')
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
-
-
-%%
-% for w=1:3
-f_signal=sig2{2*w-1};
-%Amplitude normalization
-%f_signal=median(f_signal);
-
-[NC]=epocher(f_signal,2);
-av=mean(NC,1);
-av=artifacts(av,10);
-%Limits artifacts to a maximum of 10
-if sum(av)>=10
-av=artifacts(av,20);    
-end
-av=not(av);
-%Removing artifacts.
-NC=NC(:,av);
-
-NCount(iii,1)=size(NC,2);
-
-%Notch filter
-Fsample=1000;
-Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-
-if w~=1 && w~=4  %Dont filter Hippocampus nor Reference 
-[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-NC=NC.';
-end
-
-if Rat==26 %Noise peak was only observed in Rat 26
-    if w==4  % Reference 
-     Fline=[208 209];
-
-    [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-    NC=NC.';
-    end
-end
-%Equal number of epochs.
-
-% if  Rat==26
-%     NC=NC(:,end-1845+1:end);
-% else
-%     NC=NC(:,end-2500+1:end);
-% end
-% NC=zscore(NC);
-% % % % % % NC=NC(:,end-1845+1:end);
-
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
-
-%hann(length(NC))
-px=mean(pxx,2);
-% error('stop')
-%plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
-semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
+figure(2)
+semilogy(SS,smooth(D),'Color',myColorMap(3*iii,:),'LineWidth',2)
 hold on
-semilogy(f, [(px.' - 1*std(pxx.')/sqrt(length(pxx.')))/sum(px); (px.'+1*std(pxx.')/sqrt(length(pxx.')))/sum(px)], 'Color',myColorMap(iii,:),'LineWidth',1.5,'LineStyle','-');
-
-xlim([0 300])
-
-% if w==1
-%  xlim([0 300])
-% else
-%  xlim([0 300])  
-% end
-
-%ylim([-40 30])
+% semilogy(SS,(D)*0+val)
 grid minor
-xlabel('Frequency (Hz)')
-%ylabel('10 Log(x)')
-ylabel('Normalized Power')
-
-%end
-%legend('HPC','PAR','PFC')
-title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-%%
-% error('stop')
-
-%%
-
-% [f,Y] = freqlog(NC);
-% Ym=mean(Y,2);
-% plot(f*(1000/2),Ym)
-
-% [~,F]=frequency(f_signal{1});  
-% F=F*0;
-% 
-% for kk=1:length(f_signal)
-%   [~,F_c]=frequency(f_signal{kk});  
-%   F=F+F_c;
-% end
-
-
-%
-% % [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
-% % 
-% %  [~,F]=frequency(p{1}(w,:));  
-% %   F=F*0;
-% % for kk=1:length(p)
-% %   [f,F_c]=frequency(p{kk}(w,:));  
-% %   F=F+F_c;
-% % end
-% % F=F./length(p);
-
-% % % % % % % % % % % plot(f,F);
-% % figure()
-% % stem(f,2*abs(Y(1:NFFT/2+1)))
-% % % % % % % % % % % % % % % % % grid minor;
-% % % % % % % % % % % % % % % % % title(strcat('Power Spectrum of',{' '},label1{2*w-1}))
-% % % % % % % % % % % % % % % % % xlabel('Frequency (Hz)')
-% % % % % % % % % % % % % % % % % ylabel('|Y(f)|')
-% % % % % % % % % % % % % % % % % xlim([0 300])
+xlim([0 250])
 
 
 
-%error('stop')
+%      F: [1001×1 double]
+%      NC: [2000×2069 double]
+%     PPx: [1001×1 double]
+%       f: [1001×1 double]
+%      nc: [2000×2069 double]
+%      px: [1001×1 double]
 
 
-% % % % string=strcat('Power_Spectrum_',label1{2*w-1},'_',num2str(level),'.png');
-% % % % 
-% % % %     cd(strcat('/home/raleman/Dropbox/Power_plots/',num2str(Rat)))
-% % % % if exist(labelconditions{iii})~=7
-% % % % (mkdir(labelconditions{iii}))
-% % % % end
-% % % % cd((labelconditions{iii}))
-% % % % 
-% % % % saveas(gcf,string)
-% % % % close all
-labelconditions{iii};
-    end
 
-L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
-set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
-    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
-    'Marker','s'); 
-
-error('stop')
-
-legend(L, labelconditions)
-%         set(gca,'Color','w')
-grid on
-set(gca,'Color','k')
-ax=gca;
-ax.GridColor=[ 1,1,1];
-
-%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_new/',num2str(Rat)))
-else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_new\',num2str(Rat)))   
 end
-% if exist(labelconditions{iii})~=7
-% (mkdir(labelconditions{iii}))
-% end
-% cd((labelconditions{iii}))
+figure(1)
+close
+legend(labelconditions)
+% error('stop')
+% legend(labelconditions{stt:end})
+%end
+% error('stop')
+% legend(labelconditions)
+set(gca,'Color','k')
+
+grid minor
+ax = gca;
+ax.GridColor = [1, 1, 1];
+title('Divergence between ')
+
+ error('stop')
+
+
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
+else
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
+end
+
 fig=gcf;
 fig.InvertHardcopy='off';
 
-string=strcat('300hz_intra_',label1{2*w-1},'.png');
+% string=strcat('300hz_intra_',label1{2*w-1},'.png');
+string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.png');
 saveas(gcf,string)
 
-string=strcat('300hz_intra_',label1{2*w-1},'.fig');
-saveas(gcf,string)
-
-% 
-xlim([0 50]);
-string=strcat('50hz_intra_',label1{2*w-1},'.png');
+string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.fig');
 saveas(gcf,string)
 
 close all
 
+%end
+% error('stop')
+
+%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 
 
+% end
 
 end
-
-
 end
 %%
-end
 %end
