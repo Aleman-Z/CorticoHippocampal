@@ -70,6 +70,10 @@ Plots all conditions after ripple removal in same plot.
 ------------------
 Plots coherence for all conditions and their Cross Power Spectral Density Phase. 
 
+-per_coh
+------------------
+Plots both periodograms (NR and WR) for each condition plus the coherence between them for all Rats and brain areas. 
+
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
