@@ -38,6 +38,11 @@ between_ripples.m: Histogram of time between ripples for different conditions.
 ------------------
 threshold_vs_ripple.m: Plots curves relating selected thresholds with the ripple rate they give. Useful for threshold selection. 
 
+threshold_interpolation.m: Saves data concerning Ripple occurrence and corresponding threshold, as well as fitted polynomial. 
+
+testing_threshold_plot.m: Plots the previously acquired data from threshold_interpolation.m. 
+
+
 -Periodogram_no_ripples_with_original
 ------------------
 Plots the frequency spectrum of the signal with and without ripples for 3 different thresholds. 
