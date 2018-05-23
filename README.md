@@ -42,6 +42,8 @@ threshold_interpolation.m: Saves data concerning Ripple occurrence and correspon
 
 testing_threshold_plot.m: Plots the previously acquired data from threshold_interpolation.m. 
 
+fixed_threshold.m: Saves the correct threshold value to get an accurate approximation to 1 Ripple per second. 
+
 
 -Periodogram_no_ripples_with_original
 ------------------
