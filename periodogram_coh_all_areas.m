@@ -1,6 +1,10 @@
+close all 
+clear all
+clc
+
 acer=0;
 
-%
+%p
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
@@ -14,8 +18,8 @@ end
 %Experiments:
 %1: Ripples
 %2:No Ripples
-for experiment=1:2
-for Rat=1:2
+% for experiment=1:2
+for Rat=1:1
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -218,8 +222,8 @@ else
     stt=3;
 end
 % 
-% stt=1;
-for condition=1:3
+ stt=1;
+%for condition=1:3
 
 for iii=stt:length(nFF)
 %for level=2:2
@@ -234,22 +238,21 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
-S=load('powercoh.mat');
-S=struct2cell(S);
 
-% 
-%Baseline 1
-if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-else
-    cd(strcat('D:\internship\',num2str(Rat)))
+if w==1
+S=load('powercoh.mat');    
 end
 
-%cd(nFF{iii})
- cd(nFF{condition})
-    %Get averaged time signal.
-S1=load('powercoh.mat');
-S1=struct2cell(S1);
+if w==2
+S=load('powercoh2.mat');    
+end
+
+if w==3
+S=load('powercoh3.mat');
+end
+
+S=struct2cell(S);
+
 
 %      F: [1001×1 double]
 %      NC: [2000×2069 double]
@@ -258,198 +261,49 @@ S1=struct2cell(S1);
 %      nc: [2000×2069 double]
 %      px: [1001×1 double]
 
+semilogy(S{1},S{6}/sum(S{6}),'Color',myColorMap(3*iii,:),'LineWidth',2)
+xlim([0 250])
+xlabel('Frequency (Hz)')
+ylabel('Normalized Power')
+hold on
 
-% % 
-% % error('stop')   
-% n1=2;
-% n2=5;
-% % %With ripples
-% mr=min([size(S1{n1},2) size(S{n2},2)]);
-% [va, fa]=mscohere(S1{n1}(:,1:mr),S{n2}(:,1:mr),hann(500),[],[],1000);
-% %[va, fa]=mscohere(median(S{n1}(:,1:mr),2),median(S{n2}(:,1:mr),2),hann(500),[],[],1000);
-
-
-%[va, fa]=mscohere(S{2},S1{2},[],[],[],1000);
-
-%[va, fa]=mscohere(S1{5}(:,1).',S{5}(:,1).',[],[],[],1000);
-%  error('stop')
-% s3=mean(S3{5},2);
-% s=mean(S{5},2);
-% [va,fa]=cohere(mean(S3{5},2),mean(S{5},2),[],1000);
-
-
-%[va,fa]=mscohere(mean(S1{5},2),mean(S{5},2),[],[],[],1000);
-
-figure(condition)
-%subplot(1,5,iii-(stt-1))
-if experiment==1 %Ripples
-X=[S{3} S1{3}];
-end
-
-if experiment==2 %No Ripples
-X=[S{6} S1{6}];
-end
-
-[coeff c]= pca(X);
-% plot((c(:,1)),(c(:,2)),'Color',myColorMap(3*iii,:)); grid minor;
-gscatter((c(:,1)),(c(:,2)),[],myColorMap(3*iii,:),[],20); grid minor; 
-% [aver ac]=xcorr(X(:,1),X(:,2),'coeff');
-% plot(ac,aver,'Color',myColorMap(3*iii,:))
- hold on
-
-% coeff = pca(X.');
-% g=plot(S{1},coeff,'LineWidth',2,'Color','k')
-% g.FaceColor=[0 1 0];
-% xlim([0 30])
-% ylim([-0.5 0.5])
-%figure(condition)
-% subplot(1,5,iii-(stt-1))
-% G=area(fa,mean(va,2));
-% %G=area(fa,va);
-% G.FaceColor=[1 1 0];
-% grid minor
-
-%ylim([min(mean(va,2)) 1])
-
-% ylim([0.135 0.16])
-% xlim([0 30])
-
-% xlabel('Frequency (Hz)')
-% ylabel('Coherence')
-xlabel('PC score 1')
-ylabel('PC score 2')
 %title(labelconditions{iii})
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ylim([0 1])
 
 
-% xlim([0 250])
-% title(labelconditions{iii})
 
-% 
-% semilogy(S.F,(S.px/sum(S.px)),'Color',myColorMap(iii*3,:),'LineWidth',2)
-% 
-% hold on
-% %plot(f,(px)/sum(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
-% % semilogy(f,(px/sum(px)),'Color',[1 0 0],'LineWidth',2)
-% grid on
-% ax=gca;
-% ax.GridColor=[ 1,1,1];
-% % AX=legend('With Ripples','No Ripples (THR 2)');
-% % AX.Location= 'southwest';
-% xlim([0 250])
-% grid minor
-% xlabel('Frequency (Hz)')
-
-
-%ylabel('10 Log(x)')
-%ylabel('Normalized Power')
-% ylabel('Normalized Power')
-% 
-% %end
-% %legend('HPC','PAR','PFC')
-% title(strcat('Power after Ripple removal in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-
-% handxlabel1 = get(gca, 'XLabel');
-% set(handxlabel1, 'FontSize', 12, 'FontWeight', 'bold')
-% handylabel1 = get(gca, 'ylabel');
-% set(handylabel1, 'FontSize', 12, 'FontWeight', 'bold')
-
-
-% handaxes2 = axes('Position', [0.6 0.6 0.3 0.3]);
-% 
-% 
-% G=area(fa,mean(va,2));
-% G.FaceColor=[1 1 0];
-% grid minor
-% 
-% %ylim([min(mean(va,2)) 1])
-% ylim([0.5 1])
-% xlim([0 250])
-% % xlabel('Frequency (Hz)')
-% % ylabel('Coherence')
-% xlabel('Frequency (Hz)','Color','w')
-% ylabel('Coherence','Color','w')
-% % title('With Ripples vs No Ripples (THR 2)')
-% set(gca,'xcolor','w') 
-% set(gca,'ycolor','w') 
-%  xticks([0 50 100 150 200])
-% 
 end
 legend(labelconditions{stt:end})
-if experiment==1
-        if acer==0
-            cd(strcat('/home/raleman/Dropbox/Power/PCA/WithRipples_wrtBaseline/',num2str(Rat)))
-        else
-              cd(strcat('C:\Users\Welt Meister\Dropbox/Power/PCA/NoRipples_wrtBaseline/',num2str(Rat)))   
-        end
-end
-
-
-
-
-if experiment==2
-        if acer==0
-            cd(strcat('/home/raleman/Dropbox/Power/PCA/NoRipples_wrtBaseline/',num2str(Rat)))
-        else
-              cd(strcat('C:\Users\Welt Meister\Dropbox/Power/PCA/NoRipples_wrtBaseline/',num2str(Rat)))   
-        end
-end
-% error('stop')
-
-figure(1)
-close
-
-fig=gcf;
-fig.InvertHardcopy='off';
-
-% string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('Divergence_',labelconditions{condition},'.png');
-saveas(gcf,string)
-
-string=strcat('Divergence_',labelconditions{condition},'.fig');
-saveas(gcf,string)
-
-close all
-
-
-
-end
-% error('stop')
-% %end
-% error('stop')
-% legend(labelconditions)
-% set(gca,'Color','k')
-% 
-% error('stop')
-
-
+set(gca,'Color','k') 
+grid on
+ax=gca;
+ax.GridColor=[ 1,1,1];
+title('Periodograms after Ripple Removal')
+%error('stop')
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power/Power_without_ripples/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox/Power/Power_without_ripples/',num2str(Rat)))   
 end
 
 fig=gcf;
 fig.InvertHardcopy='off';
 
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('NoRipples_',labelconditions{iii},'.png');
+string=strcat('250Hz_NoRipples_',label1{2*w},'.png');
 saveas(gcf,string)
 
-string=strcat('NoRipples_',labelconditions{iii},'.fig');
+string=strcat('250Hz_NoRipples_',label1{2*w},'.fig');
+saveas(gcf,string)
+
+xlim([0 15])
+string=strcat('15Hz_NoRipples_',label1{2*w},'.png');
 saveas(gcf,string)
 
 close all
 
-%end
-% error('stop')
 
-%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
-
-
+end
+end
 % end
-
-end
-end
-end

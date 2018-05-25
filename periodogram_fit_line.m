@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=3:3
+for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -198,7 +198,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -232,7 +232,19 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
-S=load('powercoh.mat');
+%S=load('powercoh.mat');
+if w==1
+S=load('powercoh.mat');    
+end
+
+if w==2
+S=load('powercoh2.mat');    
+end
+
+if w==3
+S=load('powercoh3.mat');
+end
+
 S=struct2cell(S);
 
 [SS,D]=scatter_analysis(S,S,3,6);
@@ -271,23 +283,23 @@ ax = gca;
 ax.GridColor = [1, 1, 1];
 title('Divergence between signal With and Without Ripples')
 
- error('stop')
+%  error('stop')
 
 
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power_fit/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_fit\',num2str(Rat)))   
 end
 
 fig=gcf;
 fig.InvertHardcopy='off';
 
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.png');
+string=strcat(label1{2*w-1},'_',labelconditions{iii},'.png');
 saveas(gcf,string)
 
-string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.fig');
+string=strcat(label1{2*w-1},'_',labelconditions{iii},'.fig');
 saveas(gcf,string)
 
 close all

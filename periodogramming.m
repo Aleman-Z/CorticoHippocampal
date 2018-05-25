@@ -18,7 +18,7 @@ end
 %Experiments:
 %1: Ripples
 %2:No Ripples
-% for experiment=1:2
+for experiment=1:2
 for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
@@ -204,7 +204,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -238,7 +238,19 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
-S=load('powercoh.mat');
+
+if w==1
+S=load('powercoh.mat');    
+end
+
+if w==2
+S=load('powercoh2.mat');    
+end
+
+if w==3
+S=load('powercoh3.mat');
+end
+
 S=struct2cell(S);
 
 
@@ -248,8 +260,17 @@ S=struct2cell(S);
 %       f: [1001×1 double]
 %      nc: [2000×2069 double]
 %      px: [1001×1 double]
+if experiment==1 
+semilogy(S{1},S{3}/sum(S{3}),'Color',myColorMap(3*iii,:),'LineWidth',2)
+str10='WithRipples';
+end
 
+
+if experiment==2 
 semilogy(S{1},S{6}/sum(S{6}),'Color',myColorMap(3*iii,:),'LineWidth',2)
+str10='NoRipples';
+end
+
 xlim([0 250])
 xlabel('Frequency (Hz)')
 ylabel('Normalized Power')
@@ -267,26 +288,44 @@ set(gca,'Color','k')
 grid on
 ax=gca;
 ax.GridColor=[ 1,1,1];
-title('Periodograms after Ripple Removal')
-% error('stop')
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power/Power_without_ripples/',num2str(Rat)))
-else
-      cd(strcat('C:\Users\Welt Meister\Dropbox/Power/Power_without_ripples/',num2str(Rat)))   
+if experiment==1
+title('Periodograms of signal With Ripples')
 end
 
+if experiment==2
+title('Periodograms after Ripple Removal')
+end
+%error('stop')
+
+if experiment==1
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Power/Power_with_ripples/',num2str(Rat)))
+    else
+          cd(strcat('C:\Users\Welt Meister\Dropbox/Power/Power_with_ripples/',num2str(Rat)))   
+    end
+end
+
+
+if experiment==2
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Power/Power_without_ripples/',num2str(Rat)))
+    else
+          cd(strcat('C:\Users\Welt Meister\Dropbox/Power/Power_without_ripples/',num2str(Rat)))   
+    end
+end
 fig=gcf;
 fig.InvertHardcopy='off';
 
+
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('250Hz_NoRipples_','.png');
+string=strcat('250Hz_',str10,'_',label1{2*w},'.png');
 saveas(gcf,string)
 
-string=strcat('250Hz_NoRipples_','.fig');
+string=strcat('250Hz_',str10,'_',label1{2*w},'.fig');
 saveas(gcf,string)
 
 xlim([0 15])
-string=strcat('15Hz_NoRipples_','.png');
+string=strcat('15Hz_',str10,'_',label1{2*w},'.png');
 saveas(gcf,string)
 
 close all
@@ -294,4 +333,4 @@ close all
 
 end
 end
-% end
+end

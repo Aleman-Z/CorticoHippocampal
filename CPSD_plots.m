@@ -1,5 +1,7 @@
 close all
-clear all
+clear all 
+clc
+
 acer=0;
 
 %
@@ -15,8 +17,7 @@ end
 %%
 %Rat=26;
 
-for experiment=1:2
-for Rat=2:2
+for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -201,7 +202,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -213,15 +214,15 @@ NCount=nan(length(nFF),1);
 
 
 
-if Rat==26 | 27
-    stt=4;
-else
-    stt=3;
-end
-% 
-% stt=1;
-for condition=1:3
+% if Rat==26 | 27
+%     stt=4;
+% else
+%     stt=3;
+% end
 
+stt=1;
+%for condition=1:3
+allscreen()
 for iii=stt:length(nFF)
 %for level=2:2
 myColorMap = jet(24);    
@@ -235,35 +236,53 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
+if w==1   
 S=load('powercoh.mat');
+end
+
+if w==2   
+S=load('powercoh2.mat');
+end
+
+if w==3   
+S=load('powercoh3.mat');
+end
+
 S=struct2cell(S);
 
-% 
-%Baseline 1
-if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-else
-    cd(strcat('D:\internship\',num2str(Rat)))
-end
+[A,ZZ] = mscohere(S{2},S{5},[],[],[],1000);
 
-%cd(nFF{iii})
- cd(nFF{condition})
-    %Get averaged time signal.
-S1=load('powercoh.mat');
-S1=struct2cell(S1);
+subplot(2,1,1)
+plot(ZZ,(mean(A,2)),'Color',myColorMap(3*iii,:),'LineWidth',2)
 
-if experiment==1
-[SS,D]=scatter_analysis(S,S1,3,3);
-end
-
-figure(condition+1)
-semilogy(SS,smooth(D),'Color',myColorMap(3*iii,:),'LineWidth',2)
 hold on
 % semilogy(SS,(D)*0+val)
 grid minor
 xlim([0 250])
+xlabel('Frequency')
 
-% error('stop')
+if iii==length(nFF)
+legend(labelconditions)
+set(gca,'Color','k')
+grid on
+ax = gca;
+ax.GridColor = [1, 1, 1];
+title('Magnitude Squared Coherence (Ripples vs NoRipples)')
+end
+subplot(2,1,2)
+[D,SS] = cpsd(S{2},S{5},[],[],[],1000);
+plot(SS,smooth(angle(mean(D,2))),'Color',myColorMap(3*iii,:),'LineWidth',2)
+
+%semilogy(SS,mean(D,2),'Color',myColorMap(3*iii,:),'LineWidth',2)
+
+hold on
+% semilogy(SS,(D)*0+val)
+grid minor
+xlim([0 250])
+xlabel('Frequency')
+
+
+
 %      F: [1001×1 double]
 %      NC: [2000×2069 double]
 %     PPx: [1001×1 double]
@@ -271,72 +290,39 @@ xlim([0 250])
 %      nc: [2000×2069 double]
 %      px: [1001×1 double]
 
-% 
-% %ylim([min(mean(va,2)) 1])
-% ylim([0.5 1])
-% xlim([0 250])
-% % xlabel('Frequency (Hz)')
-% % ylabel('Coherence')
-% xlabel('Frequency (Hz)','Color','w')
-% ylabel('Coherence','Color','w')
-% % title('With Ripples vs No Ripples (THR 2)')
-% set(gca,'xcolor','w') 
-% set(gca,'ycolor','w') 
-%  xticks([0 50 100 150 200])
-% 
+
+
 end
-legend(labelconditions{stt:end})
+
+legend(labelconditions)
 set(gca,'Color','k')
 grid on
 ax = gca;
 ax.GridColor = [1, 1, 1];
-title('Divergence between Conditions and Baseline')
+title('Cross Spectrum Phase')
+
 
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power/Divergence/',num2str(Rat)))
+    cd(strcat('/home/raleman/Dropbox/Power_COH_CPSD/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power/Divergence\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_COH_CPSD\',num2str(Rat)))   
 end
-
-% error('stop')
-
-figure(1)
-close
 
 fig=gcf;
 fig.InvertHardcopy='off';
 
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('Divergence_',labelconditions{condition},'.png');
+string=strcat('CPSD_250Hz_',label1{2*w-1},'.png');
 saveas(gcf,string)
 
-string=strcat('Divergence_',labelconditions{condition},'.fig');
+string=strcat('CPSD_250Hz_',label1{2*w-1},'.fig');
 saveas(gcf,string)
+ 
+% xlim([0 20])
+% string=strcat('CPSD_20Hz_',label1{2*w-1},'.png');
+% saveas(gcf,string)
 
 close all
-
-
-end
-
-% 
-% if acer==0
-%     cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
-% else
-%       cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
-% end
-% 
-% fig=figure(condition+1);
-% %fig=gcf;
-% fig.InvertHardcopy='off';
-% 
-% % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-% string=strcat('NoRipples_',labelconditions{iii},'.png');
-% saveas(gcf,string)
-% 
-% string=strcat('NoRipples_',labelconditions{iii},'.fig');
-% saveas(gcf,string)
-% 
-% close all
 
 %end
 % error('stop')
@@ -348,4 +334,5 @@ end
 
 end
 end
-end
+%%
+%end

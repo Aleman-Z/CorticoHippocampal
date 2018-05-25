@@ -17,7 +17,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=3:3
 rats=[26 27 21];
 jay=Rat;
 Rat=rats(Rat);    
@@ -228,8 +228,6 @@ end
     cd(nFF{iii})
 lepoch=2;
 
-% error('stop here')
-
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 
@@ -241,19 +239,12 @@ load('vq1.mat');
 %OCURRENCE. 
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
-%[p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),CHTM(level+1));
+% [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),vq);
 % error('stop')
-
 consig=carajo{1};
-consig=consig(:,2);
-aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
-aver=[aver{:}];
-Aver=aver;
-histogram(Aver,'Normalization','probability','BinWidth',0.1)
-xlim([0 4])
-grid minor
-hold on
-
+consig=consig(:,3);
+[Aver]=sort_ripple_histogram(consig,sig1,veamos);
+l_Aver=length(Aver);
 
 %GET NO Learning 1
 if acer==0
@@ -265,20 +256,25 @@ end
 
 cd(nFF{1})
 
-
 load('vq1.mat');
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
-
-
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 consig=carajo{1};
-consig=consig(:,2);
-aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
-aver=[aver{:}];
+consig=consig(:,3);
+[aver]=sort_ripple_histogram(consig,sig1,veamos);
+l_aver=length(aver);
 
-histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+len=min([l_aver l_Aver]);
+% error('stop')
+
+
+%PLotting, save for later. 
+histogram(Aver(1,1:len),'Normalization','probability','BinWidth',0.1)
+xlim([0 4])
+grid minor
+hold on
+
+histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
 if Rat==26 || Rat==27 
 legend(labelconditions{iii-3},'Baseline 1')
@@ -289,7 +285,7 @@ end
 xlabel('Time(sec)')
 ylabel('Probability of occurence')
 title('Histogram of interripple occurence')
-
+% error('stop')
 dim = [.6 .5 .3 .1];
 if Rat==26 || Rat==27 
 str = strcat('Rate of occurence for',{' '},labelconditions{iii-3},':',{' '},num2str(RIPFREQ2),{' '});
@@ -353,16 +349,19 @@ load('vq1.mat');
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 consig=carajo{1};
-consig=consig(:,2);
-aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
-aver=[aver{:}];
+consig=consig(:,3);
+[aver]=sort_ripple_histogram(consig,sig1,veamos);
+l_aver=length(aver);
 
-histogram(Aver,'Normalization','probability','BinWidth',0.1)
+len=min([l_aver l_Aver]);
+
+
+histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
 hold on
 
-histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
 
 if Rat==26 || Rat==27
@@ -439,16 +438,22 @@ load('vq1.mat');
 
 
 consig=carajo{1};
-consig=consig(:,2);
-aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
-aver=[aver{:}];
+consig=consig(:,3);
+[aver]=sort_ripple_histogram(consig,sig1,veamos);
+l_aver=length(aver);
 
-histogram(Aver,'Normalization','probability','BinWidth',0.1)
+len=min([l_aver l_Aver]);
+
+
+% aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
+% aver=[aver{:}];
+
+histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
 hold on
 
-histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
 legend(labelconditions{iii-3},'Baseline 3')
 xlabel('Time(sec)')

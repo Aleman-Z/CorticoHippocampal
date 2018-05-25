@@ -15,8 +15,8 @@ end
 %%
 %Rat=26;
 
-for experiment=2:2
-for Rat=3:3
+for experiment=1:2
+for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -201,7 +201,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -237,7 +237,20 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
-S=load('powercoh.mat');
+% S=load('powercoh.mat');
+if w==1
+S=load('powercoh.mat');    
+end
+
+if w==2
+S=load('powercoh2.mat');    
+end
+
+if w==3
+S=load('powercoh3.mat');
+end
+
+
 S=struct2cell(S);
 
 % 
@@ -251,7 +264,20 @@ end
 %cd(nFF{iii})
  cd(nFF{condition})
     %Get averaged time signal.
-S1=load('powercoh.mat');
+% S1=load('powercoh.mat');
+
+if w==1
+S1=load('powercoh.mat');    
+end
+
+if w==2
+S1=load('powercoh2.mat');    
+end
+
+if w==3
+S1=load('powercoh3.mat');
+end
+
 S1=struct2cell(S1);
 
 if experiment==1
@@ -259,9 +285,9 @@ if experiment==1
 end
 
 if experiment==2
-[SS,D]=scatter_analysis(S,S1,6,3);% 6 and 3
+[SS,D]=scatter_analysis(S,S1,6,6);% 6 and 3
 end
-
+strcat('/home/raleman/Dropbox/Power/Divergence/With_Ripples',num2str(Rat))
 figure(condition+1)
 semilogy(SS,smooth(D),'Color',myColorMap(3*iii,:),'LineWidth',2)
 hold on
@@ -299,11 +325,21 @@ ax.GridColor = [1, 1, 1];
 title('Divergence between Conditions and Baseline')
 
 % error('stop')
+if experiment==1
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Power/Divergence/With_Ripples_wrt_baseline/',num2str(Rat)))
+    else
+          cd(strcat('C:\Users\Welt Meister\Dropbox\Power/Divergence\With_Ripples_wrt_baseline\',num2str(Rat)))   
+    end
+end
 
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power/Divergence/',num2str(Rat)))
-else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power/Divergence\',num2str(Rat)))   
+
+if experiment==2
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Power/Divergence/No_Ripples_wrt_baseline/',num2str(Rat)))
+    else
+          cd(strcat('C:\Users\Welt Meister\Dropbox\Power/Divergence\No_Ripples_wrt_baseline\',num2str(Rat)))   
+    end
 end
 
 % error('stop')
@@ -315,10 +351,10 @@ fig=gcf;
 fig.InvertHardcopy='off';
 
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('Divergence_',labelconditions{condition},'.png');
+string=strcat(labelconditions{condition},'_',label1{2*w-1},'.png');
 saveas(gcf,string)
 
-string=strcat('Divergence_',labelconditions{condition},'.fig');
+string=strcat(labelconditions{condition},'_',label1{2*w-1},'.fig');
 saveas(gcf,string)
 
 close all

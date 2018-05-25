@@ -12,7 +12,7 @@ addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippo
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=3:3
 rats=[26 27 21];
 Rat=rats(Rat);    
     
@@ -60,9 +60,9 @@ labelconditions=[
      'Foraging_1'
      'Foraging_2'
     ];
+end
 
-
-else
+if Rat==27
 nFF=[
     {'rat27_nl_base_2016-03-28_15-01-17'                   }
     {'rat27_NL_baseline_2016-02-26_12-50-26'               }
@@ -107,6 +107,33 @@ labelconditions=[
 
     
 end
+
+if Rat==21
+ 
+ nFF=[  
+    {'2015-11-27_13-50-07 5h baseline'             }
+    {'rat21 baselin2015-12-11_12-52-58'            }
+    {'rat21_learningbaseline2_2015-12-10_15-24-17' }
+    {'rat21with45minlearning_2015-12-02_14-25-12'  }
+    %{'rat21t_maze_2015-12-14_13-29-07'             }
+    {'rat21 post t-maze 2015-12-14_13-30-52'       }
+    
+];
+
+%%
+labelconditions=[
+    {    
+     'Learning Baseline'
+                }
+     
+     '45minLearning'
+     'Novelty_2'
+     't-maze'
+     'Post t-maze'
+    ];
+    
+end
+
 
 %% Go to main directory
 if acer==0
@@ -159,7 +186,7 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-
+% length(nFF)
 for iii=1:length(nFF)
 
     
@@ -181,28 +208,12 @@ end
 cd(nFF{iii})
 lepoch=2;
 
- error('stop')
+%  error('stop')
 
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch);
-%  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
-%%
-DEMAIS=DEMAIS(2:end);
-ripple=ripple(2:end);
-y1=y1(2:end);
-
-%%
-
-%%
-plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
-xlabel('Threshold value (uV)')
-ylabel('Ripples per second')
-grid minor
-
-hold on
-plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
-title('Rate of ripples per Threshold value')
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level([],nrem,notch,w,lepoch);
+  save('thfile4.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 
 
 
@@ -213,31 +224,6 @@ end
 
 
 end
-
-
-set(gca, 'XDir','reverse')
-h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
-set(h,'Location','Northwest')
-
-set(gca,'Color','k')
-
-error('stop')
-
-string=strcat('Ripples_per_condition_scaled','.png');
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Threshold/',num2str(Rat)))
-else    
-    cd(strcat('C:\Users\Welt Meister\Dropbox\Threshold/',num2str(Rat)))
-end
-
-
-saveas(gcf,string)
-string=strcat('Ripples_per_condition_scaled','.fig');
-
-saveas(gcf,string)
-
-close all
 
 %%
 end

@@ -15,7 +15,7 @@ end
 %1: Ripples
 %2:No Ripples
 for experiment=1:2
-for Rat=3:3
+for Rat=1:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -200,7 +200,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+for w=1:3
 
 if Rat==21
 myColorMap = jet(5);
@@ -237,7 +237,20 @@ end
 
  cd(nFF{iii})
     %Get averaged time signal.
-S=load('powercoh.mat');
+% S=load('powercoh.mat');
+
+if w==1
+S=load('powercoh.mat');    
+end
+
+if w==2
+S=load('powercoh2.mat');    
+end
+
+if w==3
+S=load('powercoh3.mat');
+end
+
 S=struct2cell(S);
 
 % 
@@ -251,9 +264,23 @@ end
 %cd(nFF{iii})
  cd(nFF{condition})
     %Get averaged time signal.
-S1=load('powercoh.mat');
+% S1=load('powercoh.mat');
+
+
+if w==1
+S1=load('powercoh.mat');    
+end
+
+if w==2
+S1=load('powercoh2.mat');    
+end
+
+if w==3
+S1=load('powercoh3.mat');
+end
+
 S1=struct2cell(S1);
-% error('stop')
+
 %      F: [1001×1 double]
 %      NC: [2000×2069 double]
 %     PPx: [1001×1 double]
@@ -405,10 +432,10 @@ end
 fig=gcf;
 fig.InvertHardcopy='off';
 
-string=strcat('PCA_',labelconditions{condition},'.png');
+string=strcat('PCA_',labelconditions{condition},'_',label1{2*w},'.png');
 saveas(gcf,string)
 
-string=strcat('PCA_',labelconditions{condition},'.fig');
+string=strcat('PCA_',labelconditions{condition},'_',label1{2*w},'.fig');
 saveas(gcf,string)
 
 close all

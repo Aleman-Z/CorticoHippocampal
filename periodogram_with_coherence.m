@@ -1,5 +1,4 @@
 acer=0;
-
 %
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -7,9 +6,9 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
-   
+addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')   
 end
+
 %%
 %Rat=26;
 
@@ -198,7 +197,7 @@ label2{7}='Monopolar';
 
 %  for level=1:1
      
-for w=1:1
+%for w=2:2
 
 if Rat==21
 myColorMap = jet(5);
@@ -209,7 +208,7 @@ end
 NCount=nan(length(nFF),1);
 
 
-for iii=2:length(nFF)
+for iii=1:length(nFF)
 for level=2:2
 myColorMap = jet(9);    
     
@@ -239,17 +238,38 @@ lepoch=2;
 % error('stop')
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NORIPPLE_nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);    
 tic
-[sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=REMOVE_RIPPLES(level,nrem,notch,w,lepoch);
+[sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=REMOVE_RIPPLES(level,nrem,notch,[],lepoch);
 toc
 % error('stop')
+for w=2:3
 [PPx,F,~]=generate_periodogram(Sig22,w,Rat,iii);
 [px,f,~]=generate_periodogram(sig2,w,Rat,iii);
 
 [NC]=generate_nc(Sig22,w,Rat,iii);
 [nc]=generate_nc(sig2,w,Rat,iii);
-[va, fa]=mscohere(NC,nc,[],[],[],1000);
 
-save('powercoh.mat','PPx','F','px','f','NC','nc');
+if w==2
+save('powercoh2.mat','PPx','F','px','f','NC','nc');
+end
+
+if w==3
+save('powercoh3.mat','PPx','F','px','f','NC','nc');
+end
+
+clear PPx F px f NC nc
+end
+ 
+% [va, fa]=mscohere(NC,nc,[],[],[],1000);
+
+
+% if w==1
+% save('powercoh.mat','PPx','F','px','f','NC','nc');
+% end
+
+
+% if w==3
+% save('powercoh3.mat','PPx','F','px','f','NC','nc');
+% end
 %%
 % for w=1:3
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % f_signal=sig2{2*w-1};
@@ -306,80 +326,82 @@ save('powercoh.mat','PPx','F','px','f','NC','nc');
 %plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 
 %semilogy(f,(px)/sum(px),'Color',myColorMap(level,:),'LineWidth',1.5)
-figure(1)
-handaxes1 = axes('Position', [0.12 0.12 0.8 0.8]);
 
-semilogy(F,(PPx/sum(PPx)),'Color',[0 0 1],'LineWidth',2)
-
-hold on
-%plot(f,(px)/sum(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
-semilogy(f,(px/sum(px)),'Color',[1 0 0],'LineWidth',2)
-grid on
-ax=gca;
-ax.GridColor=[ 1,1,1];
-AX=legend('With Ripples','No Ripples (THR 2)');
-AX.Location= 'southwest';
-
-
-
-xlim([0 250])
-grid minor
-xlabel('Frequency (Hz)')
-%ylabel('10 Log(x)')
-%ylabel('Normalized Power')
-ylabel('Normalized Power')
-
-%end
-%legend('HPC','PAR','PFC')
-title(strcat('Power and Coherence in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-set(handaxes1, 'Box', 'off')
-
-handxlabel1 = get(gca, 'XLabel');
-set(handxlabel1, 'FontSize', 12, 'FontWeight', 'bold')
-handylabel1 = get(gca, 'ylabel');
-set(handylabel1, 'FontSize', 12, 'FontWeight', 'bold')
-set(gca,'Color','k')
-
-
-handaxes2 = axes('Position', [0.6 0.6 0.3 0.3]);
-
-
-G=area(fa,mean(va,2));
-G.FaceColor=[1 1 0];
-grid minor
-
-%ylim([min(mean(va,2)) 1])
-ylim([0.5 1])
-xlim([0 250])
-% xlabel('Frequency (Hz)')
-% ylabel('Coherence')
-xlabel('Frequency (Hz)','Color','w')
-ylabel('Coherence','Color','w')
-% title('With Ripples vs No Ripples (THR 2)')
-set(gca,'xcolor','w') 
-set(gca,'ycolor','w') 
- xticks([0 50 100 150 200])
-
-
-
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
-else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
-end
-
-fig=gcf;
-fig.InvertHardcopy='off';
-
-% string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('NoRipples_',labelconditions{iii},'.png');
-saveas(gcf,string)
-
-string=strcat('NoRipples_',labelconditions{iii},'.fig');
-saveas(gcf,string)
-
-close all
+%IF YOU WANT TO PLOT , UNCOMMENT THIS:
+% % % % % % % % % % % figure(1)
+% % % % % % % % % % % handaxes1 = axes('Position', [0.12 0.12 0.8 0.8]);
+% % % % % % % % % % % 
+% % % % % % % % % % % semilogy(F,(PPx/sum(PPx)),'Color',[0 0 1],'LineWidth',2)
+% % % % % % % % % % % 
+% % % % % % % % % % % hold on
+% % % % % % % % % % % %plot(f,(px)/sum(px),'Color',myColorMap(level*3,:),'LineWidth',1.5)
+% % % % % % % % % % % semilogy(f,(px/sum(px)),'Color',[1 0 0],'LineWidth',2)
+% % % % % % % % % % % grid on
+% % % % % % % % % % % ax=gca;
+% % % % % % % % % % % ax.GridColor=[ 1,1,1];
+% % % % % % % % % % % AX=legend('With Ripples','No Ripples (THR 2)');
+% % % % % % % % % % % AX.Location= 'southwest';
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % xlim([0 250])
+% % % % % % % % % % % grid minor
+% % % % % % % % % % % xlabel('Frequency (Hz)')
+% % % % % % % % % % % %ylabel('10 Log(x)')
+% % % % % % % % % % % %ylabel('Normalized Power')
+% % % % % % % % % % % ylabel('Normalized Power')
+% % % % % % % % % % % 
+% % % % % % % % % % % %end
+% % % % % % % % % % % %legend('HPC','PAR','PFC')
+% % % % % % % % % % % title(strcat('Power and Coherence in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
+% % % % % % % % % % % set(handaxes1, 'Box', 'off')
+% % % % % % % % % % % 
+% % % % % % % % % % % handxlabel1 = get(gca, 'XLabel');
+% % % % % % % % % % % set(handxlabel1, 'FontSize', 12, 'FontWeight', 'bold')
+% % % % % % % % % % % handylabel1 = get(gca, 'ylabel');
+% % % % % % % % % % % set(handylabel1, 'FontSize', 12, 'FontWeight', 'bold')
+% % % % % % % % % % % set(gca,'Color','k')
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % handaxes2 = axes('Position', [0.6 0.6 0.3 0.3]);
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % G=area(fa,mean(va,2));
+% % % % % % % % % % % G.FaceColor=[1 1 0];
+% % % % % % % % % % % grid minor
+% % % % % % % % % % % 
+% % % % % % % % % % % %ylim([min(mean(va,2)) 1])
+% % % % % % % % % % % ylim([0.5 1])
+% % % % % % % % % % % xlim([0 250])
+% % % % % % % % % % % % xlabel('Frequency (Hz)')
+% % % % % % % % % % % % ylabel('Coherence')
+% % % % % % % % % % % xlabel('Frequency (Hz)','Color','w')
+% % % % % % % % % % % ylabel('Coherence','Color','w')
+% % % % % % % % % % % % title('With Ripples vs No Ripples (THR 2)')
+% % % % % % % % % % % set(gca,'xcolor','w') 
+% % % % % % % % % % % set(gca,'ycolor','w') 
+% % % % % % % % % % %  xticks([0 50 100 150 200])
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % 
+% % % % % % % % % % % if acer==0
+% % % % % % % % % % %     cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
+% % % % % % % % % % % else
+% % % % % % % % % % %       cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
+% % % % % % % % % % % end
+% % % % % % % % % % % 
+% % % % % % % % % % % fig=gcf;
+% % % % % % % % % % % fig.InvertHardcopy='off';
+% % % % % % % % % % % 
+% % % % % % % % % % % % string=strcat('300hz_intra_',label1{2*w-1},'.png');
+% % % % % % % % % % % string=strcat('NoRipples_',labelconditions{iii},'.png');
+% % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % 
+% % % % % % % % % % % string=strcat('NoRipples_',labelconditions{iii},'.fig');
+% % % % % % % % % % % saveas(gcf,string)
+% % % % % % % % % % % 
+% % % % % % % % % % % close all
 
 end
 % error('stop')
@@ -390,7 +412,7 @@ end
 end
 
 
-end
+%end
 %%
 end
 %end

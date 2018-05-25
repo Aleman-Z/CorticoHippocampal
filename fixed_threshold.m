@@ -1,6 +1,10 @@
+close all
+clear all
+clc 
+
 acer=0;
 
-%
+%%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
@@ -12,10 +16,12 @@ addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippo
 end
 %%
 %Rat=26;
-
-for Rat=1:2
+for Rat=2:3
 rats=[26 27 21];
+jay=Rat;
 Rat=rats(Rat);    
+    
+% for Rat=26:26
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -50,20 +56,17 @@ nFF=[
 %     ];
 
 labelconditions=[
-    { 
-    
-    'Baseline_1'}
-    'Baseline_2'
-    'Baseline_3'
-     'PlusMaze'    
+    {    
+     'PlusMaze'
+                }
+     
      'Novelty_1'
      'Novelty_2'
      'Foraging_1'
      'Foraging_2'
     ];
-
-
 end
+
 if Rat==27
 nFF=[
     {'rat27_nl_base_2016-03-28_15-01-17'                   }
@@ -92,10 +95,10 @@ nFF=[
 
 labelconditions=[
     { 
-    'Baseline_1'}
-    'Baseline_2'
-    'Baseline_3'
-    'PlusMaze_1'
+    %'Baseline_1'}
+    %'Baseline_2'
+    %'Baseline_3'
+    'PlusMaze_1'} 
     'PlusMaze_2'
     
     'Foraging_1'
@@ -123,27 +126,34 @@ if Rat==21
 ];
 
 %%
+% labelconditions=[
+%     {    
+%      'Learning Baseline'
+%                 }
+%      
+%      '45minLearning'
+%      'Novelty_2'
+%      't-maze'
+%      'Post t-maze'
+%     ];
 labelconditions=[
     {    
-     'Learning Baseline'
+     'Baseline 1'
                 }
      
-     '45minLearning'
-     'Novelty_2'
-     't-maze'
-     'Post t-maze'
+     'Baseline 2'
+     'Novelty 1'
+     'Novelty 2'
+     'PlusMaze'
     ];
     
 end
- 
 
 
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     addpath /home/raleman/Documents/internship/fieldtrip-master/
-cd /home/raleman/Documents/internship/fieldtrip-master
-
     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -151,7 +161,6 @@ cd /home/raleman/Documents/internship/fieldtrip-master
 else
     cd(strcat('D:\internship\',num2str(Rat)))
     addpath D:\internship\fieldtrip-master
-    cd D:\internship\fieldtrip-master
     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -164,16 +173,18 @@ granger=0;
 %Select length of window in seconds:
 ro=[1200];
 coher=0;
-selectripples=1;
-mergebaseline=1;
+selectripples=0;
+mergebaseline=0;
+notch=1;
 nrem=3;
-notch=0;
+myColorMap = jet(8);
+
 %%
 
 %Make labels
 label1=cell(7,1);
-label1{1}='Hippocampus';
-label1{2}='Hippocampus';
+label1{1}='Hippo';
+label1{2}='Hippo';
 label1{3}='Parietal';
 label1{4}='Parietal';
 label1{5}='PFC';
@@ -190,117 +201,78 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
+% allscreen()
+VQ=[];
+for iii=1:length(nFF)
+% for iii=2:2
 
- 
     
- %clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap jay RF CH VQ
 
 
-%  for level=1:1
+
+%for level=1:length(ripple)-1;    
+ for level=1:1
      
 for w=1:1
 
-if Rat==21
-myColorMap = jet(5);
-else
-myColorMap = jet(8);    
-end
-% colormap(myColorMap);
-NCount=nan(length(nFF),1);
-
-
-
-% if Rat==26 | 27
-%     stt=4;
-% else
-%     stt=3;
-% end
-
-stt=1;
-%for condition=1:3
-
-for iii=stt:length(nFF)
-%for level=2:2
-myColorMap = jet(24);    
-
-% Current condition
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
- cd(nFF{iii})
-    %Get averaged time signal.
-S=load('powercoh.mat');
-S=struct2cell(S);
+cd(nFF{iii})
+lepoch=2;
 
-[SS,D]=scatter_analysis(S,S,3,6);
+% tic
+% [CHTM,RipFreq2]=RIPPLES(2,nrem,notch,[],lepoch);
+% toc
+% chtm=CHTM(3);
 
-figure(2)
-semilogy(SS,smooth(D),'Color',myColorMap(3*iii,:),'LineWidth',2)
-hold on
-% semilogy(SS,(D)*0+val)
-grid minor
-xlim([0 250])
+ %load('thresholdfile.mat');
+ load('thfile4.mat');
+ gth=load('actual_thr.mat');
+ RF(1,iii)=gth.RipFreq2;
+ CH(1,iii)=gth.chtm;
+% save('actual_thr.mat','chtm','RipFreq2');                                                                                                                                                                                                                                                                                                                                               
 
-
-
-%      F: [1001×1 double]
-%      NC: [2000×2069 double]
-%     PPx: [1001×1 double]
-%       f: [1001×1 double]
-%      nc: [2000×2069 double]
-%      px: [1001×1 double]
-
-
-
-end
-figure(1)
-close
-legend(labelconditions)
-% error('stop')
-% legend(labelconditions{stt:end})
-%end
-% error('stop')
-% legend(labelconditions)
-set(gca,'Color','k')
-
-grid minor
-ax = gca;
-ax.GridColor = [1, 1, 1];
-title('Divergence between ')
-
- error('stop')
-
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Power_Coh/',num2str(Rat)))
-else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Power_Coh\',num2str(Rat)))   
-end
-
-fig=gcf;
-fig.InvertHardcopy='off';
-
-% string=strcat('300hz_intra_',label1{2*w-1},'.png');
-string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.png');
-saveas(gcf,string)
-
-string=strcat('NoRipples_vs_Ripples_',labelconditions{iii},'.fig');
-saveas(gcf,string)
-
-close all
-
-%end
-% error('stop')
-
-%string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
-
-
-% end
-
-end
+%%
+if Rat~=21
+DEMAIS=DEMAIS(2:end);
+ripple=ripple(2:end);
+y1=y1(2:end);
 end
 %%
+%%
+%figure(jay)
+
+
+% hold on
+% plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
+% title('Rate of ripples per Threshold value')
+% plot(gth.chtm,gth.RipFreq2,'w*','MarkerSize',10)
+
+
+xq=1;
+vq = interp1(y1/(timeasleep*60),DEMAIS,xq);
+% hold on
+% plot(vq,xq,'*k','MarkerSize',10)
+
+ save('vq1.mat','vq');                                                                                                                                                                                                                                                                                                                                               
+
+%%
+
+end
+
+end
+VQ=[VQ vq];
+end
+
+
+
+
+% error('stop')
+%%
+end
 %end

@@ -17,7 +17,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=3:3
 rats=[26 27 21];
 jay=Rat;
 Rat=rats(Rat);    
@@ -139,12 +139,11 @@ if Rat==21
 %     ];
 labelconditions=[
     {    
- %    'Baseline 1'
- %               }
-     
- %    'Baseline 2'
-     'Novelty 1'
+     'Baseline 1'
                 }
+     
+     'Baseline 2'
+     'Novelty 1'
      'Novelty 2'
      'PlusMaze'
     ];
@@ -249,6 +248,7 @@ consig=consig(:,2);
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
 Aver=aver;
+
 histogram(Aver,'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
@@ -319,10 +319,7 @@ if exist(labelconditions{iii-3})~=7
 end
 cd((labelconditions{iii-3}))
 else
-if exist(labelconditions{iii-2})~=7
-(mkdir(labelconditions{iii-2}))
-end
-cd((labelconditions{iii-2}))
+
     
 end
 saveas(gcf,string)
@@ -364,23 +361,13 @@ hold on
 
 histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
-
-if Rat==26 || Rat==27
-legend(labelconditions{iii-3},'Baseline 2')
-else
-legend(labelconditions{iii-2},'Baseline 2')
-end
-
+legend(labelconditions{iii-3},'Baseline 1')
 xlabel('Time(sec)')
 ylabel('Probability of occurence')
 title('Histogram of interripple occurence')
 
 dim = [.6 .5 .3 .1];
-if Rat==26 || Rat==27
 str = strcat('Rate of occurence for',{' '},labelconditions{iii-3},':',{' '},num2str(RIPFREQ2),{' '});
-else
-str = strcat('Rate of occurence for',{' '},labelconditions{iii-2},':',{' '},num2str(RIPFREQ2),{' '});    
-end
 annotation('textbox',dim,'String',str)
 
 dim = [.6 .6 .3 .1];
@@ -396,19 +383,12 @@ else
     cd(strcat('C:\Users\Welt Meister\Dropbox\Histograms/',num2str(Rat)))
 end
 
-if Rat==26 || Rat==27
 
 if exist(labelconditions{iii-3})~=7
 (mkdir(labelconditions{iii-3}))
 end
 cd((labelconditions{iii-3}))
-else
-if exist(labelconditions{iii-2})~=7
-(mkdir(labelconditions{iii-2}))
-end
-cd((labelconditions{iii-2}))
-    
-end
+
 saveas(gcf,string)
 
 string=strcat('Histograms_',label1{2*w-1},'_','Baseline2','.fig');

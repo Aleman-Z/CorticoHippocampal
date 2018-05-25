@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=REMOVE_RIPPLES(level,nrem,notch,~,lepoch)
+function [CHTM,RipFreq2]=RIPPLES(level,nrem,notch,~,lepoch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -316,89 +316,7 @@ ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'
 'Look for ripples'
 k=level;
 [S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', CHTM(k+1), (CHTM(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
-
-for j=1:length(ti)
-    caco=ti{j};
-    cao=signal2{j};
-    S=S2x{j};
-    E=E2x{j};
-
- s172(:,1)=cellfun('length',S2x);
-
-% end
-
-RipFreq2=sum(s172)/(timeasleep*(60));
-
-    %%
-'Aqui andamos:'    
-% j/length(ti)*100
-% j/length(ti)*100
-% CAO=cao;
-    for L=1:length(S)
-     
-% CAO(floor(S(L)*1000):round(E(L)*1000))=NaN;
-% [CAO] = fillmissing(CAO,'linear');
-    
-    Mono17{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono17{j});
-    Bip17{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip17{j});
-    Mono12{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono12{j});
-    Bip12{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip12{j});
-    Mono9{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono9{j});
-    Bip9{j}(floor(S(L)*1000):round(E(L)*1000))=median(Bip9{j});
-    Mono6{j}(floor(S(L)*1000):round(E(L)*1000))=median(Mono6{j});
-    
-
-    V17{j}(floor(S(L)*1000):round(E(L)*1000))=median(V17{j});
-    S17{j}(floor(S(L)*1000):round(E(L)*1000))=median(S17{j});
-    V12{j}(floor(S(L)*1000):round(E(L)*1000))=median(V12{j});
-    
-    S12{j}(floor(S(L)*1000):round(E(L)*1000))=median(S12{j});
-    
-    V9{j}(floor(S(L)*1000):round(E(L)*1000))=median(V9{j});
-    
-    S9{j}(floor(S(L)*1000):round(E(L)*1000))=median(S9{j});
-    
-    V6{j}(floor(S(L)*1000):round(E(L)*1000))=median(V6{j});
-
-%     Mono17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Bip17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Mono12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Bip12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Mono9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Bip9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     Mono6{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     V17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     S17{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     V12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     S12{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     V9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     S9{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-%     V6{j}(floor(S(L)*1000):round(E(L)*1000))=NaN;
-% 
-%     
-%     Mono17{j}= fillmissing(Mono17{j},'linear');
-%     Bip17{j}= fillmissing(Bip17{j},'linear');
-%     Mono12{j}= fillmissing(Mono12{j},'linear');
-%     Bip12{j}= fillmissing(Bip12{j},'linear');
-%     Mono9{j}= fillmissing(Mono9{j},'linear');
-%     Bip9{j}= fillmissing(Bip9{j},'linear');
-%     Mono6{j}= fillmissing(Mono6{j},'linear');
-%     V17{j}= fillmissing(V17{j},'linear');
-%     S17{j}= fillmissing(S17{j},'linear');
-%     V12{j}= fillmissing(V12{j},'linear');
-%     S12{j}= fillmissing(S12{j},'linear');
-%     V9{j}= fillmissing(V9{j},'linear');
-%     S9{j}= fillmissing(S9{j},'linear');
-%     V6{j}= fillmissing(V6{j},'linear');
-
        
-    
-    [j/length(ti)*100 L/length(S)*100 level RipFreq2]
-    end
-
-end
-
-
 
 swr172(:,:,1)=[S2x E2x M2x];
 s172(:,1)=cellfun('length',S2x);
@@ -407,51 +325,5 @@ k
 
 RipFreq2=sum(s172)/(timeasleep*(60));
 
-%To display number of events use:
-ripple2=sum(s172); %When using same threshold per epoch.
-%ripple when using different threshold per epoch. 
-
-%to display thresholds use CHTM 
-% to display rate of occurence use RipFreq2. 
-%%
-%error('Stop here please')
-
-% Windowing
-for ind=1:size(s172,2)
-veamos{:,ind}=find(s172(:,ind)~=0);  %Epochs with ripples detected
-carajo{:,:,ind}=swr172(veamos{:,ind},:,ind);
-
-% veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
-% carajo2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
-end
-
-
-sig1=cell(7,1);
-
-sig1{1}=Mono17;
-sig1{2}=Bip17;
-sig1{3}=Mono12;
-sig1{4}=Bip12;
-sig1{5}=Mono9;
-sig1{6}=Bip9;
-sig1{7}=Mono6;
-
-
-sig2=cell(7,1);
-
-sig2{1}=V17;
-sig2{2}=S17;
-sig2{3}=V12;
-% sig2{4}=R12;
-sig2{4}=S12;
-%sig2{6}=SSS12;
-sig2{5}=V9;
-% sig2{7}=R9;
-sig2{6}=S9;
-%sig2{10}=SSS9;
-sig2{7}=V6;
- 
-% ripple=length(M);
-% ripple=sum(s172);
 
 end

@@ -38,7 +38,7 @@ if notch==1
 Fline=[50 100 150 200 250.5 300];
 
 [V17] = ft_notch(V17.', fn,Fline,1,2);
-V17=V17/median(V17);
+%V17=V17/median(V17);
 V17=V17.';
 end
 
@@ -69,7 +69,8 @@ rep=5; %Number of thresholds+1
 ncmax=max(NC)*(1/0.195);
 chtm=median(ncmax);
 
-%chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
+%Might need to comment this:
+chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
 
 %Median is used to account for any artifact/outlier. 
 DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
@@ -92,13 +93,13 @@ s172(:,k)=cellfun('length',S2x);
 k
 end
 
-RipFreq2=sum(s172)/(timeasleep*(60));
+RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second. 
 
 %To display number of events use:
 ripple2=sum(s172); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
  
-%
+%Adjustment to prevent decrease 
 DEMAIS2=DEMAIS;
 DEMAIS=DEMAIS(2:end-1);
 % size(DEMAIS)
@@ -109,7 +110,6 @@ DEMAIS=DEMAIS(2:end-1);
 
 [p,S,mu]=polyfit(DEMAIS,ripple2,9);
 y1=polyval(p,DEMAIS,[],mu);
-CHTM=[];
 % [p,S,mu]=polyfit(DEMAIS(2:end),ripple2(2:end),10);
 % y1=polyval(p,DEMAIS(2:end),[],mu);
 
