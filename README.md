@@ -34,6 +34,8 @@ ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 
 
 between_ripples.m: Histogram of time between ripples for different conditions. 
 
+between_ripples_fixed_number_ripples.m: Histogram of time between ripples for different conditions having (almost) the same rate of occurrence. It uses the same number of ripples on both conditions.
+
 -Threshold vs Ripple Occurence plots
 ------------------
 threshold_vs_ripple.m: Plots curves relating selected thresholds with the ripple rate they give. Useful for threshold selection. 
