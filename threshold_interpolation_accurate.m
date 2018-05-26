@@ -1,7 +1,3 @@
-close all
-clear all
-clc 
-
 acer=0;
 
 %%
@@ -16,9 +12,8 @@ addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippo
 end
 %%
 %Rat=26;
-for Rat=2:3
+for Rat=1:3
 rats=[26 27 21];
-jay=Rat;
 Rat=rats(Rat);    
     
 % for Rat=26:26
@@ -126,25 +121,15 @@ if Rat==21
 ];
 
 %%
-% labelconditions=[
-%     {    
-%      'Learning Baseline'
-%                 }
-%      
-%      '45minLearning'
-%      'Novelty_2'
-%      't-maze'
-%      'Post t-maze'
-%     ];
 labelconditions=[
     {    
-     'Baseline 1'
+     'Learning Baseline'
                 }
      
-     'Baseline 2'
-     'Novelty 1'
-     'Novelty 2'
-     'PlusMaze'
+     '45minLearning'
+     'Novelty_2'
+     't-maze'
+     'Post t-maze'
     ];
     
 end
@@ -201,13 +186,11 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-% allscreen()
-VQ=[];
+% length(nFF)
 for iii=1:length(nFF)
-% for iii=2:2
 
     
- clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap jay RF CH VQ
+ clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
 
 
 
@@ -225,54 +208,34 @@ end
 cd(nFF{iii})
 lepoch=2;
 
-% tic
-% [CHTM,RipFreq2]=RIPPLES(2,nrem,notch,[],lepoch);
-% toc
-% chtm=CHTM(3);
 % error('stop')
- %load('thresholdfile.mat');
- load('thfile4.mat');
- gth=load('actual_thr.mat');
- RF(1,iii)=gth.RipFreq2;
- CH(1,iii)=gth.chtm;
-% save('actual_thr.mat','chtm','RipFreq2');                                                                                                                                                                                                                                                                                                                                               
 
-%%
-if Rat~=21
-DEMAIS=DEMAIS(2:end);
-ripple=ripple(2:end);
-y1=y1(2:end);
-end
-%%
-%%
-%figure(jay)
+chtm=load('vq_loop.mat');
+chtm=chtm.vq;
 
+%Get averaged time signal.
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+[ripple,timeasleep,DEMAIS,y1]=NREM_accurate([],nrem,notch,w,lepoch,chtm);
 
-% hold on
-% plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
-% title('Rate of ripples per Threshold value')
-% plot(gth.chtm,gth.RipFreq2,'w*','MarkerSize',10)
-
+% [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level([],nrem,notch,w,lepoch);
+% error('stop')
 
 xq=1;
 vq = interp1(y1/(timeasleep*60),DEMAIS,xq);
-% hold on
-% plot(vq,xq,'*k','MarkerSize',10)
+save('vq_loop2.mat','vq');                                                                                                                                                                                                                                                                                                                                               
 
- save('vq1.mat','vq');                                                                                                                                                                                                                                                                                                                                               
+%   save('thfile4.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 
-%%
+
+
 
 end
 
 end
-VQ=[VQ vq];
+
+
 end
 
-
-
-
-% error('stop')
 %%
 end
 %end

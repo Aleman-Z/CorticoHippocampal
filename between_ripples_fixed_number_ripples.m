@@ -17,7 +17,7 @@ end
 %%
 %Rat=26;
 
-for Rat=3:3
+for Rat=1:3
 rats=[26 27 21];
 jay=Rat;
 Rat=rats(Rat);    
@@ -231,7 +231,7 @@ lepoch=2;
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 
-load('vq1.mat');
+load('vq_loop2.mat');
 
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RIPFREQ2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
@@ -256,7 +256,7 @@ end
 
 cd(nFF{1})
 
-load('vq1.mat');
+load('vq_loop2.mat');
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
 consig=carajo{1};
@@ -265,16 +265,17 @@ consig=consig(:,3);
 l_aver=length(aver);
 
 len=min([l_aver l_Aver]);
-% error('stop')
-
 
 %PLotting, save for later. 
-histogram(Aver(1,1:len),'Normalization','probability','BinWidth',0.1)
+% histogram(Aver(1,1:len),'Normalization','probability','BinWidth',0.1)
+histogram(Aver,'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
 hold on
 
-histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+% histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+
 alpha(0.4)
 if Rat==26 || Rat==27 
 legend(labelconditions{iii-3},'Baseline 1')
@@ -341,7 +342,7 @@ end
 cd(nFF{2})
 
 
-load('vq1.mat');
+load('vq_loop2.mat');
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
 
@@ -356,12 +357,14 @@ l_aver=length(aver);
 len=min([l_aver l_Aver]);
 
 
-histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
+%histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
+histogram(Aver,'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
 hold on
 
-histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+% histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
 
 if Rat==26 || Rat==27
@@ -428,7 +431,7 @@ end
 cd(nFF{3})
 
 
-load('vq1.mat');
+load('vq_loop2.mat');
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
 
@@ -448,12 +451,14 @@ len=min([l_aver l_Aver]);
 % aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 % aver=[aver{:}];
 
-histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
+% histogram(Aver(1:len),'Normalization','probability','BinWidth',0.1)
+histogram(Aver,'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 grid minor
 hold on
 
-histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+% histogram(aver(1:len),'Normalization','probability','BinWidth',0.1); xlim([0 4])
+histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 alpha(0.4)
 legend(labelconditions{iii-3},'Baseline 3')
 xlabel('Time(sec)')
