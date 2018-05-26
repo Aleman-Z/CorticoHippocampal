@@ -46,6 +46,8 @@ testing_threshold_plot.m: Plots the previously acquired data from threshold_inte
 
 fixed_threshold.m: Saves the correct threshold value to get an accurate approximation to 1 Ripple per second. 
 
+threshold_interpolation_accurate.m: Loop used to improve the accuracy of the vq.mat value previously obtained. Run several times to improve accuracy. 
+
 
 -Periodogram_no_ripples_with_original
 ------------------
