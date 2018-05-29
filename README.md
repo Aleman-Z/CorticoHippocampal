@@ -28,6 +28,8 @@ psd_ripples3.m: Same but using Wideband signals of PAR and PFC.
 --------------------
 main_optimized_ab.m: Main time-frequency analysis with permutation statistics. 
 
+main_optimized_ab_fixed_nr.m: Optimized time-frequency analysis for more efficiency. Threshold selection based on the same rate of occurrence per session. 
+
 -HISTOGRAMS
 ----------------
 ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
