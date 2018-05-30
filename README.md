@@ -9,11 +9,15 @@ psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all cond
 
 psd_epochs_intraregions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
 
+
 -DATA DESCRIPTION
 -----------------
 time_of_sleep.m: Gives information per condition about amount of sleep, number of ripples found, threshold values, and rate of occurence.
  
 plot_number_ripples.m: Plots information obtained from the above function. 
+
+testing_nrem_length.m: Generates variables ready to plot NREM length among conditions. 
+
 
 -SCATTER PLOTS
 --------------
@@ -30,6 +34,7 @@ main_optimized_ab.m: Main time-frequency analysis with permutation statistics.
 
 main_optimized_ab_fixed_nr.m: Optimized time-frequency analysis for more efficiency. Threshold selection based on the same rate of occurrence per session. 
 
+
 -HISTOGRAMS
 ----------------
 ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
@@ -37,6 +42,7 @@ ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 
 between_ripples.m: Histogram of time between ripples for different conditions. 
 
 between_ripples_fixed_number_ripples.m: Histogram of time between ripples for different conditions having (almost) the same rate of occurrence. It uses the same number of ripples on both conditions.
+
 
 -Threshold vs Ripple Occurence plots
 ------------------
