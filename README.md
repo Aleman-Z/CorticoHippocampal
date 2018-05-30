@@ -83,7 +83,7 @@ Plots PCA scores for conditions with respect to the different Baselines.
 
 -Periodogramming
 ------------------
-Plots all conditions after ripple removal in same plot. 
+Plots periodograms for all conditions in same plot for both original signals and those after ripple removal.  
 
 -CPSD_plots
 ------------------
