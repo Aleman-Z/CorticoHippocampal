@@ -18,6 +18,8 @@ plot_number_ripples.m: Plots information obtained from the above function.
 
 testing_nrem_length.m: Generates variables ready to plot NREM length among conditions. 
 
+ripple_distribution.m: Generates histograms of ripple occurrence with respect to the NREM (discontinuous) time. 
+
 
 -SCATTER PLOTS
 --------------
