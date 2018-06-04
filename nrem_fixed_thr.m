@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch)
+function [sig1,sig2,ripple2,carajo,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr(vq,nrem,notch,w,lepoch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -181,6 +181,7 @@ timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
 % signal=cellfun(@(equis) times((1/0.195), equis)  ,Bip17,'UniformOutput',false);
 signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
 ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
+
 
 %Find ripples
 % for k=1:rep-1

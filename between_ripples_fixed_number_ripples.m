@@ -17,7 +17,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:3
+for Rat=1:1
 rats=[26 27 21];
 jay=Rat;
 Rat=rats(Rat);    
@@ -232,7 +232,7 @@ lepoch=2;
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 
 load('vq_loop2.mat');
-
+error('stop')
 %For experiments requiring the same rate of occurrence among conditions. 
 [sig1,sig2,ripple,carajo,veamos,RIPFREQ2,timeasleep]=nrem_fixed_thr(vq,nrem,notch,w,lepoch);
 %USE THIS OF THE OLD AND ORIGINAL HISTOGRAM WITH DIFFERENT RATE OF
@@ -240,7 +240,7 @@ load('vq_loop2.mat');
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RIPFREQ2,timeasleep]=nrem_newest_only_ripple_level_backup(level,nrem,notch,w,lepoch);
 
 % [p,q,timecell,~,~,~]=getwin2(carajo{:,:,1},veamos{1},sig1,sig2,label1,label2,ro,ripple(1),vq);
-% error('stop')
+ error('stop')
 consig=carajo{1};
 consig=consig(:,3);
 [Aver]=sort_ripple_histogram(consig,sig1,veamos);

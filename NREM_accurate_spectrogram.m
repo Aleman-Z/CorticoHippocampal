@@ -1,4 +1,4 @@
-function [ripple2,timeasleep,DEMAIS,y1]=NREM_accurate(level,nrem,notch,w,lepoch,chtm)
+function [ripple2,timeasleep,DEMAIS,y1]=NREM_accurate(nrem,notch,chtm)
 %{
 LOAD DATA, easy and quick. 
 
@@ -58,8 +58,6 @@ timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 'Bandpass performed'
 
 
-rep=5; %Number of thresholds+1
-
 %%
 % [NC]=epocher(Mono17,lepoch);
 % % ncmax=max(NC)*(1/0.195);
@@ -74,10 +72,11 @@ rep=5; %Number of thresholds+1
 
 %Median is used to account for any artifact/outlier. 
 % DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
-DEMAIS=[chtm chtm+];
+% g=0.5;
+% DEMAIS=[chtm-5*g chtm-4*g chtm-3*g chtm-2*g chtm-1*g chtm chtm+1*g chtm+2*g chtm+3*g];
 
 %DEMAIS=linspace((chtm/16),(chtm),30);
-rep=length(DEMAIS);
+% rep=length(DEMAIS);
 
 
 signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
@@ -87,13 +86,13 @@ ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'
 
 %Find ripples
 % for k=1:rep-1
-for k=1:rep-2
+%for k=1:rep
 % k=level;
-[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', chtm, (chtm)*(1/2), [] ), signal2,ti,'UniformOutput',false);    
 swr172(:,:,k)=[S2x E2x M2x];
 s172(:,k)=cellfun('length',S2x);
-k
-end
+%k
+%end
 
 RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second. 
 
@@ -102,16 +101,17 @@ ripple2=sum(s172); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
  
 %Adjustment to prevent decrease 
-DEMAIS2=DEMAIS;
-DEMAIS=DEMAIS(2:end-1);
+% DEMAIS2=DEMAIS;
+% DEMAIS=DEMAIS(2:end-1);
+
 % size(DEMAIS)
 % size(ripple2)
 %%
 % [p]=polyfit(DEMAIS,ripple2,3);
 % y1=polyval(p,DEMAIS);
 
-[p,S,mu]=polyfit(DEMAIS,ripple2,9);
-y1=polyval(p,DEMAIS,[],mu);
+% [p,S,mu]=polyfit(DEMAIS,ripple2,rep-1);
+% y1=polyval(p,DEMAIS,[],mu);
 % [p,S,mu]=polyfit(DEMAIS(2:end),ripple2(2:end),10);
 % y1=polyval(p,DEMAIS(2:end),[],mu);
 

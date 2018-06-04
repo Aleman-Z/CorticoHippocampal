@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 
 %%
 if acer==0

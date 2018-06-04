@@ -19,7 +19,7 @@ end
 %1: Ripples
 %2:No Ripples
 for experiment=1:2
-for Rat=1:3
+for Rat=2:3
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -289,13 +289,13 @@ grid on
 ax=gca;
 ax.GridColor=[ 1,1,1];
 if experiment==1
-title('Periodograms of signal With Ripples')
+title('Periodograms of HPC signals With Ripples')
 end
 
 if experiment==2
 title('Periodograms after Ripple Removal')
 end
-%error('stop')
+error('stop')
 
 if experiment==1
     if acer==0

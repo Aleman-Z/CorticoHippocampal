@@ -300,7 +300,7 @@ ylabel('Coherence','Color','w')
 set(gca,'xcolor','w') 
 set(gca,'ycolor','w') 
  xticks([0 50 100 150 200])
-
+error('stop')
   if acer==0
         cd(strcat('/home/raleman/Dropbox/Power/coherence/',num2str(Rat)))
   else
