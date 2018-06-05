@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer,timecell_nl,P1_nl,P2_nl,p_nl,q_nl,freq1,freq3,freq2,freq4)
+function plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer,P1_nl,P2_nl,p_nl,q_nl,freq1,freq3,freq2,freq4)
 %function plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples)
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -45,9 +45,9 @@ function plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P
 % % % % % % % %Number of ripples per threshold.
 % % % % % % % ripple_nl=sum(s17_nl);
 
-% [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),thr_nl(level+1));
+% [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),thr_nl(level+1));
 
-% % % % % % % % % % % % % % [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+% % % % % % % % % % % % % % [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % load(strcat('randnum2_',num2str(level),'.mat'))
 % % % % % % % % % % % % % % % % % % % ran_nl=ran;
@@ -86,15 +86,15 @@ function plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P
 % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % p_nl=p_nl([ran_nl]);
 % % % % % % % % % % % % % % q_nl=q_nl([ran_nl]);
-% % % % % % % % % % % % % % timecell_nl=timecell_nl([ran_nl]);
+% % % % % % % % % % % % % % timecell=timecell([ran_nl]);
 % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % end
 
 
 %Need: P1, P2 ,p, q. 
-% % % % % % % % % % % % % P1_nl=avg_samples(q_nl,timecell_nl);
-% % % % % % % % % % % % % P2_nl=avg_samples(p_nl,timecell_nl);
+% % % % % % % % % % % % % P1_nl=avg_samples(q_nl,timecell);
+% % % % % % % % % % % % % P2_nl=avg_samples(p_nl,timecell);
 % % % if acer==0
 % % %     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % 
@@ -107,7 +107,7 @@ function plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P
 %Plot both: No ripples and Ripples. 
 allscreen()
 H1=subplot(3,4,1);
-plot(timecell_nl{1},P2_nl(w,:))
+plot(timecell{1},P2_nl(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
 grid minor
@@ -119,7 +119,7 @@ ylim(win1)
 
 %%
 H3=subplot(3,4,3)
-plot(timecell_nl{1},P1_nl(w,:))
+plot(timecell{1},P1_nl(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
 grid minor
@@ -167,15 +167,15 @@ toy = [-1.2:.01:1.2];
 % 
 %     if length(p)<length(p_nl)
 %     p_nl=p_nl(1:length(p));
-%     timecell_nl=timecell_nl(1:length(p));
+%     timecell=timecell(1:length(p));
 %     end
 % end
 
 %This is what I uncommented:
-% freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10,toy);
+% freq1=justtesting(p_nl,timecell,[1:0.5:30],w,10,toy);
 % freq2=justtesting(p,timecell,[1:0.5:30],w,0.5,toy);
  
-% FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
+% FREQ1=justtesting(p_nl,timecell,[0.5:0.5:30],w,10,toy);
 % FREQ2=justtesting(p,timecell,[0.5:0.5:30],w,0.5,toy);
 
 
@@ -258,7 +258,7 @@ set(c1,'Position',cw1)
 x1(3)=h1(3);
 set(ax1,'Position',x1)
 
-% freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10)
+% freq1=justtesting(p_nl,timecell,[1:0.5:30],w,10)
 title('Wide Band NO Learning')
 %xlim([-1 1])
 %%
@@ -329,12 +329,12 @@ toy=[-1:.01:1];
 % 
 %     if length(q)<length(q_nl)
 %     q_nl=q_nl(1:length(q));
-%     timecell_nl=timecell_nl(1:length(q));
+%     timecell=timecell(1:length(q));
 %     end
 % end
 
 %THis is what I uncommented:
-% freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w,toy);
+% freq3=barplot2_ft(q_nl,timecell,[100:1:300],w,toy);
 % freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
 %% UNCOMMENT THIS IF YOU WANT TO NORMALIZE WRT TO THE BASELINE
 % % % % % % % % % % % % cfg=[];
@@ -404,7 +404,7 @@ set(c3,'Position',cw3)
 x3(3)=h3(3);
 set(ax3,'Position',x3)
 
-% freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
+% freq3=barplot2_ft(q_nl,timecell,[100:1:300],w);
 title('High Gamma NO Learning')
 %%
 
