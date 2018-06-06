@@ -36,6 +36,7 @@ main_optimized_ab.m: Main time-frequency analysis with permutation statistics.
 
 main_optimized_ab_fixed_nr.m: Optimized time-frequency analysis for more efficiency. Threshold selection based on the same rate of occurrence per session. 
 
+main_optimized_same_duration.m: Code to generate spectrograms using the same time duration among conditions. 
 
 -HISTOGRAMS
 ----------------
