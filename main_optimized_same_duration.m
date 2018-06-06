@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=2:2
+for Rat=1:1
 rats=[26 27 21];
 Rat=rats(Rat);    
     
@@ -163,7 +163,7 @@ selectripples=1;
 mergebaseline=1;
 nrem=3;
 notch=1;
-tdura=60;
+% tdura=30;
 
 %%
 
@@ -187,8 +187,9 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-
- for iii=4:5
+%for tdura=30:30:60
+for tdura=30:30
+ for iii=4:4
 %length(nFF)
     
  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nrem notch tdura
@@ -234,7 +235,7 @@ save findrip.mat   sig1 sig2 ripple2 carajo veamos RipFreq2 timeasleep
 else
 load('findrip.mat')    
 end
-
+ error('stop')
 % for t=1:60
 [carajo,veamos]=equal_time(sig1,sig2,carajo,veamos,tdura);
 ripple=sum(cellfun('length',carajo{1}(:,1)));
@@ -243,41 +244,31 @@ ripple=sum(cellfun('length',carajo{1}(:,1)));
 
 %Get p and q.
   %Get averaged time signal.
-[p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
+[p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
 
 % [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
+
 
 
 % SUS=SU(:,level).';
 
 if selectripples==1
+[ran]=rip_outlier(q);
+    % 
+    p=p([ran]);
+    q=q([ran]);
+    timecell=timecell([ran]);
 
+
+    
 [ran]=rip_select(q);
     % 
     p=p([ran]);
     q=q([ran]);
-    Q=Q([ran]);
     timecell=timecell([ran]);
 end
 
 
-%if ro==1200 && inter==0 || granger==1
-if ro==1200 && inter==0 && granger==0
-
-SUS=SU{level}.';
-% SUS2=SU2(:,level).';
-SUS2=SU2{level}.';
-%SUQ2=SUQ(:,level).';
-SUQ2=SUQ{level}.';
-
-SUStimecell=timecell(1:length(SUS));
-SUS2timecell=timecell(1:length(SUS2));
-SUQ2timecell=timecell(1:length(SUQ2));
-
-P1_SUS=avg_samples(SUS,SUStimecell);
-P2_SUS=avg_samples(SUS2,SUS2timecell);
-
-end
 %p is wideband signal. 
 %q is bandpassed signal. 
 %timecell are the time labels. 
@@ -300,7 +291,6 @@ end
 
 P1=avg_samples(q,timecell);
 P2=avg_samples(p,timecell);
-
 %%%%for w=1:size(P2,1)    %Brain region
 %% GO TO BASELINE 
 for mergebaseline=2:3 %Ignore merged baseline  
@@ -349,7 +339,6 @@ end
 end
 
 
-
 [carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
 ripple=sum(cellfun('length',carajo_nl{1}(:,1)));
 
@@ -359,8 +348,16 @@ ripple=sum(cellfun('length',carajo_nl{1}(:,1)));
     
     
         if selectripples==1
+            
+            [ran_nl]=rip_outlier(q_nl);
+            p_nl=p_nl([ran_nl]);
+            q_nl=q_nl([ran_nl]);
+            timecell=timecell([ran_nl]);
 
-            [ran_nl]=rip_select(p_nl);
+
+            
+            
+            [ran_nl]=rip_select(q_nl);
 
             p_nl=p_nl([ran_nl]);
             q_nl=q_nl([ran_nl]);
@@ -456,38 +453,43 @@ ripple3=ripple_nl;
 
     if selectripples==1
 
-    [ran_nl]=rip_select(p_nl);
+    [ran_nl]=rip_outlier(q_nl);
+    p_nl=p_nl([ran_nl]);
+    q_nl=q_nl([ran_nl]);
+    timecell=timecell([ran_nl]);
 
+    
+    [ran_nl]=rip_select(q_nl);
     p_nl=p_nl([ran_nl]);
     q_nl=q_nl([ran_nl]);
     timecell=timecell([ran_nl]);
 
     end
 
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq1same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq1same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy = [-1.2:.01:1.2];
 freq1=justtesting(p_nl,timecell,[1:0.5:30],[],10,toy);
-save freq1same.mat freq1                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq1same.mat')            
-end    
+% save freq1same.mat freq1                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq1same.mat')            
+% end    
     
 
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq3same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq3same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy=[-1:.01:1];
 freq3=barplot2_ft(q_nl,timecell,[100:1:300],[],toy);
-save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq3same.mat')            
-end    
+% save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq3same.mat')            
+% end    
 
 
     if acer==0
@@ -543,38 +545,44 @@ ripple3=ripple_nl;
 
     if selectripples==1
 
-    [ran_nl]=rip_select(p_nl);
-
+    [ran_nl]=rip_outlier(q_nl);
+    p_nl=p_nl([ran_nl]);
+    q_nl=q_nl([ran_nl]);
+    timecell=timecell([ran_nl]);
+     
+        
+        
+    [ran_nl]=rip_select(q_nl);
     p_nl=p_nl([ran_nl]);
     q_nl=q_nl([ran_nl]);
     timecell=timecell([ran_nl]);
 
     end
     
-
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq1same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+% 
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq1same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy = [-1.2:.01:1.2];
 freq1=justtesting(p_nl,timecell,[1:0.5:30],[],10,toy);
-save freq1same.mat freq1                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq1same.mat')            
-end
+% save freq1same.mat freq1                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq1same.mat')            
+% end
 
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq3same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq3same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy=[-1:.01:1];
 freq3=barplot2_ft(q_nl,timecell,[100:1:300],[],toy);
-save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq3same.mat')            
-end    
+% save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq3same.mat')            
+% end    
 
     if acer==0
             cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -629,34 +637,34 @@ titl{3}='Baseline1';
 cd(nFF{iii}) %
 
 
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq2same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq2same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy = [-1.2:.01:1.2];
 freq2=justtesting(p,timecell,[1:0.5:30],[],0.5,toy);
-save freq2same.mat freq2                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq2same.mat')            
-end
+% save freq2same.mat freq2                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq2same.mat')            
+% end
 
-     files=dir(fullfile(cd,'*.mat'));
-     files={files.name};
-     tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq4same.mat'), files.', 'UniformOutput',false)));
- 
-if tst~=1   
+%      files=dir(fullfile(cd,'*.mat'));
+%      files={files.name};
+%      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq4same.mat'), files.', 'UniformOutput',false)));
+%  
+% if tst~=1   
 toy=[-1:.01:1];
 freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
-save freq4same.mat freq4                                                                                                                                                                                                                                                                                                                                                
-else
-load('freq4same.mat')            
-end    
+% save freq4same.mat freq4                                                                                                                                                                                                                                                                                                                                                
+% else
+% load('freq4same.mat')            
+% end    
 
 
 plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,chtm,q,selectripples,acer,P1_nl,P2_nl,p_nl,q_nl,freq1,freq3,freq2,freq4)
 %plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
-string=strcat(label1{2*w-1},'_',titl{mergebaseline},'.png');
+string=strcat(label1{2*w-1},'_',num2str(tdura),'_',titl{mergebaseline},'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/')
@@ -936,5 +944,6 @@ end
 
 end
 %%
+ end
 end
 end
