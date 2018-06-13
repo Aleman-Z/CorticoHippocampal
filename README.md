@@ -9,6 +9,8 @@ psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all cond
 
 psd_epochs_intraregions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
 
+<!---![Alt text](250Hz_WithRipples_Hippocampus.png )--->
+<img src="250Hz_WithRipples_Hippocampus.png" width="400">
 
 -DATA DESCRIPTION
 -----------------
