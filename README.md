@@ -41,6 +41,9 @@ main_optimized_ab_fixed_nr.m: Optimized time-frequency analysis for more efficie
 
 main_optimized_same_duration.m: Code to generate spectrograms using the same time duration among conditions. 
 
+main_optimized_same_duration_bounds.m: Code to generate spectrograms using the same time duration among conditions. Includes upper and lower bounds for time. Example: from 30 to 60 min.  
+
+
 -HISTOGRAMS
 ----------------
 ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
