@@ -44,6 +44,11 @@ main_optimized_same_duration.m: Code to generate spectrograms using the same tim
 main_optimized_same_duration_bounds.m: Code to generate spectrograms using the same time duration among conditions. Includes upper and lower bounds for time. Example: from 30 to 60 min.  
 
 
+-Granger Causality.
+--------------------
+main_optimized: Gives results used on the Midterm presentation. Only focused on Baseline 3. 
+
+
 -HISTOGRAMS
 ----------------
 ripple_amplitude.m: Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
