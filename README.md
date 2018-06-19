@@ -113,3 +113,7 @@ Plots both periodograms (NR and WR) for each condition plus the coherence betwee
 -Read data from Ophen Ephys
 ------------------
 read_ratdata27.m: Adaptable to any other rat. 
+
+-Testing Tools
+------------------
+powerspectrum.m: Plots periodogram of a signal stored in  a cell array. 
