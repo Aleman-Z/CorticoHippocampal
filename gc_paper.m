@@ -1,5 +1,5 @@
 
-function [granger,granger1]=gc_paper(q,timecell,label,ro)
+function [granger,granger1]=gc_paper(q,timecell,label,ro,ord)
 fn=1000;
 data1.trial=q;
 data1.time= timecell; %Might have to change this one 
@@ -12,7 +12,7 @@ data1.label{3}='PFC';
 
 %Parametric model
 cfg         = [];
-cfg.order   = 10;
+cfg.order   = ord;
 cfg.toolbox = 'bsmart';
 mdata       = ft_mvaranalysis(cfg, data1);
 
