@@ -48,6 +48,9 @@ main_optimized_same_duration_bounds.m: Code to generate spectrograms using the s
 --------------------
 main_optimized: Gives results used on the Midterm presentation. Only focused on Baseline 3. 
 
+<!---![Alt text](gc_learn_nl_np.eps )--->
+<img src="gc_learn_nl_np.pdf" width="400">
+
 
 -HISTOGRAMS
 ----------------
