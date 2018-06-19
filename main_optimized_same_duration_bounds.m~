@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21];
 Rat=rats(Rat);    
     
@@ -157,7 +157,9 @@ end
 inter=1;
 granger=0;
 %Select length of window in seconds:
-ro=[1200];
+%ro=[1200];
+ro=[10200];
+
 coher=0;
 selectripples=1;
 mergebaseline=1;
@@ -188,8 +190,8 @@ label2{7}='Monopolar';
 
 %%
 %for tdura=30:30:60
-for tdura=30:30
- for iii=4:4
+%for tdura=30:30
+ for iii=5:5
 %length(nFF)
     
  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nrem notch tdura
@@ -235,9 +237,9 @@ save findrip.mat   sig1 sig2 ripple2 carajo veamos RipFreq2 timeasleep
 else
 load('findrip.mat')    
 end
-%  error('stop')
+ error('stop')
 % for t=1:60
-[carajo,veamos]=equal_time(sig1,sig2,carajo,veamos,tdura);
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
 ripple=sum(cellfun('length',carajo{1}(:,1)));
 % R(t)=ripple;
 %end
@@ -338,8 +340,9 @@ else
 end
 end
 
+%[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
 
-[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
 ripple=sum(cellfun('length',carajo_nl{1}(:,1)));
 
 
@@ -439,7 +442,11 @@ else
     load('findrip.mat');    
 end
 end
-[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
+
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+
+%[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
+
 % ripple3=sum(cellfun('length',carajo_nl{1}(:,1)));
    
 %  [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],lepoch);
@@ -470,8 +477,12 @@ ripple3=ripple_nl;
 %      files={files.name};
 %      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq1same.mat'), files.', 'UniformOutput',false)));
 %  
-% if tst~=1   
+% if tst~=1
+if ro==1200
 toy = [-1.2:.01:1.2];
+else
+toy = [-10.2:.1:10.2];    
+end    
 freq1=justtesting(p_nl,timecell,[1:0.5:30],[],10,toy);
 % save freq1same.mat freq1                                                                                                                                                                                                                                                                                                                                                
 % else
@@ -484,7 +495,11 @@ freq1=justtesting(p_nl,timecell,[1:0.5:30],[],10,toy);
 %      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq3same.mat'), files.', 'UniformOutput',false)));
 %  
 % if tst~=1   
+if ro==1200
 toy=[-1:.01:1];
+else
+toy=[-10:.1:10];    
+end
 freq3=barplot2_ft(q_nl,timecell,[100:1:300],[],toy);
 % save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
 % else
@@ -537,7 +552,9 @@ end
 
 %[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
 ripple3=ripple_nl;
-[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
+
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+%[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
 
 % [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);
@@ -641,8 +658,11 @@ cd(nFF{iii}) %
 %      files={files.name};
 %      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'freq2same.mat'), files.', 'UniformOutput',false)));
 %  
-% if tst~=1   
+% if tst~=1
+if
 toy = [-1.2:.01:1.2];
+else
+end
 freq2=justtesting(p,timecell,[1:0.5:30],[],0.5,toy);
 % save freq2same.mat freq2                                                                                                                                                                                                                                                                                                                                                
 % else
@@ -664,7 +684,7 @@ freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
 
 plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,chtm,q,selectripples,acer,P1_nl,P2_nl,p_nl,q_nl,freq1,freq3,freq2,freq4)
 %plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
-string=strcat(label1{2*w-1},'_',num2str(tdura),'_',titl{mergebaseline},'.png');
+string=strcat(label1{2*w-1},'_',titl{mergebaseline},'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/')
@@ -683,10 +703,10 @@ string=strcat(label1{2*w-1},'_',num2str(tdura),'_',titl{mergebaseline},'.png');
 %if Rat==27
     if acer==0
       %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
-      cd(strcat('/home/raleman/Dropbox/SameDuration/',num2str(Rat)))
+      cd(strcat('/home/raleman/Dropbox/SameDuration3060/',num2str(Rat)))
 
     else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\SameDuration\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\SameDuration3060\',num2str(Rat)))   
     end
         
 %end
@@ -945,14 +965,5 @@ end
 end
 %%
  end
-end
-% Adding next test
-    if acer==0
-            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    else
-            cd(strcat('D:\internship\',num2str(Rat)))
-    end
-clear all
-close all
-run('main_optimized_same_duration_bounds.m');
+%end
 end
