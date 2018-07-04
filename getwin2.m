@@ -79,7 +79,8 @@ i=7;
 p=cell(length(z1),1);
 q=cell(length(z1),1);
 timecell=cell(length(z1),1);
-Q=cell(length(z1),1);
+%UNCOMMENT IF YOU WANT THE ENVELOPE:
+% Q=cell(length(z1),1);
 
 
 for i=1:length(z1)
@@ -93,13 +94,16 @@ for i=1:length(z1)
    
    timecell{i,1}=[0:length(p7)-1]*(1/fn)-(ro/1000);
   %Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.');envelope1(z8{i}.')]; %Bandpassed
-  Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.')]; %Bandpassed 
+  
+  %Uncomment the following if you need the envelope
+%   Q{i,1}=[envelope1(z4{i}.');envelope1(z5{i}.');envelope1(z6{i}.')]; %Bandpassed 
 end
 
 p=p.';
 q=q.';
 timecell=timecell.';
-Q=Q.';
+%UNCOMMENT IF YOU WANT THE ENVELOPE:
+%Q=Q.';
 
 
 % GETTING THE ENVELOPE
@@ -124,4 +128,6 @@ Q=Q.';
 % P2=[p4;p5;p6;p8];
 P1=[p1;p2;p3];
 P2=[p4;p5;p6];
+%Comment this if you need Q:
+Q=[];
 end
