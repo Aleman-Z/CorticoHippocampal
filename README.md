@@ -11,6 +11,8 @@ psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all cond
 
 psd_epochs_intraregions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
 
+nrem_newest_power.m: Loads data in a suited fashion to generate periodograms without powerline artifacts. Notch filtering is performed outside and after running this function. 
+
 <!---![Alt text](250Hz_WithRipples_Hippocampus.png )--->
 
 
@@ -118,3 +120,4 @@ read_ratdata27.m: Adaptable to any other rat.
 -Testing Tools
 ------------------
 powerspectrum.m: Plots periodogram of a signal stored in  a cell array. 
+
