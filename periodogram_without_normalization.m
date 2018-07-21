@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %
 if acer==0
@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -67,18 +67,18 @@ end
 if Rat==27
 nFF=[
     {'rat27_nl_base_2016-03-28_15-01-17'                   }
-    {'rat27_NL_baseline_2016-02-26_12-50-26'               }
-    {'rat27_nl_base_III_2016-03-30_14-36-57'               }
+   % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
+   % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
     {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
-    {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
-    
+%     {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
+    {'rat27_novelty_I_2016-04-11_14-34-55'                 } 
     {'rat27_for_2016-03-21_15-03-05'                       }
-    {'Rat27_for_II_2016-03-23_15-06-59'                    }
+    %{'Rat27_for_II_2016-03-23_15-06-59'                    }
     
     %{'rat27_novelty_II_2016-04-13_14-37-58'                }  %NO .MAT files found. 
     %{'rat27_novelty_II_2016-04-13_16-29-42'                } %No (complete).MAT files found.
-    {'rat27_novelty_I_2016-04-11_14-34-55'                 }
+   
   
 %     {'rat27_plusmaze_dis_2016-03-10_14-35-18'              }
 %     {'rat27_plusmaze_dis_II_2016-03-16_14-36-07'           }
@@ -92,16 +92,16 @@ nFF=[
 
 labelconditions=[
     { 
-    'Baseline_1'}
-    'Baseline_2'
-    'Baseline_3'
-    'PlusMaze_1'
-    'PlusMaze_2'
+    'Baseline'}
+%     'Baseline_2'
+%     'Baseline_3'
+    'PlusMaze'
+%     'PlusMaze_2'
+    'Novelty'
+    'Foraging'
     
-    'Foraging_1'
-    
-     'Foraging_2'
-     'Novelty_1'
+  %   'Foraging_2'
+     
     
     
      
