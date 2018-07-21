@@ -332,7 +332,9 @@ legend(L, labelconditions)
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+
 end
 % if exist(labelconditions{iii})~=7
 % (mkdir(labelconditions{iii}))
