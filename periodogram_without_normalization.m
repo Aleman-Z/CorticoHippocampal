@@ -7,7 +7,7 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
+%addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
    
 end
 %%
