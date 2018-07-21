@@ -7,11 +7,14 @@ DESCRIPTION of MAIN FUNCTIONS:
 -PERIODOGRAMS
 ---------------
 psd_epochs_intraconditions.m: Generates Power plots of NREM signals for all conditions in a specific brain area. 
+<img src="250Hz_WithRipples_Hippocampus.png" width="400">
 
 psd_epochs_intraregions.m: Generates Power plots of NREM signals for all brain areas during a specific condition. 
 
+nrem_newest_power.m: Loads data in a suited fashion to generate periodograms without powerline artifacts. Notch filtering is performed outside and after running this function. 
+
 <!---![Alt text](250Hz_WithRipples_Hippocampus.png )--->
-<img src="250Hz_WithRipples_Hippocampus.png" width="400">
+
 
 -DATA DESCRIPTION
 -----------------
@@ -117,3 +120,4 @@ read_ratdata27.m: Adaptable to any other rat.
 -Testing Tools
 ------------------
 powerspectrum.m: Plots periodogram of a signal stored in  a cell array. 
+
