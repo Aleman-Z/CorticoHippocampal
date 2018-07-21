@@ -125,4 +125,5 @@ powerspectrum.m: Plots periodogram of a signal stored in  a cell array.
 ------------------
 
 Figure 2: 
+
 periodogram_without_normalization.m: Self-explainatory. 
