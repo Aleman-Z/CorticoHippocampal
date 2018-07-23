@@ -68,6 +68,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 -Threshold vs Ripple Occurence plots
 ------------------
 **threshold_vs_ripple.m:** Plots curves relating selected thresholds with the ripple rate they give. Useful for threshold selection. 
+<img src="Ripples_per_condition.png" width="400">
 
 **threshold_interpolation.m:** Saves data concerning Ripple occurrence and corresponding threshold, as well as fitted polynomial. 
 
