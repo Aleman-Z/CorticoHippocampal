@@ -1,6 +1,3 @@
-List of functions used to generate Figures
-
-
 -List of functions used to generate Figures
 ------------------
 
