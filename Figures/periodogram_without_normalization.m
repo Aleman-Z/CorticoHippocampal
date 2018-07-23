@@ -7,14 +7,14 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-%addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
+addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
    
 end
 %%
 %Rat=26;
 
-for Rat=2:2
-rats=[26 27 21];
+for Rat=4:4
+rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
 nFF=[
@@ -135,6 +135,19 @@ labelconditions=[
     ];
     
 end
+
+if Rat==24
+nFF=[  
+    {'Baseline1'}
+    {'Baseline2'}
+    {'Baseline3'}
+    {'Baseline4'}
+    {'Plusmaze1'}
+    {'Plusmaze2'}
+       
+];       
+labelconditions=nFF;
+end
  
 %% Go to main directory
 if acer==0
@@ -156,6 +169,7 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
     clc
 end
+
 %% Select experiment to perform. 
 nrem=3;
 notch=0;
@@ -200,6 +214,11 @@ myColorMap =myColorMap([2 4 5 7],:);
 % myColorMap(3,:)=[1 0 1];
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+
+if Rat==24
+    myColorMap = jet(6);                                                                                                                                                                                    
+end
+
 NCount=nan(length(nFF),1);
 Block{1}='complete';
 Block{2}='block1';
@@ -207,7 +226,7 @@ Block{3}='block2';
 Block{4}='block3';
 
 
-for block_time=0:0
+for block_time=1:3
 
     for iii=1:length(nFF)
 
@@ -217,10 +236,8 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-    cd(nFF{iii})
-  
+    cd(nFF{iii})  
 [sig2]=nrem_newest_power(nrem,notch);
-
 %%
 f_signal=sig2{2*w-1};
 %Amplitude normalization
@@ -271,6 +288,18 @@ if Rat==26 %Noise peak was only observed in Rat 26
     NC=NC.';
     end
 end
+
+if Rat==24 %Noise peak was only observed in Rat 26
+    if w==1  % Reference 
+        if strcmp(nFF{iii},'Plusmaze1') || strcmp(nFF{iii},'Baseline1')
+     Fline=[50 66.5 100 200 133.5 299.5 300];
+
+    [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+    NC=NC.';
+        end
+    end
+end
+
 %Equal number of epochs.
 
 % if  Rat==26
@@ -327,14 +356,13 @@ legend(L, labelconditions)
 % %set(gca,'Color','k')
 % ax=gca;
 % ax.GridColor=[ 0,0,0];
-% xo
+%xo
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
-
 end
 % if exist(labelconditions{iii})~=7
 % (mkdir(labelconditions{iii}))
