@@ -33,6 +33,9 @@ V17=filtfilt(b2,a2,V17);
 %NO NEED OF NOTCH FILTER FOR HIPPOCAMPUS
 %UPDATE: Actually does need one!
 %V17=flipud(filter(Hcas,flipud(filter(Hcas,V17))));
+if size(V17,1)<size(V17,2)
+    V17=V17.';
+end
 
 if notch==1
 Fline=[50 100 150 200 250.5 300];
