@@ -263,7 +263,7 @@ else
 end
 
 if Rat== 24 && iii==6
-[p,S,mu]=polyfit(DEMAIS,ripple,5);
+[p,S,mu]=polyfit(DEMAIS,ripple,7);
 y1=polyval(p,DEMAIS,[],mu);    
 end
 %%
