@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=4:4
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -303,7 +303,7 @@ set(h,'Location','Northwest')
 % h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
 % set(h,'Location','Northwest')
 
-
+xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else

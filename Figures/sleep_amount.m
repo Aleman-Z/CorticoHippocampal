@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=2:2
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -249,7 +249,7 @@ end
 
 end
 
-xo
+%xo
 %%
 % ax=figure();
 allscreen()

@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=4:4
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
@@ -370,7 +370,7 @@ end
 % cd((labelconditions{iii}))
 fig=gcf;
 fig.InvertHardcopy='off';
-
+xo
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
 % saveas(gcf,string)
 % 
