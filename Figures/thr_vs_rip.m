@@ -178,7 +178,7 @@ mergebaseline=0;
 notch=1;
 nrem=3;
 myColorMap = jet(8);
-
+Score=2;
 %%
 
 %Make labels
@@ -234,8 +234,12 @@ lepoch=2;
 %  xo
  level=1;
 %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
-[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch);
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
+else
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
+end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %% IGNORE SMALL THRESHOLD VALUES
 
@@ -290,7 +294,7 @@ end
 
 set(gca, 'XDir','reverse')
 %h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
-xo
+
 if Rat==24
 h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)','Plusmaze 1','Plusmaze 1 (fit)','Plusmaze 2','Plusmaze 2 (fit)')        
 else
@@ -312,9 +316,12 @@ else
 end
 
 
-string=strcat('Ripples_per_condition_best','.pdf');
-figure_function(gcf,[],string,[]);
+if Score==2
+    cd('new_scoring')
+end
 
+string=strcat('Ripples_per_condition_best','.eps');
+saveas(gcf,string)
 string=strcat('Ripples_per_condition_best','.fig');
 saveas(gcf,string)
 

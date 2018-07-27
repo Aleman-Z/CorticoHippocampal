@@ -1,4 +1,4 @@
-function [ripple2,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch)
+function [ripple2,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score)
 %{
 LOAD DATA, easy and quick. 
 
@@ -20,7 +20,11 @@ Wn1=[320/(fn/2)]; % Cutoff=500 Hz
 
 
 %Load Sleeping stage classification
+if Score==1
 load('transitions.mat')
+else
+load('transitions2.mat')    
+end
 %Load Monopolar signals
 % Fline=[50 100 150 200 250 300];
 

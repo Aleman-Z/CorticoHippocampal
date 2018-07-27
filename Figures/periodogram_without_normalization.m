@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
