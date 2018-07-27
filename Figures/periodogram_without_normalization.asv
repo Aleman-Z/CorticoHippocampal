@@ -227,7 +227,7 @@ Block{3}='block2';
 Block{4}='block3';
 
 
-for block_time=0:3
+for block_time=1:3
 
     for iii=1:length(nFF)
 
@@ -239,10 +239,10 @@ end
 
     cd(nFF{iii})  
 % xo
-if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
+if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'Plusn')
  [sig2]=nrem_newest_power(nrem,notch,Score);
 else
-  [sig2]=nrem_newest_power(nrem,notch,1);  
+    
 end
 %%
 f_signal=sig2{2*w-1};
@@ -386,10 +386,9 @@ fig.InvertHardcopy='off';
 % 
 % string=strcat('300hz_intra_',label1{2*w-1},'.fig');
 % saveas(gcf,string)
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 %saveas(gcf,string)
-%figure_function(fig,[],string,[]);
-saveas(gcf,string)
+figure_function(fig,[],string,[]);
 string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 saveas(gcf,string)
 

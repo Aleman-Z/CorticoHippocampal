@@ -74,4 +74,19 @@ end
     l(2)=legend(h(2),'Baseline','Plusmaze','Novelty','Foraging')
     l(3)=legend(h(3),'Baseline','Plusmaze','Novelty','Foraging')
     end
+    
+    if fq_range==300
+        string=strcat('300Hz_','time_blocks','_','Hippocampus','.eps');
+        saveas(gcf,string)
+        string=strcat('300Hz_','time_blocks','_','Hippocampus','.fig');
+        saveas(gcf,string)
+    end
+    
+    if fq_range==30
+        string=strcat('30Hz_','time_blocks','_','Hippocampus','.eps');
+        saveas(gcf,string)
+        string=strcat('30Hz_','time_blocks','_','Hippocampus','.fig');
+        saveas(gcf,string)
+    end
+   close all 
 end
