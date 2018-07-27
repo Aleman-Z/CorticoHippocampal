@@ -175,6 +175,7 @@ nrem=3;
 notch=0;
 normalizeperiod=0;
 block_time=0; %Should be 0 for whole recording. 
+Score=1;
 %%
 %Make labels
 label1=cell(7,1);
@@ -237,7 +238,8 @@ else
 end
 
     cd(nFF{iii})  
-[sig2]=nrem_newest_power(nrem,notch);
+
+ [sig2]=nrem_newest_power(nrem,notch,Score);
 %%
 f_signal=sig2{2*w-1};
 %Amplitude normalization
@@ -364,13 +366,17 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
 end
+
+if Score==2
+    cd('new_scoring')
+end
 % if exist(labelconditions{iii})~=7
 % (mkdir(labelconditions{iii}))
 % end
 % cd((labelconditions{iii}))
 fig=gcf;
 fig.InvertHardcopy='off';
-xo
+
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
 % saveas(gcf,string)
 % 
@@ -384,9 +390,10 @@ saveas(gcf,string)
 
 xlim([0 30])
 
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
+% string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
+string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+saveas(gcf,string)
+%figure_function(fig,[],string,[]);
 string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 saveas(gcf,string)
 
@@ -400,5 +407,6 @@ close all
 
 end
 %%
+
 end
 %end
