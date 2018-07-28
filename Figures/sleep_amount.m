@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -170,6 +170,8 @@ end
 
 %% Select experiment to perform. 
 
+Score=2;
+
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
@@ -199,12 +201,16 @@ end
 
 cd(nFF{iii})
 
-
+%xo
 if Rat==24
    load('states.mat')
 else
-   st=strcat(nFF{iii},'-states.mat');
-   load(st) 
+    if Score==2 && (strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze'))
+         load('states2.mat')
+    else
+        st=strcat(nFF{iii},'-states.mat');
+        load(st) 
+    end
 end
 % 
  %xo
@@ -249,7 +255,7 @@ end
 
 end
 
-%xo
+xo
 %%
 % ax=figure();
 allscreen()
@@ -368,7 +374,7 @@ D.BackgroundColor=[1 1 1]
 % % lg2.FontSize=14
 % 
 %%
-grid on
+% grid on
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
@@ -377,8 +383,12 @@ else
 end
 
 
-string=strcat('Sleep_amount','.pdf');
-figure_function(gcf,[],string,[]);
+if Score==2
+    cd('new_scoring')
+end
+
+string=strcat('Sleep_amount','.eps');
+saveas(gcf,string)
 
 string=strcat('Sleep_amount','.fig');
 saveas(gcf,string)
