@@ -1,6 +1,9 @@
 # CorticoHippocampal
 
 INTERNSHIP PROJECT by> Adrián Alemán
+
+<img src="poster_Adrian8.png" width="800">
+
 --------------------------------
 DESCRIPTION of MAIN FUNCTIONS:
 
