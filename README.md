@@ -1,6 +1,6 @@
 # CorticoHippocampal
 
-INTERNSHIP PROJECT by> Adrián Alemán
+MASTER THESIS PROJECT by> Adrián Alemán
 
 <img src="poster_Adrian8.png" width="800">
 
