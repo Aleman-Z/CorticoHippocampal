@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=4:4
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
@@ -216,6 +216,11 @@ myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
+%New Colors
+% myColorMap(1,:)=[127, 131, 135]./255;
+% myColorMap(2,:)=[0,0,0];
+% myColorMap(4,:)=[212, 11, 226]./255;
+
 if Rat==24
     myColorMap = jet(6);                                                                                                                                                                                    
 end
@@ -362,7 +367,7 @@ legend(L, labelconditions)
 % %set(gca,'Color','k')
 % ax=gca;
 % ax.GridColor=[ 0,0,0];
-%xo
+xo
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
