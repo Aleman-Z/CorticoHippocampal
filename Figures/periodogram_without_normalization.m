@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=2:2
+for Rat=4:4
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
@@ -175,7 +175,7 @@ nrem=3;
 notch=0;
 normalizeperiod=0;
 block_time=0; %Should be 0 for whole recording. 
-Score=2;
+Score=1;
 %%
 %Make labels
 label1=cell(7,1);
@@ -227,7 +227,7 @@ Block{3}='block2';
 Block{4}='block3';
 
 
-for block_time=0:3
+for block_time=0:0
 
     for iii=1:length(nFF)
 
@@ -358,7 +358,7 @@ set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
 
 legend(L, labelconditions)
 %         set(gca,'Color','w')
- grid on
+% grid on
 % %set(gca,'Color','k')
 % ax=gca;
 % ax.GridColor=[ 0,0,0];
@@ -386,21 +386,27 @@ fig.InvertHardcopy='off';
 % 
 % string=strcat('300hz_intra_',label1{2*w-1},'.fig');
 % saveas(gcf,string)
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 %saveas(gcf,string)
-%figure_function(fig,[],string,[]);
-saveas(gcf,string)
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)
+figure_function(fig,[],string,[]);
+% saveas(gca, string,'epsc');
+% saveas(gcf,string)
+string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+print(string,'-depsc')
+
+% % % string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
+% % % saveas(gcf,string)
 
 xlim([0 30])
 
-% string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-saveas(gcf,string)
-%figure_function(fig,[],string,[]);
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)
+string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
+%saveas(gcf,string)
+figure_function(fig,[],string,[]);
+% string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+% print(string,'-depsc')
+
+% % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
+% % % saveas(gcf,string)
 
 
 % 
@@ -412,6 +418,6 @@ close all
 
 end
 %%
-
+clearvars -except acer Rat
 end
 %end

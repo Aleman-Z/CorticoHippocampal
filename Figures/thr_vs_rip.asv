@@ -169,9 +169,38 @@ else
 end
 
 %% Select experiment to perform. 
-
+inter=1;
+%Select length of window in seconds:
+ro=[1200];
+coher=0;
+selectripples=1;
+mergebaseline=0;
+notch=1;
+nrem=3;
+myColorMap = jet(8);
 Score=1;
+%%
 
+%Make labels
+label1=cell(7,1);
+label1{1}='Hippo';
+label1{2}='Hippo';
+label1{3}='Parietal';
+label1{4}='Parietal';
+label1{5}='PFC';
+label1{6}='PFC';
+label1{7}='Reference';
+
+label2=cell(7,1);
+label2{1}='Monopolar';
+label2{2}='Bipolar';
+label2{3}='Monopolar';
+label2{4}='Bipolar';
+label2{5}='Monopolar';
+label2{6}='Bipolar';
+label2{7}='Monopolar';
+
+%%
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
@@ -200,51 +229,58 @@ else
 end
 
 cd(nFF{iii})
+lepoch=2;
 
-%xo
-if Rat==24
-   load('states.mat')
+%  xo
+ level=1;
+%Get averaged time signal.
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 else
-    if Score==2 && (strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze'))
-         load('states2.mat')
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
+end
+%  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
+%% IGNORE SMALL THRESHOLD VALUES
+
+if Rat==26 && iii==2 
+
+DEMAIS=DEMAIS(3:end);
+ripple=ripple(3:end);
+y1=y1(3:end);
+
+[p,S,mu]=polyfit(DEMAIS,ripple,5);
+y1=polyval(p,DEMAIS,[],mu);
+% plot(y1)
+
+else
+    if Rat==27 && iii==2
+        DEMAIS=DEMAIS(2:end);
+        ripple=ripple(2:end);
+        y1=y1(2:end);
     else
-        st=strcat(nFF{iii},'-states.mat');
-        load(st) 
+        DEMAIS=DEMAIS(1:end);
+        ripple=ripple(1:end);
+        y1=y1(1:end);
     end
-end
-% 
- %xo
-% Z{iii}=states;
-% % %%
-L= length(states)/60%min
-
- g1=sum(states==1)/60; %Wake
- g3=sum(states==3)/60; %NREM
- g4=sum(states==4)/60; %Transitional Sleep
- g5=sum(states==5)/60; %REM
-
- G=[g1 g3 g4 g5];
- g=G;
- G=G/L*100
-
-Z{iii}=G;
-X{iii}=g; 
- %  v=G;
-% %%
-% f=figure();
-%    %v =sort(v,'descend');
-% bb=bar([v; nan(1,length(v))], 'Stacked');
-% %set(gca,'xtick',1)}
-% xlim([0 3])
-% lg=legend(fliplr(bb),strcat('State1:','{ }',num2str(round(v(4))),'%'),strcat('State2:','{ }',num2str(round(v(3))),'%'),strcat('State3:','{ }',num2str(round(v(2))),'%'),strcat('State4:','{ }',num2str(round(v(1))),'%'));
-% % camroll(-90)
-% lg.Location='east'
-% %lg.FontSize=18
-% 
-
 
 end
 
+if Rat== 24 && iii==6
+[p,S,mu]=polyfit(DEMAIS,ripple,7);
+y1=polyval(p,DEMAIS,[],mu);    
+end
+%%
+
+%%
+plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
+xlabel('Threshold value (uV)')
+ylabel('Ripples per second')
+grid minor
+
+hold on
+plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
+title('Rate of ripples per Threshold value')
 
 %%
 
@@ -253,127 +289,25 @@ end
 %end
 
 
-
-
-%%
-% ax=figure();
-allscreen()
-y = [Z{1};Z{2};Z{3};Z{4}];
-c = categorical({'Baseline','Plusmaze','Novelty','Foraging'});
-bb=bar(c,y,'stacked')
-ylabel('Cumulative percentage of sleep','FontSize',16)
-lg=legend('Wake','NREM','Transitional Sleep','REM')
-lg.Location='eastoutside';
-lg.FontSize=14
-ax = gca;
-ax.XAxis.FontSize = 16;
-ax.YAxis.FontSize = 16;
-%%
-dim = [.14 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{1}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{1}(2))), ' min','{        }');
-st3=strcat('T.S.: ','{     }',num2str(round(X{1}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{1}(4))), ' min','{       }');
-st6='------------------------';
-st5=strcat('Total: ','{ }',num2str(sum(round(X{1}))), ' min','{      }');
-
-
-str=[st1;st2;st3;st4;st6;st5];
-%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
-A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
-A.BackgroundColor=[1 1 1]
-%%
-dim = [.307 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{4}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{4}(2))), ' min','{        }');
-if Rat==27
-st3=strcat('T.S.: ','{     }',num2str(round(X{4}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{       }');
-else
-st3=strcat('T.S.: ','{     }',num2str(round(X{4}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{       }');    
 end
-st6='------------------------';
-st5=strcat('Total: ','{ }',num2str(sum(round(X{4}))), ' min','{      }');
 
 
-str=[st1;st2;st3;st4;st6;st5];
-%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
-B=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
-B.BackgroundColor=[1 1 1]
-%%
+set(gca, 'XDir','reverse')
+%h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
 
-dim = [.472 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{3}(1))), ' min','{      }');
-if Rat==27
-st2=strcat('NREM: ','{ }',num2str(round(X{3}(2))), ' min','{       }');
+if Rat==24
+h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)','Plusmaze 1','Plusmaze 1 (fit)','Plusmaze 2','Plusmaze 2 (fit)')        
 else
-st2=strcat('NREM: ','{ }',num2str(round(X{3}(2))), ' min','{        }');    
+h=legend('Baseline','Baseline (fit)','Plusmaze','Plusmaze (fit)','Novelty','Novelty (fit)','Foraging','Foraging (fit)')    
 end
-st3=strcat('T.S.: ','{     }',num2str(round(X{3}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{3}(4))), ' min','{       }');
-st6='------------------------';
-st5=strcat('Total: ','{ }',num2str(sum(round(X{3}))), ' min','{      }');
 
 
-str=[st1;st2;st3;st4;st6;st5];
-%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
-C=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
-C.BackgroundColor=[1 1 1]
+set(h,'Location','Northwest')
 
-%%
+% h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
+% set(h,'Location','Northwest')
 
-dim = [.64 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{2}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{2}(2))), ' min','{        }');
-st3=strcat('T.S.: ','{     }',num2str(round(X{2}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{2}(4))), ' min','{       }');
-st6='------------------------';
-st5=strcat('Total: ','{ }',num2str(sum(round(X{2}))), ' min','{      }');
-
-
-str=[st1;st2;st3;st4;st6;st5];
-%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
-D=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
-D.BackgroundColor=[1 1 1]
-
-
-%%
-% allscreen()
-% y = [Z{1}];
-% % c = categorical({'Wake','NREM','Transitional Sleep','REM'});
-% bb=bar(y,'stacked')
-%%
-% figure; 
-% b1=bar(sum(v), 'b')
-% hold on
-% bar(v(1), 'm')
-% hold off
-% hold on
-% bar(v(2), 'r')
-% bar(v(3), 'g')
-% bar(v(4), 'y')
-%%
-
-
-%%
-% allscreen()
-% y = [Z{1};Z{2};Z{3};Z{4}];
-% c = categorical({'Baseline','Plusmaze','Novelty','Foraging'});
-% bar(c,y,'stacked')
-% ylabel('Percentage of sleep','FontSize',16)
-% lg=legend('Wake','NREM','Transitional Sleep','REM')
-% lg.Location='West';
-% lg.FontSize=14
-% ax = gca;
-% ax.XAxis.FontSize = 16;
-% ax.YAxis.FontSize = 16;
-% % lg2=legend('Wake','NREM','Transitional Sleep','REM')
-% % lg2.Location='East';
-% % lg2.FontSize=14
-% 
-%%
-% grid on
+%xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
@@ -386,17 +320,18 @@ if Score==2
     cd('new_scoring')
 end
 
-string=strcat('Sleep_amount','.eps');
-% saveas(gcf,string)
+string=strcat('Ripples_per_condition_best','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Ripples_per_condition_best','.eps');
 print(string,'-depsc')
 
-% string=strcat('Sleep_amount','.fig');
-% saveas(gcf,string)
 
+% string=strcat('Ripples_per_condition_best','.fig');
+% saveas(gcf,string)
 
 close all
 
 %%
 clearvars -except acer Rat
-
 end
+%end

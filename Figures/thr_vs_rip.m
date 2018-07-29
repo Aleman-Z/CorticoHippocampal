@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -178,7 +178,7 @@ mergebaseline=0;
 notch=1;
 nrem=3;
 myColorMap = jet(8);
-Score=2;
+Score=1;
 %%
 
 %Make labels
@@ -307,7 +307,7 @@ set(h,'Location','Northwest')
 % h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
 % set(h,'Location','Northwest')
 
-xo
+%xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
@@ -320,13 +320,18 @@ if Score==2
     cd('new_scoring')
 end
 
+string=strcat('Ripples_per_condition_best','.pdf');
+figure_function(gcf,[],string,[]);
 string=strcat('Ripples_per_condition_best','.eps');
-saveas(gcf,string)
-string=strcat('Ripples_per_condition_best','.fig');
-saveas(gcf,string)
+print(string,'-depsc')
+
+
+% string=strcat('Ripples_per_condition_best','.fig');
+% saveas(gcf,string)
 
 close all
 
 %%
+clearvars -except acer Rat
 end
 %end
