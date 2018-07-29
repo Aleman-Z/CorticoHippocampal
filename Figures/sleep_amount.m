@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:2
+for Rat=4:4
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -249,12 +249,12 @@ end
 %%
 
 end
-
+% xo
 %end
 
 
 
-
+if Rat~=24
 %%
 % ax=figure();
 allscreen()
@@ -337,7 +337,113 @@ str=[st1;st2;st3;st4;st6;st5];
 D=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
 D.BackgroundColor=[1 1 1]
 
+else
+%% Rat 24    
+allscreen()
+y = [Z{1};Z{2};Z{3};Z{4};Z{5};Z{6}];
+c = categorical({'Baseline 1','Baseline 2','Baseline 3','Baseline 4','Plusmaze 1','Plusmaze 2'});
+bb=bar(c,y,'stacked')
+ylabel('Cumulative percentage of sleep','FontSize',16)
+lg=legend('Wake','NREM','Transitional Sleep','REM')
+lg.Location='eastoutside';
+lg.FontSize=14
+ax = gca;
+ax.XAxis.FontSize = 16;
+ax.YAxis.FontSize = 16;
 
+dim = [.12 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{1}(1))), ' min','{      }');
+st2=strcat('NREM: ','{ }',num2str(round(X{1}(2))), ' min','{       }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{1}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{1}(4))), ' min','{      }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{1}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+    
+%A.Position=[0.1200 0.2259 0.1115 0.1741];
+A.Position=[0.1195    0.2259    0.1045    0.1741];
+
+dim = [.23 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{2}(1))), ' min','{      }');
+st2=strcat('NREM: ','{ }',num2str(round(X{2}(2))), ' min','{        }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{2}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{2}(4))), ' min','{       }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{2}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+
+ch=3;
+dim = [.34 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{      }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{        }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{       }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+
+ch=4;
+dim = [.45 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{      }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{        }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{       }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+
+ch=5;
+dim = [.56 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{       }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{       }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{      }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+%%
+ch=6;
+dim = [.67 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{       }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{       }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{      }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+
+%%    
+end
 %%
 % allscreen()
 % y = [Z{1}];
@@ -390,8 +496,11 @@ string=strcat('Sleep_amount','.eps');
 % saveas(gcf,string)
 print(string,'-depsc')
 
-% string=strcat('Sleep_amount','.fig');
-% saveas(gcf,string)
+string=strcat('Sleep_amount','.fig');
+saveas(gcf,string)
+
+string=strcat('Sleep_amount','.pdf');
+figure_function(gcf,[],string,[]);
 
 
 close all
