@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=2:2
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -231,7 +231,7 @@ end
 cd(nFF{iii})
 lepoch=2;
 
-%  xo
+  xo
  level=1;
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
