@@ -1,5 +1,5 @@
 acer=1;
-rat24base=2;
+rat24base=1;
 %
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -152,25 +152,7 @@ nFF=[
 if  rat24base==2
   nFF{1,:}='Baseline2'; 
 end
-
-
-labelconditions=[
-    { 
-    'Baseline'}
-%     'Baseline_2'
-%     'Baseline_3'
-    'PlusMaze'
-%     'PlusMaze_2'
-    'Novelty'
-    'Foraging'
-    
-  %   'Foraging_2'
-     
-    
-    
-     
-    ];
-%labelconditions=nFF;
+labelconditions=nFF;
 end
  
 %% Go to main directory
@@ -331,8 +313,6 @@ if Rat==24 %Noise peak was only observed in Rat 26
      Fline=[50 66.5 100 200 133.5 299.5 300];
 
     [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
-%     [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.25);
-
     NC=NC.';
         end
     end
@@ -413,35 +393,6 @@ end
 fig=gcf;
 fig.InvertHardcopy='off';
 
-if Rat~=24
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
-
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
-% saveas(gca, string,'epsc');
-% saveas(gcf,string)
-
-%string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-print(string,'-depsc')
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)
-
-else
-string=strcat('300Hz_',nFF{1},'_',label1{2*w-1},'.pdf');
-
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
-% saveas(gca, string,'epsc');
-% saveas(gcf,string)
-
-%string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-string=strcat('300Hz_',nFF{1},'_',label1{2*w-1},'.eps');
-print(string,'-depsc')
-string=strcat('300Hz_',nFF{1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)
-    
-end
 % string=strcat('300hz_intra_',label1{2*w-1},'.png');
 % saveas(gcf,string)
 % 
@@ -449,27 +400,26 @@ end
 % saveas(gcf,string)
 
 %string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
+string=strcat('300Hz_',nFF{1},'_',label1{2*w-1},'.pdf');
+
+%saveas(gcf,string)
+figure_function(fig,[],string,[]);
+% saveas(gca, string,'epsc');
+% saveas(gcf,string)
+string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+print(string,'-depsc')
 
 % % % string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 % % % saveas(gcf,string)
 
 xlim([0 30])
-if Rat~=24
+
 string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 %saveas(gcf,string)
 figure_function(fig,[],string,[]);
 string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
 print(string,'-depsc')
-else
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.pdf');
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.eps');
-print(string,'-depsc')
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)    
-end
-    
+
 % % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 % % % saveas(gcf,string)
 
