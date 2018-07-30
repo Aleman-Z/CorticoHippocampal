@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
@@ -407,8 +407,8 @@ xlim([0 30])
 string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 %saveas(gcf,string)
 figure_function(fig,[],string,[]);
-% string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-% print(string,'-depsc')
+string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+print(string,'-depsc')
 
 % % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 % % % saveas(gcf,string)

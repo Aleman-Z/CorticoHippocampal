@@ -12,7 +12,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=3:3
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -231,7 +231,7 @@ end
 cd(nFF{iii})
 lepoch=2;
 
-  xo
+%  xo
  level=1;
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
@@ -307,7 +307,7 @@ set(h,'Location','Northwest')
 % h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
 % set(h,'Location','Northwest')
 
-%xo
+xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
