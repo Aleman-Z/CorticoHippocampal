@@ -1,4 +1,5 @@
 acer=1;
+rat24base=2;
 
 %%
 if acer==0
@@ -140,16 +141,37 @@ end
 if Rat==24
 nFF=[  
     {'Baseline1'}
-    {'Baseline2'}
-    {'Baseline3'}
-    {'Baseline4'}
+%     {'Baseline2'}
+%     {'Baseline3'}
+%     {'Baseline4'}
     {'Plusmaze1'}
-    {'Plusmaze2'}
+%     {'Plusmaze2'}
     {'Novelty1'}
     {'Foraging1'}
        
-];       
-labelconditions=nFF;
+];
+if  rat24base==2
+  nFF{1,:}='Baseline2'; 
+end
+
+%labelconditions=nFF;
+labelconditions=[
+    { 
+    'Baseline'}
+%     'Baseline_2'
+%     'Baseline_3'
+    'PlusMaze'
+%     'PlusMaze_2'
+    'Novelty'
+    'Foraging'
+    
+  %   'Foraging_2'
+     
+    
+    
+     
+    ];
+
 end
 
 %% Go to main directory
@@ -178,9 +200,9 @@ myColorMap = jet(8);
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-if Rat==24
-    myColorMap = jet(length(nFF));                                                                                                                                                                                    
-end
+% if Rat==24
+%     myColorMap = jet(length(nFF));                                                                                                                                                                                    
+% end
 
 
 for iii=1:length(nFF)
@@ -256,7 +278,7 @@ xo
 
 
 
-if Rat~=24
+if Rat~=24 || rat24base==1
 %%
 % ax=figure();
 allscreen()
@@ -548,7 +570,35 @@ str=[st1;st2;st3;st4;st6;st5];
 A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
 A.BackgroundColor=[1 1 1]
 %%
-    
+ch=7;
+dim = [.61 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{      }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{        }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{       }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]
+%%
+ch=8;
+dim = [.70 .2 .2 .2];
+st1=strcat('Wake: ','{  }',num2str(round(X{ch}(1))), ' min','{       }');
+st2=strcat('NREM: ','{ }',num2str(round(X{ch}(2))), ' min','{       }');
+st3=strcat('T.S.: ','{     }',num2str(round(X{ch}(3))), ' min','{     }');
+st4=strcat('REM: ','{    }',num2str(round(X{ch}(4))), ' min','{      }');
+st6='------------------------';
+st5=strcat('Total: ','{ }',num2str(sum(round(X{ch}))), ' min','{      }');
+
+
+str=[st1;st2;st3;st4;st6;st5];
+%str = [ strcat('Wake:',num2str(round(X{1}(1))), ' min'); strcat('NREM:',num2str(round(X{1}(2))), '  min'); strcat('T.S. :',num2str(round(X{1}(3))), '  min');strcat('REM:  ',num2str(round(X{1}(4))), '  min')];
+A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
+A.BackgroundColor=[1 1 1]    
 %%
 end
 %%    

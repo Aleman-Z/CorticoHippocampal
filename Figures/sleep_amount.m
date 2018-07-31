@@ -1,4 +1,5 @@
 acer=1;
+rat24base=1;
 
 %%
 if acer==0
@@ -140,16 +141,37 @@ end
 if Rat==24
 nFF=[  
     {'Baseline1'}
-    {'Baseline2'}
-    {'Baseline3'}
-    {'Baseline4'}
+%     {'Baseline2'}
+%     {'Baseline3'}
+%     {'Baseline4'}
     {'Plusmaze1'}
-    {'Plusmaze2'}
+%     {'Plusmaze2'}
     {'Novelty1'}
     {'Foraging1'}
        
-];       
-labelconditions=nFF;
+];
+if  rat24base==2
+  nFF{1,:}='Baseline2'; 
+end
+
+%labelconditions=nFF;
+labelconditions=[
+    { 
+    'Baseline'}
+%     'Baseline_2'
+%     'Baseline_3'
+    'PlusMaze'
+%     'PlusMaze_2'
+    'Novelty'
+    'Foraging'
+    
+  %   'Foraging_2'
+     
+    
+    
+     
+    ];
+
 end
 
 %% Go to main directory
@@ -178,9 +200,9 @@ myColorMap = jet(8);
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-if Rat==24
-    myColorMap = jet(length(nFF));                                                                                                                                                                                    
-end
+% if Rat==24
+%     myColorMap = jet(length(nFF));                                                                                                                                                                                    
+% end
 
 
 for iii=1:length(nFF)
@@ -256,7 +278,7 @@ xo
 
 
 
-if Rat~=24
+if Rat~=24 || rat24base==1 || rat24base==2
 %%
 % ax=figure();
 allscreen()
@@ -273,9 +295,9 @@ ax.YAxis.FontSize = 16;
 %%
 dim = [.14 .2 .2 .2];
 st1=strcat('Wake: ','{  }',num2str(round(X{1}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{1}(2))), ' min','{        }');
+st2=strcat('NREM: ','{ }',num2str(round(X{1}(2))), ' min','{       }');
 st3=strcat('T.S.: ','{     }',num2str(round(X{1}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{1}(4))), ' min','{       }');
+st4=strcat('REM: ','{    }',num2str(round(X{1}(4))), ' min','{      }');
 st6='------------------------';
 st5=strcat('Total: ','{ }',num2str(sum(round(X{1}))), ' min','{      }');
 
@@ -286,14 +308,14 @@ A=annotation('textbox',dim,'String',str,'FitBoxToText','on','FontSize',12);
 A.BackgroundColor=[1 1 1]
 %%
 dim = [.307 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{4}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{4}(2))), ' min','{        }');
+st1=strcat('Wake: ','{  }',num2str(round(X{4}(1))), ' min','{       }');
+st2=strcat('NREM: ','{ }',num2str(round(X{4}(2))), ' min','{       }');
 if Rat==27
 st3=strcat('T.S.: ','{     }',num2str(round(X{4}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{       }');
+st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{      }');
 else
 st3=strcat('T.S.: ','{     }',num2str(round(X{4}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{       }');    
+st4=strcat('REM: ','{    }',num2str(round(X{4}(4))), ' min','{      }');    
 end
 st6='------------------------';
 st5=strcat('Total: ','{ }',num2str(sum(round(X{4}))), ' min','{      }');
@@ -326,10 +348,10 @@ C.BackgroundColor=[1 1 1]
 %%
 
 dim = [.64 .2 .2 .2];
-st1=strcat('Wake: ','{  }',num2str(round(X{2}(1))), ' min','{      }');
-st2=strcat('NREM: ','{ }',num2str(round(X{2}(2))), ' min','{        }');
+st1=strcat('Wake: ','{  }',num2str(round(X{2}(1))), ' min','{       }');
+st2=strcat('NREM: ','{ }',num2str(round(X{2}(2))), ' min','{       }');
 st3=strcat('T.S.: ','{     }',num2str(round(X{2}(3))), ' min','{     }');
-st4=strcat('REM: ','{    }',num2str(round(X{2}(4))), ' min','{       }');
+st4=strcat('REM: ','{    }',num2str(round(X{2}(4))), ' min','{      }');
 st6='------------------------';
 st5=strcat('Total: ','{ }',num2str(sum(round(X{2}))), ' min','{      }');
 
@@ -629,6 +651,7 @@ if Score==2
     cd('new_scoring')
 end
 
+if Rat~=24
 string=strcat('Sleep_amount','.eps');
 % saveas(gcf,string)
 print(string,'-depsc')
@@ -638,6 +661,20 @@ saveas(gcf,string)
 
 string=strcat('Sleep_amount','.pdf');
 figure_function(gcf,[],string,[]);
+
+else
+
+string=strcat('Sleep_amount_',nFF{1},'.eps');
+% saveas(gcf,string)
+print(string,'-depsc')
+
+string=strcat('Sleep_amount_',nFF{1},'.fig');
+saveas(gcf,string)
+
+string=strcat('Sleep_amount_',nFF{1},'.pdf');
+figure_function(gcf,[],string,[]);
+
+end
 
 
 close all
