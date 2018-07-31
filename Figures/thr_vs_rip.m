@@ -1,4 +1,5 @@
 acer=1;
+rat24base=2;
 
 %%
 if acer==0
@@ -12,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=3:3
+for Rat=4:4
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -140,14 +141,39 @@ end
 if Rat==24
 nFF=[  
     {'Baseline1'}
-    {'Baseline2'}
-    {'Baseline3'}
-    {'Baseline4'}
+%     {'Baseline2'}
+%     {'Baseline3'}
+%     {'Baseline4'}
     {'Plusmaze1'}
-    {'Plusmaze2'}
-       
-];       
-labelconditions=nFF;
+%     {'Plusmaze2'}
+   {'Novelty1'}
+   {'Foraging1'}
+     
+]; 
+if  rat24base==2
+  nFF{1,:}='Baseline2'; 
+end
+
+%labelconditions=nFF;
+labelconditions=[
+    { 
+    'Baseline'}
+%     'Baseline_2'
+%     'Baseline_3'
+    'PlusMaze'
+%     'PlusMaze_2'
+    'Novelty'
+    'Foraging'
+    
+  %   'Foraging_2'
+     
+    
+    
+     
+    ];
+
+
+
 end
 
 %% Go to main directory
@@ -205,9 +231,11 @@ myColorMap = jet(8);
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-if Rat==24
-    myColorMap = jet(length(nFF));                                                                                                                                                                                    
-end
+
+%Rat 24
+% if Rat==24
+%     myColorMap = jet(length(nFF));                                                                                                                                                                                    
+% end
 
 
 for iii=1:length(nFF)
@@ -271,12 +299,12 @@ if Rat== 24 && iii==6
 y1=polyval(p,DEMAIS,[],mu);    
 end
 %%
-
+%xo
 %%
 plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
 xlabel('Threshold value (uV)')
 ylabel('Ripples per second')
-grid minor
+%grid minor
 
 hold on
 plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
@@ -296,7 +324,9 @@ set(gca, 'XDir','reverse')
 %h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
 
 if Rat==24
-h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)','Plusmaze 1','Plusmaze 1 (fit)','Plusmaze 2','Plusmaze 2 (fit)')        
+%h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)','Plusmaze 1','Plusmaze 1 (fit)','Plusmaze 2','Plusmaze 2 (fit)')        
+h=legend('Baseline','Baseline (fit)','Plusmaze','Plusmaze (fit)','Novelty','Novelty (fit)','Foraging','Foraging (fit)')    
+
 else
 h=legend('Baseline','Baseline (fit)','Plusmaze','Plusmaze (fit)','Novelty','Novelty (fit)','Foraging','Foraging (fit)')    
 end
@@ -320,11 +350,20 @@ if Score==2
     cd('new_scoring')
 end
 
+if Rat~=24
 string=strcat('Ripples_per_condition_best','.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Ripples_per_condition_best','.eps');
 print(string,'-depsc')
+else
+string=strcat('Ripples_per_condition_',nFF{1},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Ripples_per_condition_',nFF{1},'.eps');
+print(string,'-depsc')    
+string=strcat('Ripples_per_condition_',nFF{1},'.fig');
+saveas(gcf,string)
 
+end
 
 % string=strcat('Ripples_per_condition_best','.fig');
 % saveas(gcf,string)
