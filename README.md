@@ -43,6 +43,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 -SPECTROGRAMS AND GC
 --------------------
 **main_optimized_ab.m:** Main time-frequency analysis with permutation statistics. 
+ -plot_inter_conditions_27: Plots Normalized and Non-normalized spectrograms, as well as their statistics. 
 
 **main_optimized_ab_fixed_nr.m:** Optimized time-frequency analysis for more efficiency. Threshold selection based on the same rate of occurrence per session. 
 
