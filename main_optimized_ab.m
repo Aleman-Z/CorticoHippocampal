@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 
 %%
 if acer==0
@@ -7,14 +7,14 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
-   
+%addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
+addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
 
-for Rat=1:3
-rats=[26 27 21];
+for Rat=1:1
+rats=[26 27 21 24];
 Rat=rats(Rat);    
     
 if Rat==26
@@ -160,7 +160,7 @@ granger=0;
 ro=[1200];
 coher=0;
 selectripples=1;
-mergebaseline=1;
+mergebaseline=0;
 %%
 
 %Make labels
@@ -183,7 +183,7 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-
+% xo
  for iii=4:length(nFF)
 
     
@@ -212,7 +212,7 @@ end
 % ripple=ripple2;
   %Get p and q.
   %Get averaged time signal.
-[p,q,timecell,Q,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
+[p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 % SUS=SU(:,level).';
 
 if selectripples==1
@@ -221,7 +221,7 @@ if selectripples==1
     % 
     p=p([ran]);
     q=q([ran]);
-    Q=Q([ran]);
+%    Q=Q([ran]);
     timecell=timecell([ran]);
 end
 
@@ -277,6 +277,7 @@ end
 
  %error('stop')
 %% Get average baseline
+%xo
 if mergebaseline==1
     for k=1:3 %get baselines (Number of baselines varies among rats)
 
@@ -396,6 +397,7 @@ if iii>=4 && inter==1
 
 
 plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,selectripples,acer,timecell_nl,P1_nl,P2_nl,p_nl,q_nl)
+xo
 %plot_inter_conditions_27(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
 string=strcat('Intra_conditions_',label1{2*w-1},'_',num2str(level),'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
