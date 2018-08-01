@@ -18,3 +18,12 @@ Figure 2:
 * **sleep_amount.m:**   
 *Generates barplots with amount of sleep per condition.* 
 <img src="Sleep_amount.png" width="400">
+
+Figure 3:
+
+* **Poster_main_optimized:**
+*Generates non-normalized spectrograms and statistical tests using the complete recordings.*
+
+
+
+
