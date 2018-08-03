@@ -340,8 +340,44 @@ ripple3=ripple_nl;
 for w=2:3
 xo
 %%
-plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
+%%
+pos = get(h,'Position');
+new = mean(cellfun(@(v)v(1),pos(1:2)));
+set(h(9),'Position',[new,pos{9}(2:end)])
+
+pos = get(h,'Position');
+new = mean(cellfun(@(v)v(1),pos(3:4)));
+set(h(10),'Position',[new,pos{10}(2:end)])
+%%
+set(h(1),'Position',[pos{1}(1:2),pos{1+4}(3:end)])
+set(h(2),'Position',[pos{2}(1:2),pos{2+4}(3:end)])
+set(h(3),'Position',[pos{3}(1:2),pos{3+4}(3:end)])
+set(h(4),'Position',[pos{4}(1:2),pos{4+4}(3:end)])
+
+%%
+H=gcf;
+ca = get(H, 'Children');  %axes handles
+Pos = get(ca,'Position');
+
+set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
+set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
+%%
 error('stop')
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.eps');
+print(string,'-depsc')
+string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.fig');
+saveas(gcf,string)
+
 
 %%
 

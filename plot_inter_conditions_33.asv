@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM)
+function plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -100,7 +100,7 @@ plot(timecell_nl{1},P2_nl(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
 %grid minor
-% narrow_colorbar()
+narrow_colorbar()
 title('Wide Band No Learning')
 win1=[min(P2_nl(w,:)) max(P2_nl(w,:)) min(P2(w,:)) max(P2(w,:))];
 win1=[(min(win1)) round(max(win1))];
@@ -114,7 +114,7 @@ plot(timecell_nl{1},P1_nl(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
 %grid minor
-% narrow_colorbar()
+narrow_colorbar()
 title('High Gamma No Learning')
 
 win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
@@ -129,7 +129,7 @@ plot(timecell{1},P2(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
 %grid minor
-% narrow_colorbar()
+narrow_colorbar()
 title(strcat('Wide Band',{' '},labelconditions{iii}))
 %title(strcat('Wide Band',{' '},labelconditions{iii}))
 ylim(win1)
@@ -141,8 +141,8 @@ h(4)=subplot(3,4,4)
 plot(timecell{1},P1(w,:))
 xlim([-1,1])
 %xlim([-0.8,0.8])
-%grid minor
-% narrow_colorbar()
+grid minor
+narrow_colorbar()
 %title('High Gamma RIPPLE')
 title(strcat('High Gamma',{' '},labelconditions{iii}))
 %title(strcat('High Gamma',{' '},labelconditions{iii}))
@@ -232,10 +232,10 @@ ylabel('Frequency (Hz)')
 %error('stop')
 ylim([0.5 30])
 %%
-
+%
 [stats]=stats_between_trials(freq1,freq2,label1,w);
 %% 
-h(9)=subplot(3,4,10)
+h(10)=subplot(3,4,10)
 % 
 cfg = [];
 cfg.channel = label1{2*w-1};
@@ -285,13 +285,12 @@ freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
  
 cfg              = [];
 cfg.channel      = freq3.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-[zmin2, zmax2] = ft_getminmax(cfg, freq4);
+[ zmin1, zmax1] = ft_getminmax(cfg, freq30);
+[zmin2, zmax2] = ft_getminmax(cfg, freq40);
 
 zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
 
-% zlim=[-max(abs(zlim)) max(abs(zlim))];
-
+ zlim=[-max(abs(zlim)) max(abs(zlim))];
 
 %%
 
@@ -301,34 +300,25 @@ cfg.channel      = freq3.label{w};
 cfg.colormap=colormap(jet(256));
 
 %%
-h(7)=subplot(3,4,7)
+subplot(3,4,3)
 ft_singleplotTFR(cfg, freq3); 
 % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
-g=title('High Gamma No Learning');
-g.FontSize=12;
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
-
+title('High Gamma NO Learning')
 %%
 % 
-h(8)=subplot(3,4,8);
-% freq4=barplot2_ft(q,timecell,[100:1:300],w)
-%freq=justtesting(q,timecell,[100:1:300],w,0.5)
-%title('High Gamma RIPPLE')
-ft_singleplotTFR(cfg, freq4); 
-g=title(strcat('High Gamma',{' '},labelconditions{iii}));
-g.FontSize=12;
-%title(strcat('High Gamma',{' '},labelconditions{iii}))
-%xo
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
+% subplot(2,3,3)
+% % freq4=barplot2_ft(q,timecell,[100:1:300],w)
+% %freq=justtesting(q,timecell,[100:1:300],w,0.5)
+% %title('High Gamma RIPPLE')
+% ft_singleplotTFR(cfg, freq4); 
+% title(strcat('High Gamma',{' '},labelconditions{iii-3}))
+% %title(strcat('High Gamma',{' '},labelconditions{iii}))
+
 %%
 
 [stats1]=stats_between_trials(freq3,freq4,label1,w);
 %% %
- h(10)=subplot(3,4,12);
+ h(12)=subplot(3,4,12)
 cfg = [];
 cfg.channel = label1{2*w-1};
 cfg.parameter = 'stat';
@@ -336,7 +326,7 @@ cfg.maskparameter = 'mask';
 cfg.zlim = 'maxabs';
 cfg.colorbar       = 'yes';
 cfg.colormap=colormap(jet(256));
-%grid minor
+grid minor
 ft_singleplotTFR(cfg, stats1);
 %title('Ripple vs No Ripple')
 g=title(strcat(labelconditions{iii},' vs No Learning'));
