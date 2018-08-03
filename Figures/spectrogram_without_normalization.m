@@ -1,5 +1,12 @@
 acer=1;
-rat24base=2;
+%rat24base=2;
+DUR{1}='1sec';
+DUR{2}='10sec';
+Block{1}='complete';
+Block{2}='block1';
+Block{3}='block2';
+
+
 
 %%
 if acer==0
@@ -14,6 +21,9 @@ end
 %%
 %Rat=26;
 for Rat=1:1
+    
+for dura=1:2
+    
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -197,10 +207,14 @@ end
 %% Select experiment to perform. 
 inter=1;
 %Select length of window in seconds:
+if dura==1
 ro=[1200];
+else
+ro=[10200];    
+end
 coher=0;
-selectripples=1;
-mergebaseline=0;
+% selectripples=1;
+% mergebaseline=0;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
@@ -238,6 +252,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 % end
 
 %xo
+for block_time=0:2
 for iii=2:length(nFF)
 
     
@@ -270,6 +285,21 @@ lepoch=2;
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+
+
+%% Select time block 
+if block_time==1
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
+ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+end
+
+if block_time==2
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
+ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+end
+
+%%
+
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 [p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 
@@ -325,12 +355,21 @@ P2=avg_samples(p,timecell);
 
 cd(strcat('D:\internship\',num2str(Rat)))
 
-cd(nFF{1})
+cd(nFF{1}) %Baseline
 
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
-ripple3=ripple_nl;
+
+if block_time==1
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
+end
+
+if block_time==2
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
+end
 
 
 % xo
@@ -338,7 +377,7 @@ ripple3=ripple_nl;
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
 for w=2:3
-xo
+%xo
 %%
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
 %%
@@ -363,7 +402,7 @@ Pos = get(ca,'Position');
 set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
 set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
-error('stop')
+%error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -371,13 +410,14 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.pdf');
+string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.eps');
+string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_',label1{2*w-1},'_',num2str(level),'.fig');
+string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
 
+close all
 
 %%
 
@@ -387,59 +427,12 @@ end
 
 
 end
-
-
-set(gca, 'XDir','reverse')
-%h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))
-
-if Rat==24
-%h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)','Plusmaze 1','Plusmaze 1 (fit)','Plusmaze 2','Plusmaze 2 (fit)')        
-h=legend('Baseline','Baseline (fit)','Plusmaze','Plusmaze (fit)','Novelty','Novelty (fit)','Foraging','Foraging (fit)')    
-
-else
-h=legend('Baseline','Baseline (fit)','Plusmaze','Plusmaze (fit)','Novelty','Novelty (fit)','Foraging','Foraging (fit)')    
 end
 
 
-set(h,'Location','Northwest')
-
-% h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
-% set(h,'Location','Northwest')
-
-xo
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
 end
-
-
-if Score==2
-    cd('new_scoring')
-end
-
-if Rat~=24
-string=strcat('Ripples_per_condition_best','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Ripples_per_condition_best','.eps');
-print(string,'-depsc')
-else
-string=strcat('Ripples_per_condition_',nFF{1},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Ripples_per_condition_',nFF{1},'.eps');
-print(string,'-depsc')    
-string=strcat('Ripples_per_condition_',nFF{1},'.fig');
-saveas(gcf,string)
-
-end
-
-% string=strcat('Ripples_per_condition_best','.fig');
-% saveas(gcf,string)
-
-close all
 
 %%
-clearvars -except acer Rat
+%clearvars -except acer Rat
 end
 %end

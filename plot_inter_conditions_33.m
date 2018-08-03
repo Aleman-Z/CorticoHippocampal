@@ -8,7 +8,7 @@ function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2]=newest_only_ripple_nl;
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ripple3=ripple_nl;
-ripple3=ripple_nl;
+% ripple3=ripple_nl;
 %ran=randi(length(p),100,1);
 
 % % % % % % % sig1_nl=cell(7,1);
@@ -97,7 +97,11 @@ allscreen()
 %%
 h(1)=subplot(3,4,1)
 plot(timecell_nl{1},P2_nl(w,:))
+if ro==1200
 xlim([-1,1])
+else
+xlim([-10,10])    
+end
 %xlim([-0.8,0.8])
 %grid minor
 % narrow_colorbar()
@@ -111,7 +115,13 @@ ylabel('uV')
 
 h(3)=subplot(3,4,3)
 plot(timecell_nl{1},P1_nl(w,:))
+%xlim([-1,1])
+if ro==1200
 xlim([-1,1])
+else
+xlim([-10,10])    
+end
+
 %xlim([-0.8,0.8])
 %grid minor
 % narrow_colorbar()
@@ -126,7 +136,13 @@ ylabel('uV')
 
 h(2)=subplot(3,4,2)
 plot(timecell{1},P2(w,:))
+%xlim([-1,1])
+if ro==1200
 xlim([-1,1])
+else
+xlim([-10,10])    
+end
+
 %xlim([-0.8,0.8])
 %grid minor
 % narrow_colorbar()
@@ -139,7 +155,13 @@ ylabel('uV')
 %%
 h(4)=subplot(3,4,4)
 plot(timecell{1},P1(w,:))
+%xlim([-1,1])
+if ro==1200
 xlim([-1,1])
+else
+xlim([-10,10])    
+end
+
 %xlim([-0.8,0.8])
 %grid minor
 % narrow_colorbar()
@@ -152,7 +174,13 @@ ylabel('uV')
 
 %% Time Frequency plots
 % Calculate Freq1 and Freq2
+if ro==1200   
 toy = [-1.2:.01:1.2];
+else
+toy = [-10.2:.1:10.2];    
+end
+
+%toy = [-1.2:.01:1.2];
 
 if length(p)>length(p_nl)
 p=p(1:length(p_nl));        
@@ -209,7 +237,13 @@ ft_singleplotTFR(cfg, freq1);
 g=title('Wide Band No Learning');
 g.FontSize=12;
 
-xlim([-1 1])
+%xlim([-1 1])
+if ro==1200
+xlim([-1,1])
+else
+xlim([-10,10])    
+end
+
 xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
@@ -225,7 +259,13 @@ g=title(strcat('Wide Band',{' '},labelconditions{iii}));
 g.FontSize=12;
 
 
-xlim([-1 1])
+%xlim([-1 1])
+if ro==1200
+xlim([-1,1])
+else
+xlim([-10,10])    
+end
+
 xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
@@ -256,7 +296,12 @@ ylabel('Frequency (Hz)')
 
 %%
 %Calculate Freq3 and Freq4
+%toy=[-1:.01:1];
+if ro==1200
 toy=[-1:.01:1];
+else
+toy=[-10:.1:10];    
+end
 
 if length(q)>length(q_nl)
 q=q(1:length(q_nl));        
@@ -268,8 +313,13 @@ q_nl=q_nl(1:length(q));
 timecell_nl=timecell_nl(1:length(q));
 end
 
+if ro==1200
 freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w,toy);
 freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
+else
+freq3=barplot2_ft(q_nl,timecell_nl,[100:2:300],w,toy); %Memory reasons
+freq4=barplot2_ft(q,timecell,[100:2:300],w,toy);
+end
 %%
 
 % % % % % % % % % % cfg=[];
