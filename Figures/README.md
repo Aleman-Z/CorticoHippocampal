@@ -32,7 +32,7 @@ Figure 3:
 
 * **spectrogram_without_normalization.m:**
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
-<img src="Sleep_amount.png" width="400">
+<img src="example_figure_spectrogram.png" width="400">
 
 
 
