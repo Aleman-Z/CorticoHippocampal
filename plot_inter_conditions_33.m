@@ -61,7 +61,11 @@ av=av(1:3:end,:); %Only Hippocampus
 
 [ach]=max(av.');
 achinga=sort(ach,'descend');
+%achinga=achinga(1:1000);
+if length(achinga)>1000
 achinga=achinga(1:1000);
+end
+
 B=achinga;
 I=nan(1,length(B));
 for hh=1:length(achinga)

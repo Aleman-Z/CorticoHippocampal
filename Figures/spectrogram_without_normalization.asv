@@ -21,6 +21,7 @@ end
 %%
 %Rat=26;
 for Rat=1:1
+    
 for dura=1:2
     
 rats=[26 27 21 24];
@@ -206,10 +207,14 @@ end
 %% Select experiment to perform. 
 inter=1;
 %Select length of window in seconds:
+if dura==1
 ro=[1200];
+else
+ro=[10200];    
+end
 coher=0;
-selectripples=1;
-mergebaseline=0;
+% selectripples=1;
+% mergebaseline=0;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
@@ -282,10 +287,18 @@ lepoch=2;
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
 
 
-%% 
+%% Select time block 
+if block_time==1
 [carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
 ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
-%
+end
+
+if block_time==2
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
+ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+end
+
+%%
 
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 [p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
@@ -300,7 +313,9 @@ av=av(1:3:end,:); %Only Hippocampus
 
 [ach]=max(av.');
 achinga=sort(ach,'descend');
+if
 achinga=achinga(1:1000);
+
 B=achinga;
 I=nan(1,length(B));
 for hh=1:length(achinga)
@@ -347,7 +362,16 @@ cd(nFF{1}) %Baseline
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
-ripple3=ripple_nl;
+
+if block_time==1
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
+end
+
+if block_time==2
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
+end
 
 
 % xo
@@ -409,6 +433,7 @@ end
 
 
 end
+
 %%
 %clearvars -except acer Rat
 end

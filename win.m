@@ -3,10 +3,13 @@ function [cellx,cellr]=win(carajo,veamos,Bip17,S17,Num)
 count=0;
 clear TI TN cellx cellr tu to
 fn=1000;
-for index=1:length(carajo)
+%for index=1:length(carajo)
+for index=1:size(carajo,1)
+    
 % index=3;
-index
-length(carajo)
+% index
+% length(carajo)
+% whos carajo
 checa=carajo(index,:);
 maxch=checa{3};
 
