@@ -20,9 +20,9 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=2:2
     
-for dura=2:2
+for dura=1:2 %Starts with 1
     
 rats=[26 27 21 24];
 Rat=rats(Rat);    
@@ -78,9 +78,9 @@ labelconditions=[
 end
 if Rat==27
 nFF=[
-    {'rat27_nl_base_2016-03-28_15-01-17'                   }
+   % {'rat27_nl_base_2016-03-28_15-01-17'                   }
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
-   % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
+    {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
     {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
 %     {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
@@ -252,7 +252,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 % end
 
 %xo
-for block_time=1:2 %Should start with 0
+for block_time=0:2 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 
     
