@@ -1,8 +1,8 @@
 %% "Project: Large scale interactions in the cortico-hippocampal network" 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %STUDENT: Ramiro Adrián Alemán Zapata. Master Student @ TU Eindhoven. 
-%ADVISOR: Francesco Battaglia. Donders Institute of Brain, Cognition and
-%Behaviour. Radboud University. 
+%ADVISORS: Francesco Battaglia and Lisa Genzel
+%Donders Institute of Brain, Cognition and Behaviour. Radboud University. 
 %2017
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
