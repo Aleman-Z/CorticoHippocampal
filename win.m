@@ -5,7 +5,8 @@ clear TI TN cellx cellr tu to
 fn=1000;
 for index=1:length(carajo)
 % index=3;
-
+index
+length(carajo)
 checa=carajo(index,:);
 maxch=checa{3};
 
