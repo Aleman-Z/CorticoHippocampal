@@ -21,7 +21,7 @@ Figure 2:
 
 * **compare_states.m:**   
 *Quantifies and displays the percentual differences between the oldest and the newests sleep scoring methods.* 
-<img src="Sleep_amount.png" width="400">
+<img src="scoring_comparison.png" width="400">
 
 
 Figure 3:
