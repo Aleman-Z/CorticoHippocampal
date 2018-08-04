@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=27:27
+for Rat=26:26
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -179,7 +179,7 @@ lepoch=2;
 notch=1;
 nrem=3;
 
-%error('stop here')
+error('stop here')
 [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=nrem_newest_only_ripple_level(level,nrem,notch,w,lepoch);
 
 if Rat==26

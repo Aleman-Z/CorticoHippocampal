@@ -1,0 +1,32 @@
+function [timeasleep]=nrem_sleep(nrem,notch)
+
+
+%Load Sleeping stage classification
+load('transitions.mat')
+%Load Monopolar signals
+% Fline=[50 100 150 200 250 300];
+
+
+V9=load('data9m.mat');
+V9=V9.data9m;
+
+
+total_sleep=length(V9)*(1/1000)/60; % In minutes
+
+
+%NREM
+[V9nrem,~]=reduce_data(V9,transitions,1000,3);
+%Total amount of time spent sleeping:
+time_nrem=sum(cellfun('length',V9nrem))*(1/1000)/60; % In minutes
+%save('timeasleep.mat','timeasleep')
+
+%REM
+[V9rem,~]=reduce_data(V9,transitions,1000,1);
+%Total amount of time spent sleeping:
+time_rem=sum(cellfun('length',V9rem))*(1/1000)/60; % In minutes
+%save('timeasleep.mat','timeasleep')
+
+
+
+
+end
