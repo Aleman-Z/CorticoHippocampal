@@ -19,6 +19,11 @@ Figure 2:
 *Generates barplots with amount of sleep per condition.* 
 <img src="Sleep_amount.png" width="400">
 
+* **compare_states.m:**   
+*Quantifies and displays the percentual differences between the oldest and the newests sleep scoring methods.* 
+<img src="Sleep_amount.png" width="400">
+
+
 Figure 3:
 
 * **Poster_main_optimized:**
@@ -27,6 +32,7 @@ Figure 3:
 
 * **spectrogram_without_normalization.m:**
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
+<img src="Sleep_amount.png" width="400">
 
 
 
