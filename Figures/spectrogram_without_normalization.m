@@ -22,7 +22,7 @@ end
 %Rat=26;
 for Rat=1:1
     
-for dura=1:2
+for dura=2:2
     
 rats=[26 27 21 24];
 Rat=rats(Rat);    
@@ -252,8 +252,8 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 % end
 
 %xo
-for block_time=1:2
-for iii=2:length(nFF)
+for block_time=1:2 %Should start with 0
+for iii=2:length(nFF) %Should start with 2!
 
     
 %  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
@@ -412,6 +412,10 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
+if dura==2
+    cd('10sec')
+end
+
 string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
@@ -429,6 +433,7 @@ end
 
 
 end
+% xo
 end
 
 

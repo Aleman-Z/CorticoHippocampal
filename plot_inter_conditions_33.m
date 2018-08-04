@@ -276,8 +276,12 @@ ylabel('Frequency (Hz)')
 %error('stop')
 ylim([0.5 30])
 %%
-
+if ro==1200
 [stats]=stats_between_trials(freq1,freq2,label1,w);
+else
+[stats]=stats_between_trials10(freq1,freq2,label1,w);
+end
+
 %% 
 h(9)=subplot(3,4,10)
 % 
@@ -379,8 +383,13 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
-
+if ro==1200
 [stats1]=stats_between_trials(freq3,freq4,label1,w);
+else
+[stats1]=stats_between_trials10(freq3,freq4,label1,w);
+end
+
+
 %% %
  h(10)=subplot(3,4,12);
 cfg = [];
