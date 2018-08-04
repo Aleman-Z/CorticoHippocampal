@@ -25,5 +25,9 @@ Figure 3:
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
 
 
+* **spectrogram_without_normalization.m:**
+*Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
+
+
 
 
