@@ -26,7 +26,7 @@ for rat24base=1:2
       break
   end
 
-for dura=1:2 %Starts with 1
+for dura=2:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -308,7 +308,7 @@ end
  %for level=1:1
      
 
-
+ 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
@@ -347,46 +347,8 @@ end
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 [p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 
- av=cat(1,p{1:end});
-%av=cat(1,q{1:end});
-
-av=av(1:3:end,:); %Only Hippocampus
-%AV=max(av.');
-%[B I]= maxk(AV,1000);
-%[B I]= maxk(max(av.'),1000); %Look for the 1000 ripples with highest amplitude. THIS SHOULD BE MEAN instead of Max since some peaks go downwards and no upwards. 
-
-[ach]=max(av.');
-achinga=sort(ach,'descend');
-if length(achinga)>1000
-achinga=achinga(1:1000);
-end
-B=achinga;
-I=nan(1,length(B));
-for hh=1:length(achinga)
-   % I(hh)= min(find(ach==achinga(hh)));
-I(hh)= find(ach==achinga(hh),1,'first');
-end
-
-
-
-[ajal ind]=unique(B); %Repeated ripples, which are very close to each other. 
-
-if length(ajal)>500
-ajal=ajal(end-499:end);
-ind=ind(end-499:end);
-end
-
-% if length(ajal)>1000
-% ajal=ajal(end-999:end);
-% ind=ind(end-999:end);
-% end
-
-dex=I(ind);
-Files=dir(fullfile(cd,'*.mat'));
-
-
-% ran=I.'; % Select ripples with highest magnitudes. 
-ran=dex.';
+%Ripple selection. Memory free. 
+[ran]=select_rip(p);
 
 % 
 p=p([ran]);

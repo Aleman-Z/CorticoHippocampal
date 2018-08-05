@@ -46,46 +46,47 @@ function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,
 
 % % % % % load(strcat('randnum2_',num2str(level),'.mat'))
 % % % % % ran_nl=ran;
+[ran_nl]=select_rip(p_nl);
 
-
-av=cat(1,p_nl{1:end});
-%av=cat(1,q_nl{1:end});
-av=av(1:3:end,:); %Only Hippocampus
-
-%AV=max(av.');
-%[B I]= maxk(AV,1000);
-
-%AV=max(av.');
-%[B I]= maxk(max(av.'),1000);
-
-
-[ach]=max(av.');
-achinga=sort(ach,'descend');
-%achinga=achinga(1:1000);
-if length(achinga)>1000
-    if  Rat==24
-        achinga=achinga(6:1005);
-    else
-        achinga=achinga(1:1000);
-    end
-end
-
-B=achinga;
-I=nan(1,length(B));
-for hh=1:length(achinga)
-   % I(hh)= min(find(ach==achinga(hh)));
-I(hh)= find(ach==achinga(hh),1,'first');
-end
-
-
-[ajal ind]=unique(B);
-if length(ajal)>500
-ajal=ajal(end-499:end);
-ind=ind(end-499:end);
-end
-dex=I(ind);
-
-ran_nl=dex.';
+% 
+% av=cat(1,p_nl{1:end});
+% %av=cat(1,q_nl{1:end});
+% av=av(1:3:end,:); %Only Hippocampus
+% 
+% %AV=max(av.');
+% %[B I]= maxk(AV,1000);
+% 
+% %AV=max(av.');
+% %[B I]= maxk(max(av.'),1000);
+% 
+% 
+% [ach]=max(av.');
+% achinga=sort(ach,'descend');
+% %achinga=achinga(1:1000);
+% if length(achinga)>1000
+%     if  Rat==24
+%         achinga=achinga(6:1005);
+%     else
+%         achinga=achinga(1:1000);
+%     end
+% end
+% 
+% B=achinga;
+% I=nan(1,length(B));
+% for hh=1:length(achinga)
+%    % I(hh)= min(find(ach==achinga(hh)));
+% I(hh)= find(ach==achinga(hh),1,'first');
+% end
+% 
+% 
+% [ajal ind]=unique(B);
+% if length(ajal)>500
+% ajal=ajal(end-499:end);
+% ind=ind(end-499:end);
+% end
+% dex=I(ind);
+% 
+% ran_nl=dex.';
 
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
