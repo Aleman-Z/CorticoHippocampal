@@ -1,5 +1,5 @@
 acer=1;
-%rat24base=2;
+% rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
 Block{1}='complete';
@@ -20,10 +20,13 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=2:3
-    
+for RAT=3:3
+for rat24base=1:2
+  if Rat~=3
+      break
+  end
 for dura=1:2 %Starts with 1
-    
+    xo
 rats=[26 27 24 21];
 Rat=rats(RAT);    
     
@@ -480,5 +483,6 @@ end
 
 %%
 %clearvars -except acer Rat
+end
 end
 %end
