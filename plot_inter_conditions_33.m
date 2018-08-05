@@ -63,7 +63,11 @@ av=av(1:3:end,:); %Only Hippocampus
 achinga=sort(ach,'descend');
 %achinga=achinga(1:1000);
 if length(achinga)>1000
-achinga=achinga(1:1000);
+    if  Rat==24
+        achinga=achinga(6:1005);
+    else
+        achinga=achinga(1:1000);
+    end
 end
 
 B=achinga;
