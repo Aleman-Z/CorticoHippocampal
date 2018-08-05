@@ -20,11 +20,11 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=2:3
     
-for dura=2:2 %Starts with 1
+for dura=1:2 %Starts with 1
     
-rats=[26 27 21 24];
+rats=[26 27 24 21];
 Rat=rats(RAT);    
     
 % for Rat=26:26
@@ -255,7 +255,43 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 for block_time=0:2 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 
-    
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if dura==2
+    cd('10sec')
+end
+
+string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+
+
+while exist(string1, 'file')==2 && exist(string2, 'file')==2
+iii=iii+1;
+
+if iii>length(nFF)
+    break
+end
+   string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+   string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+
+end
+
+if iii>length(nFF)
+    break
+end
+
+% string=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% if exist(string, 'file') == 2
+% string=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+%       if exist(string, 'file') == 2
+%            iii=iii+1;
+%       end
+% end
 %  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
 
 
@@ -431,6 +467,9 @@ end
 
 %end
 
+if iii==length(nFF)
+   break 
+end
 
 end
 % xo
