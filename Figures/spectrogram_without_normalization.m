@@ -20,13 +20,14 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=3:3
+for RAT=1:3
 for rat24base=1:2
-  if Rat~=3
+  if RAT~=3
       break
   end
+
 for dura=1:2 %Starts with 1
-    xo
+    
 rats=[26 27 24 21];
 Rat=rats(RAT);    
     
