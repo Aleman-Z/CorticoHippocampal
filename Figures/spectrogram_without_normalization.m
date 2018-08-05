@@ -20,7 +20,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=1:3
+for RAT=3:3
 for rat24base=1:2
   if RAT~=3
       break
@@ -209,20 +209,20 @@ else
 end
 
 %% Select experiment to perform. 
-inter=1;
+% inter=1;
 %Select length of window in seconds:
 if dura==1
 ro=[1200];
 else
 ro=[10200];    
 end
-coher=0;
+% coher=0;
 % selectripples=1;
 % mergebaseline=0;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
-Score=1;
+% Score=1;
 %%
 
 %Make labels
@@ -264,6 +264,10 @@ if acer==0
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if Rat==24
+    cd(nFF{1})
 end
 
 if dura==2
@@ -450,6 +454,10 @@ if acer==0
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if Rat==24
+    cd(nFF{1})
 end
 
 if dura==2
