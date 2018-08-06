@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM)
+function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -97,7 +97,13 @@ P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
 
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-cd(strcat('D:\internship\',num2str(Rat)))
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+%cd(strcat('D:\internship\',num2str(Rat)))
 cd(nFF{iii})
 
 %%
