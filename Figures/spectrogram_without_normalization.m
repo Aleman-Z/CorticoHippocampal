@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -20,14 +20,14 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=1:1
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
       break
   end
 
-for dura=1:2 %Starts with 1
+for dura=2:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -362,7 +362,12 @@ P1=avg_samples(q,create_timecell(ro,length(p)));
 P2=avg_samples(p,create_timecell(ro,length(p)));
 %[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
 
-cd(strcat('D:\internship\',num2str(Rat)))
+
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
 
 cd(nFF{1}) %Baseline
 
@@ -386,7 +391,7 @@ end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
 for w=2:3
-%xo
+xo
 %%
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
 %%
