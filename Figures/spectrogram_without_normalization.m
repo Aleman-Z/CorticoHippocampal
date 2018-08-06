@@ -419,7 +419,7 @@ Pos = get(ca,'Position');
 set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
 set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
-xo
+%xo
 %error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
