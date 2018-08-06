@@ -188,7 +188,9 @@ ylabel('uV')
 if ro==1200   
 toy = [-1.2:.01:1.2];
 else
-toy = [-10.2:.1:10.2];    
+%toy = [-10.2:.1:10.2];    
+toy = [-10.2:.01:10.2];    
+
 end
 
 %toy = [-1.2:.01:1.2];
@@ -315,7 +317,9 @@ ylabel('Frequency (Hz)')
 if ro==1200
 toy=[-1:.01:1];
 else
-toy=[-10:.1:10];    
+%toy=[-10:.1:10];    
+toy=[-10:.01:10];    
+
 end
 
 if length(q)>length(q_nl)
