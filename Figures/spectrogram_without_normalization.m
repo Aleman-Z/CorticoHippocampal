@@ -22,7 +22,8 @@ end
 %Rat=26;
 for RAT=2:2
 for rat24base=1:2
-  if RAT~=3
+ 
+  if RAT~=3 && rat24base==2
       break
   end
 
@@ -255,10 +256,10 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
 % end
 
-%xo
-for block_time=1:2 %Should start with 0
+% xo
+for block_time=0:2 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
-
+%xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
