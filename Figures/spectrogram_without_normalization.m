@@ -20,13 +20,13 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=3:3
+for RAT=2:2
 for rat24base=1:2
   if RAT~=3
       break
   end
 
-for dura=2:2 %Starts with 1
+for dura=1:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -82,9 +82,9 @@ labelconditions=[
 end
 if Rat==27
 nFF=[
-   % {'rat27_nl_base_2016-03-28_15-01-17'                   }
+     {'rat27_nl_base_2016-03-28_15-01-17'                   }
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
-    {'rat27_nl_base_III_2016-03-30_14-36-57'               }
+   % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
     {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
 %     {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
@@ -256,7 +256,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 % end
 
 %xo
-for block_time=0:2 %Should start with 0
+for block_time=1:2 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 
 if acer==0
@@ -345,8 +345,8 @@ end
 %%
 
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
-[p,q,timecell,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
-
+[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
+clear sig1 sig2
 %Ripple selection. Memory free. 
 [ran]=select_rip(p);
 
@@ -354,11 +354,11 @@ end
 p=p([ran]);
 q=q([ran]);
 %Q=Q([ran]);
-timecell=timecell([ran]);
+%timecell=timecell([ran]);
  
 
-P1=avg_samples(q,timecell);
-P2=avg_samples(p,timecell);
+P1=avg_samples(q,create_timecell(ro,length(p)));
+P2=avg_samples(p,create_timecell(ro,length(p)));
 %[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
 
 cd(strcat('D:\internship\',num2str(Rat)))
@@ -387,7 +387,7 @@ end
 for w=2:3
 %xo
 %%
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM);
 %%
 pos = get(h,'Position');
 new = mean(cellfun(@(v)v(1),pos(1:2)));

@@ -42,7 +42,7 @@ function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,
 % % % % % % % ripple_nl=sum(s17_nl);
 
 % [p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),thr_nl(level+1));
-[p_nl,q_nl,timecell_nl,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 
 % % % % % load(strcat('randnum2_',num2str(level),'.mat'))
 % % % % % ran_nl=ran;
@@ -90,11 +90,11 @@ function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,
 
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
-timecell_nl=timecell_nl([ran_nl]);
+%timecell_nl=timecell_nl([ran_nl]);
 
 %Need: P1, P2 ,p, q. 
-P1_nl=avg_samples(q_nl,timecell_nl);
-P2_nl=avg_samples(p_nl,timecell_nl);
+P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
+P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
 
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 cd(strcat('D:\internship\',num2str(Rat)))
@@ -105,7 +105,9 @@ cd(nFF{iii})
 allscreen()
 %%
 h(1)=subplot(3,4,1)
-plot(timecell_nl{1},P2_nl(w,:))
+%plot(timecell_nl{1},P2_nl(w,:))
+plot(cell2mat(create_timecell(ro,1)),P2_nl(w,:))
+
 if ro==1200
 xlim([-1,1])
 else
@@ -123,7 +125,7 @@ ylabel('uV')
 %%
 
 h(3)=subplot(3,4,3)
-plot(timecell_nl{1},P1_nl(w,:))
+plot(cell2mat(create_timecell(ro,1)),P1_nl(w,:))
 %xlim([-1,1])
 if ro==1200
 xlim([-1,1])
@@ -144,7 +146,7 @@ ylabel('uV')
 %%
 
 h(2)=subplot(3,4,2)
-plot(timecell{1},P2(w,:))
+plot(cell2mat(create_timecell(ro,1)),P2(w,:))
 %xlim([-1,1])
 if ro==1200
 xlim([-1,1])
@@ -163,7 +165,7 @@ ylabel('uV')
 
 %%
 h(4)=subplot(3,4,4)
-plot(timecell{1},P1(w,:))
+plot(cell2mat(create_timecell(ro,1)),P1(w,:))
 %xlim([-1,1])
 if ro==1200
 xlim([-1,1])
@@ -193,17 +195,17 @@ end
 
 if length(p)>length(p_nl)
 p=p(1:length(p_nl));        
-timecell=timecell(1:length(p_nl));
+%timecell=timecell(1:length(p_nl));
 end
 
 if length(p)<length(p_nl)
 p_nl=p_nl(1:length(p));
-timecell_nl=timecell_nl(1:length(p));
+%timecell_nl=timecell_nl(1:length(p));
 end
 
 
-freq1=justtesting(p_nl,timecell_nl,[1:0.5:30],w,10,toy);
-freq2=justtesting(p,timecell,[1:0.5:30],w,0.5,toy);
+freq1=justtesting(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,10,toy);
+freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
 % 
 % FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
 % FREQ2=justtesting(p,timecell,[0.5:0.5:30],w,0.5,toy);
@@ -318,20 +320,20 @@ end
 
 if length(q)>length(q_nl)
 q=q(1:length(q_nl));        
-timecell=timecell(1:length(q_nl));
+% timecell=timecell(1:length(q_nl));
 end
 
 if length(q)<length(q_nl)
 q_nl=q_nl(1:length(q));
-timecell_nl=timecell_nl(1:length(q));
+% timecell_nl=timecell_nl(1:length(q));
 end
 
 if ro==1200
-freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w,toy);
-freq4=barplot2_ft(q,timecell,[100:1:300],w,toy);
+freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
+freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
 else
-freq3=barplot2_ft(q_nl,timecell_nl,[100:2:300],w,toy); %Memory reasons
-freq4=barplot2_ft(q,timecell,[100:2:300],w,toy);
+freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
+freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
 end
 %%
 
