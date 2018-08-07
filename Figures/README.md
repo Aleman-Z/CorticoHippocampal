@@ -9,7 +9,7 @@ Figure 2:
 
 * **merge_blocks.m:**   
 *Merges time blocks of periodograms.* 
-<img src="time_blocks.png" width="400">
+<img src="time_blocks.png" width="600">
 
 * **thr_vs_rip.m:**   
 *Plots the relationship between amplitude threshold for SWR and the rate of ripple occurrence per condition.* 
@@ -17,11 +17,11 @@ Figure 2:
 
 * **sleep_amount.m:**   
 *Generates barplots with amount of sleep per condition.* 
-<img src="Sleep_amount.png" width="400">
+<img src="Sleep_amount.png" width="600">
 
 * **compare_states.m:**   
 *Quantifies and displays the percentual differences between the oldest and the newests sleep scoring methods.* 
-<img src="scoring_comparison.png" width="400">
+<img src="scoring_comparison.png" width="600">
 
 
 Figure 3:
@@ -32,7 +32,7 @@ Figure 3:
 
 * **spectrogram_without_normalization.m:**
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
-<img src="example_figure_spectrogram.png" width="400">
+<img src="example_figure_spectrogram.png" width="600">
 
 
 
