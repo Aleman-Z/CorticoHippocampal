@@ -58,7 +58,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 **main_optimized:** Gives results used on the Midterm presentation. Only focused on Baseline 3. 
 
 <!---![Alt text](gc_learn_nl_np.eps )--->
-<img src="gc_learn_nl_np.png" width="400">
+<img src="gc_learn_nl_np.png" width="600">
 
 
 -HISTOGRAMS
@@ -74,7 +74,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 ------------------
 **threshold_vs_ripple.m:** Plots curves relating selected thresholds with the ripple rate they give. Useful for threshold selection. 
 
-<img src="Ripples_per_condition.png" width="400">
+<img src="Ripples_per_condition.png" width="600">
 
 **threshold_interpolation.m:** Saves data concerning Ripple occurrence and corresponding threshold, as well as fitted polynomial. 
 
