@@ -8,7 +8,7 @@ NC=NC.';
 % %%
 %% Rearranging from matrix to cell form
 GG=[];
-Cha=reshape(NC,[2401 500 3]);
+Cha=reshape(NC,[length(p{1}) length(p) 3]);
 for cont=1:length(p)
 gg=squeeze(Cha(:,cont,:)).';
 GG=[GG {(gg)}];
