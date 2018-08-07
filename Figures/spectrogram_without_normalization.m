@@ -22,7 +22,7 @@ addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=1:1
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -44,8 +44,8 @@ nFF=[
     
    
 %    {'rat26_nl_base_III_2016-03-30_10-32-57'            }
-%     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
-     {'rat26_nl_baseline2016-03-01_11-01-55'             }
+     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
+ %    {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
@@ -221,7 +221,7 @@ ro=[10200];
 end
 % coher=0;
 % selectripples=1;
-% mergebaseline=0;
+%mergebaseline=0;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
@@ -260,7 +260,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
 % xo
 for block_time=0:2 %Should start with 0
-for iii=4:length(nFF) %Should start with 2!
+for iii=2:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
