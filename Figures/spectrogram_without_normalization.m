@@ -391,7 +391,7 @@ end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
-for w=3:3
+for w=2:3
 
 %%
 
