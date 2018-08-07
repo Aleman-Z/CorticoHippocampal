@@ -258,9 +258,9 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
 % xo
 for block_time=0:2 %Should start with 0
-for w=1:3
+for w=1:1
     
-for iii=4:length(nFF) %Should start with 2!
+for iii=1:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -431,7 +431,9 @@ q=q([ran]);
  end
 
 gt=mean(gg);
-area(f*500,smooth(gt,29),'FaceColor',myColorMap(iii,:));alpha(0.2);
+% area(f*500,smooth(gt,29),'FaceColor',myColorMap(iii,:));alpha(0.5);
+%plot(f*500,smooth(gt,29),'Color',myColorMap(iii,:));
+K(iii)=fill(f*500,smooth(gt,29),myColorMap(iii,:));alpha(0.5);
 hold on
 
 % %error('stop')
@@ -462,12 +464,25 @@ hold on
 %%
 
 end
+legend(labelconditions)
+xo
+K=gcf;
+ydata = get(K, 'YData');  %data from low-level grahics objects
+ydata=cell2mat(ydata);
+ydata=reshape(ydata,[length(ydata)/4 4]);
+ymax=max(ydata);
+[B,I] = sort(ymax,'descend');
+uistack(K(I(1)),'bottom')
+uistack(K(I(4)),'top')
+% uistack(K(I(2)),'down')
+% uistack(K(I(3)),'up')
 
+
+
+% J=K;
+% J=[K(4) K(3) K(2) K(1)]
+%  uistack(K(2),'bottom')
 %end
-
-if iii==length(nFF)
-   break 
-end
 
 end
 % xo

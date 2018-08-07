@@ -466,6 +466,7 @@ hold on
 end
 legend(labelconditions)
 xo
+% K=gcf;
 ydata = get(K, 'YData');  %data from low-level grahics objects
 ydata=cell2mat(ydata);
 ydata=reshape(ydata,[length(ydata)/4 4]);
@@ -473,6 +474,12 @@ ymax=max(ydata);
 [B,I] = sort(ymax,'descend');
 uistack(K(I(1)),'bottom')
 uistack(K(I(4)),'top')
+xlim([0 400])
+grid minor
+title('Spectrogram of Hippocampal ripples')
+xlabel('Frequency (Hz)')
+ylabel('Power (log)')
+
 % uistack(K(I(2)),'down')
 % uistack(K(I(3)),'up')
 
