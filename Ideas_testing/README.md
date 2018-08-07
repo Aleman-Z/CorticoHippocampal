@@ -4,5 +4,5 @@
 <img src="spec_ripp.png" width="400">
 
 **filter_ripples.m**: Filters power noise on high frequency bands. Results in a clean spectrogram. 
-<img src="result_filter.png" width="400">
+<img src="result_filter.png" width="600">
 
