@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -56,7 +56,7 @@ nFF=[
 %     {'rat26_for_II_2016-03-23_10-49-50'                 }
     
     ];
-
+NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
 % labelconditions=[
 %     {'Baseline_1' 
 %      'Baseline_2'}
@@ -108,6 +108,7 @@ nFF=[
 %     {'rat27_watermaze_dis_morning_2016-04-06_10-18-36'     }
 %     {'rat27_watermaze_jitter_afternoon_2016-04-06_15-41-51'}  
     ]
+NFF=[{'rat27_NL_baseline_2016-02-26_12-50-26'               }];
 
 labelconditions=[
     { 
@@ -221,7 +222,7 @@ ro=[10200];
 end
 % coher=0;
 % selectripples=1;
-%mergebaseline=0;
+mergebaseline=1;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
