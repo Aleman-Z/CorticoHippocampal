@@ -92,6 +92,8 @@ p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
 %timecell_nl=timecell_nl([ran_nl]);
 
+[q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
 %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
