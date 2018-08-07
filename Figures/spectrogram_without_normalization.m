@@ -358,7 +358,6 @@ p=p([ran]);
 q=q([ran]);
 %Q=Q([ran]);
 %timecell=timecell([ran]);
- xo
 
 P1=avg_samples(q,create_timecell(ro,length(p)));
 P2=avg_samples(p,create_timecell(ro,length(p)));
