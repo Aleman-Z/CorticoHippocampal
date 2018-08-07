@@ -29,7 +29,7 @@ for rat24base=1:2
       break
   end
 
-for dura=2:2 %Starts with 1
+for dura=1:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -260,7 +260,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
 % xo
 for block_time=0:2 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
+for iii=4:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -358,7 +358,7 @@ p=p([ran]);
 q=q([ran]);
 %Q=Q([ran]);
 %timecell=timecell([ran]);
- 
+ xo
 
 P1=avg_samples(q,create_timecell(ro,length(p)));
 P2=avg_samples(p,create_timecell(ro,length(p)));
@@ -392,7 +392,7 @@ end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
-for w=2:3
+for w=3:3
 
 %%
 

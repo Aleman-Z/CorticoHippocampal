@@ -1,0 +1,31 @@
+%Notch filter
+Fsample=1000;
+Fline=[200];
+NC=cell2mat(p).';
+[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+NC=NC.';
+% %%
+% aver=NC(1:2401,1);
+% %%
+% ao=p{1}(1,:);
+% %%
+% plot(aver)
+% figure()
+% plot(ao)
+% %%
+% ag=mat2cell(NC,[500 1],[2401 3]);
+% %%
+% ag=num2cell(NC.',500);
+%%
+GG=[];
+Cha=reshape(NC,[2401 500 3]);
+for cont=1:length(p)
+gg=squeeze(Cha(:,cont,:)).';
+GG=[GG {(gg)}];
+end
+%%
+ plot(GG{1}(1,:))
+ hold on
+ 
+
+
