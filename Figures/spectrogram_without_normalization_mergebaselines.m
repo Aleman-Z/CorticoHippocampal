@@ -12,7 +12,7 @@ Block{3}='block2';
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-%addpath(('/home/raleman/Documents/GitHub/CorticoHippocampal'))
+addpath((genpath('/home/raleman/Documents/GitHub/ADRITOOLS')))
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
