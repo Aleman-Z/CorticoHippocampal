@@ -12,11 +12,12 @@ Block{3}='block2';
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-%addpath(('/home/raleman/Documents/GitHub/CorticoHippocampal'))
+addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
 addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 %addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
    
 end
@@ -259,7 +260,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
 % end
 
-xo
+%xo
 for block_time=0:2 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 %xo
