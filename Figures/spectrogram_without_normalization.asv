@@ -5,7 +5,7 @@ DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-mergebaseline=1;
+
 
 
 %%
@@ -23,7 +23,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=2:1
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -57,7 +57,7 @@ nFF=[
 %     {'rat26_for_II_2016-03-23_10-49-50'                 }
     
     ];
-NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
+
 % labelconditions=[
 %     {'Baseline_1' 
 %      'Baseline_2'}
@@ -109,7 +109,6 @@ nFF=[
 %     {'rat27_watermaze_dis_morning_2016-04-06_10-18-36'     }
 %     {'rat27_watermaze_jitter_afternoon_2016-04-06_15-41-51'}  
     ]
-NFF=[{'rat27_NL_baseline_2016-02-26_12-50-26'               }];
 
 labelconditions=[
     { 
@@ -223,6 +222,7 @@ ro=[10200];
 end
 % coher=0;
 % selectripples=1;
+%mergebaseline=0;
 notch=0;
 nrem=3;
 myColorMap = jet(8);
@@ -398,7 +398,7 @@ for w=2:3
 
 %%
 
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline);
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
 %%

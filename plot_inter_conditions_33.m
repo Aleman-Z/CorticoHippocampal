@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer)
+function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -93,6 +93,62 @@ q_nl=q_nl([ran_nl]);
 %timecell_nl=timecell_nl([ran_nl]);
 
 [q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
+if mergebaseline==1
+%% 
+'MERGING BASELINES'
+L1=length(p_nl);
+
+NU{1}=p_nl;
+QNU{1}=q_nl;
+%% Other Baseline
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(NFF{1}) %Baseline
+
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+
+if block_time==1
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
+end
+
+if block_time==2
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
+end
+
+[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+[ran_nl]=select_rip(p_nl);
+
+p_nl=p_nl([ran_nl]);
+q_nl=q_nl([ran_nl]);
+
+[q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
+NU{2}=p_nl;
+QNU{2}=q_nl;
+L2=length(p_nl);
+amount=min([L1 L2]);
+ 
+% p_nl(1:amount)=NU{1}(1:amount);
+% p_nl(amount+1:2*amount)=NU{2}(1:amount);
+
+p_nl(1:2*amount)=[NU{1}(1:amount) NU{1}(1:amount)];
+p_nl(2:2:end)=[NU{2}(1:length(p_nl(2:2:end)))];
+
+
+% q_nl(1:amount)=QNU{1}(1:amount);
+% q_nl(amount+1:2*amount)=QNU{2}(1:amount);
+q_nl(1:2*amount)=[QNU{1}(1:amount) QNU{1}(1:amount)];
+q_nl(2:2:end)=[QNU{2}(1:length(q_nl(2:2:end)))];
+    
+    
+end
 
 %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
