@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_mergebaselines(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer)
+function [h]=plot_inter_conditions_mergebaselines(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -94,6 +94,57 @@ q_nl=q_nl([ran_nl]);
 
 [q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
+NU{1}=p_nl;
+QNU{1}=q_nl;
+TNU{1}=create_timecell(ro,length(p_nl));                                                                                                                                                                                                                                                                        
+
+
+%% Other Baseline
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(NFF{1}) %Baseline
+
+%run('newest_load_data_nl.m')
+%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+
+if block_time==1
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
+end
+
+if block_time==2
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
+end
+
+%xo
+
+[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+
+% % % % % load(strcat('randnum2_',num2str(level),'.mat'))
+% % % % % ran_nl=ran;
+[ran_nl]=select_rip(p_nl);
+
+
+p_nl=p_nl([ran_nl]);
+q_nl=q_nl([ran_nl]);
+%timecell_nl=timecell_nl([ran_nl]);
+
+[q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
+NU{2}=p_nl;
+QNU{2}=q_nl;
+TNU{2}=create_timecell(ro,length(p_nl));                                                                                                                                                                                                                                                                        
+
+length(p_nl)
+length(p_nl2)
+xo
+%%
 %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
