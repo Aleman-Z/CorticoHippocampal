@@ -7,7 +7,7 @@ dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in 
 
 % zdata = get(dataObjs, 'ZData');
 %%
-% allscreen()
+allscreen()
 subplot(3,4,5)
 I=imagesc(flip(dataObjs{1}.CData,1))
 
@@ -26,23 +26,20 @@ gg.YTickLabel=flip(gg.YTickLabel);
 %%
 gg.XTick=[1 50 100 150 200];
 gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
-%
+%%
 i=I.CData;
 % ga=5;
 % vecen=[1  size(i,1)/ga (size(i,1)/ga*2) size(i,1)/ga*3 (size(i,1)/ga*4) ];
 % set(gca, 'YTick',vecen , 'YTickLabel', [30 25 20 15 10]) % 20 ticks
 % vecen=[1  size(i,1)/ga (size(i,1)/ga*2) size(i,1)/ga*3 (size(i,1)/ga*4) ];
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
-% xlabel('Time (s)')
-% title('Wide Band No Learning')
-% ylabel('Frequency (Hz)')
+set(gca, 'YTick',[1 size(i,1)/2 size(i,1)/2] , 'YTickLabel', [30 15]) % 20 ticks
 
 %size(i,1)/5 size(i,1)/5*2 size(i,1)/5*3 size(i,1)/5*4 size(i,1)
 
 % 
 % xtickformat('%-g')
 %%
-% i=I.CData;
+i=I.CData;
 % set(gca, 'XTick',[0.5 size(i,2)/4 round((size(i,2)+0.5)/2) size(i,2)/4*3  size(i,2)+0.5], 'XTickLabel', [-1:0.5:1]) % 10 ticks 
 %set(gca, 'XTick',[0.5  size(i,2)/4  size(i,2)/2+0.5  size(i,2)/4*3 size(i,2)+0.5], 'XTickLabel', [-1:0.5:1]) % 10 ticks 
 
@@ -77,26 +74,14 @@ do=sort([c1.YLim c2.YLim]);
 % mi2=max([c1.YLim c2.YLim]);
 c1.YLim=[do(2) do(3)];
 c2.YLim=[do(2) do(3)];
-%%
-gg.XTick=[1 50 100 150 200];
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
-%
-i=I.CData;
-% ga=5;
-% vecen=[1  size(i,1)/ga (size(i,1)/ga*2) size(i,1)/ga*3 (size(i,1)/ga*4) ];
-% set(gca, 'YTick',vecen , 'YTickLabel', [30 25 20 15 10]) % 20 ticks
-% vecen=[1  size(i,1)/ga (size(i,1)/ga*2) size(i,1)/ga*3 (size(i,1)/ga*4) ];
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
 
 %%
 %camroll(180)  
-% xlabel('Time (s)')
-% %    title('Before Spectral Interpolation')
-% ylabel('Frequency (Hz)')
-% 
-% title('Wide Band')
+   xlabel('Time (s)')
+%    title('Before Spectral Interpolation')
+ylabel('Frequency (Hz)')
 % set(gca,'Ydir','reverse')
-%% AQUI TERMINA 
+
 subplot(1,2,2)
 I=imagesc(flip(dataObjs{7}.CData,1))
 
