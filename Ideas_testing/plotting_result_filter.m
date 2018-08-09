@@ -1,3 +1,5 @@
+addpath('C:\Users\addri\Documents\GitHub\ADRITOOLS')
+%%
 h = gcf; %current figure handle
 
 axesObjs = get(h, 'Children');  %axes handles
@@ -67,12 +69,12 @@ ylabel('Frequency (Hz)')
 %set(gca,'Ydir','reverse')
 
 
-%%
+%% NOTCH 
 figure()
 subplot(1,2,1)
-I=imagesc(data1)
+%I=imagesc(data1)
 
-%I=imagesc(dataObjs{3}.CData)
+I=imagesc(flip(dataObjs{3}.CData,1))
 % colorbar()
 colormap(jet(256))
 I.CDataMapping = 'scaled';
@@ -81,13 +83,24 @@ I.CDataMapping = 'scaled';
    title('Before Spectral Interpolation')
 ylabel('Frequency (Hz)')
 set(gca,'Ydir','reverse')
+% gg=gca;
+% gg.YTickLabel=flip(gg.YTickLabel);
 
+%%
+i=I.CData;
+set(gca, 'XTick',[0.5 size(i,2)/4 size(i,2)/2 size(i,2)/4*3  size(i,2)+0.5], 'XTickLabel', [-1:0.5:1]) % 10 ticks 
+%%
+set(gca, 'YTick', [1 size(i,1)/4 size(i,1)/2 size(i,1)/4*3 size(i,1)], 'YTickLabel', [300 250 200 150 100]) % 20 ticks
+%%
+%% not necessary
+gg=gca;
+gg.YTickLabel=flip(gg.YTickLabel);
 
 %% SECOND PART
 subplot(1,2,2)
-I=imagesc(data2)
+I=imagesc(flip(data2))
 
-%I=imagesc(dataObjs{3}.CData)
+% I=imagesc(dataObjs{3}.CData)
 % colorbar()
 colormap(jet(256))
 I.CDataMapping = 'scaled';
@@ -95,5 +108,9 @@ I.CDataMapping = 'scaled';
    xlabel('Time (s)')
    title('After Spectral Interpolation')
 ylabel('Frequency (Hz)')
-set(gca,'Ydir','reverse')
-
+%set(gca,'Ydir','reverse')
+%%
+i=I.CData;
+set(gca, 'XTick',[0.5 size(i,2)/4 size(i,2)/2 size(i,2)/4*3  size(i,2)+0.5], 'XTickLabel', [-1:0.5:1]) % 10 ticks 
+%%
+set(gca, 'YTick', [1 size(i,1)/4 size(i,1)/2 size(i,1)/4*3 size(i,1)], 'YTickLabel', [300 250 200 150 100]) % 20 ticks
