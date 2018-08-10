@@ -4,7 +4,7 @@
 <img src="spec_ripp.png" width="400">
 
 **filter_ripples.m**: Filters power noise on high frequency bands. Results in a clean spectrogram. 
-<img src="result_filter.png" width="600">
+<img src="result_filter.png" width="500">
 
 **spec_improve.m**: Replaces old spectrogram and improves visualization of power. 
 <img src="improved.png" width="350">
