@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level)
+function [sig1,sig2,ripple2,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level)
 %{
 LOAD DATA, easy and quick. 
 
