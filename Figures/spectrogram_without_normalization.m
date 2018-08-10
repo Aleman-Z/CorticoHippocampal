@@ -5,7 +5,7 @@ DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-mergebaseline=1;
+mergebaseline=0;
 
 
 %%
@@ -23,14 +23,14 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=1:1
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
       break
   end
 
-for dura=1:2 %Starts with 1
+for dura=1:1 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -44,9 +44,9 @@ nFF=[
 %    {'rat26_Base_II_2016-03-24_12-57-57'                }
     
    
-%    {'rat26_nl_base_III_2016-03-30_10-32-57'            }
-     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
- %    {'rat26_nl_baseline2016-03-01_11-01-55'             }
+%   {'rat26_nl_base_III_2016-03-30_10-32-57'            }
+ %    {'rat26_nl_base_II_2016-03-28_10-40-19'             }
+     {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
