@@ -6,7 +6,8 @@ Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
 mergebaseline=0;
-
+FiveHun=1;
+meth=1;
 
 %%
 if acer==0
@@ -23,7 +24,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=1:1
+for RAT=2:2
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -117,10 +118,10 @@ nFF=[
     ]
 %NFF=[{'rat27_NL_baseline_2016-02-26_12-50-26'               }];
 if strcmp(nFF{1},'rat27_NL_baseline_2016-02-26_12-50-26')
-NFF=[ {             }];    
+NFF=[ {  'rat27_nl_base_2016-03-28_15-01-17'           }];    
 end
-if strcmp(nFF{1},'rat26_nl_base_II_2016-03-28_10-40-19')
-NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
+if strcmp(nFF{1}, 'rat27_nl_base_2016-03-28_15-01-17')
+NFF=[ {'rat27_NL_baseline_2016-02-26_12-50-26'   }];
 end
 
 
@@ -342,11 +343,17 @@ lepoch=2;
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
-
+xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+if meth==1
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+    [Nsig1,Nsig2,Nripple,Ncarajo,Nveamos,NCHTM,RipFreq2,timeasleep]=newest_only_ripple_nl_level(level);
+end
 
+if meth==2
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+end
 
 %% Select time block 
 if block_time==1
@@ -365,7 +372,7 @@ end
 [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
 clear sig1 sig2
 %Ripple selection. Memory free. 
-[ran]=select_rip(p);
+[ran]=select_rip(p,FiveHun);
 
 % 
 p=p([ran]);
@@ -411,7 +418,7 @@ for w=2:3
 
 %%
 
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline);
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
 %%
@@ -482,5 +489,6 @@ end
 %%
 %clearvars -except acer Rat
 end
+spec_loop_improve(RAT);
 end
 %end

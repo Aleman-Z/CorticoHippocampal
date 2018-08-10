@@ -1,4 +1,4 @@
-function [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level)
+function [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_nl_level(level)
 %{
 LOAD DATA, easy and quick. 
 timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60; % In minutes
@@ -36,6 +36,7 @@ V6=load('V6.mat');
 V6_nl=V6.V6;
 'Loaded channels'
 
+timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60 % In minutes
 
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
@@ -84,8 +85,8 @@ swr17_nl(:,:,1)=[S2x_nl E2x_nl M2x_nl];
 s17_nl(:,1)=cellfun('length',S2x_nl);
 k
 %end
-
-timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60; % In minutes
+%%%%%%%%%CHECK HERE
+% % % % % % % % % % % timeasleep2=sum(cellfun('length',V9_nl))*(1/1000)/60; % In minutes
 RipFreq3=sum(s17_nl)/(timeasleep2*(60));
 
 ripple3=sum(s17_nl); %When using same threshold per epoch.
@@ -133,5 +134,5 @@ ripple_nl=sum(s17_nl);
 
 
 
-
+timeasleep2
 end

@@ -1,3 +1,4 @@
+function spec_loop_improve(equis)
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -20,7 +21,8 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=2:2
+RAT=equis;
+%for RAT=2:2
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
