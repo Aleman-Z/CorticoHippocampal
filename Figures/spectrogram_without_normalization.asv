@@ -117,10 +117,10 @@ nFF=[
     ]
 %NFF=[{'rat27_NL_baseline_2016-02-26_12-50-26'               }];
 if strcmp(nFF{1},'rat27_NL_baseline_2016-02-26_12-50-26')
-NFF=[ {  'rat27_nl_base_2016-03-28_15-01-17'           }];    
+NFF=[ {             }];    
 end
-if strcmp(nFF{1}, 'rat27_nl_base_2016-03-28_15-01-17')
-NFF=[ {'rat27_NL_baseline_2016-02-26_12-50-26'   }];
+if strcmp(nFF{1},'rat26_nl_base_II_2016-03-28_10-40-19')
+NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
 end
 
 
