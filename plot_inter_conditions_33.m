@@ -123,7 +123,7 @@ ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
 end
 
 [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
-[ran_nl]=select_rip(p_nl);
+[ran_nl]=select_rip(p_nl,FiveHun);
 
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
