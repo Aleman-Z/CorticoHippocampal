@@ -184,7 +184,7 @@ title('Wide Band No Learning')
 win1=[min(P2_nl(w,:)) max(P2_nl(w,:)) min(P2(w,:)) max(P2(w,:))];
 win1=[(min(win1)) round(max(win1))];
 ylim(win1)
-xlabel('Time (t)')
+xlabel('Time (s)')
 ylabel('uV')
 %%
 
@@ -205,7 +205,7 @@ title('High Gamma No Learning')
 win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
 win2=[(min(win2)) (max(win2))];
 ylim(win2)
-xlabel('Time (t)')
+xlabel('Time (s)')
 ylabel('uV')
 %%
 
