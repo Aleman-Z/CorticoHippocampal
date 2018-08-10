@@ -7,5 +7,5 @@
 <img src="result_filter.png" width="600">
 
 **spec_improve.m**: Replaces old spectrogram and improves visualization of power. 
-<img src="improved.png" width="300">
+<img src="improved.png" width="350">
 
