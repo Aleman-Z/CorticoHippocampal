@@ -34,6 +34,9 @@ Figure 3:
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
 <img src="example_figure_spectrogram.png" width="600">
 
+* **spec_loop_improve.m:**
+*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles.*
+<img src="example_figure_spectrogram.png" width="600">
 
 
 
