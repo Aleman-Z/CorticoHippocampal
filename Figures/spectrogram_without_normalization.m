@@ -6,7 +6,8 @@ Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
 mergebaseline=0;
-FiveHun=0;
+FiveHun=1;
+meth=1;
 
 %%
 if acer==0
@@ -23,7 +24,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=1:1
+for RAT=2:2
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -345,8 +346,13 @@ lepoch=2;
 %xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
-[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+if meth==1
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);    
+end
 
+if meth==2
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+end
 
 %% Select time block 
 if block_time==1
