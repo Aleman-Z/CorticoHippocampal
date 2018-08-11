@@ -250,6 +250,11 @@ if base==2
     nFF{1}=NFF{1};
 end
 
+if base==3
+    break
+end
+
+
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
