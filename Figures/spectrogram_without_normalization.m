@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -6,7 +6,7 @@ Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
 mergebaseline=0;
-FiveHun=1;
+FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 meth=1;
 
 %%
@@ -24,7 +24,8 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=1:2
+for base=1:2 %Baseline numeration.     
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -65,6 +66,8 @@ end
 if strcmp(nFF{1},'rat26_nl_base_II_2016-03-28_10-40-19')
 NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
 end
+
+
 % labelconditions=[
 %     {'Baseline_1' 
 %      'Baseline_2'}
@@ -97,8 +100,8 @@ nFF=[
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
    % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
-    {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
-%     {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
+%    {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
+    {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
     {'rat27_novelty_I_2016-04-11_14-34-55'                 } 
     {'rat27_for_2016-03-21_15-03-05'                       }
     %{'Rat27_for_II_2016-03-23_15-06-59'                    }
@@ -209,6 +212,42 @@ labelconditions=[
 
 end
 
+%% Check if experiment has been run before.
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if Rat==24
+    cd(nFF{1})
+end
+
+if dura==2
+    cd('10sec')
+end
+%xo
+
+FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+
+
+if exist(Folder)==7
+base=base+1;
+end
+%%
+% Use other baseline, beware when using mergebaseline
+if base==2
+    nFF{1}=NFF{1};
+end
+
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -274,7 +313,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 % end
 
  
-for block_time=0:2 %Should start with 0
+for block_time=0:0 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 %xo
 if acer==0
@@ -291,6 +330,8 @@ end
 if dura==2
     cd('10sec')
 end
+%xo
+
 
 string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
@@ -343,11 +384,12 @@ lepoch=2;
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
-%xo
+% xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
-    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);    
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+%     [Nsig1,Nsig2,Nripple,Ncarajo,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
 end
 
 if meth==2
@@ -396,7 +438,15 @@ cd(nFF{1}) %Baseline
 
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+
+if meth==1
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+end
+
+if meth==2
+    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
+end
+
 
 if block_time==1
 [carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
@@ -416,8 +466,8 @@ end
 for w=2:3
 
 %%
-
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun);
+% xo
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
 %%
@@ -488,6 +538,31 @@ end
 %%
 %clearvars -except acer Rat
 end
-run('spec_loop_improve.mat');
+spec_loop_improve(RAT,block_time);
+%save in right folder
+list = dir();
+list([list.isdir]) = [];
+list={list.name};
+FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+%Check to see if directory is there, otherwhise mkdir.
+
+if exist(Folder)~=7
+(mkdir(Folder))
+end
+
+for nmd=1:length(list)
+movefile (list{nmd}, Folder)
+end
+
+
+clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base
+end
 end
 %end
