@@ -10,7 +10,7 @@ function [ran]=select_rip(p,FiveHun)
 
     [ach]=max(av.');
     achinga=sort(ach,'descend');
-    if FiveHun~=0
+    if FiveHun==1 || FiveHun==2
         if length(achinga)>1000
         achinga=achinga(1:1000);
         end
@@ -25,7 +25,7 @@ function [ran]=select_rip(p,FiveHun)
 
 
     [ajal ind]=unique(B); %Repeated ripples, which are very close to each other. 
-if FiveHun~=0
+if FiveHun==1
     if length(ajal)>500
     ajal=ajal(end-499:end);
     ind=ind(end-499:end);
