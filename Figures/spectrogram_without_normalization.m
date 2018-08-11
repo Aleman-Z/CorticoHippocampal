@@ -7,7 +7,7 @@ Block{2}='block1';
 Block{3}='block2';
 mergebaseline=0;
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
-meth=1;
+%meth=1;
 
 %%
 if acer==0
@@ -24,6 +24,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
+for meth=2:2
 for RAT=1:2
   base=1;  
 % for base=1:2 %Baseline numeration.     
@@ -576,4 +577,4 @@ end
 
 end
 end
-%end
+end
