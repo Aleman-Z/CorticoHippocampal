@@ -25,7 +25,9 @@ end
 %%
 %Rat=26;
 for RAT=1:2
-for base=1:2 %Baseline numeration.     
+  base=1;  
+% for base=1:2 %Baseline numeration.     
+while base<=2
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -550,19 +552,23 @@ end
 if Rat==27 
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
-Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
 %Check to see if directory is there, otherwhise mkdir.
 
-if exist(Folder)~=7
-(mkdir(Folder))
+if exist(folder)~=7
+(mkdir(folder))
 end
 
 for nmd=1:length(list)
-movefile (list{nmd}, Folder)
+movefile (list{nmd}, folder)
 end
 
 
 clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base
+if base>=2
+    break
+end
+
 end
 end
 %end
