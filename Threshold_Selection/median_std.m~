@@ -133,5 +133,5 @@ sig2{7}=V6;
  
 % ripple=length(M);
 % ripple=sum(s172);
-CHTM=[CHTM CHTM]; % Adapt to the original method in which CHTM was a vector. CHTM(k+1)
+CMTH=[CMTH CMTH];
 end
