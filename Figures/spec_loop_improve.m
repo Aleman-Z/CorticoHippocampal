@@ -1,4 +1,4 @@
-function spec_loop_improve(equis)
+function spec_loop_improve(equis,bt)
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -218,7 +218,7 @@ label1{7}='Reference';
 
 %%
  
-for block_time=0:2 %Should start with 0
+for block_time=0:bt %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
 %xo
 if acer==0
