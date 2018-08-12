@@ -103,8 +103,8 @@ nFF=[
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
    % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
-%    {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
-    {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
+   {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
+   %{'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }
     {'rat27_novelty_I_2016-04-11_14-34-55'                 } 
     {'rat27_for_2016-03-21_15-03-05'                       }
     %{'Rat27_for_II_2016-03-23_15-06-59'                    }
@@ -233,19 +233,24 @@ end
 %xo
 
 %Ignore this for a moment
-% FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-% if Rat==26
-% Base=[{'Baseline1'} {'Baseline2'}];
-% end
-% if Rat==27 
-% Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-% end
-% Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-% 
-% 
-% if exist(Folder)==7
-% base=base+1;
-% end
+FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+
+if meth==1
+Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+else
+Method=[{'Method2' 'Method3'}];
+Folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+end
+
+if exist(Folder)==7
+base=base+1;
+end
 %%
 % Use other baseline, beware when using mergebaseline
 if base==2
