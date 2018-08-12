@@ -30,13 +30,15 @@ Wn1=[320/(fn/2)]; % Cutoff=500 Hz
 
 
 %Load Sleeping stage classification
-load('transitions.mat')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%load('transitions.mat')
 %Load Monopolar signals
 % Fline=[50 100 150 200 250 300];
 
 %Reference
-V6=load('data6m.mat');
-V6=V6.data6m;
+% V6=load('data6m.mat');
+% V6=V6.data6m;
+V6=load('V6.mat');
+V6=V6.V6;
 V6=filtfilt(b2,a2,V6);
 %if w==4 && notch==1
 if notch==1
@@ -52,9 +54,11 @@ end
 Mono6=filtfilt(b1,a1,V6); 
 
 
-V17=load('data17m.mat');
-%Monopolar
-V17=V17.data17m;
+% V17=load('data17m.mat');
+% %Monopolar
+% V17=V17.data17m;
+V17=load('V17.mat');
+V17=V17.V17;
 V17=filtfilt(b2,a2,V17);
 %NO NEED OF NOTCH FILTER FOR HIPPOCAMPUS
 %UPDATE: Actually does need one!
@@ -73,14 +77,18 @@ S17=V17-V6;
 Mono17=filtfilt(b1,a1,V17); 
 Bip17=filtfilt(b1,a1,S17);
 %NREM extraction
-[V17,~]=reduce_data(V17,transitions,1000,nrem);
-[S17,~]=reduce_data(S17,transitions,1000,3);
-[Mono17,~]=reduce_data(Mono17,transitions,1000,nrem);
-[Bip17,~]=reduce_data(Bip17,transitions,1000,3);
+% [V17,~]=reduce_data(V17,transitions,1000,nrem);
+% [S17,~]=reduce_data(S17,transitions,1000,3);
+% [Mono17,~]=reduce_data(Mono17,transitions,1000,nrem);
+% [Bip17,~]=reduce_data(Bip17,transitions,1000,3);
 
 
-V12=load('data12m.mat');
-V12=V12.data12m;
+% V12=load('data12m.mat');
+% V12=V12.data12m;
+
+V12=load('V12.mat');
+V12=V12.V12;
+
 V12=filtfilt(b2,a2,V12);
 %if w==2 && notch==1
 if  notch==1
@@ -95,14 +103,17 @@ end
 S12=V12-V6;
 Mono12=filtfilt(b1,a1,V12);
 Bip12=filtfilt(b1,a1,S12);
-[V12,~]=reduce_data(V12,transitions,1000,nrem);
-[S12,~]=reduce_data(S12,transitions,1000,3);
-[Mono12,~]=reduce_data(Mono12,transitions,1000,nrem);
-[Bip12,~]=reduce_data(Bip12,transitions,1000,3);
+% [V12,~]=reduce_data(V12,transitions,1000,nrem);
+% [S12,~]=reduce_data(S12,transitions,1000,3);
+% [Mono12,~]=reduce_data(Mono12,transitions,1000,nrem);
+% [Bip12,~]=reduce_data(Bip12,transitions,1000,3);
 
 
-V9=load('data9m.mat');
-V9=V9.data9m;
+% V9=load('data9m.mat');
+% V9=V9.data9m;
+V9=load('V9.mat');
+V9=V9.V9;
+
 V9=filtfilt(b2,a2,V9);
 %if w==3 && notch==1
 if notch==1
@@ -116,14 +127,14 @@ end
 S9=V9-V6;
 Mono9=filtfilt(b1,a1,V9);
 Bip9=filtfilt(b1,a1,S9);
-[V9,~]=reduce_data(V9,transitions,1000,nrem);
-[S9,~]=reduce_data(S9,transitions,1000,3);
-[Mono9,~]=reduce_data(Mono9,transitions,1000,nrem);
-[Bip9,~]=reduce_data(Bip9,transitions,1000,3);
+% [V9,~]=reduce_data(V9,transitions,1000,nrem);
+% [S9,~]=reduce_data(S9,transitions,1000,3);
+% [Mono9,~]=reduce_data(Mono9,transitions,1000,nrem);
+% [Bip9,~]=reduce_data(Bip9,transitions,1000,3);
 
 
-[V6,~]=reduce_data(V6,transitions,1000,nrem);
-[Mono6,~]=reduce_data(Mono6,transitions,1000,nrem);
+% [V6,~]=reduce_data(V6,transitions,1000,nrem);
+% [Mono6,~]=reduce_data(Mono6,transitions,1000,nrem);
 
 % V12=load('V12.mat');
 % V12=V12.V12;
@@ -227,15 +238,26 @@ sig1{7}=Mono6;
 
 sig2=cell(7,1);
 
+% sig2{1}=V17;
+% sig2{2}=S17;
+% sig2{3}=V12;
+% % sig2{4}=R12;
+% sig2{4}=S12;
+% %sig2{6}=SSS12;
+% sig2{5}=V9;
+% % sig2{7}=R9;
+% sig2{6}=S9;
+% %sig2{10}=SSS9;
+% sig2{7}=V6;
 sig2{1}=V17;
-sig2{2}=S17;
+sig2{2}=[];
 sig2{3}=V12;
 % sig2{4}=R12;
-sig2{4}=S12;
+sig2{4}=[];
 %sig2{6}=SSS12;
 sig2{5}=V9;
 % sig2{7}=R9;
-sig2{6}=S9;
+sig2{6}=[];
 %sig2{10}=SSS9;
 sig2{7}=V6;
  
