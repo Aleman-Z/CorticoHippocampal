@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -402,6 +402,13 @@ end
 
 if meth==2
     [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+end
+
+if meth==3
+%     [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;
+chtm=load('vq_loop2.mat');
+chtm=chtm.vq;
+    [sig1,sig2,ripple2,carajo,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr_Vfiles(chtm,notch);
 end
 
 %% Select time block 
