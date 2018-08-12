@@ -558,8 +558,13 @@ end
 if Rat==27 
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
+
+if meth==1
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-%Check to see if directory is there, otherwhise mkdir.
+else
+Method=[{'Method2'}];
+folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+end
 
 if exist(folder)~=7
 (mkdir(folder))
