@@ -24,7 +24,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=1:2
+for meth=1:3
 for RAT=2:2
   base=1;  
 % for base=1:2 %Baseline numeration.     
