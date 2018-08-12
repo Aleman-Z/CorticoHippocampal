@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -25,7 +25,7 @@ end
 %%
 %Rat=26;
 for meth=2:2
-for RAT=1:2
+for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
 while base<=2
@@ -232,19 +232,20 @@ if dura==2
 end
 %xo
 
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
-end
-if Rat==27 
-Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-
-
-if exist(Folder)==7
-base=base+1;
-end
+%Ignore this for a moment
+% FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+% if Rat==26
+% Base=[{'Baseline1'} {'Baseline2'}];
+% end
+% if Rat==27 
+% Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+% end
+% Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+% 
+% 
+% if exist(Folder)==7
+% base=base+1;
+% end
 %%
 % Use other baseline, beware when using mergebaseline
 if base==2
@@ -492,7 +493,7 @@ end
 for w=2:3
 
 %%
-% xo
+%xo
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
@@ -580,7 +581,7 @@ end
 if meth==1
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
 else
-Method=[{'Method2'}];
+Method=[{'Method2' 'Method3'}];
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
 end
 
@@ -597,7 +598,9 @@ clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base
 if base>=2
     break
 end
-
+xo
 end
+base=1;
+xo
 end
 end
