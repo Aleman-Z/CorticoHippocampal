@@ -405,10 +405,10 @@ if meth==2
 end
 
 if meth==3
+%     [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM=[chtm chtm];
+    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr_Vfiles(chtm,notch);
 end
 
 %% Select time block 
@@ -425,11 +425,11 @@ end
 %%
 
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
-% if meth==3
-% [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
-% else
-[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));    
-% end
+if meth==3
+
+    [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));
+else
+end
 clear sig1 sig2
 %Ripple selection. Memory free. 
 [ran]=select_rip(p,FiveHun);
@@ -466,13 +466,6 @@ if meth==2
     [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
 end
 
-if meth==3
-chtm=load('vq_loop2.mat');
-chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-end
-%%
 
 if block_time==1
 [carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
