@@ -51,8 +51,8 @@ gt=mean(GG);
 area(f*500,gt)
 xlim([0 50])
 %%
-title('Spectral interpolation on Low frequencies')
+title('Why I did not notch-filtered the lowest frequencies')
 %%
 xlabel('Frequency','FontSize',12)
 ylabel('Power (log)','FontSize',12)
-legend('Original spectrum','Spectral interpolation at 5 and 15Hz')
+legend('Original SPE','')
