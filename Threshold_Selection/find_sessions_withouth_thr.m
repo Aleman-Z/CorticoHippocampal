@@ -26,7 +26,7 @@ nFF=[
    
 %   {'rat26_nl_base_III_2016-03-30_10-32-57'            }
     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
-     {'rat26_nl_baseline2016-03-01_11-01-55'             }
+    {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
@@ -76,63 +76,32 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
     clc
 end
+
+% xo
 %%
-% % % % 
-% % % % %% Select experiment to perform. 
-% % % % % inter=1;
-% % % % %Select length of window in seconds:
-% % % % if dura==1
-% % % % ro=[1200];
-% % % % else
-% % % % ro=[10200];    
-% % % % end
-% % % % % coher=0;
-% % % % % selectripples=1;
 % % % % notch=0;
 % % % % nrem=3;
-% % % % myColorMap = jet(8);
-% % % % % Score=1;
-% % % % %%
-% % % % 
-% % % % %Make labels
-% % % % label1=cell(7,1);
-% % % % label1{1}='Hippo';
-% % % % label1{2}='Hippo';
-% % % % label1{3}='Parietal';
-% % % % label1{4}='Parietal';
-% % % % label1{5}='PFC';
-% % % % label1{6}='PFC';
-% % % % label1{7}='Reference';
-% % % % 
-% % % % label2=cell(7,1);
-% % % % label2{1}='Monopolar';
-% % % % label2{2}='Bipolar';
-% % % % label2{3}='Monopolar';
-% % % % label2{4}='Bipolar';
-% % % % label2{5}='Monopolar';
-% % % % label2{6}='Bipolar';
-% % % % label2{7}='Monopolar';
-% % % % 
-% % % % %%
-% % % % 
-% % % %  
-% % % % for iii=2:length(nFF) %Should start with 2!
+CH=[];
+
+for iii=1:length(nFF)
 % % % % %xo
 % % % % 
 % % % % 
-% % % % if acer==0
-% % % %     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-% % % % else
-% % % %     cd(strcat('D:\internship\',num2str(Rat)))
-% % % % end
-% % % % 
-% % % % cd(nFF{iii})
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(nFF{iii})
+
+chtm=load('vq_loop2.mat');
+
+CH=[CH chtm.vq];
 % % % % lepoch=2;
 % % % % 
 % % % %  level=1;
 % % % %  
-% % % % xo
-% % % % if meth==3
 % % % % chtm=load('vq_loop2.mat');
 % % % % chtm=chtm.vq;
 % % % %     [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
@@ -141,5 +110,5 @@ end
 % % % % 
 % % % % end
 % % % % 
-% % % % end
+ end
 % % % % 
