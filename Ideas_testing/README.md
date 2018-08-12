@@ -9,3 +9,8 @@
 **spec_improve.m**: Replaces old spectrogram and improves visualization of power. 
 <img src="improved.png" width="350">
 
+**ripple_periodogram.m**
+Justifies the lack of filtering on the lower frequencies. Verifies that visual artifacts at 15Hz are not due to the signal. 
+
+<img src="low_interpolation.png" width="350">
+
