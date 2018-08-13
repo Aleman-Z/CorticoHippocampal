@@ -25,7 +25,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:2
+for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
 while base<=2
@@ -435,7 +435,17 @@ ror=2000/timeasleep;
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
           cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
     end
-openfig('Ripples_per_condition_best.fig')
+    
+
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+
+%openfig('Ripples_per_condition_best.fig')
+openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
 h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
@@ -447,8 +457,8 @@ xdata=dataObjs{2}(8).XData;
 % plot(xdata,ydata)
 chtm = interp1(ydata,xdata,ror);
 close
-Nose=[Nose timeasleep];
-xo
+Nose=[Nose chtm];
+%xo
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
