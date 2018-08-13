@@ -222,8 +222,7 @@ s172(:,1)=cellfun('length',S2x);
 
 % end
 
-%RipFreq2=sum(s172)/(timeasleep*(60));
-RipFreq2=sum(s172)/(timeasleep);
+RipFreq2=sum(s172)/(timeasleep*(60));
 
 %To display number of events use:
 ripple2=sum(s172); %When using same threshold per epoch.
