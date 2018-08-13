@@ -15,6 +15,9 @@ Figure 2:
 *Plots the relationship between amplitude threshold for SWR and the rate of ripple occurrence per condition.* 
 <img src="Ripples_per_condition.png" width="400">
 
+* **thr_vs_rip_vs.m:**   
+*Does the same thing as the function above but using vx.mat files and different baselines.*
+
 * **sleep_amount.m:**   
 *Generates barplots with amount of sleep per condition.* 
 <img src="Sleep_amount.png" width="600">
