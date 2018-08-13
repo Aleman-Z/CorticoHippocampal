@@ -7,3 +7,9 @@
 * **nrem_fixed_thr.m**: Selects threshold which gives a rate of occurence of 1 ripple per sec. 
 
 * **nrem_fixed_thr_Vfiles.m**: Same as above but uses the original Vx.mat files instead of the ones generated in python. 
+
+* **NREM_newest_only_ripple_level.m**: Loop with different threshold values to generate thr_vs_ripple plot.   
+
+* **NREM_newest_only_ripple_level_vx.m**: Same as above but using vx.mat files. 
+
+
