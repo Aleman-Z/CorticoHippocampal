@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -457,7 +457,7 @@ xdata=dataObjs{2}(8).XData;
 % plot(xdata,ydata)
 chtm = interp1(ydata,xdata,ror);
 close
-Nose=[Nose chtm];
+
 %xo
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -470,7 +470,7 @@ cd(nFF{iii})
 CHTM=[chtm chtm];
 end
 
-
+Nose=[Nose RipFreq2];
 
 
 

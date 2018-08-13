@@ -24,7 +24,7 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=3:3
+for meth=4:4
 for RAT=1:2
   base=1;  
 % for base=1:2 %Baseline numeration.     
@@ -244,7 +244,7 @@ end
 if meth==1
 Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
 else
-Method=[{'Method2' 'Method3'}];
+Method=[{'Method2' 'Method3' 'Method4'}];
 Folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
 end
 
@@ -416,6 +416,62 @@ chtm=chtm.vq;
     [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 end
+%%
+if meth==4
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(nFF{1})
+
+[timeasleep]=find_thr_base;
+ror=2000/timeasleep;
+
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+    else
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+          cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+    end
+    
+
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+
+%openfig('Ripples_per_condition_best.fig')
+openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+
+h = gcf; %current figure handle
+axesObjs = get(h, 'Children');  %axes handles
+dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+
+ydata=dataObjs{2}(8).YData;
+xdata=dataObjs{2}(8).XData;
+% figure()
+% plot(xdata,ydata)
+chtm = interp1(ydata,xdata,ror);
+close
+
+%xo
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+
+cd(nFF{iii})
+    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+CHTM=[chtm chtm];
+end
+
+%Nose=[Nose RipFreq2];
+
 
 %% Select time block 
 if block_time==1
@@ -478,6 +534,12 @@ chtm=chtm.vq;
     [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
 end
+
+if meth==4
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+CHTM2=[chtm chtm];
+end
+
 %%
 
 if block_time==1
@@ -498,7 +560,7 @@ end
 for w=2:3
 
 %%
-% xo
+%xo
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
@@ -586,7 +648,7 @@ end
 if meth==1
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
 else
-Method=[{'Method2' 'Method3'}];
+Method=[{'Method2' 'Method3' 'Method4'}];
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
 end
 
