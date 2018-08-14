@@ -45,4 +45,5 @@ Figure 3:
 *Plots and saves the threshold vs ripple plot per rat and baseline, indicating the fixed threshold used on Method 4.*
 <img src="thr_vs_rip_line.png.png" width="400">
 
-
+* **fix_threshold.m:**
+*Initial test ran to try the fixed_threshold approach. Later merged with spectrogram_withouth_normalization.m*
