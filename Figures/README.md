@@ -43,6 +43,6 @@ Figure 3:
 
 * **test_fix_thr.m:**
 *Plots and saves the threshold vs ripple plot per rat and baseline, indicating the fixed threshold used on Method 4.  *
-<img src="thr_vs_rip_line.png.png" width="600">
+<img src="thr_vs_rip_line.png.png" width="400">
 
 
