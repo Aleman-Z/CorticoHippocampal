@@ -13,7 +13,7 @@ end
 %%
 %Rat=26;
 
-for Rat=4:4
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
 if Rat==26
@@ -66,8 +66,8 @@ labelconditions=[
 end
 if Rat==27
 nFF=[
-    {'rat27_nl_base_2016-03-28_15-01-17'                   }
-   % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
+    {'rat27_nl_base_2016-03-28_15-01-17'                   } %Baseline 2
+   % {'rat27_NL_baseline_2016-02-26_12-50-26'               } %Baseline 1
    % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
     {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
@@ -412,7 +412,7 @@ end
 % cd((labelconditions{iii}))
 fig=gcf;
 fig.InvertHardcopy='off';
-
+xo
 if Rat~=24
 string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 
