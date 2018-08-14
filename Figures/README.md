@@ -41,5 +41,8 @@ Figure 3:
 *Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles.*
 <img src="example_improve.png" width="600">
 
+* **test_fix_thr.m:**
+*Plots and saves the threshold vs ripple plot per rat and baseline, indicating the fixed threshold used on Method 4.  *
+<img src="thr_vs_rip_line.png" width="600">
 
 
