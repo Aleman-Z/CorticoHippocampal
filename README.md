@@ -38,6 +38,7 @@ DESCRIPTION of MAIN FUNCTIONS:
 **psd_ripples2.m:** Same but using bandpassed signals of PAR and PFC.
 
 **psd_ripples3.m:** Same but using Wideband signals of PAR and PFC.
+<img src="Scatter_PFC_l.png" width="600">
 
 
 -SPECTROGRAMS AND GC
