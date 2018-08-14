@@ -47,3 +47,7 @@ Figure 3:
 
 * **fix_threshold.m:**
 *Initial test ran to try the fixed_threshold approach. Later merged with spectrogram_withouth_normalization.m*
+
+* **testing_loop.m:**
+*Loop ran to observe that the folder names generated followed the correct order.*
+
