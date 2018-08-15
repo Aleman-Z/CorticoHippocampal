@@ -8,7 +8,7 @@ Block{3}='block2';
 mergebaseline=0;
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
-
+rat26session3=1; %Swaps session 1 for session 3 on Rat 26.
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -24,11 +24,11 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=3:3
-for RAT=1:2
+for meth=1:3
+for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
-while base<=2
+while base<=1
 %for rat24base=1:2
  
 %   if RAT~=3 && rat24base==2
@@ -70,6 +70,9 @@ if strcmp(nFF{1},'rat26_nl_base_II_2016-03-28_10-40-19')
 NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
 end
 
+if strcmp(nFF{1},'rat26_nl_baseline2016-03-01_11-01-55') && rat26session3 == 1
+   nFF{1}='rat26_nl_base_III_2016-03-30_10-32-57'; 
+end
 
 % labelconditions=[
 %     {'Baseline_1' 
@@ -237,7 +240,10 @@ FolderRip=[{'all_ripples'} {'500'} {'1000'}];
 if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
-if Rat==27 
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+if Rat==27
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
 
@@ -251,6 +257,7 @@ end
 if exist(Folder)==7 && base==1
 base=base+1;
 end
+% xo
 %%
 % Use other baseline, beware when using mergebaseline
 if base==2
@@ -272,6 +279,10 @@ FolderRip=[{'all_ripples'} {'500'} {'1000'}];
 if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
 if Rat==27 
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
@@ -291,7 +302,7 @@ pause(3)
 % end
 
 
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base
+clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 nFF
 if base>=2
     break
 end
