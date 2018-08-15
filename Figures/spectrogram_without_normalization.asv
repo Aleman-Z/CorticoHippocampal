@@ -241,10 +241,8 @@ if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
 
-if Rat==26 && rat26session3==1
-Base=[{'Baseline3'} {'Baseline2'}];
-end
 
+{'Baseline3'}
 if Rat==27 
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
@@ -572,7 +570,7 @@ end
 for w=2:3
 
 %%
-%xo
+xo
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
