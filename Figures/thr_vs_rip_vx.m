@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 rat24base=2;
 
 %%
@@ -13,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=2:2
+for RAT=1:1
 for base=1:2    
 rats=[26 27 21 24];
 Rat=rats(RAT);    
@@ -27,9 +27,9 @@ nFF=[
 %    {'rat26_Base_II_2016-03-24_12-57-57'                }
     
    
-%   {'rat26_nl_base_III_2016-03-30_10-32-57'            }
+   {'rat26_nl_base_III_2016-03-30_10-32-57'            }  %Baseline 1 (so-called)
  %    {'rat26_nl_base_II_2016-03-28_10-40-19'             }
-     {'rat26_nl_baseline2016-03-01_11-01-55'             }
+ %    {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
@@ -75,7 +75,7 @@ labelconditions=[
 end
 if Rat==27
 nFF=[
-     {'rat27_nl_base_2016-03-28_15-01-17'                   } %Baseline 2: Use this one. 
+    {'rat27_nl_base_2016-03-28_15-01-17'                   } %Baseline 2: Use this one. 
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
    % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
@@ -353,8 +353,8 @@ set(h,'Location','Northwest')
 
 % h=legend('Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)','Baseline 4','Baseline 4 (fit)')
 % set(h,'Location','Northwest')
-
-%xo
+ylim([-0.5 3])
+xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
