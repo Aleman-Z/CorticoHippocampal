@@ -153,7 +153,7 @@ chtm=median(ncmax);
 
 %Might need to comment this:
 chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
-chtm=315;
+chtm=320;
 %Median is used to account for any artifact/outlier. 
 DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
 %DEMAIS=linspace((chtm/16),(chtm),30);
@@ -190,7 +190,7 @@ DEMAIS=DEMAIS(2:end-1);
 % [p]=polyfit(DEMAIS,ripple2,3);
 % y1=polyval(p,DEMAIS);
 
-[p,S,mu]=polyfit(DEMAIS,ripple2,9);
+[p,S,mu]=polyfit(DEMAIS,ripple2,10);
 y1=polyval(p,DEMAIS,[],mu);
 % [p,S,mu]=polyfit(DEMAIS(2:end),ripple2(2:end),10);
 % y1=polyval(p,DEMAIS(2:end),[],mu);

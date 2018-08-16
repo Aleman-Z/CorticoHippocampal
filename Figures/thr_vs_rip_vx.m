@@ -276,12 +276,14 @@ end
 cd(nFF{iii})
 lepoch=2;
 
-xo
+%xo
 level=1;
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
-if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
-[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score);
+% if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
+if strcmp(labelconditions{iii},'PlusMaze')     
+% [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score);
+[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx_CUSTOM(level,nrem,notch,w,lepoch,Score);
 else
 [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,1);    
 end
