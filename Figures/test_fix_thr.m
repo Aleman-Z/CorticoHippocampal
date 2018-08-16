@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -8,7 +8,7 @@ Block{3}='block2';
 mergebaseline=0;
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
-rat26session3=1; %Swaps session 1 for session 3 on Rat 26.
+rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -25,8 +25,8 @@ end
 %%
 %Rat=26;
 meth=4;
-for RAT=1:1
-  base=1;  
+for RAT=2:2
+  base=2;  
 % for base=1:2 %Baseline numeration.     
 while base<=2
 for rat24base=1:2
