@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 rat24base=1;
 
 %%
@@ -13,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=2:2
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -28,7 +28,7 @@ nFF=[
    
 %    {'rat26_nl_base_III_2016-03-30_10-32-57'            }
 %     {'rat26_nl_base_II_2016-03-28_10-40-19'             }
-     {'rat26_nl_baseline2016-03-01_11-01-55'             }
+%     {'rat26_nl_baseline2016-03-01_11-01-55'             }
     {'rat26_plusmaze_base_2016-03-08_10-24-41'}
     
     
@@ -68,9 +68,9 @@ labelconditions=[
 end
 if Rat==27
 nFF=[
-   % {'rat27_nl_base_2016-03-28_15-01-17'                   }
+    {'rat27_nl_base_2016-03-28_15-01-17'                   }
    % {'rat27_NL_baseline_2016-02-26_12-50-26'               }
-    {'rat27_nl_base_III_2016-03-30_14-36-57'               }
+   % {'rat27_nl_base_III_2016-03-30_14-36-57'               }
     
     {'rat27_plusmaze_base_2016-03-14_14-52-48'             }
 %     {'rat27_plusmaze_base_II_2016-03-24_14-10-08'          }

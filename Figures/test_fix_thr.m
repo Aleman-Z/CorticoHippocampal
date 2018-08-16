@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -8,7 +8,7 @@ Block{3}='block2';
 mergebaseline=0;
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
-
+rat26session3=1; %Swaps session 1 for session 3 on Rat 26.
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -25,7 +25,7 @@ end
 %%
 %Rat=26;
 meth=4;
-for RAT=2:2
+for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
 while base<=2
@@ -70,6 +70,9 @@ if strcmp(nFF{1},'rat26_nl_base_II_2016-03-28_10-40-19')
 NFF=[ {'rat26_nl_baseline2016-03-01_11-01-55'             }];
 end
 
+if strcmp(nFF{1},'rat26_nl_baseline2016-03-01_11-01-55') && rat26session3==1
+   nFF{1}='rat26_nl_base_III_2016-03-30_10-32-57'; 
+end
 
 % labelconditions=[
 %     {'Baseline_1' 
@@ -402,7 +405,12 @@ ror=2000/timeasleep;
 if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
-if Rat==27 
+
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
+if Rat==27
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
 
@@ -432,13 +440,18 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
-% xo
+ xo
 
 FolderRip=[{'all_ripples'} {'500'} {'1000'}];
 if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
-if Rat==27 
+
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
+if Rat==27
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
 

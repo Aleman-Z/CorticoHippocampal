@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -24,11 +24,11 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=1:3
+for meth=4:4
 for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
-while base<=1
+while base<=2
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -234,31 +234,31 @@ if dura==2
     cd('10sec')
 end
 %xo
-
-%Ignore this for a moment
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
-end
-
-if Rat==26 && rat26session3==1
-Base=[{'Baseline3'} {'Baseline2'}];
-end
-
-if Rat==27 
-Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-
-if meth==1
-Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-else
-Method=[{'Method2' 'Method3' 'Method4'}];
-Folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-end
-
-if exist(Folder)==7 && base==1
-base=base+1;
-end
+% 
+% %Ignore this for a moment
+% FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+% if Rat==26
+% Base=[{'Baseline1'} {'Baseline2'}];
+% end
+% 
+% if Rat==26 && rat26session3==1
+% Base=[{'Baseline3'} {'Baseline2'}];
+% end
+% 
+% if Rat==27 
+% Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+% end
+% 
+% if meth==1
+% Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+% else
+% Method=[{'Method2' 'Method3' 'Method4'}];
+% Folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+% end
+% 
+% if exist(Folder)==7 && base==1
+% base=base+1;
+% end
 %%
 % Use other baseline, beware when using mergebaseline
 if base==2
@@ -354,21 +354,21 @@ if dura==2
 end
 %xo
 
-
-string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-
-
-while exist(string1, 'file')==2 && exist(string2, 'file')==2
-iii=iii+1;
-
-if iii>length(nFF)
-    break
-end
-   string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-   string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-
-end
+% 
+% string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% 
+% 
+% while exist(string1, 'file')==2 && exist(string2, 'file')==2
+% iii=iii+1;
+% 
+% if iii>length(nFF)
+%     break
+% end
+%    string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+%    string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% 
+% end
 
 if iii>length(nFF)
     break
@@ -406,7 +406,7 @@ lepoch=2;
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
-% xo
+ xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1

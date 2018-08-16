@@ -1,4 +1,4 @@
-acer=1;
+acer=0;
 rat24base=2;
 
 %%
@@ -13,8 +13,8 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for RAT=1:1
-for base=1:2    
+for RAT=2:2
+for base=2:2    
 rats=[26 27 21 24];
 Rat=rats(RAT);    
     
