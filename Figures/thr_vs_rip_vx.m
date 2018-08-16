@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 rat24base=2;
 
 %%
@@ -276,7 +276,7 @@ end
 cd(nFF{iii})
 lepoch=2;
 
-
+xo
 level=1;
 %Get averaged time signal.
 % [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
