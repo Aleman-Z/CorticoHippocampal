@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth)
+function [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -134,6 +134,60 @@ chtm=chtm.vq;
 CHTM2=[chtm chtm];
 end
 
+
+if meth==4
+
+[timeasleep]=find_thr_base;
+ror=2000/timeasleep;
+
+    if acer==0
+        cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+    else
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+          cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+    end
+
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+base=2; %VERY IMPORTANT!
+%openfig('Ripples_per_condition_best.fig')
+openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+
+h = gcf; %current figure handle
+axesObjs = get(h, 'Children');  %axes handles
+dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+
+ydata=dataObjs{2}(8).YData;
+xdata=dataObjs{2}(8).XData;
+% figure()
+% plot(xdata,ydata)
+chtm = interp1(ydata,xdata,ror);
+close
+
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+cd(NFF{1})
+
+%xo
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+CHTM2=[chtm chtm];
+end
+%This seems incomplete:
+% if meth==4
+% [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+% CHTM2=[chtm chtm];
+% end
 
 if block_time==1
 [carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);

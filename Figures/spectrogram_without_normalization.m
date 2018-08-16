@@ -1,14 +1,14 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-mergebaseline=0;
+mergebaseline=1; %Make sure base's while loop condition is never equal to 2.
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
-rat26session3=1; %Swaps session 1 for session 3 on Rat 26.
+rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -24,11 +24,11 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=4:4
+for meth=1:4
 for RAT=1:1
   base=1;  
 % for base=1:2 %Baseline numeration.     
-while base<=2
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2. 
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -406,7 +406,7 @@ lepoch=2;
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
- xo
+% xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
@@ -564,16 +564,14 @@ if block_time==2
 ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
 end
 
-
-% xo
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
 for w=2:3
 
 %%
-%xo
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth);
+% xo
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
 %%
@@ -666,6 +664,15 @@ folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
 else
 Method=[{'Method2' 'Method3' 'Method4'}];
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+end
+
+if mergebaseline==1
+    if meth==1
+    folder=strcat('Merged','_',FolderRip{FiveHun+1});
+    else
+    Method=[{'Method2' 'Method3' 'Method4'}];
+    folder=strcat('Merged','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+    end
 end
 
 if exist(folder)~=7
