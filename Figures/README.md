@@ -51,3 +51,6 @@ Figure 3:
 * **testing_loop.m:**
 *Loop ran to observe that the folder names generated followed the correct order.*
 
+* **bars_ripples.m:**
+Bar plots of the number of ripples found among conditions for a fixed baseline threshold.
+<img src="example_bars.png" width="400">
