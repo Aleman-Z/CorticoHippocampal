@@ -9,8 +9,8 @@ mergebaseline=0; %Make sure base's while loop condition is never equal to 2.
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
-rat27session3=1; %Swaps session 1 for session 3 on Rat 26.
-rippletable=1;
+rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
+rippletable=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -26,12 +26,12 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=4:4
-for RAT=2:2
+for meth=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -591,7 +591,7 @@ if rippletable==0
 for w=2:3
 
 %%
-% xo
+ xo
 h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
