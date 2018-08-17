@@ -9,8 +9,6 @@ mergebaseline=0; %Make sure base's while loop condition is never equal to 2.
 FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 %meth=1;
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
-rat27session3=1; %Swaps session 1 for session 3 on Rat 26.
-rippletable=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -27,14 +25,10 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
- if meth==4
-    s=struct; 
- end  
-  base=2; %This should be 1  
+for RAT=1:1
+  base=1;  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
-riptable=zeros(4,3);        
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2. 
 for rat24base=1:2
  
   if RAT~=3 && rat24base==2
@@ -138,11 +132,7 @@ end
 if strcmp(nFF{1}, 'rat27_nl_base_2016-03-28_15-01-17')
 NFF=[ {'rat27_NL_baseline_2016-02-26_12-50-26'   }];
 end
-if rat27session3==1
-    if strcmp(nFF{1}, 'rat27_nl_base_2016-03-28_15-01-17')
-    NFF=[ {'rat27_nl_base_III_2016-03-30_14-36-57'   }];
-    end
-end
+
 
 labelconditions=[
     { 
@@ -416,7 +406,7 @@ lepoch=2;
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
-%xo
+ xo
 %[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
 % [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
@@ -435,7 +425,7 @@ chtm=chtm.vq;
 CHTM=[chtm chtm];
 end
 %%
-if meth==4   
+if meth==4
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
@@ -466,9 +456,6 @@ if Rat==27
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
 end
 
-if Rat==27 && rat27session3==1
-Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-end
 %openfig('Ripples_per_condition_best.fig')
 openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
@@ -493,9 +480,6 @@ end
 cd(nFF{iii})
     [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
-riptable(iii,1)=ripple;
-riptable(iii,2)=timeasleep;
-riptable(iii,3)=RipFreq2;
 
 end
 
@@ -567,9 +551,6 @@ end
 if meth==4
 [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
-riptable(1,1)=ripple_nl;
-riptable(1,2)=timeasleep2;
-riptable(1,3)=RipFreq3;
 end
 
 %%
@@ -587,12 +568,11 @@ end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
-if rippletable==0
 for w=2:3
 
 %%
 % xo
-h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
+h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3);
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
 %%
@@ -617,7 +597,7 @@ Pos = get(ca,'Position');
 set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
 set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
-xo
+%xo
 %error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -646,7 +626,7 @@ close all
 %%
 
 end
-end
+
 %end
 
 if iii==length(nFF)
@@ -654,36 +634,15 @@ if iii==length(nFF)
 end
 
 end
+% xo
+end
+
 
 end
 
 %%
 %clearvars -except acer Rat
 end
-%xo
-if meth==4
-
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
-
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-    
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-
-    [s.(Base{base})]=riptable;
-end
-
-end
-%xo
-if rippletable==0
 spec_loop_improve(RAT,block_time);
 %save in right folder
 list = dir();
@@ -699,10 +658,6 @@ end
 
 if Rat==27 
 Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-
-if Rat==27 && rat27session3==1
-   Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
 end
 
 if meth==1
@@ -730,35 +685,11 @@ movefile (list{nmd}, folder)
 end
 
 
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3
-end
+clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3
 if base>=2
     break
 end
 base=2;
-end
-xo
-
-if rippletable==1
-            if acer==0
-                cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-            else
-                  %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-                  cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-            end
-            save('NumberRipples','s')
-            
-            list = dir();
-            list([list.isdir]) = [];
-            list={list.name};
-            FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-            Method=[{'Method2' 'Method3' 'Method4'}];
-            if Rat==26
-            folder=strcat('Baseline1','_',FolderRip{FiveHun+1},'_',Method{meth-1});
-            else
-            folder=strcat('Baseline2','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-            end
-            movefile (list{1}, folder)
 end
 base=1;
 
