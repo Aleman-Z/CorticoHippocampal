@@ -11,7 +11,7 @@ c = categorical(labelconditions);
 
 %%
 
-for Rat=2:2
+for Rat=1:1
     
 if Rat==1
 cd('/home/raleman/Dropbox/Figures/Figure3/26/Baseline1_1000_Method4')
@@ -28,8 +28,8 @@ for cont=1:contlim
 vr=getfield(s,Base{cont});
 bar(c,vr(:,1))
 ylabel('Number of ripples')
-title(Base{cont})
-%  xo
+% title(Base{cont})
+  xo
 
 % string=strcat('Number_ripples_',Base{cont},'.fig');
 % saveas(gcf,string)
