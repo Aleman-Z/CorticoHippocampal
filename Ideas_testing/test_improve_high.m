@@ -246,7 +246,7 @@ end
 
 %cd(strcat('D:\internship\',num2str(Rat)))
 cd(nFF{iii})
-
+xo
 %%
 %Plot both: No ripples and Ripples. 
 %%
