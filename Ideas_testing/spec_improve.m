@@ -2,6 +2,7 @@ function spec_improve(lab)
 h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+%%
 axesObjs(15).XLabel.String='Time (s)'
 axesObjs(16).XLabel.String='Time (s)'
 %%

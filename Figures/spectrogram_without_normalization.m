@@ -1,4 +1,4 @@
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
