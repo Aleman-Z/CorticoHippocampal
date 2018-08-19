@@ -57,6 +57,10 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 
 * **spec_skipto_high.m:**
 *Calls .fig files and replaces wrong stats for High Gamma power spectrograms.*
+* **plot_inter_conditions_33_high.m:**
+*Corrected version of plot_inter_conditions_33, using an improved method to generate the stats.*
+* **plot_inter_high_improve.m:**
+*Adaptation of plot_inter_conditions_33_high, only computing the High Gamma spectrograms*
 * **stats_high.m:**
 *Computes statistics on the high frequency spectrograms.*
 <img src="example_high_freq_stats.png" width="400">
