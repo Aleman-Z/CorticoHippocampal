@@ -537,11 +537,13 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
-if ro==1200
 zmap=stats_high(freq3,freq4,w);
-else
-[stats1]=stats_between_trials10(freq3,freq4,label1,w);
-end
+
+% if ro==1200
+% zmap=stats_high(freq3,freq4,w);
+% else
+% [stats1]=stats_between_trials10(freq3,freq4,label1,w);
+% end
 
 
 %% %
