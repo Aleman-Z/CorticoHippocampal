@@ -57,7 +57,7 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 
 * **spec_skipto_high.m:**
 *Calls .fig files and replaces wrong stats for High Gamma power spectrograms.*
+* **stats_high.m:**
+Computes statistics on the high frequency spectrograms.
 <img src="example_high_freq_stats.png" width="400">
 
-* **stats_high.m:**
-Computes statistics.
