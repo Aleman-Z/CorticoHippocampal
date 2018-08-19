@@ -54,3 +54,10 @@ Figure 3:
 * **bars_ripples.m:**
 Bar plots of the number of ripples found among conditions for a fixed baseline threshold.
 <img src="example_bars.png" width="400">
+
+* **spec_skipto_high.m:**
+*Calls .fig files and replaces wrong stats for High Gamma power spectrograms.*
+<img src="example_high_freq_stats.png" width="600">
+
+
+
