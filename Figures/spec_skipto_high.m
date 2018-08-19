@@ -439,7 +439,7 @@ string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_tim
 
 py=openfig(string)
 py.Units='normalized';
-py.Outerposition=[0 0 1 1];
+py.OuterPosition=[0 0 1 1];
 %%
 subplot(3,4,12)
 %%
