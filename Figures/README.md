@@ -65,3 +65,5 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 *Computes statistics on the high frequency spectrograms.*
 <img src="example_high_freq_stats.png" width="400">
 
+* **colorbar_among_conditions.m:**
+*Equalizes the colorbar ranges among conditions for a specific brain area*
