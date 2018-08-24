@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function [h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch)
+function [h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,varargin)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -10,7 +10,9 @@ function [h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,la
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ripple3=ripple_nl;
 % ripple3=ripple_nl;
 %ran=randi(length(p),100,1);
-
+randrip=varargin;
+randrip=cell2mat(randrip);
+%xo
 % % % % % % % sig1_nl=cell(7,1);
 % % % % % % % 
 % % % % % % % sig1_nl{1}=Mono17_nl;
@@ -99,6 +101,10 @@ function [h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,la
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
 %timecell_nl=timecell_nl([ran_nl]);
+if sanity==1
+ p_nl=p_nl(randrip);
+ q_nl=q_nl(randrip);
+end
 
 [q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
@@ -209,6 +215,12 @@ end
 
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
+
+
+if sanity==1
+ p_nl=p_nl(randrip);
+ q_nl=q_nl(randrip);
+end
 
 [q_nl]=filter_ripples(q_nl,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
@@ -430,8 +442,8 @@ ylabel('Frequency (Hz)')
 ylim([0.5 30])
 %%
 if ro==1200
-% [stats]=stats_between_trials(freq1,freq2,label1,w);
-[zmap]=stats_high(freq3,freq4,w)
+[stats]=stats_between_trials(freq1,freq2,label1,w);
+%[stats]=stats_high(freq1,freq2,w)
 else
 [stats]=stats_between_trials10(freq1,freq2,label1,w);
 end

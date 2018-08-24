@@ -11,6 +11,7 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
+sanity=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -26,14 +27,14 @@ addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 end
 %%
 %Rat=26;
-for meth=2:2
-for RAT=1:1
+for meth=4:4
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
   base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -362,8 +363,51 @@ end
 if dura==2
     cd('10sec')
 end
-%xo
 
+if iii==2 && sanity==1
+%Get number of ripples
+FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+            Method=[{'Method2' 'Method3' 'Method4'}];
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'} {'Baseline3'}];
+end
+%             else
+%             Base=[{'Baseline2'} {'Baseline1'} {'Baseline3'}];    
+%             end
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+
+if Rat==27 && rat27session3==1
+Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+end
+
+            folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
+
+cd(folder)
+%look for randrip.
+b=struct2cell(dir)
+
+if ~any(ismember(b(1,:),'randrip.mat'))
+
+load('NumberRipples.mat')
+vr=getfield(s,Base{base});
+vr=min(vr(:,1));
+    
+randrip=randi(1000,[1,vr]);
+save('randrip.mat','randrip');
+
+%xo
+else
+ load('randrip.mat')   
+end
+cd('..')
+end
+% xo
 % 
 % string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 % string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
@@ -523,11 +567,17 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-[ran]=select_rip(p,FiveHun);
 
+[ran]=select_rip(p,FiveHun);
 % 
 p=p([ran]);
 q=q([ran]);
+
+if iii~=2 && sanity==1
+ p=p(randrip);
+ q=q(randrip);
+end
+
 %Q=Q([ran]);
 %timecell=timecell([ran]);
 [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
@@ -591,11 +641,15 @@ if rippletable==0
 for w=2:3
 
 %%
-% xo
-% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
-[h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
-%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 
+% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
+if sanity==1
+[h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,randrip);
+else
+[h]=plot_inter_conditions_33_high(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity);    
+end
+%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
+%xo
 %%
 pos = get(h,'Position');
 new = mean(cellfun(@(v)v(1),pos(1:2)));
@@ -618,7 +672,7 @@ Pos = get(ca,'Position');
 set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
 set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
-xo
+%xo
 %error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -635,13 +689,22 @@ if dura==2
     cd('10sec')
 end
 
+if sanity~=1
 string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
 string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
-
+else
+string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+print(string,'-depsc')
+string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+saveas(gcf,string)
+    
+end
 close all
 
 %%
@@ -661,7 +724,7 @@ end
 %%
 %clearvars -except acer Rat
 end
-%xo
+xo
 if meth==4
 
     if Rat==26
@@ -731,7 +794,7 @@ movefile (list{nmd}, folder)
 end
 
 
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3
+clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
 end
 if base>=2
     break
