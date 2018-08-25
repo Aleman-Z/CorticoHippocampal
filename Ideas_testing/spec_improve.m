@@ -1,15 +1,27 @@
-function spec_improve(lab)
+function spec_improve(lab,sanity)
 h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 %%
-axesObjs(15).XLabel.String='Time (s)'
-axesObjs(16).XLabel.String='Time (s)'
+% axesObjs(15).XLabel.String='Time (s)'
+% axesObjs(16).XLabel.String='Time (s)'
 %%
 hold on
 %allscreen()
+% if sanity==1
+% datmat=(flip(dataObjs{3}.CData,1));
+% else
+% % datmat=(flip(dataObjs{1}.CData,1));
+% datmat=(flip(dataObjs{1}.CData,1));
+% end
+% 
+% if size(datmat,2)~=201
+% datmat=datmat(:,20:end-20);
+% end
+
 subplot(3,4,5)
-I=imagesc(flip(dataObjs{1}.CData,1))
+%I=imagesc(datmat);
+I=imagesc(flip(dataObjs{1}.CData,1));
 
 colormap(jet(256))
 c1=narrow_colorbar()
@@ -54,8 +66,8 @@ set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 si
 c2=narrow_colorbar()
 
 xlabel('Time (s)')
-title(strcat('Wide Band','{ }',lab))
 ylabel('Frequency (Hz)')
+title(strcat('Wide Band','{ }',lab))
 
 %% Redo left size
 subplot(3,4,5)
