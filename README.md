@@ -1,6 +1,6 @@
 # CorticoHippocampal
 
-MASTER THESIS PROJECT by: Adrián Alemán
+MASTER THESIS PROJECT by: Adrián Alemán <img src="raised.png" width="25">
 
 *Due on: Late October 2018*
 
