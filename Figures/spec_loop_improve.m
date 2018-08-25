@@ -1,4 +1,4 @@
-function spec_loop_improve(equis,bt)
+function spec_loop_improve(equis,bt,sanity)
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -240,15 +240,31 @@ end
 for w=2:3
 
 % xo
+if sanity==1
+string1=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+else
 string1=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+end
 openfig(string1)
-spec_improve(labelconditions{iii})
+spec_improve(labelconditions{iii},sanity)
 saveas(gcf,string1)
 
 %%
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+if sanity==1
+string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+else
+string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+end
+
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+
+
+if sanity==1
+string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');   
+else
+string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');   
+end
+
 print(string,'-depsc')
 % string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 % saveas(gcf,string)
