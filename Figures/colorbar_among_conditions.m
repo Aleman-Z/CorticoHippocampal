@@ -34,6 +34,7 @@ DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
+sanity=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -80,7 +81,12 @@ for dura=1:1
 for block_time=0:0
 for w=2:3    
     for iii=2:length(labelconditions)
-        string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        if sanity~=1
+        string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+        else
+        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+        end
+        %xo
         openfig(string)  
         
         h = gcf; %current figure handle
@@ -94,7 +100,13 @@ for w=2:3
     close all
     
     for iii=2:length(labelconditions)
+    
+    
+    if sanity~=1
     string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    else
+    string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+    end
         openfig(string)    
     %figure(1)
     h = gcf; %current figure handle
@@ -214,17 +226,26 @@ ylabel('Frequency (Hz)')
 i=I.CData;
 set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
 
+if sanity ~=1
 string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
 string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
+else
+string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+print(string,'-depsc')
+string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+saveas(gcf,string)    
+end
+
     end
 %xo
 %%
 end
 end
 end
-xo
 end
