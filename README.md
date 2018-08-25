@@ -2,6 +2,7 @@
 
 MASTER THESIS PROJECT by> Adrián Alemán
 
+[embed]https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-presentation-4.pdf[/embed]
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
 --------------------------------
