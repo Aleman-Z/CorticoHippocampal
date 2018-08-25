@@ -1,8 +1,8 @@
 # CorticoHippocampal
 
-MASTER THESIS PROJECT by> Adrián Alemán
+MASTER THESIS PROJECT by: Adrián Alemán
 
-Due on: Late October 2018
+*Due on: Late October 2018*
 
 Half-way presentation:
 https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-presentation-4.pdf
