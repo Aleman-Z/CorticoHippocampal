@@ -9,7 +9,7 @@ https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-prese
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
 --------------------------------
-DESCRIPTION of MAIN FUNCTIONS:
+:zap: DESCRIPTION of MAIN FUNCTIONS:
 
 -PERIODOGRAMS
 ---------------
