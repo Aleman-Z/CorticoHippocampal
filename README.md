@@ -32,7 +32,7 @@ https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-prese
 
 **testing_nrem_length.m:** Generates variables ready to plot NREM length among conditions. 
 
-**ripple_distribution.m:** Generates histograms of ripple occurrence with respect to the NREM (discontinuous) time. 
+**ripple_distribution.m:** Generates histograms of ripple occurrence with respect to the NREM (discontinuous) time. The data is later used to fit a polynomial. 
 
 
 -SCATTER PLOTS
