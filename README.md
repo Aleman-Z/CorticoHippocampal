@@ -71,6 +71,8 @@ https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-prese
 -HISTOGRAMS
 ----------------
 **ripple_amplitude.m:** Generates normalized histogram of the amplitude of the 1000 strongest ripples in the Hippocampus. 
+<img src="HistAmp.png" width="400">
+
 
 **between_ripples.m:** Histogram of time between ripples for different conditions. 
 
