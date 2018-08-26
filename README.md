@@ -34,6 +34,8 @@ https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-prese
 
 **ripple_distribution.m:** Generates histograms of ripple occurrence with respect to the NREM (discontinuous) time. The data is later used to fit a polynomial. 
 
+<img src="Histo_fit.png" width="500">
+
 
 -SCATTER PLOTS
 --------------
