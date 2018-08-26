@@ -1,4 +1,4 @@
-# CorticoHippocampal  <img src="brain.png" width="30"> 
+# CorticoHippocampal Networks during Memory Consolidation <img src="brain.png" width="30"> 
 
 MASTER THESIS PROJECT by: Adrián Alemán <img src="raised.png" width="25">
 
