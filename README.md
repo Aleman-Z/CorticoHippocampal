@@ -75,6 +75,7 @@ https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-prese
 
 
 **between_ripples.m:** Histogram of time between ripples for different conditions. 
+<img src="Hist3.png" width="400">
 
 **between_ripples_fixed_number_ripples.m:** Histogram of time between ripples for different conditions having (almost) the same rate of occurrence. It uses the same number of ripples on both conditions.
 
