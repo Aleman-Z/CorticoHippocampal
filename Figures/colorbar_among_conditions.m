@@ -53,7 +53,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=2:2
+for Rat=1:1
     
 if Rat==1
     

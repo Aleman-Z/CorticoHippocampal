@@ -28,13 +28,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -347,7 +347,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
+for iii=3:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -387,7 +387,7 @@ Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the on
 end
 
             folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
-
+%xo
 cd(folder)
 %look for randrip.
 b=struct2cell(dir)
@@ -711,7 +711,7 @@ close all
 %%
 
 end
-xo
+%xo
 end
 %end
 
