@@ -4,7 +4,7 @@ MASTER THESIS PROJECT by: Adrián Alemán <img src="raised.png" width="25">
 
 *Due on: Late October 2018*
 
-Half-way presentation:
+Half-way presentation (June 2018):
 https://github.com/Aleman-Z/CorticoHippocampal/blob/master/midterm-project-presentation-4.pdf
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
