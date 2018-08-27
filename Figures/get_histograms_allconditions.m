@@ -29,13 +29,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -341,6 +341,10 @@ myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
+nFF=nFF([1 4 3 2]);
+labelconditions=labelconditions([1 4 3 2]);
+
+
 %Rat 24
 % if Rat==24
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
@@ -348,10 +352,9 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-%for iii=1:length(nFF) %Should start with 2!
+for iii=1:length(nFF) %Should start with 2!
 %for iii=1:1 %Should start with 2!
-for vert=2:length(nFF)
- iii=1;   
+%for vert=2:length(nFF)
     %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -520,7 +523,7 @@ end
 %openfig('Ripples_per_condition_best.fig')
 openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-h = gcf; %current figure handle
+h = figure(1); %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 
@@ -569,92 +572,34 @@ consig=consig(:,3);
 
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
-Aver=aver;
-histogram(Aver,'Normalization','probability','BinWidth',0.1)
-xlim([0 4])
-grid minor
-hold on
+Aver{iii,:}=aver;
+
+end
 %xo
 %%
-clear sig1 sig2
+allscreen()
+for vert=1:length(nFF)
+subplot(1,4,vert)    
+histogram(Aver{vert,:},'Normalization','probability','BinWidth',0.1)
+xlim([0 4])
+%ylim([0 14])
 
-if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-else
-    cd(strcat('D:\internship\',num2str(Rat)))
-end
-
-cd(nFF{vert}) %Plusmaze
-
-%run('newest_load_data_nl.m')
-%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
-
-if meth==1
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
-end
-
-if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
-end
-
-if meth==3
-chtm=load('vq_loop2.mat');
-chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-end
-
-if meth==4
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-riptable(1,1)=ripple_nl;
-riptable(1,2)=timeasleep2;
-riptable(1,3)=RipFreq3;
-end
-
-%%
-
-if block_time==1
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
-end
-
-if block_time==2
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
-end
-
-% end
-%  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
-%%
-
-consig=carajo_nl{1};
-consig=consig(:,3);
-aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
-aver=[aver{:}];
-
-histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
-alpha(0.4)
-
-legend([labelconditions(1) labelconditions(vert)])
+title(labelconditions{vert})
+%grid minor
 xlabel('Time(sec)')
-title('Histogram of interripple occurence')
+% title('Histogram of interripple occurence')
 grid off
 
 %xo
+ylim([0 .14])
 ytix = get(gca, 'YTick');
 set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
 ylabel('Percentage of occurence')
+%hold on
+end
 
-
-if rippletable==0
-    %for w=2:3
 
 %%
-
-%%
-%xo
-%error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -669,30 +614,27 @@ end
 if dura==2
     cd('10sec')
 end
-
-% if sanity~=1
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-print(string,'-depsc')
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-saveas(gcf,string)
-% else
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% figure_function(gcf,[],string,[]);
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-% print(string,'-depsc')
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-% saveas(gcf,string)
-    
-% end
-%xo
-close all
-
 %%
+% if sanity~=1
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.eps');
+print(string,'-depsc')
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.fig');
+saveas(gcf,string)
+xo
+%%
+%histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+alpha(0.4)
 
-%end
-%xo
+% legend([labelconditions])
+xlabel('Time(sec)')
+title('Histogram of interripple occurence')
+grid off
+ytix = get(gca, 'YTick');
+set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
+ylabel('Percentage of occurence')
+
 end
 end
 xo
@@ -708,106 +650,6 @@ end
 %clearvars -except acer Rat
 end
 xo
-if meth==4
-
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
-
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-    
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-
-    [s.(Base{base})]=riptable;
-end
 
 end
 %xo
-if rippletable==0
-spec_loop_improve(RAT,block_time,sanity);
-%save in right folder
-list = dir();
-list([list.isdir]) = [];
-list={list.name};
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
-end
-if Rat==26 && rat26session3==1
-Base=[{'Baseline3'} {'Baseline2'}];
-end
-
-if Rat==27 
-Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-
-if Rat==27 && rat27session3==1
-   Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-end
-
-if meth==1
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-else
-Method=[{'Method2' 'Method3' 'Method4'}];
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-end
-
-if mergebaseline==1
-    if meth==1
-    folder=strcat('Merged','_',FolderRip{FiveHun+1});
-    else
-    Method=[{'Method2' 'Method3' 'Method4'}];
-    folder=strcat('Merged','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-    end
-end
-
-if exist(folder)~=7
-(mkdir(folder))
-end
-
-for nmd=1:length(list)
-movefile (list{nmd}, folder)
-end
-
-
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
-end
-if base>=2
-    break
-end
-base=2;
-end
-xo
-
-if rippletable==1
-            if acer==0
-                cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-            else
-                  %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-                  cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-            end
-            save('NumberRipples','s')
-            
-            list = dir();
-            list([list.isdir]) = [];
-            list={list.name};
-            FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-            Method=[{'Method2' 'Method3' 'Method4'}];
-            if Rat==26
-            folder=strcat('Baseline1','_',FolderRip{FiveHun+1},'_',Method{meth-1});
-            else
-            folder=strcat('Baseline2','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-            end
-            movefile (list{1}, folder)
-end
-base=1;
-
-end
-%end
