@@ -1,7 +1,7 @@
 -List of functions used to generate Figures
 ------------------
 
-Figure 2: 
+:zap: Figure 2: 
 
 * **periodogram_without_normalization.m:**  
 *Self-explainatory.* 
@@ -27,7 +27,7 @@ Figure 2:
 <img src="scoring_comparison.png" width="600">
 
 
-Figure 3:
+:zap: Figure 3:
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
