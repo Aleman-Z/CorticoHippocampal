@@ -245,7 +245,7 @@ load('vq1.mat');
 % error('stop')
 
 consig=carajo{1};
-consig=consig(:,2);
+consig=consig(:,3); %I think it should be the ripple peak. 
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
 Aver=aver;

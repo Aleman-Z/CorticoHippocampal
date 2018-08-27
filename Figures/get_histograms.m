@@ -1,3 +1,4 @@
+close all
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -11,7 +12,7 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=1;
+sanity=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -28,13 +29,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -347,8 +348,10 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
-%xo
+%for iii=1:length(nFF) %Should start with 2!
+for iii=1:1 %Should start with 2!
+
+    %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -559,34 +562,20 @@ end
 
 %%
 
-%[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
-% if meth==3
-% [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
-% else
-[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));    
-% end
+%%
+consig=carajo{1};
+consig=consig(:,3);
+
+aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
+aver=[aver{:}];
+Aver=aver;
+histogram(Aver,'Normalization','probability','BinWidth',0.1)
+xlim([0 4])
+grid minor
+hold on
+%xo
+%%
 clear sig1 sig2
-%Ripple selection. Memory free. 
-
-[ran]=select_rip(p,FiveHun);
-% 
-p=p([ran]);
-q=q([ran]);
-
-if iii~=2 && sanity==1
- p=p(randrip);
- q=q(randrip);
-end
-
-%Q=Q([ran]);
-%timecell=timecell([ran]);
-[q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-%[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-
-P1=avg_samples(q,create_timecell(ro,length(p)));
-P2=avg_samples(p,create_timecell(ro,length(p)));
-%[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
-
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -594,7 +583,7 @@ else
     cd(strcat('D:\internship\',num2str(Rat)))
 end
 
-cd(nFF{1}) %Baseline
+cd(nFF{2}) %Plusmaze
 
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
@@ -637,40 +626,31 @@ end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
-if rippletable==0
-for w=2:3
 
-%%
+consig=carajo_nl{1};
+consig=consig(:,3);
+aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
+aver=[aver{:}];
 
-% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
-if sanity==1
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,randrip);
-else
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity);    
-end
-%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
+histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+alpha(0.4)
+
+legend(labelconditions(1:2))
+xlabel('Time(sec)')
+title('Histogram of interripple occurence')
+grid off
+
 %xo
-%%
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(1:2)));
-set(h(9),'Position',[new,pos{9}(2:end)])
+ytix = get(gca, 'YTick');
+set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
+ylabel('Percentage of occurence')
 
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(3:4)));
-set(h(10),'Position',[new,pos{10}(2:end)])
-%%
-set(h(1),'Position',[pos{1}(1:2),pos{1+4}(3:end)])
-set(h(2),'Position',[pos{2}(1:2),pos{2+4}(3:end)])
-set(h(3),'Position',[pos{3}(1:2),pos{3+4}(3:end)])
-set(h(4),'Position',[pos{4}(1:2),pos{4+4}(3:end)])
+
+if rippletable==0
+    %for w=2:3
 
 %%
-H=gcf;
-ca = get(H, 'Children');  %axes handles
-Pos = get(ca,'Position');
 
-set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
-set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
 %xo
 %error('stop')
@@ -689,32 +669,32 @@ if dura==2
     cd('10sec')
 end
 
-if sanity~=1
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% if sanity~=1
+string=strcat('Histo_','BaseVsPlusmaze','_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Histo_','BaseVsPlusmaze','_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Histo_','BaseVsPlusmaze','_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
-else
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-print(string,'-depsc')
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-saveas(gcf,string)
+% else
+% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+% figure_function(gcf,[],string,[]);
+% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+% print(string,'-depsc')
+% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+% saveas(gcf,string)
     
-end
+% end
 %xo
 close all
 
 %%
 
-end
+%end
 %xo
 end
 %end
-
+xo
 if iii==length(nFF)
    break 
 end
