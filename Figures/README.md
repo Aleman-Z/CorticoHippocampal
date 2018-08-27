@@ -67,3 +67,7 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 
 * **colorbar_among_conditions.m:**
 *Equalizes the colorbar ranges among conditions for a specific brain area*
+
+* **get_histograms.m:**
+*Generates percentual histogram of interriple time between baseline and plusmaze.*
+
