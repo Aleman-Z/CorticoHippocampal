@@ -72,3 +72,7 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 *Generates percentual histogram of interriple time between baseline and plusmaze.*
 <img src="Histo.png" width="400">
 
+* **get_histograms_allconditions.m:**
+*Generates percentual histogram of interriple time between all conditions.*
+<img src="HistAmp.png" width="600">
+
