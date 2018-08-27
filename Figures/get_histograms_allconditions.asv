@@ -29,13 +29,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -341,9 +341,10 @@ myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
-xo
-n
-nFF=;
+nFF=nFF([1 4 3 2]);
+labelconditions=labelconditions([1 4 3 2]);
+
+
 %Rat 24
 % if Rat==24
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
@@ -567,15 +568,31 @@ end
 
 %%
 consig=carajo{1};
+
+bon=consig(:,1:2);
+C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
+c=cell2mat(C.');
+c=median(c)*1000; %Miliseconds
+cc(iii)=c;
 consig=consig(:,3);
 
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
 Aver{iii,:}=aver;
 
+
+
 end
+%%
 xo
 %%
+d=categorical(labelconditions)
+bar(d,cc)
+ylim([35 45])
+title('Median duration of ripple')
+ylabel(Miliseconds'')
+%%
+allscreen()
 for vert=1:length(nFF)
 subplot(1,4,vert)    
 histogram(Aver{vert,:},'Normalization','probability','BinWidth',0.1)
@@ -589,33 +606,15 @@ xlabel('Time(sec)')
 grid off
 
 %xo
-ylim([0 .15])
+ylim([0 .14])
 ytix = get(gca, 'YTick');
 set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
 ylabel('Percentage of occurence')
 %hold on
 end
-%%
-%histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
-alpha(0.4)
 
-% legend([labelconditions])
-xlabel('Time(sec)')
-title('Histogram of interripple occurence')
-grid off
-ytix = get(gca, 'YTick');
-set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
-ylabel('Percentage of occurence')
-
-end
-if rippletable==0
-    %for w=2:3
 
 %%
-
-%%
-%xo
-%error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -630,31 +629,27 @@ end
 if dura==2
     cd('10sec')
 end
-
-% if sanity~=1
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-print(string,'-depsc')
-string=strcat('Histo_',labelconditions{vert},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-saveas(gcf,string)
-
-% else
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% figure_function(gcf,[],string,[]);
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-% print(string,'-depsc')
-% string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-% saveas(gcf,string)
-    
-% end
-%xo
-close all
-
 %%
+% if sanity~=1
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.eps');
+print(string,'-depsc')
+string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.fig');
+saveas(gcf,string)
+xo
+%%
+%histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
+alpha(0.4)
 
-%end
-%xo
+% legend([labelconditions])
+xlabel('Time(sec)')
+title('Histogram of interripple occurence')
+grid off
+ytix = get(gca, 'YTick');
+set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
+ylabel('Percentage of occurence')
+
 end
 end
 xo
@@ -670,25 +665,6 @@ end
 %clearvars -except acer Rat
 end
 xo
-if meth==4
-
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
-
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-    
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-
-    [s.(Base{base})]=riptable;
-end
 
 end
 %xo

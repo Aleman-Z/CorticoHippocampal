@@ -568,14 +568,29 @@ end
 
 %%
 consig=carajo{1};
+
+bon=consig(:,1:2);
+C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
+c=cell2mat(C.');
+c=median(c)*1000; %Miliseconds
+cc(iii)=c;
 consig=consig(:,3);
 
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
 Aver{iii,:}=aver;
 
+
+
 end
-%xo
+%%
+xo
+%%
+d=categorical(labelconditions)
+bar(d,cc)
+ylim([35 45])
+title('Median duration of ripples')
+ylabel('Time (ms)')
 %%
 allscreen()
 for vert=1:length(nFF)
