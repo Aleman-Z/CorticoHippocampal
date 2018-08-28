@@ -34,7 +34,7 @@ DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-sanity=1;
+sanity=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 

@@ -13,6 +13,7 @@ rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
+ripdur=1; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -29,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -586,11 +587,13 @@ end
 %%
 xo
 %%
+if ripdur==1
 d=categorical(labelconditions)
 bar(d,cc)
-ylim([35 45])
+ylim([35 50])
 title('Median duration of ripples')
 ylabel('Time (ms)')
+else
 %%
 allscreen()
 for vert=1:length(nFF)
@@ -612,7 +615,7 @@ set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
 ylabel('Percentage of occurence')
 %hold on
 end
-
+end
 
 %%
 if acer==0
@@ -631,12 +634,22 @@ if dura==2
 end
 %%
 % if sanity~=1
-string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.pdf');
+if ripdur~=1
+string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Histo_','Allconditions','_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
+else
+string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+        
+end
 xo
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
