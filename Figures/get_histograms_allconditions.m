@@ -596,15 +596,36 @@ xo
 %%
 if ripdur==1
 %%    
-d=categorical(labelconditions)
-bar(d,cccc)
-%ylim([35 50])
-title('Median duration of ripples')
+% % % d=categorical(labelconditions)
+% % % bar(d,cccc)
+% % % %ylim([35 50])
+% % % title('Median duration of ripples')
+% % % ylabel('Time (ms)')
+% % % hold on
+% % % ylim([40 70])
+% % % ee=errorbar(d,cccc,Sem*1000,'.')
+% % % ee.Color=[0 0 0]
+
+tvar=CC{1};
+CCC{1}=tvar(~isoutlier(tvar));
+tvar=CC{2};
+CCC{2}=tvar(~isoutlier(tvar));
+tvar=CC{3};
+CCC{3}=tvar(~isoutlier(tvar));
+tvar=CC{4};
+CCC{4}=tvar(~isoutlier(tvar));
+
+C = [CCC{1} CCC{2}  CCC{3}  CCC{4}];
+grp = [zeros(1,length(CCC{1})),ones(1,length(CCC{2})),2*ones(1,length(CCC{3})),3*ones(1,length(CCC{4}))];
+
+bb=boxplot(C*1000,grp,'Notch','on' );
+ylim([0 0.10*1000])
+
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
 ylabel('Time (ms)')
-hold on
-ylim([40 70])
-ee=errorbar(d,cccc,Sem*1000,'.')
-ee.Color=[0 0 0]
+
 %%
 else
 %%
@@ -666,15 +687,6 @@ end
 xo
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
-alpha(0.4)
-
-% legend([labelconditions])
-xlabel('Time(sec)')
-title('Histogram of interripple occurence')
-grid off
-ytix = get(gca, 'YTick');
-set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
-ylabel('Percentage of occurence')
 
 end
 end
