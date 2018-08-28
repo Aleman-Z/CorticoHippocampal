@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -572,15 +572,22 @@ consig=carajo{1};
 
 bon=consig(:,1:2);
 C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
-c=cell2mat(C.');
-c=median(c)*1000; %Miliseconds
+C=cell2mat(C.');
+data_SEM = std(C)/sqrt( length(C));       % SEM Across Columns
+CC{iii,:}=C;
+%xo
+c=median(C)*1000; %Miliseconds
+ccc=mean(C)*1000;
+% c=median(c)*1000; %Miliseconds
 cc(iii)=c;
+cccc(iii)=ccc;
+
 consig=consig(:,3);
 
 aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
 aver=[aver{:}];
 Aver{iii,:}=aver;
-
+Sem(iii,:)=data_SEM;
 
 
 end
@@ -588,11 +595,17 @@ end
 xo
 %%
 if ripdur==1
+%%    
 d=categorical(labelconditions)
-bar(d,cc)
-ylim([35 50])
+bar(d,cccc)
+%ylim([35 50])
 title('Median duration of ripples')
 ylabel('Time (ms)')
+hold on
+ylim([40 70])
+ee=errorbar(d,cccc,Sem*1000,'.')
+ee.Color=[0 0 0]
+%%
 else
 %%
 allscreen()
