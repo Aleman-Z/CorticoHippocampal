@@ -79,5 +79,5 @@ When ripdur=0: \
 
 When ripdur=1: \
 *Plots notched boxplots of the ripples´s duration per condition.*
-<img src="HistAmp.png" width="600">
+<img src="RipDur.png" width="400">
 
