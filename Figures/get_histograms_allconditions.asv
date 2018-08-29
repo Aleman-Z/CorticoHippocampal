@@ -13,7 +13,7 @@ rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
-ripdur=1; % Duration of ripples. 
+ripdur=0; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -573,14 +573,14 @@ consig=carajo{1};
 bon=consig(:,1:2);
 C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
 C=cell2mat(C.');
-data_SEM = std(c)/sqrt( length(c));       % SEM Across Columns
-
+data_SEM = std(C)/sqrt( length(C));       % SEM Across Columns
+CC{iii,:}=C;
 %xo
 c=median(C)*1000; %Miliseconds
 ccc=mean(C)*1000;
 % c=median(c)*1000; %Miliseconds
 cc(iii)=c;
-ccc(iii)=
+cccc(iii)=ccc;
 
 consig=consig(:,3);
 
@@ -593,20 +593,77 @@ Sem(iii,:)=data_SEM;
 end
 %%
 xo
+for tailed=1:2
 %%
 if ripdur==1
 %%    
-d=categorical(labelconditions)
-bar(d,cc)
-ylim([35 50])
-title('Median duration of ripples')
+% % % d=categorical(labelconditions)
+% % % bar(d,cccc)
+% % % %ylim([35 50])
+% % % title('Median duration of ripples')
+% % % ylabel('Time (ms)')
+% % % hold on
+% % % ylim([40 70])
+% % % ee=errorbar(d,cccc,Sem*1000,'.')
+% % % ee.Color=[0 0 0]
+
+tvar=CC{1};
+CCC{1}=tvar(~isoutlier(tvar));
+tvar=CC{2};
+CCC{2}=tvar(~isoutlier(tvar));
+tvar=CC{3};
+CCC{3}=tvar(~isoutlier(tvar));
+tvar=CC{4};
+CCC{4}=tvar(~isoutlier(tvar));
+
+C = [CCC{1} CCC{2}  CCC{3}  CCC{4}];
+grp = [zeros(1,length(CCC{1})),ones(1,length(CCC{2})),2*ones(1,length(CCC{3})),3*ones(1,length(CCC{4}))];
+
+bb=boxplot(C*1000,grp,'Notch','on' );
+ylim([0 0.10*1000])
+
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
 ylabel('Time (ms)')
-hold on
-ee=errorbar(d,cc,Sem*1000,'.')
-ee.Color=[0 0 0]
+
 %%
 else
 %%
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if tailed==1
+indiv=1;
+allscreen()
+for vert=1:length(nFF)
+if indiv~?   
+subplot(4,1,vert)
+end
+H=histogram(Aver{vert,:},'BinWidth',0.1)
+xlim([0 50])
+ylim([0 50])
+
+title(labelconditions{vert})
+%grid minor
+xlabel('Time(sec)')
+% title('Histogram of interripple occurence')
+grid off
+
+%xo
+%ylim([0 .14])
+ytix = get(gca, 'YTick');
+% set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
+ylabel('Ripples')
+%hold on
+
+end
+%%
+else
 allscreen()
 for vert=1:length(nFF)
 subplot(1,4,vert)    
@@ -626,6 +683,13 @@ ytix = get(gca, 'YTick');
 set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
 ylabel('Percentage of occurence')
 %hold on
+
+end    
+    
+%%    
+
+
+%%
 end
 end
 
@@ -647,12 +711,23 @@ end
 %%
 % if sanity~=1
 if ripdur~=1
+if tailed==1
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+else
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
+    
+end
 else
 string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
@@ -662,18 +737,10 @@ string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fi
 saveas(gcf,string)
         
 end
+end
 xo
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
-alpha(0.4)
-
-% legend([labelconditions])
-xlabel('Time(sec)')
-title('Histogram of interripple occurence')
-grid off
-ytix = get(gca, 'YTick');
-set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
-ylabel('Percentage of occurence')
 
 end
 end

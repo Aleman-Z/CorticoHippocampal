@@ -13,7 +13,7 @@ rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
-ripdur=1; % Duration of ripples. 
+ripdur=0; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -593,6 +593,7 @@ Sem(iii,:)=data_SEM;
 end
 %%
 xo
+for tailed=1:2
 %%
 if ripdur==1
 %%    
@@ -629,9 +630,60 @@ ylabel('Time (ms)')
 %%
 else
 %%
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+
+if tailed==1
+indiv=1;
+if indiv~=1
 allscreen()
+end
 for vert=1:length(nFF)
+if indiv~=1
+subplot(4,1,vert)
+end
+H=histogram(Aver{vert,:},'BinWidth',0.1)
+xlim([0 50])
+ylim([0 50])
+
+title(labelconditions{vert})
+%grid minor
+xlabel('Time(sec)')
+% title('Histogram of interripple occurence')
+grid off
+
+%xo
+%ylim([0 .14])
+ytix = get(gca, 'YTick');
+% set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
+ylabel('Ripples')
+%hold on
+if indiv==1
+pause(1)
+string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+end
+if indiv==1
+close all
+end
+end
+%%
+else
+if indiv~=1    
+allscreen()
+end
+for vert=1:length(nFF)
+if indiv~=1
 subplot(1,4,vert)    
+end
 histogram(Aver{vert,:},'Normalization','probability','BinWidth',0.1)
 xlim([0 4])
 %ylim([0 14])
@@ -648,6 +700,23 @@ ytix = get(gca, 'YTick');
 set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
 ylabel('Percentage of occurence')
 %hold on
+if indiv==1
+pause(1)
+string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+    
+close all
+end
+end    
+    
+%%    
+
+
+%%
 end
 end
 
@@ -669,12 +738,23 @@ end
 %%
 % if sanity~=1
 if ripdur~=1
+if tailed==1
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+else
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
 string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
+    
+end
 else
 string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
@@ -683,6 +763,7 @@ print(string,'-depsc')
 string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
         
+end
 end
 xo
 %%
