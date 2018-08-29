@@ -1,4 +1,4 @@
-function spec_loop_improve(equis,bt,sanity)
+function spec_loop_improve(equis,bt,sanity,Dura)
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -29,7 +29,7 @@ for rat24base=1:2
       break
   end
 
-for dura=1:1 %Starts with 1
+for dura=Dura:Dura %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -246,7 +246,7 @@ else
 string1=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 end
 openfig(string1)
-spec_improve(labelconditions{iii},sanity)
+spec_improve(labelconditions{iii},sanity,dura)
 saveas(gcf,string1)
 
 %%

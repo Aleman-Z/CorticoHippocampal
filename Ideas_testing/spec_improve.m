@@ -1,4 +1,4 @@
-function spec_improve(lab,sanity)
+function spec_improve(lab,sanity,dura)
 h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
@@ -31,7 +31,11 @@ gg=gca;
 gg.YTickLabel=flip(gg.YTickLabel);
 %%
 gg.XTick=[1 50 100 150 200];
+if dura==1
 gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+else
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+end
 %
 i=I.CData;
 set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
@@ -59,7 +63,12 @@ c2.YLim=[do(2) do(3)];
 
 %%
 gg.XTick=[1 50 100 150 200];
+if dura==1
 gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+else
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+end
+%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
 
 i=I.CData;
 set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
@@ -82,7 +91,13 @@ gg=gca;
 gg.YTickLabel=flip(gg.YTickLabel);
 %%
 gg.XTick=[1 50 100 150 200];
+%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+if dura==1
 gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+else
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+end
+
 %
 i=I.CData;
 set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
