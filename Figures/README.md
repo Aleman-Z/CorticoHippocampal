@@ -79,7 +79,7 @@ When ripdur=0 and tailed~=1:\
 
 When ripdur=0 and tailed=1:\
 *Generates full-tail non-normalized histogram of interriple time between all conditions.*
-<img src="HistAmp.png" width="600">
+<img src="fulltail.png" width="600">
 
 When ripdur=1: \
 *Plots notched boxplots of the ripples´s duration per condition.* \
