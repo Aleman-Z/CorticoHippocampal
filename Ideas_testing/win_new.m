@@ -101,8 +101,6 @@ cellr{count,1}=sn;
 
 end
 
-% tn=t(max1s:max2s);
-% sn=signal(max1s:max2s);
-% sn1=signalwave(max1s:max2s);    
+
 end
 end
