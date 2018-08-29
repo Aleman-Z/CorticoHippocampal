@@ -73,8 +73,12 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 <img src="Histo.png" width="400">
 
 * **get_histograms_allconditions.m:** \
-When ripdur=0: \
+When ripdur=0 and tailed~=1:\
 *Generates percentual histogram of interriple time between all conditions.*
+<img src="HistAmp.png" width="600">
+
+When ripdur=0 and tailed=1:\
+*Generates full-tail non-normalized histogram of interriple time between all conditions.*
 <img src="HistAmp.png" width="600">
 
 When ripdur=1: \
