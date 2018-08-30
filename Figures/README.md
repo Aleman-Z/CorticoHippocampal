@@ -85,3 +85,6 @@ When ripdur=1: \
 *Plots notched boxplots of the ripples´s duration per condition.* \
 <img src="RipDur.png" width="400">
 
+* **frequency_boxplots.m:**
+*Plots notched boxplots of the ripples´s peak or mean frequency.* 
+<img src="peak_freq.png" width="400">
