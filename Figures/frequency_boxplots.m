@@ -1,6 +1,6 @@
 close all
 clear all
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -13,7 +13,7 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=0;
+sanity=1;
 ripdur=0; % Duration of ripples. 
 %%
 if acer==0
@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -373,7 +373,7 @@ if dura==2
     cd('10sec')
 end
 
-if iii==2 && sanity==1
+if iii==1 && sanity==1
 %Get number of ripples
 FolderRip=[{'all_ripples'} {'500'} {'1000'}];
             Method=[{'Method2' 'Method3' 'Method4'}];
@@ -572,6 +572,23 @@ end
 %xo
 [p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
 xq=0:0.5:500;
+%xo
+
+% [ran]=select_rip(p,FiveHun);
+% % 
+% p=p([ran]);
+% q=q([ran]);
+
+if iii~=4 && sanity==1 %4 is Plusmaze!
+ p=p(randrip);
+ q=q(randrip);
+end
+
+%Q=Q([ran]);
+%timecell=timecell([ran]);
+[q]=filter_ripples_new(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+%[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
 %%
 clear U VQ MU
 
@@ -638,7 +655,8 @@ set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Frequency (Hz)')
-ylim([90 220])
+%ylim([90 220])
+ylim([90 230])
 %%
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -646,22 +664,45 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
+%%
+if sanity==1
 
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+else
 string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
 string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
+    
+end
 %%
+if sanity==1
+
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+else
 string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
 string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
-
-
+    
+end
+%%
 %%
 xo
 %%
