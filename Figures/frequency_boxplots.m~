@@ -1,5 +1,4 @@
 close all
-clear all
 acer=0;
 % rat24base=1;
 DUR{1}='1sec';
@@ -31,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -569,11 +568,9 @@ end
 %%
 
 %%
-%xo
-[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
+xo
+[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));    
 xq=0:0.5:500;
-%%
-clear U VQ MU
 
 for k=1:length(q)
 % plot(q{k})   
@@ -583,17 +580,16 @@ for k=1:length(q)
 %  semilogy(f,(pxx))
  vq1 = interp1(f,pxx,xq,'PCHIP');
  VQ(k,:)=vq1;
-%  U(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
- U(k)=interp1(VQ(k,:),xq,mean(VQ(k,:)));
-MU(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
+ U(op)=interp1(VQ(k,:),xq,max(VQ(k,:)));
  %%
 %  semilogy(f,(pxx))
 %  hold on
 %  semilogy(xq,(vq1))
- k/length(q)*100
+ k
 end
-UU{iii}=U;
-MUU{iii}=MU;
+
+
+
 %%
 
 consig=carajo{1};
@@ -619,49 +615,6 @@ Sem(iii,:)=data_SEM;
 
 
 end
-%%
- xo
-%% 
-UM = [UU{1} UU{2}  UU{3}  UU{4}];
-grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
-bb=boxplot(UM,grp,'Notch','on' );
-%set(bb(7,:),'Visible','off');
-ave=gca;
-ave.XTickLabel=labelconditions;
-ylabel('Frequency (Hz)')
-% ylim([90 220])
-%%
-UM = [MUU{1} MUU{2}  MUU{3}  MUU{4}];
-grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
-bb=boxplot(UM,grp,'Notch','on' );
-set(bb(7,:),'Visible','off');
-ave=gca;
-ave.XTickLabel=labelconditions;
-ylabel('Frequency (Hz)')
-ylim([90 220])
-%%
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-end
-
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-%%
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-
-
 %%
 xo
 for tailed=1:2
