@@ -629,7 +629,7 @@ bb=boxplot(UM,grp,'Notch','on' );
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Frequency (Hz)')
-% ylim([90 220])
+ylim([60 300])
 %%
 UM = [MUU{1} MUU{2}  MUU{3}  MUU{4}];
 grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
