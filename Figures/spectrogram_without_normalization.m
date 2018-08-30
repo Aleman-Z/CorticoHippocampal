@@ -11,7 +11,7 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=1;
+sanity=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -28,13 +28,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -42,7 +42,7 @@ for rat24base=1:2
       break
   end
 
-for dura=1:1 %Starts with 1
+for dura=2:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -244,7 +244,7 @@ end
 if dura==2
     cd('10sec')
 end
-%xo
+% xo
 % 
 % %Ignore this for a moment
 % FolderRip=[{'all_ripples'} {'500'} {'1000'}];
@@ -407,7 +407,7 @@ else
 end
 cd('..')
 end
-% xo
+%xo
 % 
 % string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 % string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
@@ -750,7 +750,7 @@ end
 end
 %xo
 if rippletable==0
-spec_loop_improve(RAT,block_time,sanity);
+spec_loop_improve(RAT,block_time,sanity,dura);
 %save in right folder
 list = dir();
 list([list.isdir]) = [];
