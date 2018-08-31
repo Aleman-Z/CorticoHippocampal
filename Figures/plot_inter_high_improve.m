@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,varargin)
+function plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,varargin)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -53,55 +53,21 @@ randrip=cell2mat(randrip);
 [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));    
 % end
 
-
-% % % % % load(strcat('randnum2_',num2str(level),'.mat'))
-% % % % % ran_nl=ran;
+if quinientos==0
 [ran_nl]=select_rip(p_nl,FiveHun);
-
-% 
-% av=cat(1,p_nl{1:end});
-% %av=cat(1,q_nl{1:end});
-% av=av(1:3:end,:); %Only Hippocampus
-% 
-% %AV=max(av.');
-% %[B I]= maxk(AV,1000);
-% 
-% %AV=max(av.');
-% %[B I]= maxk(max(av.'),1000);
-% 
-% 
-% [ach]=max(av.');
-% achinga=sort(ach,'descend');
-% %achinga=achinga(1:1000);
-% if length(achinga)>1000
-%     if  Rat==24
-%         achinga=achinga(6:1005);
-%     else
-%         achinga=achinga(1:1000);
-%     end
-% end
-% 
-% B=achinga;
-% I=nan(1,length(B));
-% for hh=1:length(achinga)
-%    % I(hh)= min(find(ach==achinga(hh)));
-% I(hh)= find(ach==achinga(hh),1,'first');
-% end
-% 
-% 
-% [ajal ind]=unique(B);
-% if length(ajal)>500
-% ajal=ajal(end-499:end);
-% ind=ind(end-499:end);
-% end
-% dex=I(ind);
-% 
-% ran_nl=dex.';
-
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
-%timecell_nl=timecell_nl([ran_nl]);
-if sanity==1
+
+else
+     if iii~=2
+        [ran_nl]=select_quinientos(p_nl,length(randrip)); 
+        p_nl=p_nl([ran_nl]);
+        q_nl=q_nl([ran_nl]);
+     %    ran=1:length(randrip);
+     end
+end
+
+if sanity==1 && quinientos==0
  p_nl=p_nl(randrip);
  q_nl=q_nl(randrip);
 end
@@ -211,12 +177,25 @@ ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
 end
 
 [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+% [ran_nl]=select_rip(p_nl,FiveHun);
+% 
+% p_nl=p_nl([ran_nl]);
+% q_nl=q_nl([ran_nl]);
+if quinientos==0
 [ran_nl]=select_rip(p_nl,FiveHun);
-
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);
 
-if sanity==1
+else
+     if iii~=2
+        [ran_nl]=select_quinientos(p_nl,length(randrip)); 
+        p_nl=p_nl([ran_nl]);
+        q_nl=q_nl([ran_nl]);
+     %    ran=1:length(randrip);
+     end
+end
+
+if sanity==1 && quinientos==0
  p_nl=p_nl(randrip);
  q_nl=q_nl(randrip);
 end

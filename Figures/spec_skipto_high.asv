@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -583,29 +583,6 @@ clear sig1 sig2
 % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % p=p([ran]);
 % % % % % % % % % % % % % % % % % % % % q=q([ran]);
-if quinientos==1 && iii==2
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-end
-
-if Rat==24
-    cd(nFF{1})
-end
-
-if dura==2
-    cd('10sec')
-end
-
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
-cd(folder)
-load('randrip.mat')
-end
-
-
 if quinientos==0
 [ran]=select_rip(p,FiveHun);
 p=p([ran]);
@@ -743,19 +720,7 @@ end
 %xo
 if sanity==1
     if quinientos==1
-        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-        saveas(gcf,string)
-        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-        figure_function(gcf,[],string,[]);
-        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-        print(string,'-depsc')
     else
-        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-        saveas(gcf,string)
-        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-        figure_function(gcf,[],string,[]);
-        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-        print(string,'-depsc')
     end
     
 else
