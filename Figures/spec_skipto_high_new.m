@@ -366,44 +366,17 @@ if dura==2
     cd('10sec')
 end
 %xo
-
-% 
-% string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% 
-% 
-% while exist(string1, 'file')==2 && exist(string2, 'file')==2
-% iii=iii+1;
-% 
-% if iii>length(nFF)
-%     break
-% end
-%    string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-%    string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% 
-% end
-
-if iii>length(nFF)
-    break
-end
-
-% string=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-% if exist(string, 'file') == 2
-% string=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
-%       if exist(string, 'file') == 2
-%            iii=iii+1;
-%       end
-% end
-%  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
-
-
-
-%for level=1:length(ripple)-1;    
- %for level=1:1
-%xo     
+%%
+if iii==2 && sanity==1
+%Get number of ripples
+FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+            Method=[{'Method2' 'Method3' 'Method4'}];
 if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
+Base=[{'Baseline1'} {'Baseline2'} {'Baseline3'}];
 end
+%             else
+%             Base=[{'Baseline2'} {'Baseline1'} {'Baseline3'}];    
+%             end
 if Rat==26 && rat26session3==1
 Base=[{'Baseline3'} {'Baseline2'}];
 end
@@ -416,7 +389,44 @@ if Rat==27 && rat27session3==1
 Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
 end
 
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+            folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
+%xo
+cd(folder)
+%look for randrip.
+b=struct2cell(dir)
+
+if ~any(ismember(b(1,:),'randrip.mat'))
+
+load('NumberRipples.mat')
+vr=getfield(s,Base{base});
+vr=min(vr(:,1));
+    
+randrip=randi(1000,[1,vr]);
+save('randrip.mat','randrip');
+
+%xo
+else
+ load('randrip.mat')   
+end
+cd('..')
+end
+
+%%
+if iii>length(nFF)
+    break
+end
+
+% if acer==0
+%     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+% else
+%     cd(strcat('D:\internship\',num2str(Rat)))
+% end
+% 
+% cd(nFF{iii})
+% lepoch=2;
+% 
+%  level=1;
+%%
 
 if meth==1
 folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
@@ -583,6 +593,32 @@ clear sig1 sig2
 % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % p=p([ran]);
 % % % % % % % % % % % % % % % % % % % % q=q([ran]);
+
+%CHECK THIS:
+
+% % % % % % % % % % % % if quinientos==1 && iii==2
+% % % % % % % % % % % % 
+% % % % % % % % % % % % if acer==0
+% % % % % % % % % % % %     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+% % % % % % % % % % % % else
+% % % % % % % % % % % %       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+% % % % % % % % % % % %       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+% % % % % % % % % % % % end
+% % % % % % % % % % % % 
+% % % % % % % % % % % % if Rat==24
+% % % % % % % % % % % %     cd(nFF{1})
+% % % % % % % % % % % % end
+% % % % % % % % % % % % 
+% % % % % % % % % % % % if dura==2
+% % % % % % % % % % % %     cd('10sec')
+% % % % % % % % % % % % end
+% % % % % % % % % % % % 
+% % % % % % % % % % % % folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
+% % % % % % % % % % % % cd(folder)
+% % % % % % % % % % % % load('randrip.mat')
+% % % % % % % % % % % % end
+
+
 if quinientos==0
 [ran]=select_rip(p,FiveHun);
 p=p([ran]);
@@ -600,33 +636,38 @@ end
 
 
 % xo
-if sanity==1 && quinientos==0 
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-end
-
-if Rat==24
-    cd(nFF{1})
-end
-
-if dura==2
-    cd('10sec')
-end
-
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
-cd(folder)
-load('randrip.mat')
-
-if iii~=2
+if iii~=2 && sanity==1 && quinientos==0 
  p=p(randrip);
  q=q(randrip);
 end
 
-end
+% % % % % % % % % % % if sanity==1 && quinientos==0 
+% % % % % % % % % % % 
+% % % % % % % % % % % if acer==0
+% % % % % % % % % % %     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+% % % % % % % % % % % else
+% % % % % % % % % % %       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+% % % % % % % % % % %       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+% % % % % % % % % % % end
+% % % % % % % % % % % 
+% % % % % % % % % % % if Rat==24
+% % % % % % % % % % %     cd(nFF{1})
+% % % % % % % % % % % end
+% % % % % % % % % % % 
+% % % % % % % % % % % if dura==2
+% % % % % % % % % % %     cd('10sec')
+% % % % % % % % % % % end
+% % % % % % % % % % % 
+% % % % % % % % % % % folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});
+% % % % % % % % % % % cd(folder)
+% % % % % % % % % % % load('randrip.mat')
+% % % % % % % % % % % 
+% % % % % % % % % % % if iii~=2
+% % % % % % % % % % %  p=p(randrip);
+% % % % % % % % % % %  q=q(randrip);
+% % % % % % % % % % % end
+% % % % % % % % % % % 
+% % % % % % % % % % % end
 
 %Q=Q([ran]);
 %timecell=timecell([ran]);
@@ -720,7 +761,19 @@ end
 %xo
 if sanity==1
     if quinientos==1
+        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        saveas(gcf,string)
+        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        figure_function(gcf,[],string,[]);
+        string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        print(string,'-depsc')
     else
+        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        saveas(gcf,string)
+        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        figure_function(gcf,[],string,[]);
+        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        print(string,'-depsc')
     end
     
 else

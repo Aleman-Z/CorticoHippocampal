@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -349,7 +349,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
+for iii=4:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -710,7 +710,7 @@ end
 %xo   
         
 %%
-%xo
+xo
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,randrip);    
