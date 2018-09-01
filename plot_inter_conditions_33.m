@@ -181,6 +181,8 @@ end
 
 [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 %%
+clear sig1_nl sig2_nl
+
 if quinientos==0
 [ran_nl]=select_rip(p_nl,FiveHun);
 p_nl=p_nl([ran_nl]);
@@ -223,6 +225,7 @@ q_nl(2:2:end)=[QNU{2}(1:length(q_nl(2:2:end)))];
     
     
 end
+clear sig1_nl sig2_nl 
 
 %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
@@ -321,6 +324,7 @@ ylim(win2)
 xlabel('Time (s)')
 ylabel('uV')
 
+clear P1 P2 
 %% Time Frequency plots
 % Calculate Freq1 and Freq2
 if ro==1200   
@@ -449,6 +453,7 @@ xlabel('Time (s)')
 ylabel('Frequency (Hz)')
 
 %%
+clear freq1 freq2 stats p_nl p
 %Calculate Freq3 and Freq4
 %toy=[-1:.01:1];
 if ro==1200
