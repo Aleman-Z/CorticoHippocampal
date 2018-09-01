@@ -31,7 +31,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:2
  if meth==4
     s=struct; 
  end  
@@ -641,13 +641,13 @@ end
 %%
 
 if ripdur==1
-C = [lq(1,:) lq(1,:)  lq(1,:)  lq(1,:)];
+LQ = [lq(1,:) lq(2,:)  lq(3,:)  lq(4,:)];
     
-grp = [zeros(1,length(CCC{1})),ones(1,length(CCC{2})),2*ones(1,length(CCC{3})),3*ones(1,length(CCC{4}))];
+grp = [zeros(1,size(lq,2)),ones(1,size(lq,2)),2*ones(1,size(lq,2)),3*ones(1,size(lq,2))];
 
-bb=boxplot(C*1000,grp,'Notch','on' );
-ylim([0 0.10*1000])
-
+bb=boxplot(LQ*1000,grp,'Notch','on' );
+%ylim([0 0.10*1000])
+ylim([0 100])
 set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
@@ -722,6 +722,15 @@ end
 %%
 %%
 xo
+%%
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+%%
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 

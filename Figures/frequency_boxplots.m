@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -647,7 +647,7 @@ grp = [zeros(1,size(lq,2)),ones(1,size(lq,2)),2*ones(1,size(lq,2)),3*ones(1,size
 
 bb=boxplot(LQ*1000,grp,'Notch','on' );
 %ylim([0 0.10*1000])
-ylim([0 100])
+ylim([0 160])
 set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
@@ -722,6 +722,15 @@ end
 %%
 %%
 xo
+%%
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
+%%
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 
