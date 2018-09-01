@@ -55,7 +55,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=2:2
     
 if Rat==1
     
@@ -166,7 +166,11 @@ colormap(jet(256))
 %set(gca,'YDir','normal')
 c1=narrow_colorbar()
 gg.XTick=[1 50 100 150 200];
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+if dura==2
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+else
+gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+end
 xlabel('Time (s)')
 % title(strcat('Wide Band','{ }',lab))
 ylabel('Frequency (Hz)')
@@ -192,7 +196,13 @@ colormap(jet(256))
 %set(gca,'YDir','normal')
 c1=narrow_colorbar()
 gg.XTick=[1 50 100 150 200];
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+if dura==2
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+else
+gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+end
+
 xlabel('Time (s)')
 title(strcat('Wide Band','{ }',labelconditions{iii}))
 ylabel('Frequency (Hz)')
@@ -218,7 +228,13 @@ colormap(jet(256))
 %set(gca,'YDir','normal')
 c1=narrow_colorbar()
 gg.XTick=[1 50 100 150 200];
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+if dura==2
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+else
+gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+end
+
 xlabel('Time (s)')
 % title(strcat('Wide Band','{ }',lab))
 ylabel('Frequency (Hz)')
@@ -245,7 +261,13 @@ colormap(jet(256))
 %set(gca,'YDir','normal')
 c1=narrow_colorbar()
 gg.XTick=[1 50 100 150 200];
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+if dura==2
+gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+else
+gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+end
+
 xlabel('Time (s)')
 % title(strcat('Wide Band','{ }',lab))
 title(strcat('High Gamma','{ }',labelconditions{iii}))
