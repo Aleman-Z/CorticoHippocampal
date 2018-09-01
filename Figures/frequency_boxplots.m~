@@ -1,4 +1,5 @@
 close all
+clear all
 acer=0;
 % rat24base=1;
 DUR{1}='1sec';
@@ -12,8 +13,8 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=0;
-ripdur=0; % Duration of ripples. 
+sanity=1;
+ripdur=1; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -30,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -372,7 +373,7 @@ if dura==2
     cd('10sec')
 end
 
-if iii==2 && sanity==1
+if iii==1 && sanity==1
 %Get number of ripples
 FolderRip=[{'all_ripples'} {'500'} {'1000'}];
             Method=[{'Method2' 'Method3' 'Method4'}];
@@ -568,9 +569,28 @@ end
 %%
 
 %%
-xo
-[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));    
+%xo
+[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
 xq=0:0.5:500;
+%xo
+
+% [ran]=select_rip(p,FiveHun);
+% % 
+% p=p([ran]);
+% q=q([ran]);
+
+if iii~=4 && sanity==1 %4 is Plusmaze!
+ p=p(randrip);
+ q=q(randrip);
+end
+
+%Q=Q([ran]);
+%timecell=timecell([ran]);
+[q]=filter_ripples_new(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+%[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
+%%
+clear U VQ MU
 
 for k=1:length(q)
 % plot(q{k})   
@@ -580,16 +600,17 @@ for k=1:length(q)
 %  semilogy(f,(pxx))
  vq1 = interp1(f,pxx,xq,'PCHIP');
  VQ(k,:)=vq1;
- U(op)=interp1(VQ(k,:),xq,max(VQ(k,:)));
+%  U(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
+ U(k)=interp1(VQ(k,:),xq,mean(VQ(k,:)));
+MU(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
  %%
 %  semilogy(f,(pxx))
 %  hold on
 %  semilogy(xq,(vq1))
- k
+ k/length(q)*100
 end
-
-
-
+UU{iii}=U;
+MUU{iii}=MU;
 %%
 
 consig=carajo{1};
@@ -613,34 +634,15 @@ aver=[aver{:}];
 Aver{iii,:}=aver;
 Sem(iii,:)=data_SEM;
 
-
+lq(iii,:)=cellfun('length',q)/1000; %sec
 end
 %%
-xo
-for tailed=1:2
+ xo
 %%
+
 if ripdur==1
-%%    
-% % % d=categorical(labelconditions)
-% % % bar(d,cccc)
-% % % %ylim([35 50])
-% % % title('Median duration of ripples')
-% % % ylabel('Time (ms)')
-% % % hold on
-% % % ylim([40 70])
-% % % ee=errorbar(d,cccc,Sem*1000,'.')
-% % % ee.Color=[0 0 0]
-
-tvar=CC{1};
-CCC{1}=tvar(~isoutlier(tvar));
-tvar=CC{2};
-CCC{2}=tvar(~isoutlier(tvar));
-tvar=CC{3};
-CCC{3}=tvar(~isoutlier(tvar));
-tvar=CC{4};
-CCC{4}=tvar(~isoutlier(tvar));
-
-C = [CCC{1} CCC{2}  CCC{3}  CCC{4}];
+C = [lq(1,:) lq(1,:)  lq(1,:)  lq(1,:)];
+    
 grp = [zeros(1,length(CCC{1})),ones(1,length(CCC{2})),2*ones(1,length(CCC{3})),3*ones(1,length(CCC{4}))];
 
 bb=boxplot(C*1000,grp,'Notch','on' );
@@ -650,9 +652,28 @@ set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Time (ms)')
-
+   
+    
+end
+%% 
+UM = [UU{1} UU{2}  UU{3}  UU{4}];
+grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
+bb=boxplot(UM,grp,'Notch','on' );
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Frequency (Hz)')
+ylim([60 300])
 %%
-else
+UM = [MUU{1} MUU{2}  MUU{3}  MUU{4}];
+grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
+bb=boxplot(UM,grp,'Notch','on' );
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Frequency (Hz)')
+%ylim([90 220])
+ylim([90 230])
 %%
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -660,135 +681,46 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
+%%
+if sanity==1
 
-if tailed==1
-indiv=1;
-if indiv~=1
-allscreen()
-end
-for vert=1:length(nFF)
-if indiv~=1
-subplot(4,1,vert)
-end
-H=histogram(Aver{vert,:},'BinWidth',0.1)
-xlim([0 50])
-ylim([0 50])
-
-title(labelconditions{vert})
-%grid minor
-xlabel('Time(sec)')
-% title('Histogram of interripple occurence')
-grid off
-
-%xo
-%ylim([0 .14])
-ytix = get(gca, 'YTick');
-% set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
-ylabel('Ripples')
-%hold on
-if indiv==1
-pause(1)
-string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.pdf');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.eps');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('HistogramTail_',labelconditions{vert},'_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-end
-if indiv==1
-close all
-end
-end
-%%
-else
-if indiv~=1    
-allscreen()
-end
-for vert=1:length(nFF)
-if indiv~=1
-subplot(1,4,vert)    
-end
-histogram(Aver{vert,:},'Normalization','probability','BinWidth',0.1)
-xlim([0 4])
-%ylim([0 14])
-
-title(labelconditions{vert})
-%grid minor
-xlabel('Time(sec)')
-% title('Histogram of interripple occurence')
-grid off
-
-%xo
-ylim([0 .14])
-ytix = get(gca, 'YTick');
-set(gca, 'YTick',ytix, 'YTickLabel',ytix*100)
-ylabel('Percentage of occurence')
-%hold on
-if indiv==1
-pause(1)
-string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Histogram_',labelconditions{vert},'_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-    
-close all
-end
-end    
-    
-%%    
-
-
-%%
-end
-end
-
-%%
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-end
-
-if Rat==24
-    cd(nFF{1})
-end
-
-if dura==2
-    cd('10sec')
-end
-%%
-% if sanity~=1
-if ripdur~=1
-if tailed==1
-string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('HistogramTail_','Allconditions','_',Block{block_time+1},'_','.fig');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
 
 else
-string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.pdf');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.eps');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Histogram_','Allconditions','_',Block{block_time+1},'_','.fig');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
     
 end
-else
-string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
+%%
+if sanity==1
+
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
-        
+
+else
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+    
 end
-end
+%%
+%%
 xo
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])

@@ -1,5 +1,5 @@
 close all
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -12,8 +12,8 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=0;
-ripdur=0; % Duration of ripples. 
+sanity=1;
+ripdur=1; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -353,7 +353,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=1:length(nFF) %Should start with 2!
+for iii=1:length(nFF) 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
     %xo

@@ -1,6 +1,6 @@
 close all
 clear all
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -13,8 +13,8 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=0;
-ripdur=0; % Duration of ripples. 
+sanity=1;
+ripdur=1; % Duration of ripples. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -634,10 +634,27 @@ aver=[aver{:}];
 Aver{iii,:}=aver;
 Sem(iii,:)=data_SEM;
 
-
+lq(iii,:)=cellfun('length',q)/1000; %sec
 end
 %%
  xo
+%%
+
+if ripdur==1
+LQ = [lq(1,:) lq(2,:)  lq(3,:)  lq(4,:)];
+    
+grp = [zeros(1,size(lq,2)),ones(1,size(lq,2)),2*ones(1,size(lq,2)),3*ones(1,size(lq,2))];
+
+bb=boxplot(LQ*1000,grp,'Notch','on' );
+%ylim([0 0.10*1000])
+ylim([0 100])
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Time (ms)')
+   
+    
+end
 %% 
 UM = [UU{1} UU{2}  UU{3}  UU{4}];
 grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
