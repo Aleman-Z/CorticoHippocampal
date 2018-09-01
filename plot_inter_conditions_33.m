@@ -536,24 +536,27 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
-if ro==1200
-[stats1]=stats_between_trials(freq3,freq4,label1,w);
-else
-[stats1]=stats_between_trials10(freq3,freq4,label1,w);
-end
+
+% % % % % % % % % % if ro==1200
+% % % % % % % % % % [stats1]=stats_between_trials(freq3,freq4,label1,w);
+% % % % % % % % % % else
+% % % % % % % % % % [stats1]=stats_between_trials10(freq3,freq4,label1,w);
+% % % % % % % % % % end
 
 
 %% %
  h(10)=subplot(3,4,12);
-cfg = [];
-cfg.channel = label1{2*w-1};
-cfg.parameter = 'stat';
-cfg.maskparameter = 'mask';
-cfg.zlim = 'maxabs';
-cfg.colorbar       = 'yes';
-cfg.colormap=colormap(jet(256));
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg = [];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.channel = label1{2*w-1};
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.parameter = 'stat';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.maskparameter = 'mask';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.zlim = 'maxabs';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.colorbar       = 'yes';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.colormap=colormap(jet(256));
 %grid minor
-ft_singleplotTFR(cfg, stats1);
+% ft_singleplotTFR(cfg, stats1);
+ft_singleplotTFR(cfg, freq3);
+
 %title('Ripple vs No Ripple')
 g=title(strcat(labelconditions{iii},' vs No Learning'));
 g.FontSize=12;
