@@ -34,7 +34,8 @@ DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-sanity=0;
+sanity=1;
+quinientos=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -53,7 +54,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=2:2
     
 if Rat==1
     
@@ -84,7 +85,13 @@ for w=2:3
         if sanity~=1
         string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
         else
-        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+            if quinientos==1
+                string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+
+            else
+                string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+
+            end
         end
         %xo
         openfig(string)  
@@ -105,7 +112,11 @@ for w=2:3
     if sanity~=1
     string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
     else
-    string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+        if quinientos==1
+             string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
+        else
+             string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');       
+        end
     end
         openfig(string)    
     %figure(1)
@@ -234,12 +245,23 @@ print(string,'-depsc')
 string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
 else
-string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-print(string,'-depsc')
-string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-saveas(gcf,string)    
+    if quinientos==1
+        
+        string=strcat('Control2_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        figure_function(gcf,[],string,[]);
+        string=strcat('Control2_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        print(string,'-depsc')
+        string=strcat('Control2_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        saveas(gcf,string)            
+
+    else
+        string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        figure_function(gcf,[],string,[]);
+        string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        print(string,'-depsc')
+        string=strcat('Control2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        saveas(gcf,string)            
+    end
 end
 
     end
