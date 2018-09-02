@@ -11,8 +11,8 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=1;
-quinientos=1;
+sanity=0;
+quinientos=0;
 %%
 
 if acer==0
@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -44,7 +44,7 @@ for rat24base=1:2
       break
   end
 
-for dura=1:1 %Starts with 1
+for dura=2:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
