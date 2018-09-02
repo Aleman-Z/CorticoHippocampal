@@ -300,7 +300,24 @@ end
 end
  xo
 %end
+% (LL(1,:))
+%%
+LQ = [cell2mat(LL(1,1)) cell2mat(LL(1,2))  cell2mat(LL(1,3))  cell2mat(LL(1,4))];    
+grp = [zeros(1,cellfun('length',LL(1,1))),ones(1,cellfun('length',LL(1,2))),2*ones(1,cellfun('length',LL(1,3))),3*ones(1,cellfun('length',LL(1,4)))];
+%%
+LQ = [cell2mat(LL(1,1)) cell2mat(LL(2,1))  cell2mat(LL(3,1))  cell2mat(LL(4,1))];    
+grp = [zeros(1,cellfun('length',LL(1,1))),ones(1,cellfun('length',LL(2,1))),2*ones(1,cellfun('length',LL(3,1))),3*ones(1,cellfun('length',LL(4,1)))];
 
+%%
+%bb=boxplot(LQ,grp,'Notch','on' );
+bb=boxplot(LQ./60,grp);
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Time (min)')
+
+ylim([0 15])
+%%
 
 
 if Rat~=24 || rat24base==1 || rat24base==2
