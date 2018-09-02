@@ -249,55 +249,20 @@ s5=(states==5);
  %REM
 nb(iii,:)=[nbouts(s1) nbouts(s3) nbouts(s4) nbouts(s5)];
 
+LL(iii,:)=[{lbouts(s1)} {lbouts(s3)} {lbouts(s4)} {lbouts(s5)}];
+
 %%
 
 
 
-%%
-n = diff(find(s5));               % Number of repetitions
-% n(n==1)=0;
-% n(n~=0)=1;
-Y = repelem(n, n);
-% nb1=sum(n)+1;
-plot(Y)
-%%
-% av=(diff([0 find(diff(s5)) numel(s5)]))
-i = find(diff(s5)) 
-  n = [i numel(s5)] - [0 i]
-  c = arrayfun(@(X) X-1:-1:0, n , 'un',0)
-  y = cat(2,c{:})
-av=y.*s5;
-av(av~=0)=1;
 
-fd=(diff(y)); %Number of bouts in total. 
-fd(fd~=-1)=1;
-fd(fd==-1)=0;
-G=find(fd);
-
-%%
-ng=nan(length(G)+1,1);
-
-for o=1:length(G)
-   D= diff([s5(G(o)) s5(G(o)+1)]);
-   if D== 1
-      ng(o+1)=1;
-   else
-      ng(o+1)=0;
-   end 
-   if o==1
-       ng(o)=not(ng(o+1));
-   end
-end
 %%
 %%
 
 %%
-d = [true, diff(states) ~= 0, true];  % TRUE if values change
-n = diff(find(d));               % Number of repetitions
-Y = repelem(n, n)
 
 %%
- xo
+% xo
 % Z{iii}=states;
 % % %%
 L= length(states)/60%min
@@ -333,7 +298,7 @@ end
 %%
 
 end
-% xo
+ xo
 %end
 
 

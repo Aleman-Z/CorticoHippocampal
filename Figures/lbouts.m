@@ -28,4 +28,5 @@ nu=[1:length(ng)].*ng.';
 nu=nu(nu~=0);
 
 L=n(nu);
+L=L*(1/1000); % Convert samples to seconds
 end
