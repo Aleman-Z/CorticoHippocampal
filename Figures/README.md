@@ -88,3 +88,6 @@ When ripdur=1: \
 * **frequency_boxplots.m:**
 *Plots notched boxplots of the ripples´s peak or mean frequency.* 
 <img src="peak_freq.png" width="400">
+
+* **sleep_bouts.m:**
+*Characterizes bouts for Wake, NREM, REM and transitional sleep stages*
