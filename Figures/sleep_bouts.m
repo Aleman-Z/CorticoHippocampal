@@ -13,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -334,10 +334,23 @@ end
 %%
 xo
 if sanity==1
- [LL]=control_bouts(LL);   
+     b=struct2cell(dir);
+
+    if ~any(ismember(b(1,:),'LL.mat'))
+        [LL]=control_bouts(LL); 
+        save('LL.mat','LL')
+    else
+        load('LL.mat')
+    end   
+end
+%%
+if sanity==1
+    H=2;
+else
+    H=4;
 end
 %% Individual plots
-for h=1:4
+for h=1:H
 LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
 grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
 
@@ -355,12 +368,23 @@ T=title(labstage{h})
 ylim auto
 T.FontSize=13;
 %%
+if sanity==1
+string=strcat('Control_Bouts_Duration_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Bouts_Duration_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Control_Bouts_Duration_',labstage{h},'.fig');
+saveas(gcf,string)
+    
+else
 string=strcat('Bouts_Duration_',labstage{h},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Bouts_Duration_',labstage{h},'.eps');
 print(string,'-depsc')
 string=strcat('Bouts_Duration_',labstage{h},'.fig');
 saveas(gcf,string)
+    
+end
 
 %%
 kk=categorical(labelconditions)
@@ -369,12 +393,23 @@ ylabel('Number of bouts')
 T=title(labstage{h})
 ylim auto
 %%
+if sanity==1
+string=strcat('Control_Bouts_Number_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Bouts_Number_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Control_Bouts_Number_',labstage{h},'.fig');
+saveas(gcf,string)
+
+else
 string=strcat('Bouts_Number_',labstage{h},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Bouts_Number_',labstage{h},'.eps');
 print(string,'-depsc')
 string=strcat('Bouts_Number_',labstage{h},'.fig');
 saveas(gcf,string)
+    
+end
 
 %%
 
@@ -419,12 +454,23 @@ T.Position=[-0.15 T.Position(2) T.Position(3)];
 T.FontSize=15;
 %%
 %xo
-% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.pdf');
-% % % % % % % % % % % figure_function(gcf,[],string,[]);
-% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.eps');
-% % % % % % % % % % % print(string,'-depsc')
-% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.fig');
-% % % % % % % % % % % saveas(gcf,string)
+if sanity==1
+string=strcat('Control_Bouts_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Bouts_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Control_Bouts_',labstage{h},'.fig');
+saveas(gcf,string)
+
+else
+string=strcat('Bouts_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Bouts_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Bouts_',labstage{h},'.fig');
+saveas(gcf,string)
+    
+end
 
 pause(2)
 close all
