@@ -26,6 +26,10 @@ end
 
 nu=[1:length(ng)].*ng.';
 nu=nu(nu~=0);
+if isnan(nu)
+    L=0;
+else
+    L=n(nu); %Seconds    
+end
 
-L=n(nu); %Seconds
 end

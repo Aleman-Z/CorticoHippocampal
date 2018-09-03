@@ -195,6 +195,9 @@ end
 %% Select experiment to perform. 
 
 Score=1;
+if Rat==26
+    Score=2;
+end
 
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
@@ -234,13 +237,16 @@ if Rat==24
    load('states.mat')
 else
     if Score==2 && (strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze'))
-         load('states2.mat')
+%    if Score==2 
+
+        load('states2.mat')
     else
         st=strcat(nFF{iii},'-states.mat');
         load(st) 
     end
 end
 %%
+% xo
 %1,3,4,5
 s1=(states==1);
 s3=(states==3);
