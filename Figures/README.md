@@ -91,3 +91,4 @@ When ripdur=1: \
 
 * **sleep_bouts.m:**
 *Characterizes bouts for Wake, NREM, REM and transitional sleep stages*
+<img src="Bouts.png" width="400">
