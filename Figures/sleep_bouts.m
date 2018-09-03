@@ -1,6 +1,6 @@
 acer=0;
 rat24base=1;
-
+sanity=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -333,6 +333,9 @@ else
 end
 %%
 xo
+if sanity==1
+ [LL]=control_bouts(LL);   
+end
 %% Individual plots
 for h=1:4
 LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
@@ -382,7 +385,13 @@ end
 
 
 %% subplots
-for h=1:4
+if sanity==1
+    H=2;
+else
+    H=4;
+end
+%%
+for h=1:H
 LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
 grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
 
@@ -410,12 +419,12 @@ T.Position=[-0.15 T.Position(2) T.Position(3)];
 T.FontSize=15;
 %%
 %xo
-string=strcat('Bouts_',labstage{h},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Bouts_',labstage{h},'.eps');
-print(string,'-depsc')
-string=strcat('Bouts_',labstage{h},'.fig');
-saveas(gcf,string)
+% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.pdf');
+% % % % % % % % % % % figure_function(gcf,[],string,[]);
+% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.eps');
+% % % % % % % % % % % print(string,'-depsc')
+% % % % % % % % % % % string=strcat('Bouts_',labstage{h},'.fig');
+% % % % % % % % % % % saveas(gcf,string)
 
 pause(2)
 close all
