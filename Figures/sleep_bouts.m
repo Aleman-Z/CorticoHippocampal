@@ -195,9 +195,10 @@ end
 %% Select experiment to perform. 
 
 Score=1;
-if Rat==26
-    Score=2;
-end
+% 
+% if Rat==26
+%     Score=2;
+% end
 
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
@@ -257,7 +258,7 @@ s5=(states==5);
  %NREM
  %Transitional Sleep
  %REM
-nb(iii,:)=[nbouts(s1) nbouts(s3) nbouts(s4) nbouts(s5)];
+nb(iii,:)=[nbouts(s1,Score) nbouts(s3,Score) nbouts(s4,Score) nbouts(s5,Score)];
 
 LL(iii,:)=[{lbouts(s1)} {lbouts(s3)} {lbouts(s4)} {lbouts(s5)}];
 
@@ -332,7 +333,55 @@ else
 end
 %%
 xo
+%% Individual plots
+for h=1:4
+LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
+grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
+
 %%
+% allscreen()
+%bb=boxplot(LQ,grp,'Notch','on' );
+%subplot(1,2,1)
+bb=boxplot(LQ./60,grp);
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Bout Duration (min)')
+T=title(labstage{h})
+% ylim([-2 15])
+ylim auto
+T.FontSize=13;
+%%
+string=strcat('Bouts_Duration_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Bouts_Duration_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Bouts_Duration_',labstage{h},'.fig');
+saveas(gcf,string)
+
+%%
+kk=categorical(labelconditions)
+bar(kk,nb(:,h))
+ylabel('Number of bouts')
+T=title(labstage{h})
+ylim auto
+%%
+string=strcat('Bouts_Number_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Bouts_Number_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Bouts_Number_',labstage{h},'.fig');
+saveas(gcf,string)
+
+%%
+
+pause(2)
+close all
+
+end
+
+
+%% subplots
 for h=1:4
 LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
 grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
@@ -346,20 +395,29 @@ set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Bout Duration (min)')
-title(labstage{h})
+%title(labstage{h})
 % ylim([-2 15])
 ylim auto
 subplot(1,2,2)
 kk=categorical(labelconditions)
 bar(kk,nb(:,h))
 ylabel('Number of bouts')
-title(labstage{h})
+T=title(labstage{h})
 ylim auto
+%%
+% T.Position=[T.Position(1)/2 T.Position(2) T.Position(3)];
+T.Position=[-0.15 T.Position(2) T.Position(3)];
+T.FontSize=15;
+%%
 %xo
 string=strcat('Bouts_',labstage{h},'.pdf');
 figure_function(gcf,[],string,[]);
+string=strcat('Bouts_',labstage{h},'.eps');
+print(string,'-depsc')
+string=strcat('Bouts_',labstage{h},'.fig');
+saveas(gcf,string)
 
-%pause(2)
+pause(2)
 close all
 
 end
