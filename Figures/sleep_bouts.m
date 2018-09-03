@@ -13,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=2:2
+for Rat=1:1
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -204,6 +204,10 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
 % end
 
+%Paper order
+nFF=nFF([1 4 3 2]);
+labelconditions=labelconditions([1 4 3 2]);
+
 
 for iii=1:length(nFF)
 
@@ -298,25 +302,61 @@ end
 %%
 
 end
- xo
+ %xo
 %end
 % (LL(1,:))
 %%
-LQ = [cell2mat(LL(1,1)) cell2mat(LL(1,2))  cell2mat(LL(1,3))  cell2mat(LL(1,4))];    
-grp = [zeros(1,cellfun('length',LL(1,1))),ones(1,cellfun('length',LL(1,2))),2*ones(1,cellfun('length',LL(1,3))),3*ones(1,cellfun('length',LL(1,4)))];
+% LQ = [cell2mat(LL(1,1)) cell2mat(LL(1,2))  cell2mat(LL(1,3))  cell2mat(LL(1,4))];    
+% grp = [zeros(1,cellfun('length',LL(1,1))),ones(1,cellfun('length',LL(1,2))),2*ones(1,cellfun('length',LL(1,3))),3*ones(1,cellfun('length',LL(1,4)))];
 %%
-LQ = [cell2mat(LL(1,1)) cell2mat(LL(2,1))  cell2mat(LL(3,1))  cell2mat(LL(4,1))];    
-grp = [zeros(1,cellfun('length',LL(1,1))),ones(1,cellfun('length',LL(2,1))),2*ones(1,cellfun('length',LL(3,1))),3*ones(1,cellfun('length',LL(4,1)))];
+labstage{1}='Wake';
+labstage{2}='NREM';
+labstage{3}='Transitional Sleep';
+labstage{4}='REM';
+%Wake
+ %NREM
+ %Transitional Sleep
+ %REM
+%%
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
+end
+%%
+xo
+%%
+for h=1:4
+LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
+grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
 
 %%
+allscreen()
 %bb=boxplot(LQ,grp,'Notch','on' );
+subplot(1,2,1)
 bb=boxplot(LQ./60,grp);
 set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
-ylabel('Time (min)')
+ylabel('Bout Duration (min)')
+title(labstage{h})
+% ylim([-2 15])
+ylim auto
+subplot(1,2,2)
+kk=categorical(labelconditions)
+bar(kk,nb(:,h))
+ylabel('Number of bouts')
+title(labstage{h})
+ylim auto
+%xo
+string=strcat('Bouts_',labstage{h},'.pdf');
+figure_function(gcf,[],string,[]);
 
-ylim([0 15])
+%pause(2)
+close all
+
+end
 %%
 
 
