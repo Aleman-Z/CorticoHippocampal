@@ -240,7 +240,8 @@ cd(nFF{iii})
 if ro==1200
 toy=[-1:.01:1];
 else
-toy=[-10:.1:10];    
+%toy=[-10:.1:10];
+toy=[-10:.01:10];
 end
 
 if length(q)>length(q_nl)

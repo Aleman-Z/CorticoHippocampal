@@ -457,10 +457,15 @@ else
       string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
   end
 end
-% xo
+ %xo
 py=openfig(string)
 py.Units='normalized';
 py.OuterPosition=[0 0 1 1];
+%% 
+% ww=ex;
+% ww=ww(1:2:end);
+% freq3=ww{5};
+% freq4=ww{3};
 %%
 subplot(3,4,12)
 %%
@@ -710,7 +715,7 @@ end
 %xo   
         
 %%
-xo
+%xo
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,randrip);    
