@@ -239,7 +239,7 @@ end
 %%
 for w=2:3
 
-% xo
+ xo
 if sanity==1
     if quinientos==1
         string1=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');     
