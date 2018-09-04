@@ -12,8 +12,8 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=1;
-quinientos=1;
+sanity=0;
+quinientos=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -44,7 +44,7 @@ for rat24base=1:2
       break
   end
 
-for dura=1:1 %Starts with 1
+for dura=2:2 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -349,7 +349,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=4:length(nFF) %Should start with 2!
+for iii=2:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
