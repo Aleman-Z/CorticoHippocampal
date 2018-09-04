@@ -541,11 +541,11 @@ ylabel('Frequency (Hz)')
 clear freq4
 %%
 
-% % % % % % % % % % if ro==1200
-% % % % % % % % % % [stats1]=stats_between_trials(freq3,freq4,label1,w);
-% % % % % % % % % % else
-% % % % % % % % % % [stats1]=stats_between_trials10(freq3,freq4,label1,w);
-% % % % % % % % % % end
+if ro==1200
+[stats1]=stats_between_trials(freq3,freq4,label1,w);
+else
+[stats1]=stats_between_trials10(freq3,freq4,label1,w);
+end
 
 
 %% %
@@ -561,7 +561,7 @@ cfg.colorbar       = 'yes';
 cfg.colormap=colormap(jet(256));
 %grid minor
 % ft_singleplotTFR(cfg, stats1);
-ft_singleplotTFR(cfg, stats);
+ft_singleplotTFR(cfg, stats1);
 
 %title('Ripple vs No Ripple')
 g=title(strcat(labelconditions{iii},' vs No Learning'));
