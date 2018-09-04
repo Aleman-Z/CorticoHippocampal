@@ -522,7 +522,7 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
-clear freq3
+%clear freq3
 %%
 % 
 h(8)=subplot(3,4,8);
@@ -538,7 +538,7 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
-clear freq4
+%clear freq4
 %%
 
 if ro==1200
