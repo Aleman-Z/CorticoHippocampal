@@ -30,7 +30,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=3:3
  if meth==4
     s=struct; 
  end  
@@ -38,13 +38,13 @@ for RAT=1:1
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=1:2
+for rat24base=2:2
  
   if RAT~=3 && rat24base==2
       break
   end
 
-for dura=2:2 %Starts with 1
+for dura=1:1 %Starts with 1
     
 rats=[26 27 24 21];
 Rat=rats(RAT);    
@@ -238,10 +238,10 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
-
-if Rat==24
-    cd(nFF{1})
-end
+ 
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
@@ -274,8 +274,10 @@ end
 % end
 %%
 % Use other baseline, beware when using mergebaseline
-if base==2
-    nFF{1}=NFF{1};
+if Rat~=24
+    if base==2
+        nFF{1}=NFF{1};
+    end
 end
 
 if base==3
@@ -358,9 +360,9 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-if Rat==24
-    cd(nFF{1})
-end
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
@@ -501,7 +503,7 @@ ror=2000/timeasleep;
     end
     
 
-if Rat==26
+if Rat==26 || Rat==24 
 Base=[{'Baseline1'} {'Baseline2'}];
 end
 if Rat==26 && rat26session3==1
@@ -693,9 +695,9 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-if Rat==24
-    cd(nFF{1})
-end
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
