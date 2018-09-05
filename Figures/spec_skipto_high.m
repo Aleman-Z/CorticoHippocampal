@@ -713,7 +713,7 @@ end
 %xo   
         
 %%
-xo
+%xo
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,randrip);    
@@ -732,16 +732,18 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-if Rat==24
-    cd(nFF{1})
-end
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-if dura==1
-cd(folder)
+if Rat~=24
+    if dura==1
+    cd(folder)
+    end
 end
 %xo
 if sanity==1
