@@ -1,7 +1,7 @@
 close all
 clear all
 
-acer=0;
+acer=1;
 labelconditions=[
     {     
     'Baseline'}
@@ -97,8 +97,10 @@ end
     %%
 for dura=ldura:ldura
 for block_time=0:0
-for w=2:3    
-    for iii=2:length(labelconditions)
+    
+    %for iii=2:length(labelconditions)
+    for w=2:3
+    iii=2
         if sanity~=1
         string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
         else
@@ -116,17 +118,19 @@ for w=2:3
         h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-        VER1(iii-1,:)=[axesObjs(6).YLim];
-        VER2(iii-1,:)=[axesObjs(8).YLim];
+        VER1(w-1,:)=[axesObjs(6).YLim];
+%         VER2(w-1,:)=[axesObjs(8).YLim];
+        VER2(w-1,:)=[axesObjs(2).YLim];
         
-        BER1(iii-1,:)=[axesObjs(2).YLim];
-        BER2(iii-1,:)=[axesObjs(4).YLim];
-        
+%        BER1(w-1,:)=[axesObjs(2).YLim];
+%         BER2(w-1,:)=[axesObjs(4).YLim];        
     end
+    xo
     mVER1=[ min(VER1(:,1)) max(VER1(:,2))];
     mVER2=[ min(VER2(:,1)) max(VER2(:,2))];
     close all
     
+for w=2:3    
     for iii=2:length(labelconditions)
     
     
@@ -279,13 +283,13 @@ ylabel('Frequency (Hz)')
 %
 i=I.CData;
 set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
-%xo
+xo
 if sanity ~=1
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
 else
     if quinientos==1
