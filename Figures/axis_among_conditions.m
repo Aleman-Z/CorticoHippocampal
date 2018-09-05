@@ -107,7 +107,7 @@ for block_time=0:0
 for w=2:3    
     for iii=2:length(labelconditions)
         if sanity~=1
-        string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+        string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
         else
             if quinientos==1
                 string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
@@ -123,18 +123,18 @@ for w=2:3
         h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-        VER1(iii-1,:)=[axesObjs(6).YLim];
-        VER2(iii-1,:)=[axesObjs(8).YLim];
+        VER1(iii-1,:)=[axesObjs(13).YLim];
+        VER2(iii-1,:)=[axesObjs(14).YLim];
     end
     mVER1=[ min(VER1(:,1)) max(VER1(:,2))];
     mVER2=[ min(VER2(:,1)) max(VER2(:,2))];
     close all
-    
+   %xo 
     for iii=2:length(labelconditions)
     
     
     if sanity~=1
-    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
     else
         if quinientos==1
              string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
@@ -147,148 +147,149 @@ for w=2:3
     h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-    axesObjs(4).YLim=mVER1;
-    axesObjs(6).YLim=mVER1;
-    axesObjs(8).YLim=mVER2;
-    axesObjs(10).YLim=mVER2;
+    axesObjs(13).YLim=mVER1;
+    axesObjs(15).YLim=mVER1;
+    axesObjs(14).YLim=mVER2;
+    axesObjs(16).YLim=mVER2;
     
     %%
  % figure()
- nv1=(dataObjs{3}.CData);
-nv2=(dataObjs{5}.CData);
-nv3=(dataObjs{9}.CData);
-nv4=(dataObjs{7}.CData);
- 
-    subplot(3,4,5)
-       I=imagesc(nv1);
-    caxis(mVER1)
-%colormap(jet(256))
-c1=narrow_colorbar()
-% cax1=caxis;%  -1.6465    8.3123
-% c1.YLim=[do(1) do(4)];
-I.CDataMapping = 'scaled';
-gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
-colormap(jet(256))
-%set(gca,'YDir','normal')
-c1=narrow_colorbar()
-gg.XTick=[1 50 100 150 200];
-if dura==2
-gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
-else
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
-end
-xlabel('Time (s)')
-% title(strcat('Wide Band','{ }',lab))
-ylabel('Frequency (Hz)')
-title('Wide Band No Learning')
-%
-i=I.CData;
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
+%  nx=dataObjs{13}.XData; %Same for all 
+% nv1=(dataObjs{16}.YData);
+% nv2=(dataObjs{14}.YData);
+% nv3=(dataObjs{15}.YData);
+% nv4=(dataObjs{13}.YData);
+% %  
+%     subplot(3,4,5)
+%        I=imagesc(nv1);
+%     caxis(mVER1)
+% %colormap(jet(256))
+% c1=narrow_colorbar()
+% % cax1=caxis;%  -1.6465    8.3123
+% % c1.YLim=[do(1) do(4)];
+% I.CDataMapping = 'scaled';
+% gg=gca;
+% gg.YTickLabel=flip(gg.YTickLabel);
+% colormap(jet(256))
+% %set(gca,'YDir','normal')
+% c1=narrow_colorbar()
+% gg.XTick=[1 50 100 150 200];
+% if dura==2
+% gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+% else
+% gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+% end
+% xlabel('Time (s)')
+% % title(strcat('Wide Band','{ }',lab))
+% ylabel('Frequency (Hz)')
+% title('Wide Band No Learning')
+% %
+% i=I.CData;
+% set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
 %%
 %figure()
 
- nv=(dataObjs{5}.CData);
-    subplot(3,4,6)
-       I=imagesc(nv2)
-    caxis(mVER1)
-%colormap(jet(256))
-c1=narrow_colorbar()
-% cax1=caxis;%  -1.6465    8.3123
-% c1.YLim=[do(1) do(4)];
-I.CDataMapping = 'scaled';
-gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
-colormap(jet(256))
-%set(gca,'YDir','normal')
-c1=narrow_colorbar()
-gg.XTick=[1 50 100 150 200];
-%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
-if dura==2
-gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
-else
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
-end
-
-xlabel('Time (s)')
-title(strcat('Wide Band','{ }',labelconditions{iii}))
-ylabel('Frequency (Hz)')
-
-%
-i=I.CData;
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
+%  nv=(dataObjs{5}.CData);
+%     subplot(3,4,6)
+%        I=imagesc(nv2)
+%     caxis(mVER1)
+% %colormap(jet(256))
+% c1=narrow_colorbar()
+% % cax1=caxis;%  -1.6465    8.3123
+% % c1.YLim=[do(1) do(4)];
+% I.CDataMapping = 'scaled';
+% gg=gca;
+% gg.YTickLabel=flip(gg.YTickLabel);
+% colormap(jet(256))
+% %set(gca,'YDir','normal')
+% c1=narrow_colorbar()
+% gg.XTick=[1 50 100 150 200];
+% %gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+% if dura==2
+% gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+% else
+% gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+% end
+% 
+% xlabel('Time (s)')
+% title(strcat('Wide Band','{ }',labelconditions{iii}))
+% ylabel('Frequency (Hz)')
+% 
+% %
+% i=I.CData;
+% set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
 %%
 %figure()
 
- nv=(dataObjs{9}.CData);
-    subplot(3,4,7)
-       I=imagesc(flip(nv3,1))
-    caxis(mVER2)
-%colormap(jet(256))
-c1=narrow_colorbar()
-% cax1=caxis;%  -1.6465    8.3123
-% c1.YLim=[do(1) do(4)];
-I.CDataMapping = 'scaled';
-gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
-colormap(jet(256))
-%set(gca,'YDir','normal')
-c1=narrow_colorbar()
-gg.XTick=[1 50 100 150 200];
-%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
-if dura==2
-gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
-else
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
-end
-
-xlabel('Time (s)')
-% title(strcat('Wide Band','{ }',lab))
-ylabel('Frequency (Hz)')
-title('High Gamma No Learning')
-
-%
-i=I.CData;
-set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
+%  nv=(dataObjs{9}.CData);
+%     subplot(3,4,7)
+%        I=imagesc(flip(nv3,1))
+%     caxis(mVER2)
+% %colormap(jet(256))
+% c1=narrow_colorbar()
+% % cax1=caxis;%  -1.6465    8.3123
+% % c1.YLim=[do(1) do(4)];
+% I.CDataMapping = 'scaled';
+% gg=gca;
+% gg.YTickLabel=flip(gg.YTickLabel);
+% colormap(jet(256))
+% %set(gca,'YDir','normal')
+% c1=narrow_colorbar()
+% gg.XTick=[1 50 100 150 200];
+% %gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+% if dura==2
+% gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+% else
+% gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+% end
+% 
+% xlabel('Time (s)')
+% % title(strcat('Wide Band','{ }',lab))
+% ylabel('Frequency (Hz)')
+% title('High Gamma No Learning')
+% 
+% %
+% i=I.CData;
+% set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
 %%
 %%
 % figure()
- nv=(dataObjs{7}.CData);
-    subplot(3,4,8)
-       I=imagesc(flip(nv4,1))
-    caxis(mVER2)
-%colormap(jet(256))
-c1=narrow_colorbar()
-% cax1=caxis;%  -1.6465    8.3123
-% c1.YLim=[do(1) do(4)];
-I.CDataMapping = 'scaled';
-gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
-colormap(jet(256))
-%set(gca,'YDir','normal')
-c1=narrow_colorbar()
-gg.XTick=[1 50 100 150 200];
-%gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
-if dura==2
-gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
-else
-gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
-end
-
-xlabel('Time (s)')
-% title(strcat('Wide Band','{ }',lab))
-title(strcat('High Gamma','{ }',labelconditions{iii}))
-ylabel('Frequency (Hz)')
-%
-i=I.CData;
-set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
+%  nv=(dataObjs{7}.CData);
+%     subplot(3,4,8)
+%        I=imagesc(flip(nv4,1))
+%     caxis(mVER2)
+% %colormap(jet(256))
+% c1=narrow_colorbar()
+% % cax1=caxis;%  -1.6465    8.3123
+% % c1.YLim=[do(1) do(4)];
+% I.CDataMapping = 'scaled';
+% gg=gca;
+% gg.YTickLabel=flip(gg.YTickLabel);
+% colormap(jet(256))
+% %set(gca,'YDir','normal')
+% c1=narrow_colorbar()
+% gg.XTick=[1 50 100 150 200];
+% %gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];
+% if dura==2
+% gg.XTickLabel=[{-10} {-5} {0} {5} {10}];    
+% else
+% gg.XTickLabel=[{-1} {-0.5} {0} {0.5} {1}];    
+% end
+% 
+% xlabel('Time (s)')
+% % title(strcat('Wide Band','{ }',lab))
+% title(strcat('High Gamma','{ }',labelconditions{iii}))
+% ylabel('Frequency (Hz)')
+% %
+% i=I.CData;
+% set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
 %xo
 if sanity ~=1
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
 else
     if quinientos==1
