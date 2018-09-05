@@ -100,7 +100,7 @@ for block_time=0:0
 for w=2:3    
     for iii=2:length(labelconditions)
         if sanity~=1
-        string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+        string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
         else
             if quinientos==1
                 string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
@@ -110,7 +110,7 @@ for w=2:3
 
             end
         end
-        %xo
+        xo
         openfig(string)  
         
         h = gcf; %current figure handle
@@ -118,6 +118,10 @@ for w=2:3
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
         VER1(iii-1,:)=[axesObjs(6).YLim];
         VER2(iii-1,:)=[axesObjs(8).YLim];
+        
+        BER1(iii-1,:)=[axesObjs(2).YLim];
+        BER2(iii-1,:)=[axesObjs(4).YLim];
+        
     end
     mVER1=[ min(VER1(:,1)) max(VER1(:,2))];
     mVER2=[ min(VER2(:,1)) max(VER2(:,2))];
