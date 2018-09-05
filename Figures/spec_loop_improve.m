@@ -23,7 +23,7 @@ end
 %Rat=26;
 RAT=equis;
 %for RAT=2:2
-for rat24base=1:2
+for rat24base=2:2
  
   if RAT~=3 && rat24base==2
       break
@@ -227,10 +227,10 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
-
-if Rat==24
-    cd(nFF{1})
-end
+ 
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
@@ -239,7 +239,7 @@ end
 %%
 for w=2:3
 
- xo
+% xo
 if sanity==1
     if quinientos==1
         string1=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');     
