@@ -36,7 +36,7 @@ Block{2}='block1';
 Block{3}='block2';
 sanity=0;
 quinientos=0;
-ldura=2; %1 for 1 sec, 2 for 10 sec. 
+ldura=1; %1 for 1 sec, 2 for 10 sec. 
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -55,7 +55,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=2:2
+for Rat=3:3
     
 if Rat==1
     
@@ -93,6 +93,13 @@ if Rat==2
     end
 end
 
+if Rat==3
+    if acer==0
+        cd('/home/raleman/Dropbox/Figures/Figure3/24')
+    else
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
+    end
+end
 
     %%
 for dura=ldura:ldura

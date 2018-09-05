@@ -207,7 +207,7 @@ nFF=[
 ]; 
 if  rat24base==2
   nFF{1,:}='Baseline2'; 
-%  NFF=[];
+  NFF=[];
 end
 
 %labelconditions=nFF;
