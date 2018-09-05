@@ -96,7 +96,7 @@ When ripdur=1: \
 ####  :link: Post-Processing steps for spectrograms: 
 
 1. **spec_loop_improve.m:**
-*Visualizes spindles*
+*Visualizes spindles.*
 
 2. **spec_skipto_high.m:**
 *High frequency statistics.*
