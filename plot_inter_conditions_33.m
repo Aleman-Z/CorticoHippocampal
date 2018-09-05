@@ -495,12 +495,12 @@ end
 % Calculate zlim
 
 %U might want to uncomment this if you use a smaller step: (Memory purposes)
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg              = [];
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.channel      = freq3.label{w};
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [zmin2, zmax2] = ft_getminmax(cfg, freq4);
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+cfg              = [];
+cfg.channel      = freq3.label{w};
+[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
+[zmin2, zmax2] = ft_getminmax(cfg, freq4);
+
+zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
 
 % zlim=[-max(abs(zlim)) max(abs(zlim))];
 
@@ -508,7 +508,7 @@ end
 %%
 
 cfg              = [];
-%  cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
 cfg.channel      = freq3.label{w};
 cfg.colormap=colormap(jet(256));
 
