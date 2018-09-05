@@ -26,7 +26,7 @@ pval = 0.05;
 zval = abs(norminv(pval));
 
 % number of permutations
-n_permutes = 1500; %Seems to need a lot more than 500.
+n_permutes = 2500; %Seems to need a lot more than 500.
 
 % initialize null hypothesis maps
 % permmaps = zeros(n_permutes,length(freq3.freq),length(freq3.time));
