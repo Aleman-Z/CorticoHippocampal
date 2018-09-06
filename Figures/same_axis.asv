@@ -55,7 +55,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=3:3
+for Rat=2:2
     
 if Rat==1
     
@@ -94,13 +94,6 @@ if Rat==2
 end
 
 
-if Rat==3
-    if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24')
-    else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
-    end
-end
     %%
 for dura=ldura:ldura
 for block_time=0:0
@@ -119,25 +112,22 @@ for block_time=0:0
 
             end
         end
-%         xo
+        xo
         openfig(string)  
         
         h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-        VER1(w-1,:)=[axesObjs(6).YLim]; %TF Lowpass
-        VER2(w-1,:)=[axesObjs(2).YLim]; %TF Highpass
+        VER1(w-1,:)=[axesObjs(6).YLim]; %TF low
 %         VER2(w-1,:)=[axesObjs(8).YLim];
-
-        BER1(w-1,:)=[axesObjs(13).YLim];
-        BER2(w-1,:)=[axesObjs(14).YLim];        
+        VER2(w-1,:)=[axesObjs(2).YLim];
+        
+%        BER1(w-1,:)=[axesObjs(2).YLim];
+%         BER2(w-1,:)=[axesObjs(4).YLim];        
     end
-    %xo
-    mVER1=[ min(VER1(:,1)) max(VER1(:,2))];%TF Lowpass
-    mVER2=[ min(VER2(:,1)) max(VER2(:,2))];%TF Highpass
-    
-    mBER1=[ min(BER1(:,1)) max(BER1(:,2))]; %Bandpassed
-    mBER2=[ min(BER2(:,1)) max(BER2(:,2))]; %Wideband
+    xo
+    mVER1=[ min(VER1(:,1)) max(VER1(:,2))];
+    mVER2=[ min(VER2(:,1)) max(VER2(:,2))];
     close all
     
 for w=2:3    
@@ -158,16 +148,10 @@ for w=2:3
     h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-%        xo
     axesObjs(4).YLim=mVER1;
     axesObjs(6).YLim=mVER1;
     axesObjs(8).YLim=mVER2;
     axesObjs(10).YLim=mVER2;
-    
-    axesObjs(13).YLim=mBER1;
-    axesObjs(15).YLim=mBER1;
-    axesObjs(14).YLim=mBER2;
-    axesObjs(16).YLim=mBER2;
     
     %%
  % figure()
@@ -299,13 +283,13 @@ ylabel('Frequency (Hz)')
 %
 i=I.CData;
 set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
-%xo
+xo
 if sanity ~=1
-string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
 else
     if quinientos==1
