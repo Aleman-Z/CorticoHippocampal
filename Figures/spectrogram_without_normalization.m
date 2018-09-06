@@ -30,7 +30,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=3:3
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
@@ -38,7 +38,7 @@ for RAT=3:3
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=2:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -571,7 +571,7 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-%xo
+xo
 if quinientos==0
 [ran]=select_rip(p,FiveHun);
 p=p([ran]);
@@ -772,7 +772,7 @@ if meth==4
 end
 
 end
-%xo
+xo
 if rippletable==0
 spec_loop_improve(RAT,block_time,sanity,dura,quinientos);
 %save in right folder
