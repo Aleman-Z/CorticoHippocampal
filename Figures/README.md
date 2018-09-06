@@ -106,3 +106,7 @@ When ripdur=1: \
 
 4. **axis_among_conditions.m:**
 *Equal Y-axis for traces among conditions.*
+
+5. **same_axis.m:**
+*Equal Y-axis and colorbar among brain areas.*
+
