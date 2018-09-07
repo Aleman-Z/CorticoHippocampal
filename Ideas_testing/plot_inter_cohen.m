@@ -259,6 +259,10 @@ end
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
 
+P1=avg_samples(q,create_timecell(ro,length(p)));
+P2=avg_samples(p,create_timecell(ro,length(p)));
+
+
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -460,7 +464,7 @@ else
 end
 
 %% 
-h(9)=subplot(3,4,10)
+h(9)=subplot(3,4,9)
 % 
 cfg = [];
 cfg.channel = label1{2*w-1};
@@ -479,6 +483,28 @@ xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
 %%
+zmap=stats_high(freq1,freq2,w);
+
+subplot(3,4,10);
+
+colormap(jet(256))
+zmap(zmap == 0) = NaN;
+J=imagesc(freq1.time,freq1.freq,zmap)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+%title('tf power map, thresholded')
+set(gca,'xlim',xlim,'ydir','no')
+% c=narrow_colorbar()
+set(J,'AlphaData',~isnan(zmap))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+g=title(strcat(labelconditions{iii},' vs No Learning'));
+g.FontSize=12;
+
+
+xlim([-1 1])
 
 %%
 clear freq1 freq2 p_nl p 
@@ -577,7 +603,7 @@ end
 
 %% %
 
- h(10)=subplot(3,4,12);
+ h(10)=subplot(3,4,11);
  
 cfg = [];
 cfg.channel = label1{2*w-1};
@@ -597,7 +623,33 @@ g.FontSize=12;
 xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
+
 %% EXTRA STATISTICS
+
+zmap=stats_high(freq3,freq4,w);
+
+subplot(3,4,12);
+
+colormap(jet(256))
+zmap(zmap == 0) = NaN;
+J=imagesc(freq3.time,freq3.freq,zmap)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+%title('tf power map, thresholded')
+set(gca,'xlim',xlim,'ydir','no')
+% c=narrow_colorbar()
+set(J,'AlphaData',~isnan(zmap))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+g=title(strcat(labelconditions{iii},' vs No Learning'));
+g.FontSize=12;
+%%
+
+
+
+%%
 % [stats1]=stats_between_trials(freq30,freq40,label1,w);
 % % %
 %  subplot(3,4,11)
