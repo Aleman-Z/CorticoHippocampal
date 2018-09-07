@@ -1,5 +1,5 @@
 %This one requires running data from Non Learning condition
-function plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,varargin)
+function plot_inter_high_improve(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,varargin)
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cd(nFF{3})
@@ -54,6 +54,13 @@ randrip=cell2mat(randrip);
 % end
 
 if quinientos==0
+    
+if outlie==1 
+ache=max_outlier(p_nl);
+p_nl=p_nl(ache);
+q_nl=q_nl(ache);
+end
+    
 [ran_nl]=select_rip(p_nl,FiveHun);
 p_nl=p_nl([ran_nl]);
 q_nl=q_nl([ran_nl]);

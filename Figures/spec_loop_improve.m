@@ -1,4 +1,4 @@
-function spec_loop_improve(equis,bt,sanity,Dura,quinientos)
+function spec_loop_improve(equis,bt,sanity,Dura,quinientos,outlie)
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -23,7 +23,7 @@ end
 %Rat=26;
 RAT=equis;
 %for RAT=2:2
-for rat24base=2:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -247,7 +247,11 @@ if sanity==1
         string1=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');     
     end
 else
-string1=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    if outlie==1
+        string1=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    else
+        string1=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    end
 end
 openfig(string1)
 spec_improve(labelconditions{iii},sanity,dura)
@@ -261,7 +265,12 @@ if sanity==1
       string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');      
     end
 else
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+    if outlie==1
+        string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+    else
+        string=strcat('Spec',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');    
+    end
+    
 end
 
 figure_function(gcf,[],string,[]);
@@ -274,7 +283,11 @@ if sanity==1
        string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');           
     end
 else
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');   
+    if outlie==1
+      string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');     
+    else
+      string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');     
+    end
 end
 
 print(string,'-depsc')
