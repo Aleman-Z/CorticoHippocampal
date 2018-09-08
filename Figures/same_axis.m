@@ -37,6 +37,7 @@ Block{3}='block2';
 sanity=0;
 quinientos=0;
 ldura=1; %1 for 1 sec, 2 for 10 sec. 
+outlie=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -55,7 +56,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=3:3
+for Rat=2:2
     
 if Rat==1
     
@@ -109,7 +110,12 @@ for block_time=0:0
     for w=2:3
     iii=2
         if sanity~=1
-        string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+            if outlie==1
+                string=strcat('Spec3_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+            else
+                string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+            end
+            
         else
             if quinientos==1
                 string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
@@ -145,7 +151,12 @@ for w=2:3
     
     
     if sanity~=1
-    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        if outlie==1
+             string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        else
+             string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        end
+   
     else
         if quinientos==1
              string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
@@ -301,12 +312,24 @@ i=I.CData;
 set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTickLabel', [300 250 200 150 100]) % 20 ticks
 %xo
 if sanity ~=1
+    if outlie==1
+string=strcat('Spec4_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Spec4_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+print(string,'-depsc')
+string=strcat('Spec4_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+saveas(gcf,string)
+        
+    else
 string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
 string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
 string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
+
+    end
+    
 else
     if quinientos==1
         
