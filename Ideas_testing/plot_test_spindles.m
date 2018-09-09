@@ -358,8 +358,8 @@ freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
 % FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
 % FREQ2=justtesting(p,timecell,[0.5:0.5:30],w,0.5,toy);
 
-freq1=barplot2_ft(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,toy);
-freq2=barplot2_ft(p,create_timecell(ro,length(p)),[1:0.5:30],w,toy);
+% freq1=barplot2_ft(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,toy);
+% freq2=barplot2_ft(p,create_timecell(ro,length(p)),[1:0.5:30],w,toy);
 
 % freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
 % freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
@@ -436,61 +436,105 @@ ylabel('Frequency (Hz)')
 %error('stop')
 ylim([0.5 30])
 %%
-if ro==1200
-[stats]=stats_between_trials(freq1,freq2,label1,w);
-else
-[stats]=stats_between_trials10(freq1,freq2,label1,w);
-end
+h(7)=subplot(3,4,9)
 
-%% 
-h(9)=subplot(3,4,10)
-% 
-cfg = [];
-cfg.channel = label1{2*w-1};
-cfg.parameter = 'stat';
-cfg.maskparameter = 'mask';
-cfg.zlim = 'maxabs';
-cfg.colorbar       = 'yes';
-cfg.colormap=colormap(jet(256));
-%grid minor
-ft_singleplotTFR(cfg, stats);
-% title('Condition vs No Learning')
-g=title(strcat(labelconditions{iii},' vs No Learning'))
+[achis]=baseline_norm(freq1,w);
+
+colormap(jet(256))
+J=imagesc(freq1.time,freq1.freq,achis)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+%title('tf power map, thresholded')
+set(gca,'xlim',xlim,'ydir','no')
+% c=narrow_colorbar()
+xlim([-1 1])
+set(J,'AlphaData',~isnan(achis))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+
+g=title('Wide Band No Learning');
 g.FontSize=12;
-%title(strcat(labelconditions{iii},' vs No Learning'))
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
+
+%%
+h(8)=subplot(3,4,10)
+
+[achis2]=baseline_norm(freq2,w);
+
+
+colormap(jet(256))
+J=imagesc(freq1.time,freq1.freq,achis2)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+%title('tf power map, thresholded')
+set(gca,'xlim',xlim,'ydir','no')
+% c=narrow_colorbar()
+xlim([-1 1])
+set(J,'AlphaData',~isnan(achis2))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+g=title(strcat(labelconditions{iii}));
+g.FontSize=12;
+
+%%
+% if ro==1200
+% [stats]=stats_between_trials(freq1,freq2,label1,w);
+% else
+% [stats]=stats_between_trials10(freq1,freq2,label1,w);
+% end
+% 
+% %% 
+% h(9)=subplot(3,4,10)
+% % 
+% cfg = [];
+% cfg.channel = label1{2*w-1};
+% cfg.parameter = 'stat';
+% cfg.maskparameter = 'mask';
+% cfg.zlim = 'maxabs';
+% cfg.colorbar       = 'yes';
+% cfg.colormap=colormap(jet(256));
+% %grid minor
+% ft_singleplotTFR(cfg, stats);
+% % title('Condition vs No Learning')
+% g=title(strcat(labelconditions{iii},' vs No Learning'))
+% g.FontSize=12;
+% %title(strcat(labelconditions{iii},' vs No Learning'))
+% xlabel('Time (s)')
+% %ylabel('uV')
+% ylabel('Frequency (Hz)')
 %%
 
 %%
-clear freq1 freq2 p_nl p 
-%Calculate Freq3 and Freq4
-%toy=[-1:.01:1];
-if ro==1200
-toy=[-1:.01:1];
-else
-%toy=[-10:.1:10];    
-toy = [-10:.01:10];
-end
-
-if length(q)>length(q_nl)
-q=q(1:length(q_nl));        
-% timecell=timecell(1:length(q_nl));
-end
-
-if length(q)<length(q_nl)
-q_nl=q_nl(1:length(q));
-% timecell_nl=timecell_nl(1:length(q));
-end
-
-if ro==1200
-freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
-freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
-else
-freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
-freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
-end
+% clear freq1 freq2 p_nl p 
+% %Calculate Freq3 and Freq4
+% %toy=[-1:.01:1];
+% if ro==1200
+% toy=[-1:.01:1];
+% else
+% %toy=[-10:.1:10];    
+% toy = [-10:.01:10];
+% end
+% 
+% if length(q)>length(q_nl)
+% q=q(1:length(q_nl));        
+% % timecell=timecell(1:length(q_nl));
+% end
+% 
+% if length(q)<length(q_nl)
+% q_nl=q_nl(1:length(q));
+% % timecell_nl=timecell_nl(1:length(q));
+% end
+% 
+% if ro==1200
+% freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
+% freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
+% else
+% freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
+% freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
+% end
 %%
 
 % % % % % % % % % % cfg=[];
@@ -505,81 +549,81 @@ end
 % Calculate zlim
 
 %U might want to uncomment this if you use a smaller step: (Memory purposes)
-cfg              = [];
-cfg.channel      = freq3.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-[zmin2, zmax2] = ft_getminmax(cfg, freq4);
-
-zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
-
-% zlim=[-max(abs(zlim)) max(abs(zlim))];
-
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg              = [];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.channel      = freq3.label{w};
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [zmin2, zmax2] = ft_getminmax(cfg, freq4);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % zlim=[-max(abs(zlim)) max(abs(zlim))];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %%
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg              = [];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.channel      = freq3.label{w};
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.colormap=colormap(jet(256));
 
 %%
-
-cfg              = [];
-cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-cfg.channel      = freq3.label{w};
-cfg.colormap=colormap(jet(256));
-
-%%
-h(7)=subplot(3,4,7)
-ft_singleplotTFR(cfg, freq3); 
-% freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
-g=title('High Gamma No Learning');
-g.FontSize=12;
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % h(7)=subplot(3,4,7)
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ft_singleplotTFR(cfg, freq3); 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g=title('High Gamma No Learning');
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g.FontSize=12;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % xlabel('Time (s)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %ylabel('uV')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ylabel('Frequency (Hz)')
 %%
 %clear freq3
 %%
-% 
-h(8)=subplot(3,4,8);
-% freq4=barplot2_ft(q,timecell,[100:1:300],w)
-%freq=justtesting(q,timecell,[100:1:300],w,0.5)
-%title('High Gamma RIPPLE')
-ft_singleplotTFR(cfg, freq4); 
-g=title(strcat('High Gamma',{' '},labelconditions{iii}));
-g.FontSize=12;
-%title(strcat('High Gamma',{' '},labelconditions{iii}))
-%xo
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % h(8)=subplot(3,4,8);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % freq4=barplot2_ft(q,timecell,[100:1:300],w)
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %freq=justtesting(q,timecell,[100:1:300],w,0.5)
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %title('High Gamma RIPPLE')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ft_singleplotTFR(cfg, freq4); 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g=title(strcat('High Gamma',{' '},labelconditions{iii}));
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g.FontSize=12;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %title(strcat('High Gamma',{' '},labelconditions{iii}))
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %xo
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % xlabel('Time (s)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %ylabel('uV')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ylabel('Frequency (Hz)')
 %%
 %clear freq4
 %%
 
-if ro==1200
-[stats1]=stats_between_trials(freq3,freq4,label1,w);
-else
-[stats1]=stats_between_trials10(freq3,freq4,label1,w);
-end
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % if ro==1200
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [stats1]=stats_between_trials(freq3,freq4,label1,w);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % else
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % [stats1]=stats_between_trials10(freq3,freq4,label1,w);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % end
 
 
 %% %
-
- h(10)=subplot(3,4,12);
- 
-cfg = [];
-cfg.channel = label1{2*w-1};
-cfg.parameter = 'stat';
-cfg.maskparameter = 'mask';
-cfg.zlim = 'maxabs';
-cfg.colorbar       = 'yes';
-cfg.colormap=colormap(jet(256));
-%grid minor
-% ft_singleplotTFR(cfg, stats1);
-ft_singleplotTFR(cfg, stats1);
-
-%title('Ripple vs No Ripple')
-g=title(strcat(labelconditions{iii},' vs No Learning'));
-g.FontSize=12;
-%title(strcat(labelconditions{iii},' vs No Learning'))
-xlabel('Time (s)')
-%ylabel('uV')
-ylabel('Frequency (Hz)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %  h(10)=subplot(3,4,12);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %  
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg = [];
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.channel = label1{2*w-1};
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.parameter = 'stat';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.maskparameter = 'mask';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.zlim = 'maxabs';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.colorbar       = 'yes';
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % cfg.colormap=colormap(jet(256));
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %grid minor
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ft_singleplotTFR(cfg, stats1);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ft_singleplotTFR(cfg, stats1);
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %title('Ripple vs No Ripple')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g=title(strcat(labelconditions{iii},' vs No Learning'));
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % g.FontSize=12;
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %title(strcat(labelconditions{iii},' vs No Learning'))
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % xlabel('Time (s)')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %ylabel('uV')
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % ylabel('Frequency (Hz)')
 %% EXTRA STATISTICS
 % [stats1]=stats_between_trials(freq30,freq40,label1,w);
 % % %
