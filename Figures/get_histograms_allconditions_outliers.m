@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -626,8 +626,13 @@ bb=boxplot(C*1000,grp,'Notch','on' );
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Time (ms)')
-
 %%
+ checale= cellfun(@(x) x*1000, CCC ,'UniformOutput',false)%%
+ violin(checale,'facecolor',[[105/256 105/256 105/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
+ave=gca;
+ylabel('Time (ms)')
+ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
+legend off
 else
 %%
 if acer==0
@@ -762,7 +767,14 @@ string=strcat('RippleDuration_Outliers_','Allconditions','_',Block{block_time+1}
 print(string,'-depsc')
 string=strcat('RippleDuration_Outliers_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
-        
+
+string=strcat('RippleDuration_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('RippleDuration_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('RippleDuration_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
+
 end
 end
 xo
