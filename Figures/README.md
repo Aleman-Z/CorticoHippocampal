@@ -85,6 +85,14 @@ When ripdur=1: \
 *Plots notched boxplots of the ripples´s duration per condition.* \
 <img src="RipDur.png" width="400">
 
+* **get_histograms_allconditions_outliers.m:** 
+When ripdur=1: \
+*Plots notched boxplots of the ripples´s duration per condition. Outliers are displayed.* 
+<img src="boxplot_outliers.png" width="400">
+*Violin plot of skewed distributions per condition.* 
+<img src="violin.png" width="400">
+
+
 * **frequency_boxplots.m:**
 *Plots notched boxplots of the ripples´s peak or mean frequency.* 
 <img src="peak_freq.png" width="400">
