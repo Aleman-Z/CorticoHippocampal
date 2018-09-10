@@ -1,6 +1,6 @@
 close all
 clear all
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -13,7 +13,7 @@ FiveHun=2; % Options: 0 all, 1 current, 2 1000?
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
-sanity=1;
+sanity=0;
 ripdur=1; % Duration of ripples. 
 %%
 if acer==0
@@ -31,15 +31,15 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=1:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -569,7 +569,7 @@ end
 %%
 
 %%
-xo
+%xo
 [p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
 xq=0:0.5:500;
 %xo
@@ -634,7 +634,8 @@ aver=[aver{:}];
 Aver{iii,:}=aver;
 Sem(iii,:)=data_SEM;
 
-lq(iii,:)=cellfun('length',q)/1000; %sec
+%lq(iii,:)=cellfun('length',q)/1000; %sec
+lq{iii}=cellfun('length',q)/1000; %sec
 end
 %%
  xo
@@ -674,6 +675,13 @@ ave.XTickLabel=labelconditions;
 ylabel('Frequency (Hz)')
 %ylim([90 220])
 ylim([90 230])
+%% Violin
+violin(MUU,[5 5 5 5],'facecolor',[[180/256 180/256 180/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
+ave=gca;
+ylabel('Frequency (Hz)')
+ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
+legend off
+
 %%
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -699,6 +707,13 @@ print(string,'-depsc')
 string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
     
+
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
 end
 %%
 if sanity==1
