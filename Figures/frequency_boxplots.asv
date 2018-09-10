@@ -676,7 +676,7 @@ ylabel('Frequency (Hz)')
 %ylim([90 220])
 ylim([90 230])
 %% Violin
-violin(UU,[9 9 9 9],'facecolor',[[180/256 180/256 180/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
+violin(UU,[5],'facecolor',[[180/256 180/256 180/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
 ave=gca;
 ylabel('Frequency (Hz)')
 ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
