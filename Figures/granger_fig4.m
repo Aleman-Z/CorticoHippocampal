@@ -31,7 +31,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=3:3
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
@@ -39,7 +39,7 @@ for RAT=3:3
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=2:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -663,7 +663,16 @@ if rippletable==0
 for w=2:3
 
 %%
-%xo
+xo
+%Granger
+[gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro);
+[p_nl,q_nl,timecell_nl]=gc_no_learning(level,ro,label1,label2,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2);
+[gran_nl,gran1_nl]=gc_paper(p_nl,timecell_nl,'Widepass',ro);
+
+granger_paper(gran,gran_nl,labelconditions{iii-3})
+
+
+%%
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
