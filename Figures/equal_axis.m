@@ -5,7 +5,9 @@
 %fil='Peak_Frequency_Allconditions_complete_';
 %fil='RippleDuration_Outliers_Allconditions_complete_';
 %fil='RippleDuration_Violin_Allconditions_complete_';
-fil='RippleDuration_Violin_Allconditions_complete_';
+%fil='RippleDuration_Violin_Allconditions_complete_';
+% fil='InterrippleTime_Violin_Allconditions_complete_';
+fil='InterrippleTime_Allconditions_complete_';
 
 cd('C:\Users\addri\Dropbox\Figures\Figure3\26')
 %cd('C:\Users\addri\Dropbox\Figures\Figure3\26\Bouts_showing_outliers')
