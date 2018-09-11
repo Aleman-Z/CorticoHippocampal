@@ -101,6 +101,9 @@ When ripdur=1: \
 *Characterizes bouts for Wake, NREM, REM and transitional sleep stages*
 <img src="Bouts.png" width="400">
 
+* **equal_axis.m:**
+*Equalizes axes among boxplots for different rats.*
+
 ####  :link: Post-Processing steps for spectrograms: 
 
 1. **spec_loop_improve.m:**
@@ -117,4 +120,12 @@ When ripdur=1: \
 
 5. **same_axis.m:**
 *Equal Y-axis and colorbar among brain areas.*
+
+
+:zap: Figure 4:
+
+* **granger_fig4.m:**
+*Main file to generate granger causality figures (Work in progress)*
+
+
 
