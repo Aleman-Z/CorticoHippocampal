@@ -7,11 +7,11 @@ F= [1 2; 1 3; 2 3] ;
 
 lab=cell(6,1);
 
-lab{1}='Hippo -> Parietal';
-lab{2}='Parietal -> Hippo';
+lab{1}='HPC -> Parietal';
+lab{2}='Parietal -> HPC';
 
-lab{3}='Hippo -> PFC';
-lab{4}='PFC -> Hippo';
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
 
 lab{5}='Parietal -> PFC';
 lab{6}='PFC -> Parietal';
