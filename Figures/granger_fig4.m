@@ -354,7 +354,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=1:length(nFF) %Should start with 2!
+for iii=4:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
     %xo
@@ -570,8 +570,12 @@ end
 
 %%
 %xo
-[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
+[p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 xo
+[gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10);
+granger_paper2(gran,labelconditions{iii})
+
+
 xq=0:0.5:500;
 %xo
 
