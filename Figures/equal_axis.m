@@ -1,5 +1,10 @@
 %% Equal axis among rats
-fil='Average_Frequency_Allconditions_complete_';
+% fil='Average_Frequency_Allconditions_complete_';
+%fil='Average_Frequency_Violin_Allconditions_complete_';
+%fil='Peak_Frequency_Violin_Allconditions_complete_';
+%fil='Peak_Frequency_Allconditions_complete_';
+%fil='RippleDuration_Outliers_Allconditions_complete_';
+fil='RippleDuration_Violin_Allconditions_complete_';
 
 cd('C:\Users\addri\Dropbox\Figures\Figure3\26')
 openfig(fil)
