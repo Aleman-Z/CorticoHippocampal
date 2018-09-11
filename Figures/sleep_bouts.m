@@ -1,6 +1,6 @@
-acer=0;
+acer=1;
 rat24base=1;
-sanity=1;
+sanity=0;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -13,7 +13,7 @@ addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
 end
 %%
 %Rat=26;
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 21 24];
 Rat=rats(Rat);    
     
@@ -351,6 +351,8 @@ else
 end
 %% Individual plots
 for h=1:H
+% LL=LL_clean(LL)
+%%
 LQ = [cell2mat(LL(1,h)) cell2mat(LL(2,h))  cell2mat(LL(3,h))  cell2mat(LL(4,h))];    
 grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*ones(1,cellfun('length',LL(3,h))),3*ones(1,cellfun('length',LL(4,h)))];
 
@@ -359,7 +361,7 @@ grp = [zeros(1,cellfun('length',LL(1,h))),ones(1,cellfun('length',LL(2,h))),2*on
 %bb=boxplot(LQ,grp,'Notch','on' );
 %subplot(1,2,1)
 bb=boxplot(LQ./60,grp);
-set(bb(7,:),'Visible','off');
+%set(bb(7,:),'Visible','off');
 ave=gca;
 ave.XTickLabel=labelconditions;
 ylabel('Bout Duration (min)')

@@ -30,13 +30,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:2
  
@@ -620,31 +620,6 @@ saveas(gcf,string)
 %% Violin 
  violin(F.',[],'facecolor',[[105/256 105/256 105/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
 legend off
-ave=gca;
-ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
-ylabel('Time (sec)')
-
-if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-else
-      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-end
-
-string=strcat('InterrippleTime_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('InterrippleTime_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('InterrippleTime_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-%%
-ksdensity(F{1})
-hold on
-ksdensity(F{2})
-ksdensity(F{3})
-ksdensity(F{4})
-%xlim([0 10])
-legend(labelconditions)
 %%
 for tailed=1:2
 %%
