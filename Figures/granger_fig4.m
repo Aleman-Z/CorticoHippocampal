@@ -571,9 +571,22 @@ end
 %%
 %xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
-xo
+
+%Widepassed
 [gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10);
+
+%Bandpassed
+[Gran,Gran1]=gc_paper(q,create_timecell(ro,length(p)),'Widepass',ro,10);
+
+
+xo
+
+%Non-parametric
 granger_paper2(gran,labelconditions{iii})
+hold on
+%Parametric
+granger_paper2(gran1,labelconditions{iii})
+hold on
 
 
 xq=0:0.5:500;

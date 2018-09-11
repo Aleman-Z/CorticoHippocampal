@@ -1,7 +1,7 @@
 
 
 function granger_paper(granger,condition)
-allscreen()
+%allscreen()
  
 F= [1 2; 1 3; 2 3] ;
 
@@ -40,7 +40,7 @@ lab{6}='PFC -> Parietal';
  ylabel('G-causality')
  title(lab{2*j-1})
 % legend('Parametric: AR(10)','Non-P:Multitaper')
- legend('Baseline',condition)
+ legend(condition)
 
  subplot(3,2,2*j)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(2),f(1),:)),'Color',[1 0 0])
@@ -51,7 +51,7 @@ lab{6}='PFC -> Parietal';
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
- legend('Baseline',condition)
+ legend(condition)
  
 title(lab{2*j})
  ylim([0 mmax])
