@@ -5,15 +5,19 @@
 
 Parametric approach:
 
-1. *AR-modelling: Order Selection.* 
-
+1. *MVAR-modelling: Order Selection.* 
+ 
      **function.m:**
 
-2. *AR-modelling: Implementation.*
+2. *MVAR-modelling: Implementation.*
 
-    **function.m:**
+    **ft_mvaranalysis.m:**
 
-3. *Statistical Analysis.*
+3. *Frequency domain conversion of MVAR.*
+
+    **ft_freqanalysis.m:**
+
+4. *Statistical Analysis.*
 
     **function.m:**
 
