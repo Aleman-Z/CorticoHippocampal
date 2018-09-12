@@ -585,7 +585,24 @@ G{iii}=Gran.grangerspctrm;
 G1{iii}=Gran1.grangerspctrm;
 
 end
+%Frequency ranges. 
+g_f=gran.freq;
+g1_f=gran1.freq;
+G_f=Gran.freq;
+G1_f=Gran1.freq;
+
 xo
+%Plot 
+
+%Widepass
+granger_paper3(g,g1,g_f,g1_f,labelconditions)
+
+
+%Bandpass
+granger_paper3(G,G1,G_f,G1_f,labelconditions)
+
+
+
 %Non-parametric
 granger_paper2(gran,labelconditions{iii})
 hold on
