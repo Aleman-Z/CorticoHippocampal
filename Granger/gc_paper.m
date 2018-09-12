@@ -1,5 +1,5 @@
 
-function [granger,granger1]=gc_paper(q,timecell,label,ro,ord)
+function [granger,granger1]=gc_paper(q,timecell,label,ro,ord,freqrange)
 fn=1000;
 data1.trial=q;
 data1.time= timecell; %Might have to change this one 
@@ -29,7 +29,7 @@ cfg.taper     = 'dpss';
 cfg.output    = 'fourier';
 cfg.tapsmofrq = 2;
 cfg.pad = 10;
-cfg.foi=[0:2:300];
+cfg.foi=freqrange;
 freq          = ft_freqanalysis(cfg, data1);
 
 % %Non parametric- Multitaper
