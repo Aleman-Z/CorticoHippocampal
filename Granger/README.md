@@ -1,9 +1,7 @@
 -Spectral Granger Causality 
 ------------------
 
-####  :link: Steps to generate Spectral GC: 
-
-**Parametric approach:**
+####  :link: Steps to generate Spectral GC   _(Parametric approach)_: 
 
 1. *MVAR-modelling: Order Selection.* 
  
