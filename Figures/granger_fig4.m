@@ -354,7 +354,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=4:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
     %xo
@@ -575,10 +575,17 @@ end
 %Widepassed
 [gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
 
+g{iii}=gran.grangerspctrm;
+g1{iii}=gran1.grangerspctrm;
+
 %Bandpassed
 [Gran,Gran1]=gc_paper(q,create_timecell(ro,length(q)),'Widepass',ro,10,[100:1:300]);
 
+G{iii}=Gran.grangerspctrm;
+G1{iii}=Gran1.grangerspctrm;
 
+end
+xo
 %Non-parametric
 granger_paper2(gran,labelconditions{iii})
 hold on
@@ -794,5 +801,5 @@ end
 end
 xo
 
-end
+%end
 %xo
