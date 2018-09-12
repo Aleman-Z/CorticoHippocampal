@@ -593,18 +593,31 @@ G1_f=Gran1.freq;
 
 xo
 %Plot 
+if acer==0
+    cd(strcat('/home/raleman/Dropbox/Figures/Figure4/',num2str(Rat)))
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
+end
 
 %Widepass
 % granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
 granger_paper4(g,g_f,labelconditions,[0 300])
-granger_paper4(g1,g1_f,labelconditions,[0 300])
+printing('GC_NP_Widepass_1sec')
+close all
 
+granger_paper4(g1,g1_f,labelconditions,[0 300])
+printing('GC_P_Widepass_1sec')
+close all
 
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
+printing('GC_NP_Bandpass_1sec')
+close all
 
 granger_paper4(G1,G1_f,labelconditions,[100 300])
-
+printing('GC_P_Bandpass_1sec')
+close all
 
 %Non-parametric
 granger_paper2(gran,labelconditions{iii})
