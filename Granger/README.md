@@ -3,7 +3,7 @@
 
 ####  :link: Steps to generate Spectral GC: 
 
-Parametric approach:
+**Parametric approach:**
 
 1. *MVAR-modelling: Order Selection.* 
  
@@ -17,13 +17,17 @@ Parametric approach:
 
     **ft_freqanalysis.m: Fieldtrip function.**
 
-4. *Statistical Analysis.*
+3. *Computing Spectral Granger Causality.*
+
+    **ft_connectivityanalysis.m: Fieldtrip function.**
+
+5. *Statistical Analysis.*
 
     **function.m:**
 
 
 
-:zap: Useful functions: 
+### :zap: Useful functions: 
 
 * **granger_paper3.m:**  
 *Plots spectral granger causality among brain regions for a single condition. * 
