@@ -5,11 +5,11 @@
 
 Parametric approach:
 
-1. *AR-modelling:Order Selection.* 
+1. *AR-modelling: Order Selection.* 
 
      **function.m:**
 
-2. *AR-modelling:Implementation.*
+2. *AR-modelling: Implementation.*
 
     **function.m:**
 
