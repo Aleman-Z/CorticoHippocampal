@@ -1,6 +1,6 @@
 
 
-function granger_paper3(g,g1,g_f,g1_f,labelconditions)
+function granger_paper3(g,g1,g_f,g1_f,labelconditions,k)
 %allscreen()
  
 F= [1 2; 1 3; 2 3] ;
@@ -20,6 +20,7 @@ lab{6}='PFC -> Parietal';
  for j=1:3
      
  f=F(j,:);
+
  mmax1=[max(squeeze(g{k}(f(1),f(2),:)))];
  mmax1=max(mmax1);
 

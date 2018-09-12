@@ -1,3 +1,5 @@
+close all
+clear all
 acer=1;
 % rat24base=1;
 DUR{1}='1sec';
@@ -12,10 +14,8 @@ rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
-quinientos=0;
-outlie=1;
+ripdur=1; % Duration of ripples. 
 %%
-
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
@@ -31,7 +31,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=3:3
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
@@ -39,7 +39,7 @@ for RAT=3:3
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=2:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -229,7 +229,7 @@ labelconditions=[
     ];
 
 
-NFF=[];
+
 end
 
 %% Check if experiment has been run before.
@@ -239,15 +239,15 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
- 
-% if Rat==24
-%     cd(nFF{1})
-% end
+
+if Rat==24
+    cd(nFF{1})
+end
 
 if dura==2
     cd('10sec')
 end
-% xo
+%xo
 % 
 % %Ignore this for a moment
 % FolderRip=[{'all_ripples'} {'500'} {'1000'}];
@@ -275,10 +275,8 @@ end
 % end
 %%
 % Use other baseline, beware when using mergebaseline
-if Rat~=24
-    if base==2
-        nFF{1}=NFF{1};
-    end
+if base==2
+    nFF{1}=NFF{1};
 end
 
 if base==3
@@ -345,6 +343,10 @@ myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
+nFF=nFF([1 4 3 2]);
+labelconditions=labelconditions([1 4 3 2]);
+
+
 %Rat 24
 % if Rat==24
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
@@ -352,8 +354,10 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
-%xo
+for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+%for iii=1:1 %Should start with 2!
+%for vert=2:length(nFF)
+    %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -361,15 +365,15 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-% if Rat==24
-%     cd(nFF{1})
-% end
+if Rat==24
+    cd(nFF{1})
+end
 
 if dura==2
     cd('10sec')
 end
 
-if iii==2 && sanity==1
+if iii==1 && sanity==1
 %Get number of ripples
 FolderRip=[{'all_ripples'} {'500'} {'1000'}];
             Method=[{'Method2' 'Method3' 'Method4'}];
@@ -412,7 +416,7 @@ else
 end
 cd('..')
 end
-%xo
+% xo
 % 
 % string1=strcat('Spec_',labelconditions{iii},'_',label1{2*2-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 % string2=strcat('Spec_',labelconditions{iii},'_',label1{2*3-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
@@ -504,7 +508,7 @@ ror=2000/timeasleep;
     end
     
 
-if Rat==26 || Rat==24 
+if Rat==26
 Base=[{'Baseline1'} {'Baseline2'}];
 end
 if Rat==26 && rat26session3==1
@@ -521,7 +525,7 @@ end
 %openfig('Ripples_per_condition_best.fig')
 openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-h = gcf; %current figure handle
+h = figure(1); %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 
@@ -564,201 +568,243 @@ end
 
 %%
 
-%[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
-% if meth==3
-% [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
-% else
-[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),CHTM(level+1));    
-% end
-clear sig1 sig2
-%Ripple selection. Memory free. 
+%%
 %xo
-if quinientos==0
+[p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
-if outlie==1 
-ache=max_outlier(p);
-p=p(ache);
-q=q(ache);
+%Widepassed
+[gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
+
+g{iii}=gran.grangerspctrm;
+g1{iii}=gran1.grangerspctrm;
+
+%Bandpassed
+[Gran,Gran1]=gc_paper(q,create_timecell(ro,length(q)),'Widepass',ro,10,[100:1:300]);
+
+G{iii}=Gran.grangerspctrm;
+G1{iii}=Gran1.grangerspctrm;
+
 end
+%Frequency ranges. 
+g_f=gran.freq;
+g1_f=gran1.freq;
+G_f=Gran.freq;
+G1_f=Gran1.freq;
 
-[ran]=select_rip(p,FiveHun);
-p=p([ran]);
-q=q([ran]);
+xo
+%Plot 
 
-else
-     if iii~=2
-        [ran]=select_quinientos(p,length(randrip)); 
-        p=p([ran]);
-        q=q([ran]);
-     %    ran=1:length(randrip);
-     end
-end
-%
+%Widepass
+granger_paper3(g,g1,g_f,g1_f,labelconditions,1)
 
-if iii~=2 && sanity==1 && quinientos==0 
+
+%Bandpass
+granger_paper3(G,G1,G_f,G1_f,labelconditions)
+
+
+
+%Non-parametric
+granger_paper2(gran,labelconditions{iii})
+hold on
+%Parametric
+granger_paper2(gran1,labelconditions{iii})
+hold on
+
+
+xq=0:0.5:500;
+%xo
+
+% [ran]=select_rip(p,FiveHun);
+% % 
+% p=p([ran]);
+% q=q([ran]);
+
+if iii~=4 && sanity==1 %4 is Plusmaze!
  p=p(randrip);
  q=q(randrip);
 end
 
 %Q=Q([ran]);
 %timecell=timecell([ran]);
-[q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+[q]=filter_ripples_new(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 %[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
-P1=avg_samples(q,create_timecell(ro,length(p)));
-P2=avg_samples(p,create_timecell(ro,length(p)));
-%[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
+%%
+clear U VQ MU
 
-
-if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-else
-    cd(strcat('D:\internship\',num2str(Rat)))
+for k=1:length(q)
+% plot(q{k})   
+%  hold on
+% [fi,am]=periodogram(q{6});
+ [pxx,f]= periodogram(q{k},hann(length(q{k})),length(q{k}),1000);
+%  semilogy(f,(pxx))
+ vq1 = interp1(f,pxx,xq,'PCHIP');
+ VQ(k,:)=vq1;
+%  U(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
+ U(k)=interp1(VQ(k,:),xq,mean(VQ(k,:)));
+MU(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
+ %%
+%  semilogy(f,(pxx))
+%  hold on
+%  semilogy(xq,(vq1))
+ k/length(q)*100
 end
-
-cd(nFF{1}) %Baseline
-
-%run('newest_load_data_nl.m')
-%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
-
-if meth==1
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
-end
-
-if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
-end
-
-if meth==3
-chtm=load('vq_loop2.mat');
-chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-end
-
-if meth==4
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-riptable(1,1)=ripple_nl;
-riptable(1,2)=timeasleep2;
-riptable(1,3)=RipFreq3;
-end
-
+UU{iii}=U;
+MUU{iii}=MU;
 %%
 
-if block_time==1
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
-end
+consig=carajo{1};
 
-if block_time==2
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
-end
-
-% end
-%  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
-%%
-if rippletable==0
-for w=2:3
-
-%%
+bon=consig(:,1:2);
+C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
+C=cell2mat(C.');
+data_SEM = std(C)/sqrt( length(C));       % SEM Across Columns
+CC{iii,:}=C;
 %xo
-% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
-if sanity==1
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
-else
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
+c=median(C)*1000; %Miliseconds
+ccc=mean(C)*1000;
+% c=median(c)*1000; %Miliseconds
+cc(iii)=c;
+cccc(iii)=ccc;
+
+consig=consig(:,3);
+
+aver=cellfun(@(x) diff(x), consig,'UniformOutput',false);
+aver=[aver{:}];
+Aver{iii,:}=aver;
+Sem(iii,:)=data_SEM;
+
+%lq(iii,:)=cellfun('length',q)/1000; %sec
+lq{iii}=cellfun('length',q)/1000; %sec
 end
-%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
-%xo
 %%
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(1:2)));
-set(h(9),'Position',[new,pos{9}(2:end)])
+ xo
+%%
 
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(3:4)));
-set(h(10),'Position',[new,pos{10}(2:end)])
+if ripdur==1
+LQ = [lq(1,:) lq(2,:)  lq(3,:)  lq(4,:)];
+    
+grp = [zeros(1,size(lq,2)),ones(1,size(lq,2)),2*ones(1,size(lq,2)),3*ones(1,size(lq,2))];
+
+bb=boxplot(LQ*1000,grp,'Notch','on' );
+%ylim([0 0.10*1000])
+ylim([0 160])
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Time (ms)')
+   
+    
+end
+%% 
+UM = [UU{1} UU{2}  UU{3}  UU{4}];
+grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
+bb=boxplot(UM,grp,'Notch','on' );
+%set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Frequency (Hz)')
+%ylim([60 300])
 %%
-set(h(1),'Position',[pos{1}(1:2),pos{1+4}(3:end)])
-set(h(2),'Position',[pos{2}(1:2),pos{2+4}(3:end)])
-set(h(3),'Position',[pos{3}(1:2),pos{3+4}(3:end)])
-set(h(4),'Position',[pos{4}(1:2),pos{4+4}(3:end)])
+UM = [MUU{1} MUU{2}  MUU{3}  MUU{4}];
+grp = [zeros(1,length(UU{1})),ones(1,length(UU{2})),2*ones(1,length(UU{3})),3*ones(1,length(UU{4}))];
+bb=boxplot(UM,grp,'Notch','on' );
+set(bb(7,:),'Visible','off');
+ave=gca;
+ave.XTickLabel=labelconditions;
+ylabel('Frequency (Hz)')
+%ylim([90 220])
+ylim([90 230])
+%% Violin
+violin(UU,[9 9 9 9],'facecolor',[[180/256 180/256 180/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
+ave=gca;
+ylabel('Frequency (Hz)')
+ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
+legend off
+%%
+violin(MUU,[5 5 5 5],'facecolor',[[180/256 180/256 180/256];[38/256 43/256 226/256];[1 1 0];[0 0 0]],'medc','k','mc','')
+ave=gca;
+ylabel('Frequency (Hz)')
+ave.XTickLabel=[' '; labelconditions(1);' '; labelconditions(2);' '; labelconditions(3);' '; labelconditions(4);' ';];
+legend off
 
 %%
-H=gcf;
-ca = get(H, 'Children');  %axes handles
-Pos = get(ca,'Position');
-
-set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
-set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
-%%
-%xo
-%error('stop')
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
+%%
+if sanity==1
 
-% if Rat==24
-%     cd(nFF{1})
-% end
-
-if dura==2
-    cd('10sec')
-end
-
-if sanity~=1
-if outlie==1
-string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
 
 else
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
     
+
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
 end
+%%
+if sanity==1
+
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
 
 else
-if quinientos==0
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
-else
-string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+
+string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
 print(string,'-depsc')
-string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
 saveas(gcf,string)
-    
-end
 
 end
-%xo
-close all
+%%
+%%
+xo
+%%
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
+figure_function(gcf,[],string,[]);
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
+print(string,'-depsc')
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
+saveas(gcf,string)
 
 %%
+%%
+%histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
 
 end
-%xo
 end
-%end
-
+xo
 if iii==length(nFF)
    break 
 end
@@ -771,106 +817,6 @@ end
 %clearvars -except acer Rat
 end
 xo
-if meth==4
 
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
-
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-    
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-
-    [s.(Base{base})]=riptable;
-end
-
-end
-xo
-if rippletable==0
-spec_loop_improve(RAT,block_time,sanity,dura,quinientos,outlie);
-%save in right folder
-list = dir();
-list([list.isdir]) = [];
-list={list.name};
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
-end
-if Rat==26 && rat26session3==1
-Base=[{'Baseline3'} {'Baseline2'}];
-end
-
-if Rat==27 
-Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-
-if Rat==27 && rat27session3==1
-   Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-end
-
-if meth==1
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-else
-Method=[{'Method2' 'Method3' 'Method4'}];
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-end
-
-if mergebaseline==1
-    if meth==1
-    folder=strcat('Merged','_',FolderRip{FiveHun+1});
-    else
-    Method=[{'Method2' 'Method3' 'Method4'}];
-    folder=strcat('Merged','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-    end
-end
-
-if exist(folder)~=7
-(mkdir(folder))
-end
-
-for nmd=1:length(list)
-movefile (list{nmd}, folder)
-end
-
-
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
-end
-if base>=2
-    break
-end
-base=2;
-end
-xo
-
-if rippletable==1
-            if acer==0
-                cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-            else
-                  %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-                  cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-            end
-            save('NumberRipples','s')
-            
-            list = dir();
-            list([list.isdir]) = [];
-            list={list.name};
-            FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-            Method=[{'Method2' 'Method3' 'Method4'}];
-            if Rat==26
-            folder=strcat('Baseline1','_',FolderRip{FiveHun+1},'_',Method{meth-1});
-            else
-            folder=strcat('Baseline2','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-            end
-            movefile (list{1}, folder)
-end
-base=1;
-
-end
-end
+%end
+%xo

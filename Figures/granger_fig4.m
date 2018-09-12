@@ -595,7 +595,7 @@ xo
 %Plot 
 
 %Widepass
-granger_paper3(g,g1,g_f,g1_f,labelconditions)
+granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
 
 
 %Bandpass
