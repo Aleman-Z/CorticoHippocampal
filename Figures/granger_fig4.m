@@ -595,12 +595,15 @@ xo
 %Plot 
 
 %Widepass
-granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
+% granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
+granger_paper4(g,g_f,labelconditions,[0 300])
+granger_paper4(g1,g1_f,labelconditions,[0 300])
 
 
 %Bandpass
-granger_paper3(G,G1,G_f,G1_f,labelconditions)
+granger_paper4(G,G_f,labelconditions,[100 300])
 
+granger_paper4(G1,G1_f,labelconditions,[100 300])
 
 
 %Non-parametric
