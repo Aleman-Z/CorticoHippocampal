@@ -1,6 +1,6 @@
 
 
-function granger_paper3(g,g1,g_f,g1_f,labelconditions,k)
+function granger_paper3(g,g_f,labelconditions,k)
 %allscreen()
  
 F= [1 2; 1 3; 2 3] ;

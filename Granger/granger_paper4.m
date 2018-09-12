@@ -47,8 +47,9 @@ lab{6}='PFC -> Parietal';
  ylabel('G-causality')
  title(lab{2*j-1})
 % legend('Parametric: AR(10)','Non-P:Multitaper')
- legend(labelconditions)
-
+%if j==1
+% legend(labelconditions)
+%end
  subplot(3,2,2*j)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(2),f(1),:)),'Color',[1 0 0])
 %  hold on
@@ -64,8 +65,9 @@ lab{6}='PFC -> Parietal';
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
- legend(labelconditions)
- 
+if j==1
+legend(labelconditions,'Location','best') %Might have to change to default. 
+end
 title(lab{2*j})
  ylim([0 mmax])
  

@@ -306,7 +306,8 @@ end
 % inter=1;
 %Select length of window in seconds:
 if dura==1
-ro=[1200];
+%ro=[1200];
+ro=[250];
 else
 ro=[10200];    
 end
@@ -572,6 +573,13 @@ end
 %xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
+if iii~=4 && sanity==1 %4 is Plusmaze!
+ p=p(randrip);
+ q=q(randrip);
+end
+[p]=filter_ripples(p,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+[q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
+
 %Widepassed
 [gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
 
@@ -603,21 +611,35 @@ end
 %Widepass
 % granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
 granger_paper4(g,g_f,labelconditions,[0 300])
-printing('GC_NP_Widepass_1sec')
+% printing('GC_NP_Widepass_1sec')
+%printing('GC_NP_Widepass_0.5sec')
+printing('GC_NP_Widepass_0.25sec')
+
 close all
 
-granger_paper4(g1,g1_f,labelconditions,[0 300])
-printing('GC_P_Widepass_1sec')
+granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+% printing('GC_P_Widepass_1sec')
+%printing('GC_P_Widepass_0.5sec')
+printing('GC_P_Widepass_0.25sec')
+
 close all
 
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
-printing('GC_NP_Bandpass_1sec')
+% printing('GC_NP_Bandpass_1sec')
+% printing('GC_NP_Bandpass_0.5sec')
+printing('GC_NP_Bandpass_0.25sec')
+
 close all
 
 granger_paper4(G1,G1_f,labelconditions,[100 300])
-printing('GC_P_Bandpass_1sec')
+% printing('GC_P_Bandpass_1sec')
+% printing('GC_P_Bandpass_0.5sec')
+printing('GC_P_Bandpass_0.25sec')
 close all
+
+
+
 
 %Non-parametric
 granger_paper2(gran,labelconditions{iii})
@@ -626,23 +648,17 @@ hold on
 granger_paper2(gran1,labelconditions{iii})
 hold on
 
+xo
+
+
+
 
 xq=0:0.5:500;
-%xo
 
-% [ran]=select_rip(p,FiveHun);
-% % 
-% p=p([ran]);
-% q=q([ran]);
 
-if iii~=4 && sanity==1 %4 is Plusmaze!
- p=p(randrip);
- q=q(randrip);
-end
 
 %Q=Q([ran]);
 %timecell=timecell([ran]);
-[q]=filter_ripples_new(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 %[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
 %%
