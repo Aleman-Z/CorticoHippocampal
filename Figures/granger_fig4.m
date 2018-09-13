@@ -306,8 +306,8 @@ end
 % inter=1;
 %Select length of window in seconds:
 if dura==1
-%ro=[1200];
-ro=[250];
+ro=[1200];
+%ro=[250];
 else
 ro=[10200];    
 end
