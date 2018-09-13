@@ -1,6 +1,6 @@
 close all
 clear all
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
