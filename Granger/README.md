@@ -34,6 +34,6 @@ Steps 1 and 5: Work in progress.
 
 * **granger_paper4.m:**  
 *Plots spectral granger causality among brain regions for all conditions. * 
-<img src="gr.png" width="400">
+<img src="gr_all.png" width="500">
 
 :notebook:  Borrowed functions from: Fieldtrip, BSMART. 
