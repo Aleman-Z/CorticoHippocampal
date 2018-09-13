@@ -29,7 +29,7 @@ lab{6}='PFC -> Parietal';
  
  mmax=max([mmax1 mmax2]);
 %
- 
+
  subplot(3,2,2*j-1)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(1),f(2),:)),'Color',[1 0 0])
 % hold on
