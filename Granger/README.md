@@ -29,15 +29,18 @@ Steps 1 and 5: Work in progress.
 ### :zap: Useful functions: 
 
 * **granger_paper3.m:**  
-*Plots spectral granger causality among brain regions for a single condition. * 
+*Plots spectral granger causality among brain regions for a single condition.* 
 <img src="gr.png" width="400">
 
 * **granger_paper4.m:**  
-*Plots spectral granger causality among brain regions for all conditions. * 
+*Plots spectral granger causality among brain regions for all conditions.* 
 <img src="gr_all.png" width="500">
 
 * **granger_2D_testall.m:**  
-*Visualizes Granger causality as images to later compute their pixel-based statistics. * 
+*Visualizes Granger causality as images to later compute their pixel-based statistics.* 
 <img src="granger_2d.png" width="500">
+
+* **autotest.m:**  
+*Plots granger causality for different model order values to observe their variation. Makes use of **createauto.m*** 
 
 :notebook:  Borrowed functions from: Fieldtrip, BSMART. 
