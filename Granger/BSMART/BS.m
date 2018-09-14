@@ -1,14 +1,14 @@
 function [Fxy3, Fyx3]=BS(p,q)
 
-np=nan(length(p{1}),4,length(p));
-for i=1:77
+np=nan(length(p{1}),3,length(p));
+for i=1:length(p)
  aver=p{i};   
  aver=aver.';
  np(:,:,i)=aver;
 end
 
-nq=nan(length(p{1}),4,length(q));
-for i=1:77
+nq=nan(length(q{1}),3,length(q));
+for i=1:length(q)
  aver=q{i};   
  aver=aver.';
  nq(:,:,i)=aver;
@@ -16,7 +16,7 @@ end
 
 %
 dat=np;
-frang=1:1:300;
+frang=0:1:300; %Might require starting with 1. 
 fs=1000;
 
 order=4;
