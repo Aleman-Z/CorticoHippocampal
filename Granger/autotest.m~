@@ -58,22 +58,22 @@ granger       = ft_connectivityanalysis(cfg, freq);
 
 
 lab=cell(9,1);
-lab{1}='HPC -> HPC';
-lab{2}='HPC -> Parietal';
-lab{3}='HPC -> PFC';
-% lab{4}='HPC -> Reference';
+lab{1}='Hippo -> Hippo';
+lab{2}='Hippo -> Parietal';
+lab{3}='Hippo -> PFC';
+% lab{4}='Hippo -> Reference';
 
-lab{4}='Parietal -> HPC';
+lab{4}='Parietal -> Hippo';
 lab{5}='Parietal -> Parietal';
 lab{6}='Parietal -> PFC';
 % lab{8}='Parietal -> Reference';
 
-lab{7}='PFC -> HPC';
+lab{7}='PFC -> Hippo';
 lab{8}='PFC -> Parietal';
 lab{9}='PFC -> PFC';
 % lab{12}='PFC -> Reference';
 
-% lab{13}='Reference -> HPC';
+% lab{13}='Reference -> Hippo';
 % lab{14}='Reference -> Parietal';
 % lab{15}='Reference -> PFC';
 % lab{16}='Reference -> Reference';
@@ -120,16 +120,15 @@ if col~=row
         max(squeeze(granger3.grangerspctrm(col,row,:))) ...
         max(squeeze(granger4.grangerspctrm(col,row,:))) ...
         max(squeeze(granger5.grangerspctrm(col,row,:))) ...
-        max(squeeze(granger6.grangerspctrm(col,row,:))) 
+        max(squeeze(granger6.grangerspctrm(row,col,:))) 
           
     ];
    max2=max(max2);
    
-  Mmax=max([max1 max2]);
-   ylim([0 Mmax])
+   
 end
   
-  
+  ylim([0 1])
   xlim([0 300])
   xlabel('Frequency (Hz)')
   grid minor
@@ -150,7 +149,7 @@ end
 end
 end
 %end
-%mtit('Monopolar','fontsize',14,'color',[1 0 0],'position',[.5 1 ])
+mtit('Monopolar','fontsize',14,'color',[1 0 0],'position',[.5 1 ])
 % mtit(label,'fontsize',14,'color',[1 0 0],'position',[.5 0.75 ])
 % mtit(strcat('(+/-',num2str(ro),'ms)'),'fontsize',14,'color',[1 0 0],'position',[.5 0.5 ])
 compt
