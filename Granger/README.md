@@ -43,4 +43,7 @@ Steps 1 and 5: Work in progress.
 * **autotest.m:**  
 *Plots granger causality for different model order values to observe their variation. Makes use of **createauto.m*** 
 
+* **createauto.m:**  
+*Computes _parametric_ spectral granger causality.* 
+
 :notebook:  Borrowed functions from: Fieldtrip, BSMART. 
