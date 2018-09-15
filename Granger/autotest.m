@@ -7,7 +7,7 @@ data1.label=cell(3,1);
 data1.label{1}='Hippocampus';
 data1.label{2}='Parietal';
 data1.label{3}='PFC';
-data1.label{4}='Reference';
+% data1.label{4}='Reference';
 
 os=[1,2,3,5,10,20];
 %Parametric model Order 10
@@ -25,14 +25,16 @@ os=[1,2,3,5,10,20];
 [granger6]=createauto(data1,os(6))
 % [granger7]=createauto(data1,os(7))
 % [granger8]=createauto(data1,os(8))
+
+
 %Non parametric
 cfg           = [];
 cfg.method    = 'mtmfft';
 cfg.taper     = 'dpss';
 cfg.output    = 'fourier';
 cfg.tapsmofrq = 2;
-cfg.pad = 1;
-cfg.foi=[0:5:300];
+cfg.pad = 10;
+cfg.foi=[0:2:300];
 freq          = ft_freqanalysis(cfg, data1);
 
 cfg           = [];
@@ -55,26 +57,26 @@ granger       = ft_connectivityanalysis(cfg, freq);
 
 
 
-lab=cell(16,1);
+lab=cell(9,1);
 lab{1}='Hippo -> Hippo';
 lab{2}='Hippo -> Parietal';
 lab{3}='Hippo -> PFC';
-lab{4}='Hippo -> Reference';
+% lab{4}='Hippo -> Reference';
 
-lab{5}='Parietal -> Hippo';
-lab{6}='Parietal -> Parietal';
-lab{7}='Parietal -> PFC';
-lab{8}='Parietal -> Reference';
+lab{4}='Parietal -> Hippo';
+lab{5}='Parietal -> Parietal';
+lab{6}='Parietal -> PFC';
+% lab{8}='Parietal -> Reference';
 
-lab{9}='PFC -> Hippo';
-lab{10}='PFC -> Parietal';
-lab{11}='PFC -> PFC';
-lab{12}='PFC -> Reference';
+lab{7}='PFC -> Hippo';
+lab{8}='PFC -> Parietal';
+lab{9}='PFC -> PFC';
+% lab{12}='PFC -> Reference';
 
-lab{13}='Reference -> Hippo';
-lab{14}='Reference -> Parietal';
-lab{15}='Reference -> PFC';
-lab{16}='Reference -> Reference';
+% lab{13}='Reference -> Hippo';
+% lab{14}='Reference -> Parietal';
+% lab{15}='Reference -> PFC';
+% lab{16}='Reference -> Reference';
 
 
 % figure
