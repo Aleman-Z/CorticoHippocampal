@@ -19,10 +19,6 @@ dat=np;
 frang=0:1:300; %Might require starting with 1. 
 fs=1000;
 
-order=4;
-spts   = 1;
-epts   = 400;
-winlen = 10;
 %
 data1 = pre_sube(dat);
 
@@ -52,6 +48,12 @@ end
 if mDa==Da(4,:)
    dat=data4;          
 end
+
+%Standard values
+order=4;
+spts   = 1;
+epts   = 400;
+winlen = 10;
 
 [Fxy3, Fyx3]=BS_main(dat,order, spts, epts, winlen,fs,frang);
 
