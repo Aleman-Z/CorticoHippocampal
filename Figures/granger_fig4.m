@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -570,7 +570,7 @@ end
 %%
 
 %%
-%xo
+xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
 if iii~=4 && sanity==1 %4 is Plusmaze!
@@ -620,6 +620,7 @@ granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher
 printing('GC2D_NP_Widepass_1sec')
 close all
 
+
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 % printing('GC_P_Widepass_1sec')
 %printing('GC_P_Widepass_0.5sec')
@@ -630,6 +631,7 @@ close all
 granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
 printing('GC2D_P_Widepass_1sec')
 close all
+
 
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
@@ -642,6 +644,7 @@ granger_2D_testall(G,G_f,labelconditions,[100 300]) %g1 looks better due to high
 printing('GC2D_NP_Bandpass_1sec')
 close all
 
+
 granger_paper4(G1,G1_f,labelconditions,[100 300])
 % printing('GC_P_Bandpass_1sec')
 % printing('GC_P_Bandpass_0.5sec')
@@ -650,6 +653,23 @@ close all
 
 granger_2D_testall(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
 printing('GC2D_P_Bandpass_1sec')
+close all
+
+%%
+granger_2D_testall_nostats(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_ns_NP_Widepass_1sec')
+close all
+
+granger_2D_testall_nostats(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_ns_P_Widepass_1sec')
+close all
+
+granger_2D_testall_nostats(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_ns_NP_Bandpass_1sec')
+close all
+
+granger_2D_testall_nostats(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_ns_P_Bandpass_1sec')
 close all
 
 % 
