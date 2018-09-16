@@ -98,12 +98,30 @@ I.YTickLabel=labelconditions;
 %
 %set(gca,'xlim',xlim,'ydir','no')
 zmap(zmap == 0) = NaN;
+%aj=find(~isnan(zmap));
+dale=0;
+for ac=1:4
+aj=sum(~isnan(zmap(ac,:)));
+if aj~=0
+       dale1=find(~isnan(zmap(ac,:)));
+       dale1=abs(dale1);
+       if dale1>dale
+           dale=dale1;
+       end
+end
+end
 set(J,'AlphaData',~isnan(zmap))
+
 % c=narrow_colorbar()
 %  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
 % caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
 % c=narrow_colorbar()
+if dale==0 || dale>95
 xlim(freqrange)
+else
+xlim([0 dale*2+1])    
+end
+% xlim(freqrange)
 title(lab{3*j})
 end
 end
