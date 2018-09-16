@@ -103,7 +103,7 @@ dale=0;
 for ac=1:4
 aj=sum(~isnan(zmap(ac,:)));
 if aj~=0
-       dale1=find(~isnan(zmap(ac,:)));
+       dale1=max(find(~isnan(zmap(ac,:))));
        dale1=abs(dale1);
        if dale1>dale
            dale=dale1;
@@ -119,7 +119,8 @@ set(J,'AlphaData',~isnan(zmap))
 if dale==0 
 xlim(freqrange)
 else
-xlim([0 dale*2+1])    
+%xlim([0 dale*2+1])
+xlim([0 g1_f(dale)+2])
 end
 % xlim(freqrange)
 title(lab{3*j})

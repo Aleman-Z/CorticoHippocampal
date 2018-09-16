@@ -601,6 +601,7 @@ G1_f=Gran1.freq;
 
 xo
 %Plot 
+%%
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure4/',num2str(Rat)))
 else
@@ -610,28 +611,24 @@ end
 
 %Widepass
 granger_paper4(g,g_f,labelconditions,[0 300])
-% printing('GC_NP_Widepass_1sec')
+%printing('GC_NP_Widepass_1sec')
 %printing('GC_NP_Widepass_0.5sec')
 % printing('GC_NP_Widepass_0.25sec')
+close all
 
 granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-
-granger_2D_testall(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-granger_2D_testall(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-
-
-%  axesObjs = get(gcf, 'Children');  %axes handles
-%  dataObjs = get(axesObjs, 'Children');
-
-
+printing('GC2D_NP_Widepass_1sec')
 close all
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 % printing('GC_P_Widepass_1sec')
 %printing('GC_P_Widepass_0.5sec')
 % printing('GC_P_Widepass_0.25sec')
+close all
 
+
+granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_P_Widepass_1sec')
 close all
 
 %Bandpass
@@ -639,7 +636,10 @@ granger_paper4(G,G_f,labelconditions,[100 300])
 % printing('GC_NP_Bandpass_1sec')
 % printing('GC_NP_Bandpass_0.5sec')
 % printing('GC_NP_Bandpass_0.25sec')
+close all
 
+granger_2D_testall(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_NP_Bandpass_1sec')
 close all
 
 granger_paper4(G1,G1_f,labelconditions,[100 300])
@@ -648,20 +648,21 @@ granger_paper4(G1,G1_f,labelconditions,[100 300])
 % printing('GC_P_Bandpass_0.25sec')
 close all
 
+granger_2D_testall(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
+printing('GC2D_P_Bandpass_1sec')
+close all
 
+% 
+% %Non-parametric
+% granger_paper2(gran,labelconditions{iii})
+% hold on
+% %Parametric
+% granger_paper2(gran1,labelconditions{iii})
+% hold on
 
-
-%Non-parametric
-granger_paper2(gran,labelconditions{iii})
-hold on
-%Parametric
-granger_paper2(gran1,labelconditions{iii})
-hold on
-
+%END 
+%%
 xo
-
-
-
 
 xq=0:0.5:500;
 
