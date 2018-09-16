@@ -609,8 +609,10 @@ else
 end
 
 %Widepass
-% granger_paper3(g,g1,g_f,g1_f,labelconditions,4)
 granger_paper4(g,g_f,labelconditions,[0 300])
+% printing('GC_NP_Widepass_1sec')
+%printing('GC_NP_Widepass_0.5sec')
+% printing('GC_NP_Widepass_0.25sec')
 
 granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
 granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
@@ -619,12 +621,9 @@ granger_2D_testall(G,G_f,labelconditions,[100 300]) %g1 looks better due to high
 granger_2D_testall(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
 
 
- axesObjs = get(gcf, 'Children');  %axes handles
- dataObjs = get(axesObjs, 'Children');
+%  axesObjs = get(gcf, 'Children');  %axes handles
+%  dataObjs = get(axesObjs, 'Children');
 
-% printing('GC_NP_Widepass_1sec')
-%printing('GC_NP_Widepass_0.5sec')
-% printing('GC_NP_Widepass_0.25sec')
 
 close all
 

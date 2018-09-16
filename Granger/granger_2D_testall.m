@@ -116,7 +116,7 @@ set(J,'AlphaData',~isnan(zmap))
 %  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
 % caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
 % c=narrow_colorbar()
-if dale==0 || dale>95
+if dale==0 
 xlim(freqrange)
 else
 xlim([0 dale*2+1])    
