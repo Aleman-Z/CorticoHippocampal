@@ -6,15 +6,15 @@ lab=cell(6,1);
 
 lab{1}='HPC -> Parietal';
 lab{2}='Parietal -> HPC';
-lab{3}='Parietal -> HPC vs HPC -> Parietal';
+%lab{3}='Parietal -> HPC vs HPC -> Parietal';
 
-lab{4}='HPC -> PFC';
-lab{5}='PFC -> HPC';
-lab{6}='PFC -> HPC vs HPC -> PFC';
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
+%lab{6}='PFC -> HPC vs HPC -> PFC';
 
-lab{7}='Parietal -> PFC';
-lab{8}='PFC -> Parietal';
-lab{9}='PFC -> Parietal vs Parietal -> PFC';
+lab{5}='Parietal -> PFC';
+lab{6}='PFC -> Parietal';
+% lab{9}='PFC -> Parietal vs Parietal -> PFC';
 
 %% Get range
 for jj=1:3
