@@ -572,7 +572,8 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-xo
+%xo
+
 % % % % % % if quinientos==0
 % % % % % % %xd
 % % % % % % if outlie==1 
@@ -602,6 +603,17 @@ q=q(ache);
 %Find strongests ripples. 
 [p,q]=sort_rip(p,q);
 %Select n strongest
+switch Rat
+    case 24
+        n=550;
+    case 26
+        n=180;
+    case 27
+        n=326;
+end
+
+p=p(1:n);
+q=q(1:n);
 
 
 %
