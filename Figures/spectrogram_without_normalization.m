@@ -574,7 +574,7 @@ clear sig1 sig2
 %Ripple selection. Memory free. 
 %xo
 if quinientos==0
-
+xd
 if outlie==1 
 ache=max_outlier(p);
 p=p(ache);
