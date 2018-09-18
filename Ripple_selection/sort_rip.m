@@ -1,4 +1,4 @@
-function [P]=sort_rip(p)
+function [P,Q]=sort_rip(p,q)
 
     av=cat(1,p{1:end});
     %av=cat(1,q{1:end});
@@ -13,6 +13,8 @@ function [P]=sort_rip(p)
     
     
     P=p(ran);
+    Q=q(ran);
     P=P(11:end); %Ignore first 10 highest ripples cause they might be artifacts. 
+    Q=Q(11:end);
 end
 

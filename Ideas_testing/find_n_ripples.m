@@ -31,7 +31,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=3:3
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
@@ -39,7 +39,7 @@ for RAT=3:3
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=2:2
+for rat24base=1:1
  
   if RAT~=3 && rat24base==2
       break
@@ -352,7 +352,7 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
  
 for block_time=0:0 %Should start with 0
-for iii=2:length(nFF) %Should start with 2!
+for iii=1:length(nFF) %Should start with 2!
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -572,7 +572,8 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-xo
+%xo
+
 % % % % % % if quinientos==0
 % % % % % % %xd
 % % % % % % if outlie==1 
@@ -601,9 +602,11 @@ p=p(ache);
 q=q(ache);
 %Find strongests ripples. 
 [p,q]=sort_rip(p,q);
-%Select 500 strongest
+%Select n strongest
+W(iii)=length(p);
 
-
+end
+xo
 %
 
 if iii~=2 && sanity==1 && quinientos==0 
@@ -884,4 +887,4 @@ end
 base=1;
 
 end
-end
+%end

@@ -572,27 +572,38 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-%xo
-if quinientos==0
-%xd
-if outlie==1 
+xo
+% % % % % % if quinientos==0
+% % % % % % %xd
+% % % % % % if outlie==1 
+% % % % % % ache=max_outlier(p);
+% % % % % % p=p(ache);
+% % % % % % q=q(ache);
+% % % % % % end
+% % % % % % 
+% % % % % % [ran]=select_rip(p,FiveHun);
+% % % % % % p=p([ran]);
+% % % % % % q=q([ran]);
+% % % % % % 
+% % % % % % else
+% % % % % %      if iii~=2
+% % % % % %         [ran]=select_quinientos(p,length(randrip)); 
+% % % % % %         p=p([ran]);
+% % % % % %         q=q([ran]);
+% % % % % %      %    ran=1:length(randrip);
+% % % % % %      end
+% % % % % % end
+
+%Ripple selection. 
+%No outliers
 ache=max_outlier(p);
 p=p(ache);
 q=q(ache);
-end
+%Find strongests ripples. 
+[p,q]=sort_rip(p,q);
+%Select n strongest
 
-[ran]=select_rip(p,FiveHun);
-p=p([ran]);
-q=q([ran]);
 
-else
-     if iii~=2
-        [ran]=select_quinientos(p,length(randrip)); 
-        p=p([ran]);
-        q=q([ran]);
-     %    ran=1:length(randrip);
-     end
-end
 %
 
 if iii~=2 && sanity==1 && quinientos==0 
