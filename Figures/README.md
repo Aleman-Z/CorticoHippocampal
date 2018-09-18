@@ -121,6 +121,19 @@ When ripdur=1: \
 5. **same_axis.m:**
 *Equal Y-axis and colorbar among brain areas.*
 
+
+####  :link: NEW Post-Processing steps for spectrograms (19-9-18): 
+Leaves spindles visualization RAW.
+
+1. **colorbar_among_conditions.m:**
+*Equal colorbar range among conditions.*
+
+2. **axis_among_conditions.m:**
+*Equal Y-axis for traces among conditions.*
+
+3. **same_axis.m:**
+*Equal Y-axis and colorbar among brain areas.*
+
 ## :zap: Controls for spectrograms.
 
 1. **sanity=1:**
