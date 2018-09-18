@@ -9,3 +9,4 @@
 
 3. *sort_rip.m: Sort ripples in descendent order according to their max value. The first 10 highest values are assumed to be outliers and removed.*
 
+4. *select_quinientos.m: Selects strongests 500 ripples among those found.*
