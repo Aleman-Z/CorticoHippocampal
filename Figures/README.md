@@ -121,6 +121,16 @@ When ripdur=1: \
 5. **same_axis.m:**
 *Equal Y-axis and colorbar among brain areas.*
 
+## :zap: Controls for spectrograms.
+
+1. **sanity=1:**
+*This control test consists on selecting the same n random number of ripples among conditions. Since Plusmaze generates less ripples, this condition defines the value of n.*
+
+2. **quinientos=1:**
+*Similar to control above but this one makes sure to take the top 500 ripples instead of their random version. Could be more vulnerable to outliers.*
+
+3. **outlie=1:**
+*The use of this control activates a more agressive detection of outliers.*
 
 :zap: Figure 4:
 
