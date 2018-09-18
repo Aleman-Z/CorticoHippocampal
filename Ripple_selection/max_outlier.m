@@ -5,7 +5,7 @@ P=P.';
 R=reshape(P,[length(p) size(p{1},2)]);
 R=max(R.');
 
-H=~isoutlier(R);
+H=~isoutlier(R,'quartiles');
 
 %Look for unique:
 Vec=1:length(p);
