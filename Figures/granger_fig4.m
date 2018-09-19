@@ -1,6 +1,6 @@
 close all
 clear all
-acer=1;
+acer=0;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -619,7 +619,9 @@ close all
 granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
 printing('GC2D_NP_Widepass_1sec')
 close all
+granger_2D_stats_conditions(g,g_f,labelconditions,[0 300])
 
+granger_2D_stats_conditions(g1,g1_f,labelconditions,[0 300])
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 % printing('GC_P_Widepass_1sec')
