@@ -13,7 +13,7 @@ rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
 quinientos=0;
-outlie=1;
+outlie=0;
 %%
 
 if acer==0
@@ -695,7 +695,7 @@ else
 end
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %xo
-%%
+%% Move to the middle
 pos = get(h,'Position');
 new = mean(cellfun(@(v)v(1),pos(1:2)));
 set(h(9),'Position',[new,pos{9}(2:end)])
@@ -717,6 +717,7 @@ Pos = get(ca,'Position');
 set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
 set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
 %%
+
 %xo
 %error('stop')
 if acer==0
@@ -744,11 +745,11 @@ string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block
 saveas(gcf,string)
 
 else
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec_out_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec_out_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec_out_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
     
 end

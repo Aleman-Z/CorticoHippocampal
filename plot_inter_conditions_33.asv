@@ -82,7 +82,7 @@ ache=max_outlier(p_nl);
 p_nl=p_nl(ache);
 q_nl=q_nl(ache);
 %Find strongests rip_nlp_nlles. 
-[p_nl,q_nl]=sort_rip(p_nl,q_nl);
+[p_nl,q_nl]=sort_rip_nl(p_nl,q_nl);
 %Select n strongest
 switch Rat
     case 24
@@ -254,25 +254,10 @@ q_nl(2:2:end)=[QNU{2}(1:length(q_nl(2:2:end)))];
 end
 clear sig1_nl sig2_nl 
 
-if length(p)>length(p_nl)
-p=p(1:length(p_nl));        
-q=q(1:length(q_nl));        
-%timecell=timecell(1:length(p_nl));
-end
-
-if length(p)<length(p_nl)
-p_nl=p_nl(1:length(p));
-q_nl=q_nl(1:length(q));
-%timecell_nl=timecell_nl(1:length(p));
-end
-
 
 %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
-
-P1=avg_samples(q,create_timecell(ro,length(p)));
-P2=avg_samples(p,create_timecell(ro,length(p)));
 
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 if acer==0
@@ -583,56 +568,36 @@ ylabel('Frequency (Hz)')
 %%
 %clear freq4
 %%
-% % % % % % 
-% % % % % % if ro==1200
-% % % % % % [stats1]=stats_between_trials(freq3,freq4,label1,w);
-% % % % % % else
-% % % % % % [stats1]=stats_between_trials10(freq3,freq4,label1,w);
-% % % % % % end
-% % % % % % 
-% % % % % % 
-% % % % % % %% %
-% % % % % % 
-% % % % % %  h(10)=subplot(3,4,12);
-% % % % % %  
-% % % % % % cfg = [];
-% % % % % % cfg.channel = label1{2*w-1};
-% % % % % % cfg.parameter = 'stat';
-% % % % % % cfg.maskparameter = 'mask';
-% % % % % % cfg.zlim = 'maxabs';
-% % % % % % cfg.colorbar       = 'yes';
-% % % % % % cfg.colormap=colormap(jet(256));
-% % % % % % %grid minor
-% % % % % % % ft_singleplotTFR(cfg, stats1);
-% % % % % % ft_singleplotTFR(cfg, stats1);
-% % % % % % 
-% % % % % % %title('Ripple vs No Ripple')
-% % % % % % g=title(strcat(labelconditions{iii},' vs No Learning'));
-% % % % % % g.FontSize=12;
-% % % % % % %title(strcat(labelconditions{iii},' vs No Learning'))
-% % % % % % xlabel('Time (s)')
-% % % % % % %ylabel('uV')
-% % % % % % ylabel('Frequency (Hz)')
-%% Pixel-based stats
-zmap=stats_high(freq3,freq4,w);
-h(10)=subplot(3,4,12);
 
-colormap(jet(256))
-zmap(zmap == 0) = NaN;
-J=imagesc(freq3.time,freq3.freq,zmap)
-xlabel('Time (s)'), ylabel('Frequency (Hz)')
-%title('tf power map, thresholded')
-set(gca,'xlim',xlim,'ydir','no')
-% c=narrow_colorbar()
-set(J,'AlphaData',~isnan(zmap))
-c=narrow_colorbar()
- c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-c=narrow_colorbar()
+if ro==1200
+[stats1]=stats_between_trials(freq3,freq4,label1,w);
+else
+[stats1]=stats_between_trials10(freq3,freq4,label1,w);
+end
 
+
+%% %
+
+ h(10)=subplot(3,4,12);
+ 
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+%grid minor
+% ft_singleplotTFR(cfg, stats1);
+ft_singleplotTFR(cfg, stats1);
+
+%title('Ripple vs No Ripple')
 g=title(strcat(labelconditions{iii},' vs No Learning'));
 g.FontSize=12;
-
+%title(strcat(labelconditions{iii},' vs No Learning'))
+xlabel('Time (s)')
+%ylabel('uV')
+ylabel('Frequency (Hz)')
 %% EXTRA STATISTICS
 % [stats1]=stats_between_trials(freq30,freq40,label1,w);
 % % %
