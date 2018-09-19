@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -698,54 +698,44 @@ f=F(nv,:); %Pair
 %First direction
 granger_2D_stats_conditions(g,g_f,labelconditions,[0 300],f)
 mtit(lab{2*nv-1})
-printing(strcat('Stat_',lab2{2*nv-1},'_','NP_Widepass_1sec'))
-close all
+printing(strcat('Stat_',lab2))
 %Opposite direction
 granger_2D_stats_conditions(g,g_f,labelconditions,[0 300],flip(f))
 mtit(lab{2*nv})
-printing(strcat('Stat_',lab2{2*nv},'_','NP_Widepass_1sec'))
-close all
+printing('GC2D_ns_P_Bandpass_1sec')
+
 
 %First direction
 granger_2D_stats_conditions(g1,g1_f,labelconditions,[0 300],f)
 mtit(lab{2*nv-1})
-printing(strcat('Stat_',lab2{2*nv-1},'_','P_Widepass_1sec'))
-close all
-
+printing('GC2D_ns_P_Bandpass_1sec')
 %Opposite direction
 granger_2D_stats_conditions(g1,g1_f,labelconditions,[0 300],flip(f))
 mtit(lab{2*nv})
-printing(strcat('Stat_',lab2{2*nv},'_','P_Widepass_1sec'))
-close all
+printing('GC2D_ns_P_Bandpass_1sec')
 
-% % % 
-% % % %First direction
-% % % granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],f)
-% % % mtit(lab{2*nv-1})
-% % % printing(strcat('Stat_',lab2{2*nv-1},'_','NP_Bandpass_1sec'))
-% % % close all
-% % % 
-% % % 
-% % % %Opposite direction
-% % % granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],flip(f))
-% % % mtit(lab{2*nv})
-% % % printing(strcat('Stat_',lab2{2*nv},'_','NP_Bandpass_1sec'))
-% % % close all
-% % % 
-% % % %First direction
-% % % granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],f)
-% % % mtit(lab{2*nv-1})
-% % % printing(strcat('Stat_',lab2{2*nv-1},'_','P_Bandpass_1sec'))
-% % % close all
-% % % 
-% % % %Opposite direction
-% % % granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],flip(f))
-% % % mtit(lab{2*nv})
-% % % printing(strcat('Stat_',lab2{2*nv},'_','P_Bandpass_1sec'))
-% % % close all
+
+%First direction
+granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],f)
+mtit(lab{2*nv-1})
+printing('GC2D_ns_P_Bandpass_1sec')
+
+%Opposite direction
+granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],flip(f))
+mtit(lab{2*nv})
+printing('GC2D_ns_P_Bandpass_1sec')
+
+%First direction
+granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],f)
+mtit(lab{2*nv-1})
+printing('GC2D_ns_P_Bandpass_1sec')
+
+%Opposite direction
+granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],flip(f))
+mtit(lab{2*nv})
+printing('GC2D_ns_P_Bandpass_1sec')
 
 end
-
 %%
 
 % 

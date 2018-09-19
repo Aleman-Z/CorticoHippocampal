@@ -1,8 +1,7 @@
-function granger_2D_stats_conditions(g1,g1_f,labelconditions,freqrange)
+function granger_2D_stats_conditions(g1,g1_f,labelconditions,freqrange,f)
 %allscreen()
-F= [1 2; 1 3; 2 3] ;
+
 W=[1 2; 1 3; 1 4;  2 1; 2 3; 2 4; 3 1; 3 2; 3 4 ; 4 1; 4 2; 4 3];
-f=F(1,:); %Change this
 
 lab=cell(12,1);
 
@@ -70,10 +69,14 @@ xlim(freqrange)
 else
 %xlim([0 dale*2+1])
 %xlim([0 g1_f(dale)+5])
-if length(g1_f)==501
-xlim([0 g1_f(dale)+5])
+if freqrange(1)~=100
+    if length(g1_f)==501
+    xlim([0 g1_f(dale)+5])
+    else
+    xlim([0 (dale)+5])    
+    end
 else
-xlim([0 (dale)+5])    
+xlim(freqrange)    
 end
 
 end
