@@ -1,4 +1,4 @@
-function [H]=max_outlier(p)
+function [H]=max_outlier_consecutive(p)
 P=cell2mat(p);
 P=P(1,:);
 P=P.';
@@ -13,11 +13,11 @@ vec=1:length(p);
 vec=vec.*H; %Index equal zero are outliers. 
 vec=vec(vec~=0); %Index of no outliers. 
 
-%Get index of unique
-[~,a2]=unique(R,'first'); %Index of unique values.
-chidos=(intersect(vec,a2)); %Unique and non-outlier. 
+% %Get index of unique
+% [~,a2]=unique(R,'first'); %Index of unique values.
+% chidos=(intersect(vec,a2)); %Unique and non-outlier. 
 
-H=ismember(Vec,chidos); %Index of elements in chidos. 
+H=ismember(Vec,vec); %Index of elements in chidos. 
 
 % H=~outlier(R,10);
 % pp=p(H);
