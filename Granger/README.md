@@ -55,4 +55,8 @@ Steps 1 and 5: Work in progress.
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
 
+## :zap: MVGC-based functions: 
+* **mvgc_adapted.m:**  
+*Function to compute parametric spectral granger causality per ripple using MVGC.* 
+
 :notebook:  Borrowed functions from: Fieldtrip, BSMART and MVGC.  
