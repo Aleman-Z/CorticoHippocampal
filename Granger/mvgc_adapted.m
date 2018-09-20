@@ -16,7 +16,7 @@ regmode='';
 icregmode='';
 % 
 morder    = 'AIC';  % model order to use ('actual', 'AIC', 'BIC' or supplied numerical value)
-momax     = 5;     % maximum model order for model order estimation
+momax     = 10;     % maximum model order for model order estimation
 % 
 %acmaxlags = 1000;   % maximum autocovariance lags (empty for automatic calculation)
 acmaxlags=[];
