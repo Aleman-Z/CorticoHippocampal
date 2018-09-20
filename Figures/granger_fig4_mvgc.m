@@ -580,6 +580,13 @@ end
 [p]=filter_ripples(p,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
+for hw=1:length(p)
+  [GRC(:,:,:,hw)]=mvgc_adapted(p{hw},1000);  
+  hw/length(p)*100
+  pause(0.2)
+end
+
+
 %Widepassed
 [gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
 

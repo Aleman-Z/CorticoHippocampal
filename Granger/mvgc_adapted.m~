@@ -75,32 +75,32 @@ fres      = [fs/2];     % frequency resolution (empty for automatic calculation)
 
 %amo = size(AT,3); % actual model order
 
-% fprintf('\nbest model order (AIC) = %d\n',moAIC);
-% fprintf('best model order (BIC) = %d\n',moBIC);
+fprintf('\nbest model order (AIC) = %d\n',moAIC);
+fprintf('best model order (BIC) = %d\n',moBIC);
 %fprintf('actual model order     = %d\n',amo);
 
 % Select model order.
 
 if     strcmpi(morder,'actual')
     morder = amo;
-%     fprintf('\nusing actual model order = %d\n',morder);
+    fprintf('\nusing actual model order = %d\n',morder);
 elseif strcmpi(morder,'AIC')
     morder = moAIC;
-%     fprintf('\nusing AIC best model order = %d\n',morder);
+    fprintf('\nusing AIC best model order = %d\n',morder);
 elseif strcmpi(morder,'BIC')
     morder = moBIC;
-%     fprintf('\nusing BIC best model order = %d\n',morder);
+    fprintf('\nusing BIC best model order = %d\n',morder);
 else
-%     fprintf('\nusing specified model order = %d\n',morder);
+    fprintf('\nusing specified model order = %d\n',morder);
 end
 
 % VAR model estimation (<mvgc_schema.html#3 |A2|>)
 
 % Estimate VAR model of selected order from data.
 
-% ptic('\n*** tsdata_to_var... ');
+ptic('\n*** tsdata_to_var... ');
 [A,SIG] = tsdata_to_var(X,morder,regmode);
-% ptoc;
+ptoc;
 
 % Check for failed regression
 
@@ -116,9 +116,9 @@ assert(~isbad(A),'VAR estimation failed');
 % VAR model, to as many lags as it takes to decay to below the numerical
 % tolerance level, or to acmaxlags lags if specified (i.e. non-empty).
 
-% ptic('*** var_to_autocov... ');
+ptic('*** var_to_autocov... ');
 [G,info] = var_to_autocov(A,SIG,acmaxlags);
-% ptoc;
+ptoc;
 
 % The above routine does a LOT of error checking and issues useful diagnostics.
 % If there are problems with your data (e.g. non-stationarity, colinearity,
@@ -173,9 +173,9 @@ F = autocov_to_pwcgc(G);
 % Calculate spectral pairwise-conditional causalities at given frequency
 % resolution - again, this only requires the autocovariance sequence.
 
-% ptic('\n*** autocov_to_spwcgc... ');
+ptic('\n*** autocov_to_spwcgc... ');
 f = autocov_to_spwcgc(G,fres);
-% ptoc;
+ptoc;
 
 % Check for failed spectral GC calculation
 
@@ -191,7 +191,7 @@ f = autocov_to_spwcgc(G,fres);
 % Check that spectral causalities average (integrate) to time-domain
 % causalities, as they should according to theory.
 
-% fprintf('\nchecking that frequency-domain GC integrates to time-domain GC... \n');
+fprintf('\nchecking that frequency-domain GC integrates to time-domain GC... \n');
 Fint = smvgc_to_mvgc(f); % integrate spectral MVGCs
 mad = maxabs(F-Fint);
 madthreshold = 1e-5;
