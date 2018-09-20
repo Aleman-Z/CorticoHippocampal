@@ -59,4 +59,7 @@ Steps 1 and 5: Work in progress.
 * **mvgc_adapted.m:**  
 *Function to compute parametric spectral granger causality per ripple using MVGC.* 
 
+* **plot_spw.m:**  
+*Useful function to plot all GC combinations.* 
+
 :notebook:  Borrowed functions from: Fieldtrip, BSMART and MVGC.  
