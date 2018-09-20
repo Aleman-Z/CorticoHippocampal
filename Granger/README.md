@@ -55,4 +55,4 @@ Steps 1 and 5: Work in progress.
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
 
-:notebook:  Borrowed functions from: Fieldtrip, BSMART. 
+:notebook:  Borrowed functions from: Fieldtrip, BSMART and MVGC.  
