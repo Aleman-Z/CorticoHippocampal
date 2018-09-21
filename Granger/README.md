@@ -30,27 +30,27 @@ Steps 1 and 5: Work in progress.
 
 * **granger_paper3.m:**  
 *Plots spectral granger causality among brain regions for a single condition.* 
-<img src="gr.png" width="400">
+      <img src="gr.png" width="400">
 
 * **granger_paper4.m:**  
 *Plots spectral granger causality among brain regions for all conditions.* 
-<img src="gr_all.png" width="500">
+      <img src="gr_all.png" width="500">
 
 * **granger_2D_testall.m:**  
 *Visualizes Granger causality as images to later compute their pixel-based statistics.* 
-<img src="granger_2d.png" width="500">
+     <img src="granger_2d.png" width="500">
 
 * **granger_2D_stats_conditions.m:**  
 *Visualizes Granger causality pixel-based statistics among conditions.* 
-<img src="stats_conditions.png" width="500">
+     <img src="stats_conditions.png" width="500">
 
 * **autotest.m:**  
 *Plots granger causality for different model order values to observe their variation. Makes use of **createauto.m*** 
- <img src="autotest.png" width="500">
+     <img src="autotest.png" width="500">
  
  * **autotest_single.m:**  
 *Plots granger causality for the non-parametric and parametric models.*
- <img src="autotest_single.png" width="500">
+     <img src="autotest_single.png" width="500">
 
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
@@ -61,7 +61,7 @@ Steps 1 and 5: Work in progress.
 
 * **plot_spw.m:**  
 *Useful function to plot all GC combinations. For Fieldtrip inputs use as: plot_spw(rot90(fliplr(A))) or use **plot_spw2.m*** 
-<img src="g_plot.png" width="350">
+    <img src="g_plot.png" width="350">
 
 :notebook:  Borrowed functions from: [Fieldtrip](http://www.fieldtriptoolbox.org/tutorial/connectivity) , [BSMART](http://www.brain-smart.org/) and [MVGC](https://users.sussex.ac.uk/~lionelb/MVGC/html/mvgchelp.html)
 
