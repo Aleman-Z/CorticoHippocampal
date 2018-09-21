@@ -586,6 +586,28 @@ for hw=1:length(p)
   pause(0.2)
 end
 
+%Obtained several GC
+%Lets say we want 3 and 1
+gr=squeeze(GRC(3,1,:,:));
+
+ggr=gr-mean(gr,2);
+% nggr=flip(ggr,2);
+nggr=ggr+rand(size(ggr));
+%Stats
+for x=2:501
+ [o1(x),o2(x)]=ttest2(gr(1,:),gr(x,:));  
+end
+%%
+
+
+
+
+for k=1:297
+plot(gr(:,k))
+hold on
+end
+
+%imagesc(gr); colormap(jet(256));colorbar();
 
 %Widepassed
 [gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
