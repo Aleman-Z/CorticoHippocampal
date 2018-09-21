@@ -57,9 +57,9 @@ Steps 1 and 5: Work in progress.
 
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
-*Function to compute parametric spectral granger causality per ripple using MVGC.* 
+*Function to compute parametric spectral granger causality per ripple using MVGC. Gives very similar results to **fieltrip_adapted.m** with a different scaling due to "in the box" preprocessing.* 
 
 * **plot_spw.m:**  
-*Useful function to plot all GC combinations. For Fieldtrip inputs use as: plot_spw(rot90(fliplr(A)))* 
+*Useful function to plot all GC combinations. For Fieldtrip inputs use as: plot_spw(rot90(fliplr(A))) or use **plot_spw2.m*** 
 
 :notebook:  Borrowed functions from: Fieldtrip, BSMART and MVGC.  
