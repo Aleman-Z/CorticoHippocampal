@@ -150,5 +150,7 @@ Leaves spindles visualization RAW.
 * **granger_fig4.m:**
 *Main file to generate granger causality figures (Work in progress)*
 
+* **granger_fig4_mvgc.m:**
+*Similar version as above with improved statistics and MVGC-based GC calculations.*
 
 
