@@ -580,8 +580,12 @@ end
 [p]=filter_ripples(p,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
+%Allocate space
+granger1(1:3,1:3,1:501,1:length(p))=NaN;
+
 for hw=1:length(p)
-  [GRC(:,:,:,hw)]=mvgc_adapted(p{hw},1000);  
+  GRC(:,:,:,hw)=mvgc_adapted(p{hw},1000);
+  granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro);
   hw/length(p)*100
   pause(0.2)
 end
@@ -594,8 +598,10 @@ ggr=gr-mean(gr,2);
 % nggr=flip(ggr,2);
 nggr=ggr+rand(size(ggr));
 %Stats
-for x=2:501
- [o1(x),o2(x)]=ttest2(gr(1,:),gr(x,:));  
+for x=2:297
+%  [o1(x),o2(x)]=ttest2(gr(1,:),gr(x,:));  
+ [o1(x),o2(x)]=ttest2(gr(:,1),gr(:,x));
+ [O1(x),O2(x)]=ttest2(ggr(:,1),ggr(:,x));
 end
 %%
 
