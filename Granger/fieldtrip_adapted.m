@@ -23,7 +23,7 @@ function [gra]=fieldtrip_adapted(q,ord,ro)
     cfg.method    = 'granger';
     granger1       = ft_connectivityanalysis(cfg, mfreq);
 
-%    gra=granger1.grangerspctrm;
-        gra=granger1;
+    gra=granger1.grangerspctrm;
+    %gra=granger1;
 
 end
