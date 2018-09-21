@@ -62,4 +62,5 @@ Steps 1 and 5: Work in progress.
 * **plot_spw.m:**  
 *Useful function to plot all GC combinations. For Fieldtrip inputs use as: plot_spw(rot90(fliplr(A))) or use **plot_spw2.m*** 
 
-:notebook:  Borrowed functions from: Fieldtrip, BSMART and MVGC.  
+:notebook:  Borrowed functions from: [Fieldtrip](http://www.fieldtriptoolbox.org/tutorial/connectivity) , [BSMART](http://www.brain-smart.org/) and [MVGC](https://users.sussex.ac.uk/~lionelb/MVGC/html/mvgchelp.html)
+
