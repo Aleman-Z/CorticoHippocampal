@@ -5,7 +5,7 @@
 
 1. *MVAR-modelling: Order Selection.* 
  
-     **function.m:**
+     **tsdata_to_infocrit.m: MVGC-based function. Computes and selects AIC and BIC up to a specified maximum order. **
 
 2. *MVAR-modelling: Implementation.*
 
