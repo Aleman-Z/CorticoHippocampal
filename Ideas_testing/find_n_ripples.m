@@ -597,7 +597,7 @@ clear sig1 sig2
 
 %Ripple selection. 
 %No outliers
-ache=max_outlier(p);
+ache=max_outlier_consecutive(p);
 p=p(ache);
 q=q(ache);
 %Find strongests ripples. 
