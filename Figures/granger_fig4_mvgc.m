@@ -599,6 +599,10 @@ for hw=1:length(p)
   hw/length(p)*100
   pause(0.2)
 end
+MVGC{iii}=GRC;
+FP{iii}=granger1;
+FNP{iii}=granger1_np
+end
 
 %Obtained several GC
 %Lets say we want 3 and 1
@@ -999,7 +1003,9 @@ end
 
 %%
 %clearvars -except acer Rat
-end
+xo
+
+%end
 xo
 
 %end

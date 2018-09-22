@@ -11,27 +11,32 @@ data1.label{3}='PFC';
 %data1.label{4}='Reference';
 
 %Parametric model
-cfg         = [];
-cfg.order   = ord;
-cfg.toolbox = 'bsmart';
-mdata       = ft_mvaranalysis(cfg, data1);
+ [granger1]=createauto(data1,ord);
+%  
+% cfg         = [];
+% cfg.order   = ord;
+% cfg.toolbox = 'bsmart';
+% mdata       = ft_mvaranalysis(cfg, data1);
+% 
+% cfg        = [];
+% cfg.method = 'mvar';
+% mfreq      = ft_freqanalysis(cfg, mdata);
+% granger1       = ft_connectivityanalysis(cfg, mfreq);
 
-cfg        = [];
-cfg.method = 'mvar';
-mfreq      = ft_freqanalysis(cfg, mdata);
 
 %Non parametric
-cfg           = [];
-cfg.method    = 'mtmfft';
-cfg.taper     = 'dpss';
-%cfg.taper     = 'hanning';
-
-cfg.output    = 'fourier';
-cfg.tapsmofrq = 2;
-cfg.pad = 10;
-cfg.foi=freqrange;
-freq          = ft_freqanalysis(cfg, data1);
-
+[granger]=createauto_np(data1,freqrange);
+% cfg           = [];
+% cfg.method    = 'mtmfft';
+% cfg.taper     = 'dpss';
+% %cfg.taper     = 'hanning';
+% 
+% cfg.output    = 'fourier';
+% cfg.tapsmofrq = 2;
+% cfg.pad = 10;
+% cfg.foi=freqrange;
+% freq          = ft_freqanalysis(cfg, data1);
+ 
 % %Non parametric- Multitaper
 % cfg           = [];
 % cfg.method    = 'mtmconvol';
@@ -129,10 +134,12 @@ freq          = ft_freqanalysis(cfg, data1);
 
 
 
-cfg           = [];
-cfg.method    = 'granger';
-granger       = ft_connectivityanalysis(cfg, freq);
-granger1       = ft_connectivityanalysis(cfg, mfreq);
+% cfg           = [];
+% cfg.method    = 'granger';
+% granger       = ft_connectivityanalysis(cfg, freq);
+
+% granger1       = ft_connectivityanalysis(cfg, mfreq);
+
 % % % % % % % % % % % % % % % % % % % % % % % %granger2       = ft_connectivityanalysis(cfg, freq1);
 % % % % % % % % % % % % % % % % % % % % % % % 
 % % % % % % % % % % % % % % % % % % % % % % % %%granger3       = ft_connectivityanalysis(cfg, freq_mtmfft); %Wavelet
