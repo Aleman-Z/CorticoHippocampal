@@ -584,12 +584,15 @@ end
 
 %Allocate space
 granger1(1:3,1:3,1:501,1:length(p))=NaN;
+granger1_np(1:3,1:3,1:501,1:length(p))=NaN;
+
 GRC(1:3,1:3,1:501,1:length(p))=NaN;
 
 for hw=1:length(p)
   %Parametric approach  
   GRC(:,:,:,hw)=mvgc_adapted(p{hw},1000); %Get GC from MVGC
-  granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro); %Get GC from Fieldtrip/BSMART
+%   granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro); %Get GC from Fieldtrip/BSMART
+[granger1(:,:,:,hw),granger1_np(:,:,:,hw)]=fieldtrip_adapted(p(hw),10,ro)
   
   %No-parametric approach
   

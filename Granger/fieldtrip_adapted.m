@@ -1,4 +1,4 @@
-function [gra]=fieldtrip_adapted(q,ord,ro)
+function [gra,gra2]=fieldtrip_adapted(q,ord,ro)
     timecell=create_timecell(ro,length(q));
     fn=1000;
     data1.trial=q;
@@ -12,7 +12,9 @@ function [gra]=fieldtrip_adapted(q,ord,ro)
 
     %Parametric model
     [granger1]=createauto(data1,ord)
-    
+
+    %Non-parametric model
+    [granger2]=createauto_np(data1)
     
     %cfg         = [];
     %cfg.order   = ord;
@@ -27,6 +29,8 @@ function [gra]=fieldtrip_adapted(q,ord,ro)
     %granger1       = ft_connectivityanalysis(cfg, mfreq);
 
     gra=granger1.grangerspctrm;
+    
+    gra2=granger2.grangerspctrm;
     %gra=granger1;
 
 end
