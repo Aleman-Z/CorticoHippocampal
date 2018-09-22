@@ -11,17 +11,20 @@ function [gra]=fieldtrip_adapted(q,ord,ro)
     %data1.label{4}='Reference';
 
     %Parametric model
-    cfg         = [];
-    cfg.order   = ord;
-    cfg.toolbox = 'bsmart';
-    mdata       = ft_mvaranalysis(cfg, data1);
+    [granger1]=createauto(data1,ord)
     
-    cfg        = [];
-    cfg.method = 'mvar';
-    mfreq      = ft_freqanalysis(cfg, mdata);
-    cfg           = [];
-    cfg.method    = 'granger';
-    granger1       = ft_connectivityanalysis(cfg, mfreq);
+    
+    %cfg         = [];
+    %cfg.order   = ord;
+    %cfg.toolbox = 'bsmart';
+    %mdata       = ft_mvaranalysis(cfg, data1);
+    
+    %cfg        = [];
+    %cfg.method = 'mvar';
+    %mfreq      = ft_freqanalysis(cfg, mdata);
+    %cfg           = [];
+    %cfg.method    = 'granger';
+    %granger1       = ft_connectivityanalysis(cfg, mfreq);
 
     gra=granger1.grangerspctrm;
     %gra=granger1;
