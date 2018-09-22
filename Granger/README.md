@@ -23,8 +23,8 @@
 
     **function.m:**
 
-Steps 3 to 4 contained in function: **gc_paper.m**
-Steps 1 and 5: Work in progress. 
+Steps 3 to 4 contained in function: **gc_paper.m**. Similar implementation on **fieldtrip_adapted.m**
+Steps 5: Work in progress. 
 
 ### :zap: Useful functions: 
 
