@@ -572,7 +572,7 @@ end
 %%
 
 %%
-xo
+%xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
 if iii~=4 && sanity==1 %4 is Plusmaze!
@@ -592,7 +592,7 @@ for hw=1:length(p)
   %Parametric approach  
   GRC(:,:,:,hw)=mvgc_adapted(p{hw},1000); %Get GC from MVGC
 %   granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro); %Get GC from Fieldtrip/BSMART
-[granger1(:,:,:,hw),granger1_np(:,:,:,hw)]=fieldtrip_adapted(p(hw),10,ro)
+[granger1(:,:,:,hw),granger1_np(:,:,:,hw)]=fieldtrip_adapted(p(hw),10,ro);
   
   %No-parametric approach
   
@@ -601,9 +601,9 @@ for hw=1:length(p)
 end
 MVGC{iii}=GRC;
 FP{iii}=granger1;
-FNP{iii}=granger1_np
+FNP{iii}=granger1_np;
 end
-
+xo
 %Obtained several GC
 %Lets say we want 3 and 1
 gr=squeeze(GRC(3,1,:,:));
