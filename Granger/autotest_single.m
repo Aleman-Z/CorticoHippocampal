@@ -15,19 +15,7 @@ data1.label{3}='PFC';
 [granger5]=createauto(data1,10)
 
 %Non parametric
-cfg           = [];
-cfg.method    = 'mtmfft';
-cfg.taper     = 'dpss';
-cfg.output    = 'fourier';
-cfg.tapsmofrq = 2;
-cfg.pad = 10;
-cfg.foi=[0:2:300];
-freq          = ft_freqanalysis(cfg, data1);
-
-cfg           = [];
-cfg.method    = 'granger';
-granger       = ft_connectivityanalysis(cfg, freq);
-
+[granger]=createauto_np(data1)
 
 % cfg2         = [];
 % cfg2.order   = 20;
