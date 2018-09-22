@@ -14,7 +14,7 @@ function [gra,gra2]=fieldtrip_adapted(q,ord,ro)
     [granger1]=createauto(data1,ord)
 
     %Non-parametric model
-    [granger2]=createauto_np(data1)
+    [granger2]=createauto_np(data1,[0:1:500])
     
     %cfg         = [];
     %cfg.order   = ord;
