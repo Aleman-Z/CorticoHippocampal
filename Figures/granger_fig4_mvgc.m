@@ -25,6 +25,7 @@ else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
 addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
 addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
+addpath(genpath('C:\Users\addri\Documents\MATLAB\mvgc_v1.0'))
 %addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
    
 end
@@ -588,6 +589,9 @@ for hw=1:length(p)
   %Parametric approach  
   GRC(:,:,:,hw)=mvgc_adapted(p{hw},1000); %Get GC from MVGC
   granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro); %Get GC from Fieldtrip/BSMART
+  
+  %No-parametric approach
+  
   hw/length(p)*100
   pause(0.2)
 end
