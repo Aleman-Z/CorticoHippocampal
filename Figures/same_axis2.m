@@ -37,7 +37,7 @@ Block{3}='block2';
 sanity=0;
 quinientos=0;
 ldura=1; %1 for 1 sec, 2 for 10 sec. 
-outlie=0;
+outlie=1;
 %%
 if acer==0
 addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
@@ -56,12 +56,12 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=3:3
     
 if Rat==1
     
     if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/26/New_lessoutliers_first_ripple_only')
+     cd('/home/raleman/Dropbox/Figures/Figure3/26/New_lessoutliers')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -97,12 +97,12 @@ end
 
 if Rat==3
     if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24')
+        cd('/home/raleman/Dropbox/Figures/Figure3/24/New_out_first')
     else
         cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
     end
 end
-%xo
+% xo
     %%
 for dura=ldura:ldura
 for block_time=0:0
