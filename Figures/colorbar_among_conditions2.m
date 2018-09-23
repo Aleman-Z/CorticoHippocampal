@@ -56,7 +56,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=2:2
     
 if Rat==1
     
@@ -80,7 +80,7 @@ end
 if Rat==2
     
     if acer==0
-         cd('/home/raleman/Dropbox/Figures/Figure3/27/Baseline2_1000_Method4')
+         cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -112,7 +112,7 @@ for w=2:3
             if outlie==1
                   string=strcat('Spec_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
             else
-                  string=strcat('Spec_out_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
+                  string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
             end   
         else
             if quinientos==1
@@ -143,7 +143,7 @@ for w=2:3
     if  outlie==1  
     string=strcat('Spec_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
     else
-    string=strcat('Spec_out_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+    string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
     end
     else
         if quinientos==1
