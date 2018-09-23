@@ -125,7 +125,7 @@ When ripdur=1: \
 ####  :link: NEW Post-Processing steps for spectrograms (19-9-18): 
 Leaves spindles visualization RAW.
 
-1. **colorbar_among_conditions.m:**
+1. **colorbar_among_conditions2.m:**
 *Equal colorbar range among conditions.*
 
 2. **axis_among_conditions.m:**
