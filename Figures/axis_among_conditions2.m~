@@ -56,7 +56,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=2:2
     
 if Rat==1
     
@@ -79,7 +79,7 @@ end
 if Rat==2
     
     if acer==0
-   cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers')
+   cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers_first_ripple_only')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -141,9 +141,9 @@ for w=2:3
     
     if sanity~=1
         if outlie==1
-           string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');               
+           string=strcat('Spec2_out',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');               
         else
-           string=strcat('Spec2_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+           string=strcat('Spec2_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
         end
  
     else
@@ -298,19 +298,19 @@ for w=2:3
 if sanity ~=1
     if outlie==1
         
-        string=strcat('Spec3_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        string=strcat('Spec3_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
         figure_function(gcf,[],string,[]);
-        string=strcat('Spec3_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        string=strcat('Spec3_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
         print(string,'-depsc')
-        string=strcat('Spec3_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        string=strcat('Spec3_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
         saveas(gcf,string)
         
     else
-        string=strcat('Spec3_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+        string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
         figure_function(gcf,[],string,[]);
-        string=strcat('Spec3_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+        string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
         print(string,'-depsc')
-        string=strcat('Spec3_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+        string=strcat('Spec3_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
         saveas(gcf,string)
     end
     
