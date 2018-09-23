@@ -97,7 +97,7 @@ end
 
 if Rat==3
     if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24/New_out_first')
+        cd('/home/raleman/Dropbox/Figures/Figure3/24/New_out_consecutive')
     else
         cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
     end
