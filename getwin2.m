@@ -1,5 +1,5 @@
-function [p,q,timecell,Q,P1,P2]=getwin2(carajo,veamos,sig1,sig2,label1,label2,ro,ripple,thr)
-
+function [p,q,timecell,Q,P1,P2]=getwin2(carajo,veamos,sig1,sig2,label1,label2,ro)
+%,ripple,thr
 fn=1000;
 %if ro==200
 i=1;
