@@ -128,10 +128,10 @@ Leaves spindles visualization RAW.
 1. **colorbar_among_conditions2.m:**
 *Equal colorbar range among conditions.*
 
-2. **axis_among_conditions.m:**
+2. **axis_among_conditions2.m:**
 *Equal Y-axis for traces among conditions.*
 
-3. **same_axis.m:**
+3. **same_axis2.m:**
 *Equal Y-axis and colorbar among brain areas.*
 
 ## :zap: Controls for spectrograms.
