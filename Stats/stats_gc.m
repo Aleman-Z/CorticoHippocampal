@@ -1,4 +1,4 @@
-%%
+%% Seems useless. Check carefully. 
 function [zmap]=stats_gc(gr1,gr2)
 ntrials=373;
 %Requires turning NaN into zeros.
