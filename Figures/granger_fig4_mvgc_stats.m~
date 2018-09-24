@@ -385,7 +385,7 @@ hold on
 plot(mean(gr2,2))
 vp=max(pp.CurrentAxes.YLim);
 
-rrc=area(not(F1)*vp,'FaceColor','none')%Right RF-BF Cocontraction
+rrc=area(F3*vp,'FaceColor','none')%Right RF-BF Cocontraction
 set(rrc, 'FaceColor', 'r')
 alpha(0.1)
 xlim([0 300])
@@ -416,10 +416,6 @@ for x=1:501
  
  
 [F1(x),F2(x)] = vartest2(ggr1(x,1:373),ggr2(x,1:373));
-
-coj(x,:)=ggr2(x,1:373)-ggr1(x,1:373);
-Coj(x,:)=gr2(x,1:373)-gr1(x,1:373);
-
 end
 
 %%
