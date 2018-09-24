@@ -23,6 +23,10 @@
 * **stats_between_trials10.m:**
 *Identical as above. Used when window is 10 sec long before and after.*  
 
+:dart:Permutation test
+* **perm_stats.m:**
+*Performs two-tailed permutation test on granger causality values per frequency from two different conditions.*  
+
 *Actual computation is performed by Fieldtrip function: [ft_freqstatistics.m](http://www.fieldtriptoolbox.org/reference/ft_freqstatistics)
 
 
