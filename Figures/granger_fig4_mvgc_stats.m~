@@ -378,10 +378,23 @@ GRC1=GRC1(:,:,:,1:n_rip);
 
 
 
+lab=cell(6,1);
+
+lab{1}='HPC -> Parietal';
+lab{2}='Parietal -> HPC';
+
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
+
+lab{5}='Parietal -> PFC';
+lab{6}='PFC -> Parietal';
+
 %Select combinations. 
 F= [1 2; 1 3; 2 3] ;
+wb=waitbar(0,'wait')
 
  for j=1:3
+    waitbar(j/3,wb,'wait')
       f=F(j,:);
     %Baseline  
     %First direction  
@@ -402,8 +415,8 @@ F= [1 2; 1 3; 2 3] ;
         PP(P<0.05)=1;
         PP(P>=0.05)=0; %Binarized P value. 
     
-    Psaver{j,}=P;
-    PPsaver{j,1}=PP;
+    Psaver{j}=P;
+    PPsaver{j}=PP;
     
     %Opposite direction
     Xgr1=abs(squeeze(GRC1(f(2),f(1),:,:)));
@@ -423,13 +436,50 @@ F= [1 2; 1 3; 2 3] ;
         PP(P<0.05)=1;
         PP(P>=0.05)=0; %Binarized P value. 
 
-        XPsaver{j,1}=P;
-        XPPsaver{j,1}=PP;
+        XPsaver{j}=P;
+        XPPsaver{j}=PP;
     
  end
+close(wb)
+
+aver=[PPsaver{1};PPsaver{2};PPsaver{3}]
+Xaver=[XPPsaver{1};XPPsaver{2};XPPsaver{3}];
+
+aver2=[Psaver{1};Psaver{2};Psaver{3}]
+Xaver2=[XPsaver{1};XPsaver{2};XPsaver{3}];
+
+%% Binary
+allscreen()
+s1=subplot(1,2,1);
+im(aver)
+xlim([0 300])
+caxis([0 1])
+s1.YTickLabel=[{' '} lab{1} {' '} lab{3} {' '} lab{5} {' '}];
+xlabel('Frequency (Hz)')
+
+s2=subplot(1,2,2);
+im(Xaver)
+xlim([0 300])
+caxis([0 1])
+s2.YTickLabel=[{' '} lab{2} {' '} lab{4} {' '} lab{6} {' '}];
+xlabel('Frequency (Hz)')
+mtit('Statistical Significan')
+%% P values
+subplot(1,2,1)
+aver2(aver2>=0.05)=NaN;
+im(aver2)
+xlim([0 300])
+%caxis([0 1])
+        
+
+subplot(1,2,2)
+Xaver2(Xaver2>=0.05)=NaN;
+im(Xaver2)
+xlim([0 300])
+%caxis([0 1])
 
 
-
+%%
 %Stop it here.
 xo
 %%
