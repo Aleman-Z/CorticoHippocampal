@@ -33,13 +33,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -572,7 +572,7 @@ end
 %%
 
 %%
-%xo
+% xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
 if iii~=4 && sanity==1 %4 is Plusmaze!
@@ -602,6 +602,8 @@ end
 MVGC{iii}=GRC;
 FP{iii}=granger1;
 FNP{iii}=granger1_np;
+
+clear GRC granger1 granger1_np
 end
 xo
 %Obtained several GC
