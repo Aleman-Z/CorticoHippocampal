@@ -27,6 +27,15 @@
 * **perm_stats.m:**
 *Performs two-tailed permutation test on granger causality values per frequency from two different conditions.*  
 
+* **figure_binary.m:**
+*Plots significant frequencies that differ between conditions.*  
+    <img src="figure_bin.png" width="400">
+
+* **figure_pval.m:**
+*Plots significant frequencies and their p-values that differ between conditions.*  
+    <img src="figure_pval.png" width="400">
+
+
 *Actual computation is performed by Fieldtrip function: [ft_freqstatistics.m](http://www.fieldtriptoolbox.org/reference/ft_freqstatistics)
 
 
