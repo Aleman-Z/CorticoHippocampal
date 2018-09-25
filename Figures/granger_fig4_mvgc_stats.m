@@ -394,9 +394,11 @@ GRC1=GRC1(:,:,:,1:n_rip);
 
 % Binary
 figure_binary(aver,Xaver,lab)
+printing_image('FP_binary')
 
 % P values
 figure_pval(aver2,Xaver2,lab)
+printing_image('FP_pval')
 
 %% Non Parametric
 GRC1=FNP{1};
@@ -411,8 +413,30 @@ GRC1=GRC1(:,:,:,1:n_rip);
 
 % Binary
 figure_binary(aver,Xaver,lab)
+printing_image('FNP_binary')
+
 % P values
 figure_pval(aver2,Xaver2,lab)
+printing_image('FNP_pval')
+%%
+%% Second Parametric
+GRC1=MVGC{1};
+% GRC1(isnan(GRC1))=0;
+%Plusmaze
+GRC2=MVGC{4};
+n_rip=size(GRC2,4); %EQUALIZES NUMBER OF RIPPLES. 
+GRC1=GRC1(:,:,:,1:n_rip);
+
+%Perform stats
+[aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
+
+% Binary
+figure_binary(aver,Xaver,lab)
+printing_image('MVGC_binary')
+
+% P values
+figure_pval(aver2,Xaver2,lab)
+printing_image('MVGC_pval')
 
 
 %%
