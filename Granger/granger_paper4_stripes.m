@@ -46,6 +46,10 @@ lab{6}='PFC -> Parietal';
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
  title(lab{2*j-1})
+ % Add stripes
+ 
+ 
+ 
 % legend('Parametric: AR(10)','Non-P:Multitaper')
 %if j==1
 % legend(labelconditions)

@@ -1,6 +1,6 @@
 close all
 clear all
-acer=0;
+acer=1;
 % rat24base=1;
 DUR{1}='1sec';
 DUR{2}='10sec';
@@ -388,17 +388,19 @@ GRC2=FP{4};
 n_rip=size(GRC2,4); %EQUALIZES NUMBER OF RIPPLES. 
 GRC1=GRC1(:,:,:,1:n_rip);
 
-
 %Perform stats
 [aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
+save('FP_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
 figure_binary(aver,Xaver,lab)
-printing_image('FP_binary')
+% printing_image('FP_binary')
+close all
 
 % P values
 figure_pval(aver2,Xaver2,lab)
-printing_image('FP_pval')
+% printing_image('FP_pval')
+close all
 
 %% Non Parametric
 GRC1=FNP{1};
@@ -410,14 +412,18 @@ GRC1=GRC1(:,:,:,1:n_rip);
 
 %Perform stats
 [aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
+save('FNP_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
 figure_binary(aver,Xaver,lab)
-printing_image('FNP_binary')
+%printing_image('FNP_binary')
+close all
 
 % P values
 figure_pval(aver2,Xaver2,lab)
-printing_image('FNP_pval')
+%printing_image('FNP_pval')
+close all
+
 %%
 %% Second Parametric
 GRC1=MVGC{1};
@@ -429,15 +435,17 @@ GRC1=GRC1(:,:,:,1:n_rip);
 
 %Perform stats
 [aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
+save('MVGC_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
 figure_binary(aver,Xaver,lab)
-printing_image('MVGC_binary')
+%printing_image('MVGC_binary')
+close all
 
 % P values
 figure_pval(aver2,Xaver2,lab)
-printing_image('MVGC_pval')
-
+%printing_image('MVGC_pval')
+close all
 
 %%
 %Stop it here.
