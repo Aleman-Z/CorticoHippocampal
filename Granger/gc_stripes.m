@@ -355,7 +355,9 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+%for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+for iii=1:1 %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+    
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
     %xo
@@ -570,36 +572,10 @@ end
 %%
 
 %%
-xo
-[p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
-
-if iii~=4 && sanity==1 %4 is Plusmaze!
- p=p(randrip);
- q=q(randrip);
-end
-[p]=filter_ripples(p,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-[q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-
-%Widepassed
-[gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
-
-g{iii}=gran.grangerspctrm;
-g1{iii}=gran1.grangerspctrm;
-
-%Bandpassed
-[Gran,Gran1]=gc_paper(q,create_timecell(ro,length(q)),'Widepass',ro,10,[100:1:300]);
-
-G{iii}=Gran.grangerspctrm;
-G1{iii}=Gran1.grangerspctrm;
+%xo
 
 end
-%Frequency ranges. 
-g_f=gran.freq;
-g1_f=gran1.freq;
-G_f=Gran.freq;
-G1_f=Gran1.freq;
 
-xo
 %Plot 
 %%
 if acer==0
@@ -609,7 +585,25 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
 
+load('gees.mat')
+load('gcs_all.mat')
+
+%%
+xo
 %Widepass
+granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+% printing_image('GC_P_Widepass_1sec')
+%printing_image('GC_P_Widepass_0.5sec')
+% printing_image('GC_P_Widepass_0.25sec')
+close all
+
+xo
+% granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+% printing_image('GC2D_P_Widepass_1sec')
+% close all
+
+
+
 granger_paper4(g,g_f,labelconditions,[0 300])
 %printing_image('GC_NP_Widepass_1sec')
 %printing_image('GC_NP_Widepass_0.5sec')
@@ -618,17 +612,6 @@ close all
 
 granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
 printing_image('GC2D_NP_Widepass_1sec')
-close all
-
-granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
-% printing_image('GC_P_Widepass_1sec')
-%printing_image('GC_P_Widepass_0.5sec')
-% printing_image('GC_P_Widepass_0.25sec')
-close all
-
-
-granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-printing_image('GC2D_P_Widepass_1sec')
 close all
 
 
