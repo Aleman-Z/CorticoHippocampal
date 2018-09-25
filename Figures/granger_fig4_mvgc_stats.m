@@ -340,6 +340,18 @@ label2{5}='Monopolar';
 label2{6}='Bipolar';
 label2{7}='Monopolar';
 
+
+%GC labels 
+lab=cell(6,1);
+
+lab{1}='HPC -> Parietal';
+lab{2}='Parietal -> HPC';
+
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
+
+lab{5}='Parietal -> PFC';
+lab{6}='PFC -> Parietal';
 %%
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
@@ -377,68 +389,31 @@ n_rip=size(GRC2,4); %EQUALIZES NUMBER OF RIPPLES.
 GRC1=GRC1(:,:,:,1:n_rip);
 
 
-lab=cell(6,1);
+%Perform stats
+[aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
 
-lab{1}='HPC -> Parietal';
-lab{2}='Parietal -> HPC';
+% Binary
+figure_binary(aver,Xaver,lab)
 
-lab{3}='HPC -> PFC';
-lab{4}='PFC -> HPC';
+% P values
+figure_pval(aver2,Xaver2,lab)
 
-lab{5}='Parietal -> PFC';
-lab{6}='PFC -> Parietal';
+%% Non Parametric
+GRC1=FNP{1};
+% GRC1(isnan(GRC1))=0;
+%Plusmaze
+GRC2=FNP{4};
+n_rip=size(GRC2,4); %EQUALIZES NUMBER OF RIPPLES. 
+GRC1=GRC1(:,:,:,1:n_rip);
 
 %Perform stats
 [aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
 
+% Binary
+figure_binary(aver,Xaver,lab)
+% P values
+figure_pval(aver2,Xaver2,lab)
 
-%aver=[PPsaver{1};PPsaver{2};PPsaver{3}]
-% Xaver=[XPPsaver{1};XPPsaver{2};XPPsaver{3}];
-
-%aver2=[Psaver{1};Psaver{2};Psaver{3}]
-% Xaver2=[XPsaver{1};XPsaver{2};XPsaver{3}];
-
-%% Binary
-allscreen()
-s1=subplot(1,2,1);
-im(aver)
-colorbar('off')
-xlim([0 300])
-caxis([0 1])
-s1.YTickLabel=[{' '} lab{1} {' '} lab{3} {' '} lab{5} {' '}];
-xlabel('Frequency (Hz)')
-
-s2=subplot(1,2,2);
-im(Xaver)
-colorbar('off')
-xlim([0 300])
-caxis([0 1])
-s2.YTickLabel=[{' '} lab{2} {' '} lab{4} {' '} lab{6} {' '}];
-xlabel('Frequency (Hz)')
-t1=mtit('Plusmaze vs Baseline (p<0.05)')
-
-%% P values
-allscreen()
-s1=subplot(1,2,1)
-aver2(aver2>=0.05)=NaN;
-im(aver2)
-xlim([0 300])
-%caxis([0 1])
-s1.YTickLabel=[{' '} lab{1} {' '} lab{3} {' '} lab{5} {' '}];
-xlabel('Frequency (Hz)')
-        oldcmap = colormap;
-colormap( flipud(oldcmap) );        
-
-s2=subplot(1,2,2)
-Xaver2(Xaver2>=0.05)=NaN;
-im(Xaver2)
-xlim([0 300])
-%caxis([0 1])
-s2.YTickLabel=[{' '} lab{2} {' '} lab{4} {' '} lab{6} {' '}];
-xlabel('Frequency (Hz)')
-t1=mtit('Plusmaze vs Baseline (p<0.05)')
-        oldcmap = colormap;
-colormap( flipud(oldcmap) );
 
 %%
 %Stop it here.
