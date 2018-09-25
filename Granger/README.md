@@ -59,6 +59,9 @@ Steps 5: Work in progress.
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
 
+* **gc_stripes.m:**  
+*Visualizes previously calculated GC values and the significant frequency stripes for all directions.* 
+
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
 *Function to compute parametric spectral granger causality per ripple using MVGC. Gives very similar results to **fieltrip_adapted.m** with a different scaling due to "in the box" preprocessing.* 
