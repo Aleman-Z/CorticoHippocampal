@@ -1,6 +1,4 @@
-
-
-function granger_paper4_stripes(g,g_f,labelconditions,freqrange,aver,Xaver)
+function granger_paper4_stripes_two_conditions(g,g_f,labelconditions,freqrange,aver,Xaver)
 allscreen()
  
 F= [1 2; 1 3; 2 3] ;
@@ -35,8 +33,8 @@ lab{6}='PFC -> Parietal';
 % hold on
  plot(g_f, squeeze(g{1}(f(1),f(2),:)),'LineWidth',2)
  hold on
- plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2)
- plot(g_f, squeeze(g{3}(f(1),f(2),:)),'LineWidth',2)
+%  plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2)
+%  plot(g_f, squeeze(g{3}(f(1),f(2),:)),'LineWidth',2)
  plot(g_f, squeeze(g{4}(f(1),f(2),:)),'LineWidth',2)
  
  xlim(freqrange)
@@ -60,8 +58,8 @@ alpha(0.2)
 %  hold on
  plot(g_f, squeeze(g{1}(f(2),f(1),:)),'LineWidth',2)
  hold on
- plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2)
- plot(g_f, squeeze(g{3}(f(2),f(1),:)),'LineWidth',2)
+%  plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2)
+%  plot(g_f, squeeze(g{3}(f(2),f(1),:)),'LineWidth',2)
  plot(g_f, squeeze(g{4}(f(2),f(1),:)),'LineWidth',2)
 
  
