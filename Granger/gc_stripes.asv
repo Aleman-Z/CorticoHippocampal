@@ -584,12 +584,11 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
-xo
-load('gees.mat') %BFNP
-load('gcs_all.mat') %BFNP
 
-%Use data used to generate statistics. 
-FP_prom=cellfun(@(v) mean(v,4),FP,'UniformOutput',0);%BFNP
+load('gees.mat')
+load('gcs_all.mat')
+
+FP_prom=cellfun(@(v) mean(v,4),FP,'UniformOutput',0);
 FNP_prom=cellfun(@(v) mean(v,4),FNP,'UniformOutput',0);
 MVGC_prom=cellfun(@(v) mean(v,4),MVGC,'UniformOutput',0);
 
@@ -607,7 +606,7 @@ granger_paper4_stripes_two_conditions(g1,g1_f,labelconditions,[0 300],FP_aver.av
 
 granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_aver.aver,FP_aver.Xaver) %Parametric (501 samples due to fs/2+1)
 
-granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_mult,FP_mult) %Parametric (501 samples due to fs/2+1)
+granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_aver.aver,FP_mult) %Parametric (501 samples due to fs/2+1)
 
 
 granger_paper4_stripes_two_conditions(g1,g1_f,labelconditions,[0 300],MVGC_aver.aver,MVGC_aver.Xaver) %Parametric (501 samples due to fs/2+1)
