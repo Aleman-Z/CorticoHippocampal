@@ -585,17 +585,29 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
 xo
-load('gees.mat') %BFNP
-load('gcs_all.mat') %BFNP
+% load('gees.mat') %BFNP
+load('gcs_all.mat') %BFNP  %Granger per ripples. 
 
 %Use data used to generate statistics. 
 FP_prom=cellfun(@(v) mean(v,4),FP,'UniformOutput',0);%BFNP
 FNP_prom=cellfun(@(v) mean(v,4),FNP,'UniformOutput',0);
 MVGC_prom=cellfun(@(v) mean(v,4),MVGC,'UniformOutput',0);
 
+%Load the stripes. 
 FP_aver=load('FP_aver.mat');
 FNP_aver=load('FNP_aver.mat');
 MVGC_aver=load('MVGC_aver.mat');
+
+%P value less than  0.01
+FP_aver.Xaver=convert_pvalue(FP_aver.Xaver2,0.01);
+FP_aver.aver=convert_pvalue(FP_aver.aver2,0.01);
+
+FNP_aver.Xaver=convert_pvalue(FNP_aver.Xaver2,0.01);
+FNP_aver.aver=convert_pvalue(FNP_aver.aver2,0.01);
+
+MVGC_aver.Xaver=convert_pvalue(MVGC_aver.Xaver2,0.01);
+MVGC_aver.aver=convert_pvalue(MVGC_aver.aver2,0.01);
+
 %%
 xo
 FP_mult=FP_aver.Xaver.*FP_aver.aver;
