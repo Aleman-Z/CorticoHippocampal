@@ -588,16 +588,17 @@ granger1_np(1:3,1:3,1:501,1:length(p))=NaN;
 
 GRC(1:3,1:3,1:501,1:length(p))=NaN;
 
+f=waitbar(0,'Please wait...');
 for hw=1:length(p)
+ progress_bar(hw,length(p),f)   
   %Parametric approach  
   GRC(:,:,:,hw)=mvgc_adapted(p{hw},1000); %Get GC from MVGC
 %   granger1(:,:,:,hw)=fieldtrip_adapted(p(hw),10,ro); %Get GC from Fieldtrip/BSMART
 [granger1(:,:,:,hw),granger1_np(:,:,:,hw)]=fieldtrip_adapted(p(hw),10,ro);
   
-  %No-parametric approach
-  
-  hw/length(p)*100
-  pause(0.2)
+  %No-parametric approach   
+%   hw/length(p)*100
+%   pause(0.2)
 end
 MVGC{iii}=GRC;
 FP{iii}=granger1;
