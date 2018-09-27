@@ -60,7 +60,7 @@ Steps 5: Work in progress.
 *Computes _non-parametric_ spectral granger causality.* 
 
 * **gc_stripes.m:**  
-*Visualizes previously calculated GC values and the significant frequency stripes for all directions.* 
+*Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
