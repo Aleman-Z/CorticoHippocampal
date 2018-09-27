@@ -640,6 +640,7 @@ close all
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
 granger_paper4_with_stripes(G,G_f,labelconditions,[100 300])
+printing_image('Stripes_GC_NP_Bandpass_1sec')
 % printing_image('GC_NP_Bandpass_1sec')
 % printing_image('GC_NP_Bandpass_0.5sec')
 % printing_image('GC_NP_Bandpass_0.25sec')
