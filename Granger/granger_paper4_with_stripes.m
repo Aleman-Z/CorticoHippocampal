@@ -46,7 +46,10 @@ je_plus=g{4};
 je_base=squeeze(je_base(f(1),f(2),:));
 je_plus=squeeze(je_plus(f(1),f(2),:));
 diffo=je_plus-je_base;
-[oud]=isoutlier(diffo);
+
+maxfreq=find(g_f==300);
+
+[oud]=isoutlier(diffo(1:maxfreq));
 ind=find(oud); 
 Ind=zeros(size(diffo));
 Ind(ind)=1;
@@ -80,7 +83,10 @@ je_plus=g{4};
 je_base=squeeze(je_base(f(2),f(1),:));
 je_plus=squeeze(je_plus(f(2),f(1),:));
 diffo=je_plus-je_base;
-[oud]=isoutlier(diffo);
+
+maxfreq=find(g_f==300);
+[oud]=isoutlier(diffo(1:maxfreq));
+
 ind=find(oud); 
 Ind=zeros(size(diffo));
 Ind(ind)=1;
