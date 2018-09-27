@@ -6,7 +6,7 @@
 **filter_ripples.m**: Filters power noise on high frequency bands. Results in a clean spectrogram. 
 <img src="result_filter.png" width="500">
 
-**spec_improve.m**: Replaces old spectrogram and improves visualization of power. 
+**spec_improve.m**: Replaces old spectrogram and improves visualization of power. UPDATE: BASELINE contrast is wrong. Don't use.
 <img src="improved.png" width="350">
 
 **ripple_periodogram.m**
