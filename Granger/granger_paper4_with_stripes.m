@@ -51,7 +51,7 @@ ind=find(oud);
 Ind=zeros(size(diffo));
 Ind(ind)=1;
 
-stripes(Ind,0.2)
+stripes(Ind,0.2,g_f)
 
  xlim(freqrange)
  ylim([0 mmax])
@@ -85,7 +85,7 @@ ind=find(oud);
 Ind=zeros(size(diffo));
 Ind(ind)=1;
 
-stripes(Ind,0.2)
+stripes(Ind,0.2,g_f)
  
  xlim(freqrange)
  grid minor
