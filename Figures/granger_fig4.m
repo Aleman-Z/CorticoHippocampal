@@ -610,7 +610,10 @@ else
 end
 
 %Widepass
-granger_paper4(g,g_f,labelconditions,[0 300])
+% granger_paper4(g,g_f,labelconditions,[0 300])
+granger_paper4_with_stripes(g,g_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+printing_image('Stripes_GC_NP_Widepass_1sec')
+
 %printing_image('GC_NP_Widepass_1sec')
 %printing_image('GC_NP_Widepass_0.5sec')
 % printing_image('GC_NP_Widepass_0.25sec')
@@ -621,6 +624,8 @@ printing_image('GC2D_NP_Widepass_1sec')
 close all
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+granger_paper4_with_stripes(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+printing_image('Stripes_GC_P_Widepass_1sec')
 % printing_image('GC_P_Widepass_1sec')
 %printing_image('GC_P_Widepass_0.5sec')
 % printing_image('GC_P_Widepass_0.25sec')
@@ -634,6 +639,7 @@ close all
 
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
+granger_paper4_with_stripes(G,G_f,labelconditions,[100 300])
 % printing_image('GC_NP_Bandpass_1sec')
 % printing_image('GC_NP_Bandpass_0.5sec')
 % printing_image('GC_NP_Bandpass_0.25sec')

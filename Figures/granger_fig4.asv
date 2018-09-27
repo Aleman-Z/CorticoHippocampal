@@ -610,68 +610,148 @@ else
 end
 
 %Widepass
-granger_paper4(g,g_f,labelconditions,[0 300])
-%printing('GC_NP_Widepass_1sec')
-%printing('GC_NP_Widepass_0.5sec')
-% printing('GC_NP_Widepass_0.25sec')
+% granger_paper4(g,g_f,labelconditions,[0 300])
+granger_paper4_with_stripes(g,g_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+printing_image('Stripes_GC_NP_Widepass_1sec')
+
+%printing_image('GC_NP_Widepass_1sec')
+%printing_image('GC_NP_Widepass_0.5sec')
+% printing_image('GC_NP_Widepass_0.25sec')
 close all
 
 granger_2D_testall(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_NP_Widepass_1sec')
-close all
-
-granger_2D_testall_nostats(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_ns_NP_Widepass_1sec')
+printing_image('GC2D_NP_Widepass_1sec')
 close all
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
-% printing('GC_P_Widepass_1sec')
-%printing('GC_P_Widepass_0.5sec')
-% printing('GC_P_Widepass_0.25sec')
+granger_paper4_with_stripes(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+printing_image('Stripes_GC_P_Widepass_1sec')
+% printing_image('GC_P_Widepass_1sec')
+%printing_image('GC_P_Widepass_0.5sec')
+% printing_image('GC_P_Widepass_0.25sec')
 close all
 
 
 granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_P_Widepass_1sec')
-close all
-
-granger_2D_testall_nostats(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_ns_P_Widepass_1sec')
+printing_image('GC2D_P_Widepass_1sec')
 close all
 
 
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
-% printing('GC_NP_Bandpass_1sec')
-% printing('GC_NP_Bandpass_0.5sec')
-% printing('GC_NP_Bandpass_0.25sec')
+% printing_image('GC_NP_Bandpass_1sec')
+% printing_image('GC_NP_Bandpass_0.5sec')
+% printing_image('GC_NP_Bandpass_0.25sec')
 close all
 
 granger_2D_testall(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_NP_Bandpass_1sec')
-close all
-
-granger_2D_testall_nostats(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_ns_NP_Bandpass_1sec')
+printing_image('GC2D_NP_Bandpass_1sec')
 close all
 
 
 granger_paper4(G1,G1_f,labelconditions,[100 300])
-% printing('GC_P_Bandpass_1sec')
-% printing('GC_P_Bandpass_0.5sec')
-% printing('GC_P_Bandpass_0.25sec')
+% printing_image('GC_P_Bandpass_1sec')
+% printing_image('GC_P_Bandpass_0.5sec')
+% printing_image('GC_P_Bandpass_0.25sec')
 close all
 
 granger_2D_testall(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_P_Bandpass_1sec')
+printing_image('GC2D_P_Bandpass_1sec')
+close all
+
+%%
+granger_2D_testall_nostats(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+printing_image('GC2D_ns_NP_Widepass_1sec')
+close all
+
+granger_2D_testall_nostats(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+printing_image('GC2D_ns_P_Widepass_1sec')
+close all
+
+granger_2D_testall_nostats(G,G_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
+printing_image('GC2D_ns_NP_Bandpass_1sec')
 close all
 
 granger_2D_testall_nostats(G1,G1_f,labelconditions,[100 300]) %g1 looks better due to higher number of samples. 
-printing('GC2D_ns_P_Bandpass_1sec')
+printing_image('GC2D_ns_P_Bandpass_1sec')
 close all
+
+%% Stats among conditions
+F= [1 2; 1 3; 2 3] ;
+
+lab{1}='HPC -> Parietal';
+lab{2}='Parietal -> HPC';
+
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
+
+lab{5}='Parietal -> PFC';
+lab{6}='PFC -> Parietal';
+
+
+lab2{1}='HPC_Parietal';
+lab2{2}='Parietal_HPC';
+lab2{3}='HPC_PFC';
+lab2{4}='PFC_HPC';
+lab2{5}='Parietal_PFC';
+lab2{6}='PFC_Parietal';
+
+
+for nv=1:3
+f=F(nv,:); %Pair
+
+%First direction
+granger_2D_stats_conditions(g,g_f,labelconditions,[0 300],f)
+mtit(lab{2*nv-1})
+printing_image(strcat('Stat_',lab2{2*nv-1},'_','NP_Widepass_1sec'))
+close all
+%Opposite direction
+granger_2D_stats_conditions(g,g_f,labelconditions,[0 300],flip(f))
+mtit(lab{2*nv})
+printing_image(strcat('Stat_',lab2{2*nv},'_','NP_Widepass_1sec'))
+close all
+
+%First direction
+granger_2D_stats_conditions(g1,g1_f,labelconditions,[0 300],f)
+mtit(lab{2*nv-1})
+printing_image(strcat('Stat_',lab2{2*nv-1},'_','P_Widepass_1sec'))
+close all
+
+%Opposite direction
+granger_2D_stats_conditions(g1,g1_f,labelconditions,[0 300],flip(f))
+mtit(lab{2*nv})
+printing_image(strcat('Stat_',lab2{2*nv},'_','P_Widepass_1sec'))
+close all
+
+% % % 
+% % % %First direction
+% % % granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],f)
+% % % mtit(lab{2*nv-1})
+% % % printing_image(strcat('Stat_',lab2{2*nv-1},'_','NP_Bandpass_1sec'))
+% % % close all
+% % % 
+% % % 
+% % % %Opposite direction
+% % % granger_2D_stats_conditions(G,G_f,labelconditions,[100 300],flip(f))
+% % % mtit(lab{2*nv})
+% % % printing_image(strcat('Stat_',lab2{2*nv},'_','NP_Bandpass_1sec'))
+% % % close all
+% % % 
+% % % %First direction
+% % % granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],f)
+% % % mtit(lab{2*nv-1})
+% % % printing_image(strcat('Stat_',lab2{2*nv-1},'_','P_Bandpass_1sec'))
+% % % close all
+% % % 
+% % % %Opposite direction
+% % % granger_2D_stats_conditions(G1,G1_f,labelconditions,[100 300],flip(f))
+% % % mtit(lab{2*nv})
+% % % printing_image(strcat('Stat_',lab2{2*nv},'_','P_Bandpass_1sec'))
+% % % close all
+
+end
+
 %%
-
-
 
 % 
 % %Non-parametric
