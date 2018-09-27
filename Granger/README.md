@@ -37,6 +37,12 @@ Steps 5: Work in progress.
 *Plots spectral granger causality among brain regions for all conditions.* 
       <img src="gr_all.png" width="500">
 
+* **granger_paper4_with_stripes.m:**  
+*Plots spectral granger causality among brain regions for all conditions with their significant frequency bands.* 
+      <img src="gstripes.png" width="500">
+* **granger_paper4_stripes.m:**  
+*Same as above but used for permitation test.* 
+      
 * **granger_2D_testall.m:**  
 *Visualizes Granger causality as images to later compute their pixel-based statistics.* 
      <img src="granger_2d.png" width="500">
