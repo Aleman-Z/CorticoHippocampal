@@ -72,7 +72,7 @@ alpha(0.2)
  
  % Add stripes
  hold on
- rrc=area(Xaver(j,:),'FaceColor','none')
+rrc=area(Xaver(j,:),'FaceColor','none')
 set(rrc, 'FaceColor', 'r')
 alpha(0.2)
  

@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -596,7 +596,7 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
 
-% load('gees.mat') %BFNP
+load('gees.mat') %BFNP
 load('gcs_all.mat') %BFNP  %Granger per ripples. 
 
 %Use data used to generate statistics and average trials for plotting. 
@@ -619,7 +619,6 @@ FNP_aver.aver=convert_pvalue(FNP_aver.aver2,0.01);
 MVGC_aver.Xaver=convert_pvalue(MVGC_aver.Xaver2,0.01);
 MVGC_aver.aver=convert_pvalue(MVGC_aver.aver2,0.01);
 
-xo
  %% Generate figures and save
 % %Regenerate binary and confirm
 % figure_binary(FP_aver.aver,FP_aver.Xaver,lab,0.01)
@@ -646,8 +645,17 @@ xo
 % printing_image('MVGC_pval_0.01')
 % close all
 %%
-xo
+
 FP_mult=FP_aver.Xaver.*FP_aver.aver;
+FP_multinv1=FP_aver.Xaver.*not(FP_aver.aver);
+FP_multinv2=FP_aver.aver.*not(FP_aver.Xaver);
+
+
+FNP_mult=FNP_aver.Xaver.*FNP_aver.aver;
+MVGC_mult=MVGC_aver.Xaver.*MVGC_aver.aver;
+
+
+xo
 %Widepass
 granger_paper4_stripes(g1,g1_f,labelconditions,[0 300],FP_aver.Xaver,FP_aver.aver) %Parametric (501 samples due to fs/2+1)
 
@@ -656,7 +664,12 @@ granger_paper4_stripes_two_conditions(g1,g1_f,labelconditions,[0 300],FP_aver.av
 
 granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_aver.aver,FP_aver.Xaver) %Parametric (501 samples due to fs/2+1)
 
+
 granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_mult,FP_mult) %Parametric (501 samples due to fs/2+1)
+granger_paper4_stripes_two_conditions(g1,g1_f,labelconditions,[0 300],FP_mult,FP_mult) %Parametric (501 samples due to fs/2+1)
+
+
+granger_paper4_stripes_two_conditions(FP_prom,g1_f,labelconditions,[0 300],FP_multinv1,FP_multinv1) %Parametric (501 samples due to fs/2+1)
 
 
 granger_paper4_stripes_two_conditions(g1,g1_f,labelconditions,[0 300],MVGC_aver.aver,MVGC_aver.Xaver) %Parametric (501 samples due to fs/2+1)
