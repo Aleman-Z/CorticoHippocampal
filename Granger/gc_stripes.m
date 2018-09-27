@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -338,6 +338,17 @@ label2{5}='Monopolar';
 label2{6}='Bipolar';
 label2{7}='Monopolar';
 
+
+lab=cell(6,1);
+
+lab{1}='HPC -> Parietal';
+lab{2}='Parietal -> HPC';
+
+lab{3}='HPC -> PFC';
+lab{4}='PFC -> HPC';
+
+lab{5}='Parietal -> PFC';
+lab{6}='PFC -> Parietal';
 %%
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
@@ -584,16 +595,16 @@ else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
-xo
+
 % load('gees.mat') %BFNP
 load('gcs_all.mat') %BFNP  %Granger per ripples. 
 
-%Use data used to generate statistics. 
+%Use data used to generate statistics and average trials for plotting. 
 FP_prom=cellfun(@(v) mean(v,4),FP,'UniformOutput',0);%BFNP
 FNP_prom=cellfun(@(v) mean(v,4),FNP,'UniformOutput',0);
 MVGC_prom=cellfun(@(v) mean(v,4),MVGC,'UniformOutput',0);
 
-%Load the stripes. 
+%Load the stripes. Significant difference between BASELINE and Plusmaze. 
 FP_aver=load('FP_aver.mat');
 FNP_aver=load('FNP_aver.mat');
 MVGC_aver=load('MVGC_aver.mat');
@@ -608,6 +619,32 @@ FNP_aver.aver=convert_pvalue(FNP_aver.aver2,0.01);
 MVGC_aver.Xaver=convert_pvalue(MVGC_aver.Xaver2,0.01);
 MVGC_aver.aver=convert_pvalue(MVGC_aver.aver2,0.01);
 
+xo
+ %% Generate figures and save
+% %Regenerate binary and confirm
+% figure_binary(FP_aver.aver,FP_aver.Xaver,lab,0.01)
+% printing_image('FP_binary_0.01')
+% close all
+% 
+% figure_pval(FP_aver.aver2,FP_aver.Xaver2,lab,0.01)
+% printing_image('FP_pval_0.01')
+% close all
+% 
+% figure_binary(FNP_aver.aver,FNP_aver.Xaver,lab,0.01)
+% printing_image('FNP_binary_0.01')
+% close all
+% 
+% figure_pval(FNP_aver.aver2,FNP_aver.Xaver2,lab,0.01)
+% printing_image('FNP_pval_0.01')
+% close all
+% 
+% figure_binary(MVGC_aver.aver,MVGC_aver.Xaver,lab,0.01)
+% printing_image('MVGC_binary_0.01')
+% close all
+% 
+% figure_pval(MVGC_aver.aver2,MVGC_aver.Xaver2,lab,0.01)
+% printing_image('MVGC_pval_0.01')
+% close all
 %%
 xo
 FP_mult=FP_aver.Xaver.*FP_aver.aver;

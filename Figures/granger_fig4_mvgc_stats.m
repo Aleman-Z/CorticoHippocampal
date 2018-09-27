@@ -375,7 +375,7 @@ else
 end
 
 load('gcs_all.mat')
-%xo
+xo
 
 %MVGC
 %%
@@ -393,7 +393,7 @@ GRC1=GRC1(:,:,:,1:n_rip);
 save('FP_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
-figure_binary(aver,Xaver,lab)
+figure_binary(aver,Xaver,lab,0.05)
 % printing_image('FP_binary')
 close all
 
@@ -415,7 +415,7 @@ GRC1=GRC1(:,:,:,1:n_rip);
 save('FNP_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
-figure_binary(aver,Xaver,lab)
+figure_binary(aver,Xaver,lab,0.05)
 %printing_image('FNP_binary')
 close all
 
@@ -438,7 +438,7 @@ GRC1=GRC1(:,:,:,1:n_rip);
 save('MVGC_aver.mat','aver','aver2','Xaver','Xaver2')
 
 % Binary
-figure_binary(aver,Xaver,lab)
+figure_binary(aver,Xaver,lab,0.05)
 %printing_image('MVGC_binary')
 close all
 

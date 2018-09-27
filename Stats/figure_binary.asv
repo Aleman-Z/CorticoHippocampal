@@ -16,5 +16,5 @@ function figure_binary(aver,Xaver,lab,p_val)
     s2.YTickLabel=[{' '} lab{2} {' '} lab{4} {' '} lab{6} {' '}];
     xlabel('Frequency (Hz)')
 %     t1=mtit('Plusmaze vs Baseline (p<0.05)');
-    t1=mtit(strcat('Plusmaze vs Baseline','{ }','(p<', num2str(p_val),')'));
+    t1=mtit(strcat('Plusmaze vs Baseline- (p<0.05)'));
 end
