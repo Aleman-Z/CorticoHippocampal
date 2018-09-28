@@ -31,13 +31,13 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
 for rat24base=1:1
  
@@ -612,7 +612,7 @@ end
 %Widepass
 % granger_paper4(g,g_f,labelconditions,[0 300])
 granger_paper4_with_stripes(g,g_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
-printing_image('Stripes_GC_NP_Widepass_1sec')
+printing_image('Stripes_300_GC_NP_Widepass_1sec')
 
 %printing_image('GC_NP_Widepass_1sec')
 %printing_image('GC_NP_Widepass_0.5sec')
@@ -625,7 +625,7 @@ close all
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 granger_paper4_with_stripes(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
-printing_image('Stripes_GC_P_Widepass_1sec')
+printing_image('Stripes_300_GC_P_Widepass_1sec')
 % printing_image('GC_P_Widepass_1sec')
 %printing_image('GC_P_Widepass_0.5sec')
 % printing_image('GC_P_Widepass_0.25sec')
@@ -640,7 +640,7 @@ close all
 %Bandpass
 granger_paper4(G,G_f,labelconditions,[100 300])
 granger_paper4_with_stripes(G,G_f,labelconditions,[100 300])
-printing_image('Stripes_GC_NP_Bandpass_1sec')
+printing_image('Stripes_300_GC_NP_Bandpass_1sec')
 % printing_image('GC_NP_Bandpass_1sec')
 % printing_image('GC_NP_Bandpass_0.5sec')
 % printing_image('GC_NP_Bandpass_0.25sec')
@@ -653,7 +653,7 @@ close all
 
 granger_paper4(G1,G1_f,labelconditions,[100 300])
 granger_paper4_with_stripes(G1,G1_f,labelconditions,[100 300])
-printing_image('Stripes_GC_P_Bandpass_1sec')
+printing_image('Stripes_300_GC_P_Bandpass_1sec')
 % printing_image('GC_P_Bandpass_1sec')
 % printing_image('GC_P_Bandpass_0.5sec')
 % printing_image('GC_P_Bandpass_0.25sec')
