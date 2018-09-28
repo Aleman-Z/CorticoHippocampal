@@ -51,6 +51,10 @@ Steps 5: Work in progress.
 *Visualizes Granger causality as images among conditions without stats.* 
      <img src="nostats.png" width="500">
 
+* **granger_2D_baseplus_nostats.m:**  
+*Visualizes Granger causality as images among conditions without stats.* 
+     <img src="nostats2.png" width="500">
+
 * **granger_2D_stats_conditions.m:**  
 *Visualizes Granger causality pixel-based statistics among conditions.* 
      <img src="stats_conditions.png" width="500">
