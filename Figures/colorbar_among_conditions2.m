@@ -56,7 +56,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=1:1
+for Rat=3:3
     
 if Rat==1
     
@@ -79,14 +79,14 @@ end
 if Rat==2
     
     if acer==0
-         cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers')
+         cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers_first_ripple_only')
           if ldura==2
               cd('..')
               cd('10sec')
           end
     else
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:\Users\addri\Dropbox\Figures\Figure3\27\New_lessoutliers')
+          cd('C:\Users\addri\Dropbox\Figures\Figure3\27\New_lessoutliers_first_ripple_only')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -98,7 +98,7 @@ if Rat==3
     if acer==0
      cd('/home/raleman/Dropbox/Figures/Figure3/24/New_out_consecutive')
     else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/New_out_consecutive')
     end
 end
 %xo
