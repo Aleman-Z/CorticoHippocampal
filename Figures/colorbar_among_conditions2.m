@@ -1,7 +1,7 @@
 close all
 clear all
 
-acer=0;
+acer=1;
 labelconditions=[
     {     
     'Baseline'}
@@ -56,20 +56,19 @@ InitFieldtrip()
 end
 %%
 
-for Rat=3:3
+for Rat=1:1
     
 if Rat==1
     
     if acer==0
-         cd('/home/raleman/Dropbox/Figures/Figure3/26/New_lessoutliers_first_ripple_only')
+         cd('/home/raleman/Dropbox/Figures/Figure3/26/New_lessoutliers')
           if ldura==2
               cd('..')
               cd('10sec')
           end
     else
-          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))
-          xo %Gives error. Add new cd. 
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Baseline2_1000_Method4')
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat))) 
+          cd('C:\Users\addri\Dropbox\Figures\Figure3\26\New_lessoutliers')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -87,7 +86,7 @@ if Rat==2
           end
     else
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Baseline2_1000_Method4')
+          cd('C:\Users\addri\Dropbox\Figures\Figure3\27\New_lessoutliers')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -161,13 +160,13 @@ for w=2:3
     axesObjs(6).YLim=mVER1;
     axesObjs(10).YLim=mVER2;
     axesObjs(12).YLim=mVER2;
-% xo    
+ %xo    
     %%
  % figure()
 nv1=(dataObjs{11}.CData);
 nv1=nv1(:,21:end-21);
 nv2=(dataObjs{9}.CData);
-nv2=nv2(:,21:end-21)
+nv2=nv2(:,21:end-21);
 nv3=(dataObjs{5}.CData);
 nv4=(dataObjs{3}.CData);
  
@@ -179,8 +178,11 @@ c1=narrow_colorbar()
 % cax1=caxis;%  -1.6465    8.3123
 % c1.YLim=[do(1) do(4)];
 I.CDataMapping = 'scaled';
+%xo
 gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
+% gg.YTickLabel=flip(gg.YTickLabel);
+% gg.YTickLabel=[{5} {10} {15} {20} {25} {30}];
+% gg.YTickLabel=flip(gg.YTickLabel);
 colormap(jet(256))
 set(gca,'YDir','normal')
 c1=narrow_colorbar()
@@ -196,10 +198,10 @@ ylabel('Frequency (Hz)')
 title('Wide Band No Learning')
 %
 i=I.CData;
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
+set(gca, 'YTick',[ size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5 size(i,1)/2/3*6] , 'YTickLabel', flip([30 25 20 15 10 5])) % 20 ticks
 %%
 %figure()
-
+%xo
 %  nv=(dataObjs{5}.CData);
     subplot(3,4,6)
        I=imagesc(nv2)
@@ -210,7 +212,7 @@ c1=narrow_colorbar()
 % c1.YLim=[do(1) do(4)];
 I.CDataMapping = 'scaled';
 gg=gca;
-gg.YTickLabel=flip(gg.YTickLabel);
+%gg.YTickLabel=flip(gg.YTickLabel);
 colormap(jet(256))
 set(gca,'YDir','normal')
 c1=narrow_colorbar()
@@ -228,10 +230,11 @@ ylabel('Frequency (Hz)')
 
 %
 i=I.CData;
-set(gca, 'YTick',[1 size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5] , 'YTickLabel', [30 25 20 15 10 5]) % 20 ticks
+set(gca, 'YTick',[ size(i,1)/2/3 size(i,1)/2/3*2 size(i,1)/2 size(i,1)/2/3*4 size(i,1)/2/3*5 size(i,1)/2/3*6] , 'YTickLabel', flip([30 25 20 15 10 5])) % 20 ticks
+
 %%
 %figure()
-
+%xo
 %  nv=(dataObjs{9}.CData);
     subplot(3,4,7)
        I=imagesc(flip(nv3,1))
