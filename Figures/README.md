@@ -38,7 +38,7 @@
 <img src="example_figure_spectrogram.png" width="600">
 
 * **spec_loop_improve.m:**
-*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles.*
+*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles. UPDATE: Avoid using. This approach gives wrong results for Non-learning baseline.*
 <img src="example_improve.png" width="600">
 
 * **test_fix_thr.m:**
