@@ -5,8 +5,8 @@
  spec_win=100;
 %  spec_win = fs/2; 
 
- %nfft = fs*30; 
-nfft = 500; 
+ nfft = fs*30; 
+%nfft = 100; 
 
  
   x=p{1}(1,:);
@@ -21,3 +21,8 @@ nfft = 500;
   ylim([0 300])
   xlim([-1 1])
   colorbar()
+  %h=gcf;
+ set(gca,'YDir','normal')
+title('Coherence between Hippocampus and Parietal')
+xlabel('Time (s)')
+ylabel('Frequency (Hz)')
