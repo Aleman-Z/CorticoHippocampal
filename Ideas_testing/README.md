@@ -15,3 +15,7 @@ Justifies the lack of filtering on the lower frequencies. Verifies that visual a
 
 <img src="low_interpolation.png" width="350">
 
+**coherence_test.m**
+Function used to test time-frequency coherency among brain signals.
+
+<img src="coherence.png" width="350">
