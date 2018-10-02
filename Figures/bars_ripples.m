@@ -11,7 +11,7 @@ c = categorical(labelconditions);
 
 %%
 
-for Rat=1:1
+for Rat=3:3
     
 if Rat==1
     
@@ -24,7 +24,8 @@ if Rat==1
 
 Base=[{'Baseline1'} {'Baseline2'} {'Baseline3'}];
 contlim=length(Base);
-else
+end
+if Rat==2
 if acer==0
       cd('/home/raleman/Dropbox/Figures/Figure3/27/Baseline2_1000_Method4')
 else
@@ -36,6 +37,19 @@ end
 Base=[{'Baseline2'} {'Baseline1'} {'Baseline3'}];
 contlim=length(Base);
 end
+
+if Rat==3
+if acer==0
+      cd('/home/raleman/Dropbox/Figures/Figure3/24')
+else
+      %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+      cd('C:/Users/addri/Dropbox/Figures/Figure3/24')
+end
+
+Base=[ {'Baseline2'}];
+contlim=length(Base);    
+end
+
 load('NumberRipples.mat')
 
 for cont=1:contlim
