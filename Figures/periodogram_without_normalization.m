@@ -13,8 +13,8 @@ end
 %%
 %Rat=26;
 
-for Rat=2:2
-rats=[26 27 21 24];
+for Rat=3:3
+rats=[26 27 24 21];
 Rat=rats(Rat);    
 if Rat==26
 nFF=[
@@ -139,8 +139,8 @@ end
 if Rat==24
    
 nFF=[  
-    {'Baseline1'}
-  %  {'Baseline2'}
+  %  {'Baseline1'}
+    {'Baseline2'}
   %  {'Baseline3'}
   %  {'Baseline4'}
     {'Plusmaze1'}
