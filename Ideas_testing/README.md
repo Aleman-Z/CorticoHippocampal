@@ -10,6 +10,10 @@
 
 <img src="improved.png" width="350">
 
+**butterfly_plot.m**: Generates butterfly plot of all ripples and their grand average.
+
+<img src="butterfly.png" width="500">
+
 **ripple_periodogram.m**
 Justifies the lack of filtering on the lower frequencies. Verifies that visual artifacts at 15Hz are not due to the signal. 
 
