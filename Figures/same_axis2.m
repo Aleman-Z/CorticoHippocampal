@@ -1,7 +1,7 @@
 close all
 clear all
 
-acer=1;
+acer=0;
 labelconditions=[
     {     
     'Baseline'}
@@ -56,19 +56,19 @@ InitFieldtrip()
 end
 %%
 
-for Rat=2:2
+for Rat=3:3
     
 if Rat==1
     
     if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/26/New_lessoutliers_first_ripple_only')
+     cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_consecutive')
           if ldura==2
               cd('..')
               cd('10sec')
           end
     else
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/26/New_lessoutliers_first_ripple_only')
+          cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Newest_consecutive')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -79,14 +79,14 @@ end
 if Rat==2
     
     if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/27/New_lessoutliers_first_ripple_only')
+     cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_consecutive')
           if ldura==2
               cd('..')
               cd('10sec')
           end
     else
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/27/New_lessoutliers_first_ripple_only')
+          cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Newest_consecutive')
           if ldura==2
               cd('..')
               cd('10sec')
@@ -97,9 +97,9 @@ end
 
 if Rat==3
     if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24/New_out_first')
+        cd('/home/raleman/Dropbox/Figures/Figure3/24/Newest_consecutive')
     else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/New_out_first')
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/Newest_consecutive')
     end
 end
 % xo
