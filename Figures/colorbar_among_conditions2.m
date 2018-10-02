@@ -1,7 +1,7 @@
 close all
 clear all
 
-acer=1;
+acer=0;
 labelconditions=[
     {     
     'Baseline'}
@@ -56,7 +56,7 @@ InitFieldtrip()
 end
 %%
 
-for Rat=3:3
+for Rat=1:1
     
 if Rat==1
     
@@ -160,7 +160,7 @@ for w=2:3
     axesObjs(6).YLim=mVER1;
     axesObjs(10).YLim=mVER2;
     axesObjs(12).YLim=mVER2;
- %xo    
+% xo    
     %%
  % figure()
 nv1=(dataObjs{11}.CData);
