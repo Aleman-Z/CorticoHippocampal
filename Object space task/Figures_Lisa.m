@@ -100,8 +100,8 @@ load('V9.mat')
 load('V17.mat')
 
 %%
-V9n=outlier(V9);
-V17n=outlier(V17);
+V9n=outlier(V9,1.5);
+V17n=outlier(V17,1.5);
 
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz

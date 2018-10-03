@@ -1,4 +1,4 @@
-num=8;
+num=6;
 
 %function downsamp(num)
 str2=cell(8,1);
@@ -20,7 +20,7 @@ str2{8,1}='/home/raleman/Documents/internship/Lisa_files/day 4/presleep_28';
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
 cd(str2{num,1});
 fs=20000;
-
+%%
 Wn=[500/(fs/2) ]; % Cutoff=500 Hz
 [b,a] = butter(3,Wn); %Filter coefficients for LPF
 
