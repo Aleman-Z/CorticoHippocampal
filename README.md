@@ -137,8 +137,4 @@ read_ratdata27.m: Adaptable to any other rat.
 ------------------
 powerspectrum.m: Plots periodogram of a signal stored in  a cell array. 
 
--Older files (Autumn 2017)
-------------------
-main_clean.m 
-
 
