@@ -26,7 +26,7 @@ main_clean.m
  gc_cross.m\
  gcbip.m\
  gcbipc.m\
- gcc.m\
+ gcc.m
      
 *_*Envelope:*_   
 getenvel.m\
