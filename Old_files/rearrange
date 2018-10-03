@@ -1,0 +1,8 @@
+
+label1='Hippocampus';
+label2=' (Bipolar)'
+generate(carajo,veamos, Bip17,S17,label1,label2)
+figure()
+label1='Hippocampus';
+label2=' (Monopolar)'
+generate(carajo,veamos, Bip17,S17,label1,label2)
