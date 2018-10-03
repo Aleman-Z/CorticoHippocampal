@@ -1,4 +1,4 @@
-# Cortico-Hippocampal Network during Memory Consolidation <img src="brain.png" width="30"> :zzz: :rat: 
+# Cortico-Hippocampal Network during Memory Consolidation <img src="brain.png" width="30"> 
 
 MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/adri%C3%A1n-alem%C3%A1n-zapata-b1b727b2/) <img src="raised.png" width="25"> 
 
