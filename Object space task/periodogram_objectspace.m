@@ -244,7 +244,8 @@ myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 %New Colors
 % myColorMap(1,:)=[127, 131, 135]./255;
 % myColorMap(2,:)=[0,0,0];
-% myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
 
 %RAT 24
 % if Rat==24
@@ -258,9 +259,17 @@ Block{3}='block2';
 Block{4}='block3';
 
 
+str2=cell(5,1);
+str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
+str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
+str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
+str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
+str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
+
+
 for block_time=0:0
 
-    for iii=1:length(nFF)
+    for iii=1:length(str2)
 
 % if acer==0
 %     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -269,13 +278,6 @@ for block_time=0:0
 % end
 % 
 %     cd(nFF{iii})  
-str2=cell(5,1);
-str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
-str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
-str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
-str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
-str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
-
 %xo
 num=iii;
 cd(str2{num,1});
@@ -407,7 +409,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power')
 
 title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-xo
+
+    end
+  xo  
 %%
 %Print to track 
 labelconditions{iii};
@@ -514,5 +518,5 @@ close all
 end
 %%
 clearvars -except acer Rat
-end
+%end
 %end
