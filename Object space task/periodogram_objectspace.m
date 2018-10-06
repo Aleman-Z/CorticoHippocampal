@@ -90,24 +90,25 @@ nFF=[
 %     {'rat27_watermaze_jitter_afternoon_2016-04-06_15-41-51'}  
     ]
 
-labelconditions=[
-    { 
-    'Baseline'}
-%     'Baseline_2'
-%     'Baseline_3'
-    'PlusMaze'
-%     'PlusMaze_2'
-    'Novelty'
-    'Foraging'
-    
-  %   'Foraging_2'
-     
-    
-    
-     
-    ];
+% labelconditions=[
+%     { 
+%     'Baseline'}
+% %     'Baseline_2'
+% %     'Baseline_3'
+%     'PlusMaze'
+% %     'PlusMaze_2'
+%     'Novelty'
+%     'Foraging'
+%     
+%   %   'Foraging_2'
+%      
+%     
+%     
+%      
+%     ];
 
-    
+
+
 end
 
 if Rat==21
@@ -230,22 +231,23 @@ w=1 %Hippocampus
 % myColorMap = jet(8);    
 % end
 % colormap(myColorMap);
-myColorMap = jet(8);                                                                                                                                                                                    
-myColorMap =myColorMap([2 4 5 7],:);
 % myColorMap(2,:); %Baseline
 % myColorMap(4,:); %PlusMaze
 % myColorMap(5,:); %Novelty
 % myColorMap(7,:);%Foraging
 
 % myColorMap(3,:)=[1 0 1];
+
+myColorMap = jet(8);                                                                                                                                                                                    
+myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
+myColorMap(6,:)=[127, 131, 135]./255;
 %New Colors
 % myColorMap(1,:)=[127, 131, 135]./255;
 % myColorMap(2,:)=[0,0,0];
-myColorMap(4,:)=[212, 11, 226]./255;
-myColorMap(5,:)=[0,0,0];
 
 %RAT 24
 % if Rat==24
@@ -259,17 +261,132 @@ Block{3}='block2';
 Block{4}='block3';
 
 
-str2=cell(5,1);
-str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
-str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
-str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
-str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
-str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
 
 
 for block_time=0:0
+Jour{1}='day1_OD';
+Jour{2}='day2';
+Jour{3}='day3_HC';
+Jour{4}='day4';
 
+ff=waitbar(0,'Please wait...');
+for jour=1:4
+progress_bar(jour,4,ff)
+switch jour
+    case 1
+            str2=cell(6,1);
+            str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial1';
+            str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial2';
+            str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial3';
+            str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial4';
+            str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial5';
+            str2{6,1}='/home/raleman/Documents/internship/Lisa_files/day1_OD/post_trial6';
+            
+        labelconditions=[
+            { 
+            'PT1'}
+            'PT2'
+            'PT3'
+            'PT4'
+            'PT5'
+            'PT6'
+            ];
+
+myColorMap = jet(8);                                                                                                                                                                                    
+myColorMap =myColorMap([2 4 5 7],:);
+myColorMap(2,:)=[0, 204/255, 0];
+myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
+myColorMap(6,:)=[127, 131, 135]./255;
+
+    case 2
+            str2=cell(5,1);
+            str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
+            str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
+            str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
+            str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
+            str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
+
+            
+                                    labelconditions=[
+                                        { 
+                                        'PT1'}
+                                        'PT2'
+                                        'PT3'
+                                        'PT4'
+                                        'PT5'
+                                        ];
+
+myColorMap = jet(8);                                                                                                                                                                                    
+myColorMap =myColorMap([2 4 5 7],:);
+myColorMap(2,:)=[0, 204/255, 0];
+myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
+            
+    case 3
+
+            str2=cell(5,1);
+            str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial1';
+            str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial2';
+            str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial3';
+            str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial4';
+            str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day 3 HC/post_trial5';
+        
+            
+        labelconditions=[
+            { 
+            'PT1'}
+            'PT2'
+            'PT3'
+            'PT4'
+            'PT5'
+           
+            ];
+
+
+myColorMap = jet(8);                                                                                                                                                                                    
+myColorMap =myColorMap([2 4 5 7],:);
+myColorMap(2,:)=[0, 204/255, 0];
+myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
+        
+    otherwise
+        
+
+            str2=cell(5,1);
+            str2{1,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial1';
+            str2{2,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial2';
+            str2{3,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial3';
+            str2{4,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial4';
+            str2{5,1}='/home/raleman/Documents/internship/Lisa_files/day 4/post_trial5';
+           
+            
+        labelconditions=[
+            { 
+            'PT1'}
+            'PT2'
+            'PT3'
+            'PT4'
+            'PT5'
+           
+            ];
+
+
+myColorMap = jet(8);                                                                                                                                                                                    
+myColorMap =myColorMap([2 4 5 7],:);
+myColorMap(2,:)=[0, 204/255, 0];
+myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+myColorMap(4,:)=[212, 11, 226]./255;
+myColorMap(5,:)=[0,0,0];
+        
+end
+    
+fff=waitbar(0,'Please wait...');    
     for iii=1:length(str2)
+progress_bar(iii,length(str2),fff)
 
 % if acer==0
 %     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -411,18 +528,29 @@ ylabel('Power')
 title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 
     end
-  xo  
-%%
-%Print to track 
-labelconditions{iii};
-    end
 
 L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
     'Marker','s'); 
 
-legend(L, labelconditions)
+legend(L, labelconditions)    
+% ylim([10e-3 10e3])    
+ylim([.0010 1000])    
+    
+ %xo
+ 
+    cd('/home/raleman/Dropbox/Figures/Object_Task')
+printing(Jour{jour}) 
+close all
+ 
+end
+
+%%
+%Print to track 
+% labelconditions{iii};
+end
+
 %         set(gca,'Color','w')
 % grid on
 % %set(gca,'Color','k')
