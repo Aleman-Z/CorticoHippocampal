@@ -696,41 +696,44 @@ end
  
 
 %% Pixel-based stats
-zmap=stats_high(freq3,freq4,w);
-h(10)=subplot(3,4,12);
-
-colormap(jet(256))
-zmap(zmap == 0) = NaN;
-J=imagesc(freq3.time,freq3.freq,zmap)
-xlabel('Time (s)'), ylabel('Frequency (Hz)')
-%title('tf power map, thresholded')
-set(gca,'xlim',xlim,'ydir','no')
+% zmap=stats_high(freq3,freq4,w);
+% h(10)=subplot(3,4,12);
+% 
+% colormap(jet(256))
+% zmap(zmap == 0) = NaN;
+% J=imagesc(freq3.time,freq3.freq,zmap)
+% xlabel('Time (s)'), ylabel('Frequency (Hz)')
+% %title('tf power map, thresholded')
+% set(gca,'xlim',xlim,'ydir','no')
+% % c=narrow_colorbar()
+% set(J,'AlphaData',~isnan(zmap))
 % c=narrow_colorbar()
-set(J,'AlphaData',~isnan(zmap))
-c=narrow_colorbar()
- c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-c=narrow_colorbar()
+%  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+% caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+% c=narrow_colorbar()
+% 
+% g=title(strcat(labelconditions{iii},' vs No Learning'));
+% g.FontSize=12;
 
+%% EXTRA STATISTICS
+[stats1]=stats_between_trials(freq3,freq4,label1,w);
+% %
+%  subplot(3,4,11)
+ h(10)=subplot(3,4,12);
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+% grid minor
+ft_singleplotTFR(cfg, stats1);
+%title('Ripple vs No Ripple')
+%title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
 g=title(strcat(labelconditions{iii},' vs No Learning'));
 g.FontSize=12;
 
-%% EXTRA STATISTICS
-% [stats1]=stats_between_trials(freq30,freq40,label1,w);
-% % %
-%  subplot(3,4,11)
-% cfg = [];
-% cfg.channel = label1{2*w-1};
-% cfg.parameter = 'stat';
-% cfg.maskparameter = 'mask';
-% cfg.zlim = 'maxabs';
-% cfg.colorbar       = 'yes';
-% cfg.colormap=colormap(jet(256));
-% grid minor
-% ft_singleplotTFR(cfg, stats1);
-% %title('Ripple vs No Ripple')
-% title(strcat(labelconditions{iii-3},' vs No Learning (Baseline)'))
-%title(strcat(labelconditions{iii},' vs No Learning'))
 %%
 % [stats1]=stats_between_trials(freq10,freq20,label1,w);
 % % %

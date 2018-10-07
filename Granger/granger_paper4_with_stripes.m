@@ -59,7 +59,7 @@ stripes(Ind,0.2,g_f)
  xlim(freqrange)
  ylim([0 mmax])
  
- grid minor
+ %grid minor
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
  title(lab{2*j-1})
@@ -94,7 +94,7 @@ Ind(ind)=1;
 stripes(Ind,0.2,g_f)
  
  xlim(freqrange)
- grid minor
+ %grid minor
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')

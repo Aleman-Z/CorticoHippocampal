@@ -42,7 +42,7 @@ lab{6}='PFC -> Parietal';
  xlim(freqrange)
  ylim([0 mmax])
  
- grid minor
+ %grid minor
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
  title(lab{2*j-1})
@@ -61,7 +61,7 @@ lab{6}='PFC -> Parietal';
 
  
  xlim(freqrange)
- grid minor
+ %grid minor
  xlabel('Frequency (Hz)')
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
