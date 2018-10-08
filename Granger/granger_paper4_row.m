@@ -43,13 +43,22 @@ lab{6}='PFC -> Parietal';
  ylim([0 mmax])
  
  %grid minor
- xlabel('Frequency (Hz)')
- ylabel('G-causality')
- title(lab{2*j-1})
+%  xlabel('Frequency (Hz)')
+%  ylabel('G-causality')
+ 
+  ho=xlabel('Frequency (Hz)');
+ ho.FontSize=20;
+ ho=ylabel('G-causality');
+ ho.FontSize=20;
+ tp=title(lab{2*j-1}); 
+tp.FontSize=20;
 % legend('Parametric: AR(10)','Non-P:Multitaper')
 %if j==1
 % legend(labelconditions)
 %end
+
+set(gca,'FontSize',16)
+
  subplot(3,2,2*j)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(2),f(1),:)),'Color',[1 0 0])
 %  hold on
@@ -62,15 +71,20 @@ lab{6}='PFC -> Parietal';
  
  xlim(freqrange)
  %grid minor
- xlabel('Frequency (Hz)')
- ylabel('G-causality')
+ ho=xlabel('Frequency (Hz)');
+ ho.FontSize=20;
+ ho=ylabel('G-causality');
+ ho.FontSize=20;
 %legend('Parametric: AR(10)','Non-P:Multitaper')
 if j==1
-legend(labelconditions,'Location','best') %Might have to change to default. 
+lgd=legend(labelconditions) %Might have to change to default. 
+lgd.FontSize = 14;
 end
-title(lab{2*j})
+tp=title(lab{2*j});
+tp.FontSize=20;
  ylim([0 mmax])
  
+set(gca,'FontSize',16)
  end
  
 end
