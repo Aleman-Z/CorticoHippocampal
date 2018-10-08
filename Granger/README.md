@@ -42,7 +42,10 @@ Steps 5: Work in progress.
       <img src="gstripes.png" width="500">
 * **granger_paper4_stripes.m:**  
 *Same as above but used for permutation test.* 
-      
+
+* **granger_paper4_row.m:**  
+*Prints granger causality per row to use on _LaTeX_.* 
+
 * **granger_2D_testall.m:**  
 *Visualizes Granger causality as images to later compute their pixel-based statistics.* 
      <img src="granger_2d.png" width="500">
