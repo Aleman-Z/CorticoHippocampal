@@ -46,6 +46,14 @@ Steps 5: Work in progress.
 * **granger_paper4_row.m:**  
 *Prints granger causality per row to use on _LaTeX_.* 
 
+* **granger_2D_baseplus_stats.m:**  
+*Prints 2D Granger for Baseline and Plusmaze plus their bootstrapped statistics.* 
+     <img src="stat_boot_2d.png" width="500">
+
+* **granger_2D_baseplus_stats_only.m:**  
+*Prints the bootstrapped statistics between Baseline and Plusmaze.* 
+     <img src="stat_boot.png" width="500">
+
 * **granger_2D_testall.m:**  
 *Visualizes Granger causality as images to later compute their pixel-based statistics.* 
      <img src="granger_2d.png" width="500">
