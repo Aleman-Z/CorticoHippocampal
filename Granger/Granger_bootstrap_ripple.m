@@ -1,4 +1,4 @@
-function Granger_bootstrap_ripple(GRC1,GRC2)
+function [COMBO]=Granger_bootstrap_ripple(GRC1,GRC2)
 F= [1 2; 1 3; 2 3] ;
 COMBO=cell(1,3);
 
