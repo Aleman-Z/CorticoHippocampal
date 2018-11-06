@@ -2,7 +2,7 @@
 
 MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/adri%C3%A1n-alem%C3%A1n-zapata-b1b727b2/) <img src="raised.png" width="25"> 
 
-*Due on: Late October 2018*
+*Due on: Mid October 2018*
 
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
