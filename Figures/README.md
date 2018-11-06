@@ -7,6 +7,9 @@
 *Self-explainatory.* 
 <img src="periodogram.png" width="400">
 
+* **periodogram_without_normalization_mt.m:**  
+*Updated version of the above. It uses Multitaper spectral analysis for the higher frequencies.* 
+
 * **merge_blocks.m:**   
 *Merges time blocks of periodograms.* 
 <img src="time_blocks.png" width="600">
