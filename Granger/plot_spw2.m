@@ -64,12 +64,15 @@ for i = 1:n
         k = k+1;
         if i ~= j
             subplot(n,n,k);
-            plot(lam,squeeze(P(i,j,:)));
+            %plot(lam,squeeze(P(i,j,:)));
+                       plot(lam,squeeze(P(j,i,:)));
             axis('square');
             xlim(xlims);
             ylim(ylims);
             xlabel(xlab);
-            ylabel(sprintf('%d -> %d',j,i));
+%             ylabel(sprintf('%d -> %d',j,i));
+                        ylabel(sprintf('%d -> %d',i,j));
+
         end
     end
 end
