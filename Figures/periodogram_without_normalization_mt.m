@@ -14,7 +14,7 @@ end
 %%
 %Rat=26;
 
-for Rat=1:1
+for Rat=2:2
 rats=[26 27 24 21];
 Rat=rats(Rat);    
 if Rat==26
@@ -53,9 +53,7 @@ nFF=[
 labelconditions=[
     { 
     
-%    'Baseline'}
     'Control'}
- 
 %     'Baseline_2'
 %     'Baseline_3'
      'PlusMaze'    
@@ -95,8 +93,7 @@ nFF=[
 
 labelconditions=[
     { 
-%    'Baseline'}
-    'Control'}
+    'Baseline'}
 %     'Baseline_2'
 %     'Baseline_3'
     'PlusMaze'
@@ -241,11 +238,7 @@ myColorMap =myColorMap([2 4 5 7],:);
 % myColorMap(7,:);%Foraging
 
 % myColorMap(3,:)=[1 0 1];
-myColorMap(2,:)=[0, 204/255, 0];
-myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-
-
-
+% Colors per condition. 
 myColorMap(1,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
 myColorMap(2,:)=[0, 0, 0]; %Black plusmaze
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
@@ -359,8 +352,9 @@ end
 % NC=zscore(NC);
 % % % % % % NC=NC(:,end-1845+1:end);
 %xo
- [pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
-%[pxx,f]=pwelch(NC,[],[],[],1000);
+ %[pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
+[pxx,f]=pmtm(NC,4,[],1000);
+ %[pxx,f]=pwelch(NC,[],[],[],1000);
 PXX{iii}=pxx;
 %hann(length(NC))
 px=mean(pxx,2);
@@ -383,7 +377,7 @@ hold on
  
 xlim([0 300])
 
-grid minor
+%grid minor
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
 ylabel('Power')
@@ -426,7 +420,7 @@ fig=gcf;
 fig.InvertHardcopy='off';
 xo
 if Rat~=24
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
+string=strcat('300Hz_','MT_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
 
 %saveas(gcf,string)
 figure_function(fig,[],string,[]);
@@ -434,9 +428,9 @@ figure_function(fig,[],string,[]);
 % saveas(gcf,string)
 
 %string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+string=strcat('300Hz_','MT_',Block{block_time+1},'_',label1{2*w-1},'.eps');
 print(string,'-depsc')
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
+string=strcat('300Hz_','MT_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 saveas(gcf,string)
 
 else
@@ -465,23 +459,26 @@ end
 % % % string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 % % % saveas(gcf,string)
 
-xlim([0 30])
-if Rat~=24
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
-print(string,'-depsc')
-else
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.pdf');
-%saveas(gcf,string)
-figure_function(fig,[],string,[]);
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.eps');
-print(string,'-depsc')
-string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.fig');
-saveas(gcf,string)    
-end
-    
+
+
+% % % % % % % % % % % % % xlim([0 30])
+% % % % % % % % % % % % % if Rat~=24
+% % % % % % % % % % % % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.pdf');
+% % % % % % % % % % % % % %saveas(gcf,string)
+% % % % % % % % % % % % % figure_function(fig,[],string,[]);
+% % % % % % % % % % % % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.eps');
+% % % % % % % % % % % % % print(string,'-depsc')
+% % % % % % % % % % % % % else
+% % % % % % % % % % % % % string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.pdf');
+% % % % % % % % % % % % % %saveas(gcf,string)
+% % % % % % % % % % % % % figure_function(fig,[],string,[]);
+% % % % % % % % % % % % % string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.eps');
+% % % % % % % % % % % % % print(string,'-depsc')
+% % % % % % % % % % % % % string=strcat('30Hz_',nFF{1},'_',label1{2*w-1},'.fig');
+% % % % % % % % % % % % % saveas(gcf,string)    
+% % % % % % % % % % % % % end
+
+
 % % % string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'.fig');
 % % % saveas(gcf,string)
 
