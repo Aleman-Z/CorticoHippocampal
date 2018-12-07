@@ -40,6 +40,8 @@ Steps 5: Kruskal-Wallis Statystical Test.
 * **granger_paper4_with_stripes.m:**  
 *Plots spectral granger causality among brain regions for all conditions with their significant frequency bands.* 
       <img src="gstripes.png" width="500">
+* **granger_paper4_with_stripes_dual.m:**  
+*Same as above but with only learning and Control conditions.*       
 * **granger_paper4_stripes.m:**  
 *Same as above but used for permutation test.* 
 
