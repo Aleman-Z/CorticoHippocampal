@@ -49,7 +49,8 @@ randrip=cell2mat(randrip);
 % if meth==3
 % [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);        
 % else
-[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));    
+[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro);    
+%,ripple_nl(level),CHTM2(level+1)
 % end
 
 % % % % % load(strcat('randnum2_',num2str(level),'.mat'))
@@ -84,17 +85,32 @@ q_nl=q_nl(ache);
 %Find strongests rip_nlp_nlles. 
 [p_nl,q_nl]=sort_rip(p_nl,q_nl);
 %Select n strongest
-switch Rat
-    case 24
-        n=550;
-    case 26
-        n=180;
-    case 27
-        n=326;
-end
+% switch Rat
+%     case 24
+%         n=550;
+%     case 26
+%         n=180;
+%     case 27
+%         n=326;
+% end
+% 
+% p_nl=p_nl(1:n);
+% q_nl=q_nl(1:n);
 
-p_nl=p_nl(1:n);
-q_nl=q_nl(1:n);
+% switch Rat
+%     case 24
+% %         n=550;
+%         n=552;
+%     case 26
+% %         n=180;
+%         n=385;
+%     case 27
+% %         n=326;
+%         n=339;
+% end
+% 
+% p=p(1:n);
+% q=q(1:n);
 
 %timecell_nl=timecell_nl([ran_nl]);
 if sanity==1 && quinientos==0
@@ -254,25 +270,12 @@ q_nl(2:2:end)=[QNU{2}(1:length(q_nl(2:2:end)))];
 end
 clear sig1_nl sig2_nl 
 
-if length(p)>length(p_nl)
-p=p(1:length(p_nl));        
-q=q(1:length(q_nl));        
-%timecell=timecell(1:length(p_nl));
-end
-
-if length(p)<length(p_nl)
-p_nl=p_nl(1:length(p));
-q_nl=q_nl(1:length(q));
-%timecell_nl=timecell_nl(1:length(p));
-end
-
-
-%Need: P1, P2 ,p, q. 
+% % % %Need: P1, P2 ,p, q. 
 P1_nl=avg_samples(q_nl,create_timecell(ro,length(p_nl)));
 P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
-
-P1=avg_samples(q,create_timecell(ro,length(p)));
-P2=avg_samples(p,create_timecell(ro,length(p)));
+% % % 
+% % % P1=avg_samples(q,create_timecell(ro,length(p)));
+% % % P2=avg_samples(p,create_timecell(ro,length(p)));
 
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 if acer==0
@@ -388,7 +391,17 @@ end
 % p_nl=p_nl(1:length(p));
 % %timecell_nl=timecell_nl(1:length(p));
 % end
+if length(p)>1000
+    p=p(1:1000);
+end
 
+if length(p_nl)>1000
+    p_nl=p_nl(1:1000);
+end
+
+%By not equalizing the sizes of p and p_nl we assure that the spectrogram
+%for NL wont change throughout the sessions.  There might be an issue with
+%memory here. Would need to be solved using a max of i.e. 1000 ripples. 
 
 freq1=justtesting(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,10,toy);
 freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
@@ -468,6 +481,32 @@ xlabel('Time (s)')
 ylabel('Frequency (Hz)')
 %error('stop')
 ylim([0.5 30])
+%% Equalize number of ripples and recalculate freq1 and freq2
+%Only when number of ripples between conditions are different. 
+if length(p)~=length(p_nl)
+    clear freq1 freq2
+    
+    if length(p)>length(p_nl)
+    p=p(1:length(p_nl));        
+    %q=q(1:length(q_nl));        
+    %timecell=timecell(1:length(p_nl));
+    end
+
+    if length(p)<length(p_nl)
+    p_nl=p_nl(1:length(p));
+    %q_nl=q_nl(1:length(q));
+    %timecell_nl=timecell_nl(1:length(p));
+    end
+
+    %Due to memory reasons use top 1000
+if length(p)>1000
+    p=p(1:1000);
+    p_nl=q_nl(1:1000);
+end
+
+    freq1=justtesting(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,10,toy);
+    freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
+end
 %%
 if ro==1200
 [stats]=stats_between_trials(freq1,freq2,label1,w);
@@ -499,6 +538,8 @@ ylabel('Frequency (Hz)')
 %%
 clear freq1 freq2 p_nl p 
 %Calculate Freq3 and Freq4
+%First they need to be calculated using all q and q_nl. 
+
 %toy=[-1:.01:1];
 if ro==1200
 toy=[-1:.01:1];
@@ -507,14 +548,22 @@ else
 toy = [-10:.01:10];
 end
 
-if length(q)>length(q_nl)
-q=q(1:length(q_nl));        
-% timecell=timecell(1:length(q_nl));
+% if length(q)>length(q_nl)
+% q=q(1:length(q_nl));        
+% % timecell=timecell(1:length(q_nl));
+% end
+% 
+% if length(q)<length(q_nl)
+% q_nl=q_nl(1:length(q));
+% % timecell_nl=timecell_nl(1:length(q));
+% end
+
+if length(q)>1000
+    q=q(1:1000);
 end
 
-if length(q)<length(q_nl)
-q_nl=q_nl(1:length(q));
-% timecell_nl=timecell_nl(1:length(q));
+if length(q_nl)>1000
+    q_nl=q_nl(1:1000);
 end
 
 if ro==1200
@@ -524,6 +573,8 @@ else
 freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
 freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
 end
+
+
 %%
 
 % % % % % % % % % % cfg=[];
@@ -613,6 +664,37 @@ ylabel('Frequency (Hz)')
 % % % % % % xlabel('Time (s)')
 % % % % % % %ylabel('uV')
 % % % % % % ylabel('Frequency (Hz)')
+%% Equalize number of ripples between q and q_nl and recalculate freq3 and freq4
+if length(q)~= length(q_nl)
+clear freq3 freq4   
+    if length(q)>length(q_nl)
+    q=q(1:length(q_nl));        
+    % timecell=timecell(1:length(q_nl));
+    end
+
+    if length(q)<length(q_nl)
+    q_nl=q_nl(1:length(q));
+    % timecell_nl=timecell_nl(1:length(q));
+    end
+
+  
+%Due to memory reasons use top 1000
+if length(q)>1000
+    q=q(1:1000);
+    q_nl=q_nl(1:1000);
+end
+    
+    if ro==1200
+    freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
+    freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
+    else
+    freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
+    freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
+    end
+    
+end
+ 
+
 %% Pixel-based stats
 zmap=stats_high(freq3,freq4,w);
 h(10)=subplot(3,4,12);
