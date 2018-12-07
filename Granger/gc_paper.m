@@ -1,5 +1,5 @@
 
-function [granger,granger1]=gc_paper(q,timecell,label,ro,ord,freqrange)
+function [granger,granger1,granger_cond]=gc_paper(q,timecell,label,ro,ord,freqrange)
 fn=1000;
 data1.trial=q;
 data1.time= timecell; %Might have to change this one 
@@ -11,8 +11,10 @@ data1.label{3}='PFC';
 %data1.label{4}='Reference';
 
 %Parametric model
- [granger1]=createauto(data1,ord);
-%  
+ %[granger1]=createauto(data1,ord); %this is the good one .
+ %[granger1_cond]=createauto_conditional(data1,ord);
+ [granger1]=createauto_conditional(data1,ord);  
+ 
 % cfg         = [];
 % cfg.order   = ord;
 % cfg.toolbox = 'bsmart';
@@ -25,7 +27,14 @@ data1.label{3}='PFC';
 
 
 %Non parametric
-[granger]=createauto_np(data1,freqrange);
+%[granger]=createauto_np(data1,freqrange);
+[granger]=0;
+
+
+% [granger_cond]=createauto_np_cond(data1,freqrange);
+[granger_cond]=0;
+
+
 % cfg           = [];
 % cfg.method    = 'mtmfft';
 % cfg.taper     = 'dpss';
