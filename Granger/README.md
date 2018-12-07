@@ -105,6 +105,7 @@ Other:
 
 -granger_baseline_learning_stats.m
 
+-Granger_bootstrap_ripple.m
 
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
