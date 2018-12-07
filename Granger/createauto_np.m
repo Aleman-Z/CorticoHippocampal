@@ -2,8 +2,9 @@ function [granger]=createauto_np(data1,freqrange)
     cfg           = [];
     cfg.method    = 'mtmfft';
     cfg.taper     = 'dpss';
+    %cfg.taper     = 'hanning';
     cfg.output    = 'fourier';
-    cfg.tapsmofrq = 2;
+    cfg.tapsmofrq = 2; %1/1.2
     cfg.pad = 10;
     cfg.foi=freqrange;
     %[0:1:500]
