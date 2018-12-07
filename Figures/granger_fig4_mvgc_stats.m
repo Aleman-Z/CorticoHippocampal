@@ -388,6 +388,11 @@ GRC2=FP{4};
 n_rip=size(GRC2,4); %EQUALIZES NUMBER OF RIPPLES. 
 GRC1=GRC1(:,:,:,1:n_rip);
 
+
+[COMBO1]=Granger_bootstrap_ripple(GRC1,GRC2);
+
+[COMBO2]=Granger_bootstrap_ripple(GRC1,GRC2);
+
 %Perform stats
 [aver,aver2,Xaver,Xaver2]=perm_stats(GRC1,GRC2);
 save('FP_aver.mat','aver','aver2','Xaver','Xaver2')
@@ -723,7 +728,7 @@ end
 %%
 
 %%
-% xo
+ xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
 if iii~=4 && sanity==1 %4 is Plusmaze!
