@@ -93,6 +93,10 @@ Steps 5: Kruskal-Wallis Statystical Test.
 * **gc_stripes.m:**  
 *Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
+Other:
+-pal_test_ft_granger_cond.m
+-plot_field.m
+
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
 *Function to compute parametric spectral granger causality per ripple using MVGC. Gives very similar results to **fieltrip_adapted.m** with a different scaling due to "in the box" preprocessing.* 
