@@ -21,11 +21,11 @@
 
 5. *Statistical Analysis.*
 
-    **function.m:**
+    **function.m: Kruskal-Wallis test.**
 
 Steps 3 to 4 contained in function: **gc_paper.m**. Similar implementation on **fieldtrip_adapted.m**
 
-Steps 5: Work in progress. 
+Steps 5: Kruskal-Wallis Statystical Test. 
 
 ### :zap: Useful functions: 
 
