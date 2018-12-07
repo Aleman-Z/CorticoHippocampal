@@ -21,7 +21,7 @@
 
 5. *Statistical Analysis.*
 
-    **function.m: Kruskal-Wallis test.**
+    **stats_thesis.m: Kruskal-Wallis test.**
 
 Steps 3 to 4 contained in function: **gc_paper.m**. Similar implementation on **fieldtrip_adapted.m**
 
