@@ -95,15 +95,17 @@ Steps 5: Kruskal-Wallis Statystical Test.
 * **gc_stripes.m:**  
 *Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
+* **granger_baseline_learning.m:**  
+*Plots S-GC for Learning and Non-learning.* 
+
+* **granger_baseline_learning_stats.m:**  
+*Plots S-GC for Learning and Non-learning with significant statistics (Used on Thesis).* 
+
 Other:
 
 -pal_test_ft_granger_cond.m
 
 -plot_field.m
-
--granger_baseline_learning.m
-
--granger_baseline_learning_stats.m
 
 -Granger_bootstrap_ripple.m
 
