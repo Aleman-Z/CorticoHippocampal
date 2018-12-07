@@ -84,6 +84,9 @@ Steps 5: Work in progress.
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
 
+* **createauto_conditional.m:**  
+*Computes _parametric_  __conditional __ spectral granger causality.* 
+
 * **createauto_np_cond.m:**  
 *Computes _non-parametric_  __conditional __ spectral granger causality.* 
 
