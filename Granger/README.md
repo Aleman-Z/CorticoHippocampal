@@ -101,6 +101,11 @@ Other:
 
 -plot_field.m
 
+-granger_baseline_learning.m
+
+-granger_baseline_learning_stats.m
+
+
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
 *Function to compute parametric spectral granger causality per ripple using MVGC. Gives very similar results to **fieltrip_adapted.m** with a different scaling due to "in the box" preprocessing.* 
