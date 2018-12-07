@@ -26,7 +26,7 @@ addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
 addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
 addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
 %addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-   
+addpath(genpath('C:\Users\addri\Documents\MATLAB\mvgc_v1.0'))   
 end
 %%
 %Rat=26;
@@ -358,6 +358,11 @@ for block_time=0:0 %Should start with 0
 for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
+
+%Skip other conditions. 
+if iii==2
+    iii=4;
+end
     %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -570,7 +575,7 @@ end
 %%
 
 %%
-xo
+ %xo
 [p,q,~,~,]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);
 
 if iii~=4 && sanity==1 %4 is Plusmaze!
@@ -581,18 +586,26 @@ end
 [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
 
 %Widepassed
-[gran,gran1]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
+[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
+%[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
 
 g{iii}=gran.grangerspctrm;
 g1{iii}=gran1.grangerspctrm;
+g2{iii}=grangercon.grangerspctrm;
+%g3{iii}=gran1.grangerspctrm;
 
-%Bandpassed
-[Gran,Gran1]=gc_paper(q,create_timecell(ro,length(q)),'Widepass',ro,10,[100:1:300]);
+if iii==4
+    error('stop here')
+end
 
-G{iii}=Gran.grangerspctrm;
-G1{iii}=Gran1.grangerspctrm;
+% %Bandpassed
+% [Gran,Gran1]=gc_paper(q,create_timecell(ro,length(q)),'Widepass',ro,10,[100:1:300]);
+% 
+% G{iii}=Gran.grangerspctrm;
+% G1{iii}=Gran1.grangerspctrm;
 
 end
+xo
 %Frequency ranges. 
 g_f=gran.freq;
 g1_f=gran1.freq;
@@ -609,9 +622,52 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure4\',num2str(Rat)))   
 end
 
+C = cell(1,4);
+C{1}=convcond(g2{1});
+C{2}=convcond(g2{1});
+C{3}=convcond(g2{1});
+C{4}=convcond(g2{4});
+% 
+% [C{1:4}]=cellfun(@(x) convcond(x),g2,'UniformOutput',false);
+
+granger_2D_baseplus_stats(g,g_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+
+granger_2D_baseplus_stats(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 
+
+granger_2D_baseplus_stats_only(g,g_f,labelconditions,[0 300],0) %g1 looks better due to higher number of samples. 
+granger_2D_baseplus_stats_only(g1,g1_f,labelconditions,[0 300],0) %g1 looks better due to higher number of samples. 
+
 %Widepass
-% granger_paper4(g,g_f,labelconditions,[0 300])
-granger_paper4_with_stripes(g,g_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+ granger_paper4(g,g_f,labelconditions,[0 300])
+ 
+ granger_baseline_learning(g,g_f,labelconditions,[0 300])
+ 
+ %To save time>
+% g{2}=g{1};
+% g{3}=g{1};
+% g1{2}=g1{1};
+% g1{3}=g1{1};
+ 
+% granger_baseline_learning_stats(g,g_f,labelconditions,[0 300],GRGRNP,GRGRNP_base,0.00000000005)
+ granger_baseline_learning_stats(g,g_f,labelconditions,[0 300],GRGRNP,GRGRNP_base,0.00005)
+
+ % granger_baseline_learning_stats(g1,g1_f,labelconditions,[0 300],GRGR,GRGR_base,0.00000000005)
+ granger_baseline_learning_stats(g1,g1_f,labelconditions,[0 300],GRGR,GRGR_base,0.0001)
+
+ 
+ 
+ %Individual plots 
+granger_paper4_row(g,g_f,labelconditions,[0 300],1)
+printing('I1_GC_NP_Widepass_1sec')
+close all
+granger_paper4_row(g,g_f,labelconditions,[0 300],2)
+printing('I2_GC_NP_Widepass_1sec')
+close all
+granger_paper4_row(g,g_f,labelconditions,[0 300],3)
+printing('I3_GC_NP_Widepass_1sec')
+close all
+
+granger_paper4_with_stripes_dual(g,g_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 printing_image('Stripes_300_GC_NP_Widepass_1sec')
 
 %printing_image('GC_NP_Widepass_1sec')
@@ -624,12 +680,32 @@ printing_image('GC2D_NP_Widepass_1sec')
 close all
 
 granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+
+granger_baseline_learning(g1,g1_f,labelconditions,[0 300])
+load('GRGR_base.mat');
+load('GRGR.mat');
+ granger_baseline_learning_stats(g1,g1_f,labelconditions,[0 300],GRGR,GRGR_base,0.00000000005)
+
+
 granger_paper4_with_stripes(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
 printing_image('Stripes_300_GC_P_Widepass_1sec')
 % printing_image('GC_P_Widepass_1sec')
 %printing_image('GC_P_Widepass_0.5sec')
 % printing_image('GC_P_Widepass_0.25sec')
 close all
+%Individual plots 
+granger_paper4_row(g1,g1_f,labelconditions,[0 300],1)
+printing('I1_GC_P_Widepass_1sec')
+close all
+granger_paper4_row(g1,g1_f,labelconditions,[0 300],2)
+printing('I2_GC_P_Widepass_1sec')
+close all
+granger_paper4_row(g1,g1_f,labelconditions,[0 300],3)
+printing('I3_GC_P_Widepass_1sec')
+close all
+
+
+
 
 
 granger_2D_testall(g1,g1_f,labelconditions,[0 300]) %g1 looks better due to higher number of samples. 

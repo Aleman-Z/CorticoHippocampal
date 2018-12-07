@@ -27,12 +27,10 @@ data1.label{3}='PFC';
 
 
 %Non parametric
-%[granger]=createauto_np(data1,freqrange);
-[granger]=0;
+[granger]=createauto_np(data1,freqrange);
 
 
-% [granger_cond]=createauto_np_cond(data1,freqrange);
-[granger_cond]=0;
+[granger_cond]=createauto_np_cond(data1,freqrange);
 
 
 % cfg           = [];
