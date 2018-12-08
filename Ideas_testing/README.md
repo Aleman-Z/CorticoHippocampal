@@ -23,3 +23,7 @@ Justifies the lack of filtering on the lower frequencies. Verifies that visual a
 Function used to test time-frequency coherency among brain signals.
 
 <img src="coherence.png" width="350">
+
+**CPSD_plots.m**
+Computes the Cross Power Spectral Density between original signal and signal with removed ripples. 
+
