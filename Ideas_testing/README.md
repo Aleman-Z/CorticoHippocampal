@@ -27,3 +27,6 @@ Function used to test time-frequency coherency among brain signals.
 **CPSD_plots.m**
 Computes the Cross Power Spectral Density between original signal and signal with removed ripples. 
 
+## RIPPLE REMOVAL IDEA
+
+NORIPPLE_nrem_newest_only_ripple_level.m
