@@ -30,4 +30,5 @@ Computes the Cross Power Spectral Density between original signal and signal wit
 ## RIPPLE REMOVAL IDEA
 
 NORIPPLE_nrem_newest_only_ripple_level.m
+
 REMOVE_RIPPLES.m
