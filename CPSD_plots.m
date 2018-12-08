@@ -2,7 +2,7 @@ close all
 clear all 
 clc
 
-acer=0;
+acer=1;
 
 %
 if acer==0
@@ -11,8 +11,8 @@ addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
 addpath('/home/raleman/Documents/internship')
 else
 addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
-   
+%addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippocampal')
+addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))   
 end
 %%
 %Rat=26;
@@ -283,12 +283,12 @@ xlabel('Frequency')
 
 
 
-%      F: [1001×1 double]
-%      NC: [2000×2069 double]
-%     PPx: [1001×1 double]
-%       f: [1001×1 double]
-%      nc: [2000×2069 double]
-%      px: [1001×1 double]
+%      F: [1001??1 double]
+%      NC: [2000??2069 double]
+%     PPx: [1001??1 double]
+%       f: [1001??1 double]
+%      nc: [2000??2069 double]
+%      px: [1001??1 double]
 
 
 
@@ -301,7 +301,7 @@ ax = gca;
 ax.GridColor = [1, 1, 1];
 title('Cross Spectrum Phase')
 
-
+xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Power_COH_CPSD/',num2str(Rat)))
 else
