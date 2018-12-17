@@ -24,3 +24,8 @@ cfg.s4.ampl  = 1;
 cfg.noise    = 0.1;
 
 data = ft_freqsimulation(cfg);
+
+%%
+%     cd(strcat('D:\internship\',num2str(Rat)))
+    addpath D:\internship\fieldtrip-master
+    InitFieldtrip()
