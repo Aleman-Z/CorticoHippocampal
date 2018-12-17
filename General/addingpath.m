@@ -1,6 +1,6 @@
 
-function addingpath(cero)
-    if acer==cero
+function addingpath(acer)
+    if acer==0
     addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
     addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
     addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
