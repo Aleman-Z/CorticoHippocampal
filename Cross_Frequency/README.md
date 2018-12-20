@@ -1,4 +1,4 @@
--Cross-Frequency coupling. 
+-Cross-Frequency coupling. :dizzy:
 ------------------
  
 * **crossfreq.m:**  
