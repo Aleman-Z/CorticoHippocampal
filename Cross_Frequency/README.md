@@ -2,7 +2,7 @@
 ------------------
  
 * **crossfreq.m:**  
-*Self-explainatory.* 
+*Performs CFC coupling of ripple-centered epochs.* 
 
 * **ft_crossfrequencyanalysis:**  
-*Self-explainatory.* 
+*Fieldtrip function used to perform CFC analysis. Methods: coh, plv, mvl and mi * 
