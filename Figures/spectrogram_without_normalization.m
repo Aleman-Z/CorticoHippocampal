@@ -15,19 +15,8 @@ sanity=0;
 quinientos=0;
 outlie=0;
 %%
+addingpath(acer); %Adds main folders and libraries to path.
 
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
-addpath('/home/raleman/Documents/internship')
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
-%addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-   
-end
 %%
 %Rat=26;
 for meth=4:4
