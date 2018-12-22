@@ -562,7 +562,7 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-%xo
+xo
 
 % % % % % % if quinientos==0
 % % % % % % %xd

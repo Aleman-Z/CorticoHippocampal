@@ -11,7 +11,7 @@ H=~isoutlier(R,'quartiles'); %Not an outlier>1. Else 0.
 Vec=1:length(p);
 vec=1:length(p);
 vec=vec.*H; %Index equal zero are outliers. 
-vec=vec(vec~=0); %Index of no outliers. 
+vec=vec(vec~=0); %Index of non-outliers. 
 
 %Get index of unique
 [~,a2]=unique(R,'first'); %Index of unique values.
