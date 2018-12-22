@@ -31,7 +31,7 @@ end
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=3:3
  if meth==4
     s=struct; 
  end  
@@ -39,7 +39,7 @@ for RAT=1:1
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=1:1
+for rat24base=2:2 %Must be 2 for Rat 24.
  
   if RAT~=3 && rat24base==2
       break
@@ -563,7 +563,7 @@ ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal tim
 end
 
 %%
-
+%xo
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 % if meth==3
 % [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
