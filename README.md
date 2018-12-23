@@ -6,8 +6,8 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 
 <!--- <img src="poster_Adrian8.png" width="800">--->
 --------------------------------
-## Main Folders:
-1. Figures: Main functions for generating paper figures. 
+## Main Folders: :file_folder: 
+1. Figures: Main functions for generating paper figures. :bar_chart: :page_facing_up:
 2. Granger: Implementation of Spectral Granger Causality. 
 3. Ripple_selection: Detection and selection of ripples.
 --------------------------------
