@@ -7,11 +7,11 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 <!--- <img src="poster_Adrian8.png" width="800">--->
 --------------------------------
 ## Main Folders:
-1. Figures: Main functions for paper figures. 
+1. Figures: Main functions for generating paper figures. 
 2. Granger: Implementation of Spectral Granger Causality. 
-3. Ripple_selection: Detection and selection of ripples
+3. Ripple_selection: Detection and selection of ripples.
 --------------------------------
-:zap: DESCRIPTION of MAIN FUNCTIONS:
+:zap: DESCRIPTION of MAIN FUNCTIONS: (Mostly outdated, view Figures folder instead).
 
 -PERIODOGRAMS
 ---------------
