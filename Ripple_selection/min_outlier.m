@@ -1,14 +1,16 @@
-function [H]=min_outlier(p)
+function [H]=min_outlier(p,w)
 P=cell2mat(p);
-P=P(1,:);
+P=P(w,:);
 P=P.';
 R=reshape(P,[length(p) size(p{1},2)]);
+R=R(:,1190:1210);
 %R=max(abs(diff(R.')));
-R=min((R.'));
+R=max((R.'));
+%R=max(abs((R.')));
 
 %H=~isoutlier(R,'mean'); %Not an outlier>1. Else 0. 
-H=outlier_index(R,0.01); %Not an outlier>1. Else 0. 
-
+H=outlier_index(R,0.00001); %Not an outlier>1. Else 0. 
+%0.01
 
 %Look for unique:
 Vec=1:length(p);
