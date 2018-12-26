@@ -1,4 +1,4 @@
--Ripple Selection :point_down:
+-Ripple Selection :point_down: 📌
 ------------------
 
 ####  :link: Function Description: 
