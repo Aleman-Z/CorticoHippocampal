@@ -19,13 +19,14 @@ butterfly_plot(pp,w)
       em(j)=max(abs(p{j}(2,:))); % Best result works when detection is done on Parietal. 
       %hold on
  end
-  [em,nu]=unique(em);
+ em=unique(em);
  %1150:1250
 %% Sorting attempt: Best result,
 [c1,c2]=sort(em,'descend');
-c2=nu(c2); 
-pp=p(:,c2(240:end));
-butterfly_plot(pp,2)
+
+pp=p
+%pp=p(:,c2(350:end));
+butterfly_plot(pp,3)
 
 
 %%
