@@ -1,7 +1,7 @@
--List of functions used to generate Figures
+# List of functions used to generate Figures
 ------------------
 
-:zap: Figure 2: 
+## :zap: Figure 2: 
 
 * **periodogram_without_normalization.m:**  
 *Self-explainatory.* 
@@ -30,7 +30,7 @@
 <img src="scoring_comparison.png" width="600">
 
 
-:zap: Figure 3:
+## :zap: Figure 3:
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
@@ -148,7 +148,7 @@ Leaves spindles visualization RAW.
 3. **outlie=1:**
 *The use of this control activates a more agressive detection of outliers.*
 
-:zap: Figure 4:
+## :zap: Figure 4:
 
 * **granger_fig4.m:**
 *Main file to generate granger causality figures.*
