@@ -260,11 +260,11 @@ q=q(1:length(q_nl));
 %timecell=timecell(1:length(p_nl));
 end
 
-if length(p)<length(p_nl)
-p_nl=p_nl(1:length(p));
-q_nl=q_nl(1:length(q));
-%timecell_nl=timecell_nl(1:length(p));
-end
+% if length(p)<length(p_nl)
+% p_nl=p_nl(1:length(p));
+% q_nl=q_nl(1:length(q));
+% %timecell_nl=timecell_nl(1:length(p));
+% end
 
 
 %Need: P1, P2 ,p, q. 

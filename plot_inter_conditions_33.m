@@ -85,17 +85,17 @@ q_nl=q_nl(ache);
 %Find strongests rip_nlp_nlles. 
 [p_nl,q_nl]=sort_rip(p_nl,q_nl);
 %Select n strongest
-% switch Rat
-%     case 24
-%         n=550;
-%     case 26
-%         n=180;
-%     case 27
-%         n=326;
-% end
-% 
-% p_nl=p_nl(1:n);
-% q_nl=q_nl(1:n);
+switch Rat
+    case 24
+        n=550;
+    case 26
+        n=180;
+    case 27
+        n=326;
+end
+
+p_nl=p_nl(1:n);
+q_nl=q_nl(1:n);
 
 % switch Rat
 %     case 24

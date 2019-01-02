@@ -24,7 +24,7 @@ for RAT=3:3
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=2; %This should be 2 
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -562,7 +562,7 @@ end
 % end
 clear sig1 sig2
 %Ripple selection. Memory free. 
-xo
+%xo
 
 % % % % % % if quinientos==0
 % % % % % % %xd
@@ -598,16 +598,20 @@ if Rat==24 && rat24base==2
 
 %Find max and min peaks    
      for j=1:length(p)
-          em(j)=max(abs(p{j}(2,1150:1250))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero. 
+          %em(j)=max(abs(p{j}(2,1150:1250))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero. 
+          em(j)=max(abs(p{j}(2,:))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero.
           %hold on
      end
-
+ [em,nu]=unique(em);
      
 %Sort and remove largest peaks
 [c1,c2]=sort(em,'descend');
-p=p(:,c2(350:end));
-q=q(:,c2(350:end));
-    
+c2=nu(c2); 
+% p=p(:,c2(350:end));
+% q=q(:,c2(350:end));
+p=p(:,c2(170:end));
+q=q(:,c2(170:end));
+%170    
 end
 
 
@@ -698,12 +702,14 @@ if rippletable==0
 for w=2:3
 
 %%
- xo
+ %xo
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
 else
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %xo
@@ -763,11 +769,11 @@ else
 % print(string,'-depsc')
 % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-string=strcat('Spec_no_artifact_prueba_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_no_artifact_prueba_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_no_artifact_prueba_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
     
 end
