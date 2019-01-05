@@ -39,7 +39,7 @@ quinientos=0;
 ldura=1; %1 for 1 sec, 2 for 10 sec. 
 outlie=1;
 %%
-addingpath(acer)
+addingpath(
 % if acer==0
 % addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 % addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
@@ -57,7 +57,7 @@ addingpath(acer)
 % end
 %%
 
-for Rat=3:3
+for Rat=1:1
     
 if Rat==1
     
@@ -97,9 +97,9 @@ end
 
 if Rat==3
     if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24/NewestNL')
+        cd('/home/raleman/Dropbox/Figures/Figure3/24/Newest_first')
     else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/NewestNL')
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/Newest_first')
     end
 end
 %xo

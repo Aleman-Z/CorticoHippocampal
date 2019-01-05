@@ -39,21 +39,22 @@ quinientos=0;
 ldura=1; %1 for 1 sec, 2 for 10 sec. 
 outlie=1;
 %%
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
-addpath('/home/raleman/Documents/internship')
-addpath /home/raleman/Documents/internship/fieldtrip-master/
-InitFieldtrip()
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
-
-addpath D:\internship\fieldtrip-master
-InitFieldtrip()
-end
+addingpath(acer)
+% if acer==0
+% addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
+% addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
+% addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
+% addpath('/home/raleman/Documents/internship')
+% addpath /home/raleman/Documents/internship/fieldtrip-master/
+% InitFieldtrip()
+% else
+% addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
+% addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+% addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
+% 
+% addpath D:\internship\fieldtrip-master
+% InitFieldtrip()
+% end
 %%
 
 for Rat=3:3
@@ -96,16 +97,17 @@ end
 
 if Rat==3
     if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/24/Newest_first')
+     cd('/home/raleman/Dropbox/Figures/Figure3/24/NewestNL')
     else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/Newest_first')
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/NewestNL')
     end
 end
 %xo
     %%
 for dura=ldura:ldura
 for block_time=0:0
-for w=2:3    
+for w=2:3 
+%    xo
     for iii=2:length(labelconditions)
         if sanity~=1
             if outlie==1
