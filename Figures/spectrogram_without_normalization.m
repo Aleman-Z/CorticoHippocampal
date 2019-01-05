@@ -755,11 +755,11 @@ else
 % print(string,'-depsc')
 % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_no_artifact_best_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
     
 end

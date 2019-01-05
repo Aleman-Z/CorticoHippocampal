@@ -125,6 +125,9 @@ p_nl=p_nl(ache);
 q_nl=q_nl(ache);
 %Find strongests rip_nlp_nlles. 
 [p_nl,q_nl]=sort_rip(p_nl,q_nl);
+
+%if Rat~=24 && rat24base~=2
+
 %Select n strongest
 switch Rat
     case 24
@@ -138,6 +141,7 @@ end
 p_nl=p_nl(1:n);
 q_nl=q_nl(1:n);
 
+%end
 % switch Rat
 %     case 24
 % %         n=550;
@@ -312,6 +316,40 @@ end
 clear sig1_nl sig2_nl 
 
 
+if Rat==24 && rat24base==2
+clear em
+%Find max and min peaks    
+     for j=1:length(p_nl)
+          %em(j)=max(abs(p{j}(2,1150:1250))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero. 
+          em(j)=max(abs(p_nl{j}(2,:))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero.
+%           EM(j)=max(abs(p{j}(3,:))); % Best result works when detection is done on Parietal. 1150:1250 ensures detection around time zero.
+          %hold on
+     end
+ [em,nu]=unique(em);
+%  [EM,NU]=unique(EM);    
+%Sort and remove largest peaks
+[c1,c2]=sort(em,'descend');
+% [C1,C2]=sort(EM,'descend');
+
+c2=nu(c2); 
+% C2=NU(C2); 
+%
+% c3=intersect(c2,C2);%USE THIS 
+% 
+% C3=[];
+% for k=1:length(c2)
+%     if ismember(c2(k),c3)
+%         C3=[C3 c2(k)];
+%     end
+% end
+% c2=C3;
+
+% p=p(:,c2(350:end));
+% q=q(:,c2(350:end));
+p_nl=p_nl(:,c2(floor(0.66*length(c2)):end));
+q_nl=q_nl(:,c2(floor(0.66*length(c2)):end));
+%170    
+end
 
 
 % % % %Need: P1, P2 ,p, q. 
