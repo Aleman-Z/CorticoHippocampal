@@ -14,6 +14,9 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 * **xfreq.m:**  
 *Computes CFC of ripple-centered epochs after **crossfreq_single.m** .*
 
+* **plot_cross.m:**  
+*Plots results from **xfreq.m**.* 
+<img src="cfc_sample_im.png" width="400">
 
 
 
