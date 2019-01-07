@@ -8,6 +8,9 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 * **ft_crossfrequencyanalysis:**  
 *Fieldtrip function used to perform CFC analysis. Methods: coh, plv, mvl and mi * 
 
+* **pchannel.m:**  
+*Extracts ripples of a specific region from p.* 
+
 * **crossfreq_single.m:**  
 *Extracts High and Low frequencies spectrums of a region to be used in further CFC analysis.* 
 
@@ -18,5 +21,6 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 *Plots results from **xfreq.m**.* 
 <img src="cfc_sample_im.png" width="400">
 
-
+* **cfc_print.m:**  
+*Calls **xfreq.m** and **plot_cross.m** and saves figures in different formats.*
 
