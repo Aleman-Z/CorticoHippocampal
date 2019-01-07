@@ -1,8 +1,8 @@
-function [CFC]=crossfreq(q,f1,f2,ro,met)
+function [CFC]=crossfreq(p,f1,f2,ro,met)
 %  Pre-processed data
 fn=1000;
-data.trial=q;
-data.time=  create_timecell(ro,length(q)); %Might have to change this one
+data.trial=p;
+data.time=  create_timecell(ro,length(p)); %Might have to change this one
 avf=create_timecell(ro,1);
 data.fsample=fn;
 data.label=cell(3,1);
