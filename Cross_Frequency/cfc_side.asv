@@ -1,6 +1,13 @@
+close all
+clear all
 %Plot CFC BASELINE and PLUSMAZE side by side
 acer=1
-Rat=26;
+
+for RAT=1:2
+rats=[26 27 24 21];
+Rat=rats(RAT);    
+    
+%Rat=26;
 
 
 labelconditions=[
@@ -68,7 +75,7 @@ c.Limits(2)=0.0001;
 c.Limits(2)=a;
 set(J,'AlphaData',~isnan(e1))
 ti=title('Baseline')
-ti.FontSize=13;
+ti.FontSize=14;
 caxis([0 a]);
 
 y=ylabel({'Freq (Hz)',label1{2*n1}})
@@ -85,13 +92,14 @@ set(J,'AlphaData',~isnan(e2))
 colormap(jet(256));
 ti=title('Plusmaze')
 caxis([0 a]);
-ti.FontSize=13;
+ti.FontSize=14;
 y=ylabel({'Freq (Hz)',label1{2*n1}})
 x=xlabel({label1{2*n2},'Freq (Hz)'})
 x.FontSize=12;
 y.FontSize=12;
 %%
-HI=mtit(strcat(label1{2*n1},'_'\pi'','{ }','vs','{ }',label1{2*n2}));
- HI.th.FontSize=13;
+HI=mtit(strcat(label1{2*n1},'_\gamma','{ }','vs','{ }',label1{2*n2},'_\delta','_,','_\theta'));
+ HI.th.FontSize=18;
 HI.th.Color=[1 0 0]
- 
+%%
+printing( strcat('CFC_','Comparison_',label1{n1*2},'_vs_',label1{n2*2}))
