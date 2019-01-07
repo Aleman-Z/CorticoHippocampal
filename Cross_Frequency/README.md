@@ -11,5 +11,9 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 * **crossfreq_single.m:**  
 *Extracts High and Low frequencies spectrums of a region to be used in further CFC analysis.* 
 
+* **xfreq.m:**  
+*Computes CFC of ripple-centered epochs after **crossfreq_single.m** .*
+
+
 
 
