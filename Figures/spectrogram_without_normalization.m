@@ -20,7 +20,7 @@ addingpath(acer); %Adds main folders and libraries to path.
 %%
 %Rat=26;
 for meth=4:4
-for RAT=3:3
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
@@ -28,7 +28,7 @@ for RAT=3:3
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
-for rat24base=2:2 %Must be 2 for Rat 24.
+for rat24base=1:1 %Must be 2 for Rat 24.
  
   if RAT~=3 && rat24base==2
       break
