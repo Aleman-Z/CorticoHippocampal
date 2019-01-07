@@ -1,6 +1,7 @@
 -Cross-Frequency coupling. :dizzy:
 ------------------
- 
+Main script is shared with Granger causality analysis main script: **granger_fig4.m**
+
 * **crossfreq.m:**  
 *Performs CFC coupling of ripple-centered epochs.* 
 
