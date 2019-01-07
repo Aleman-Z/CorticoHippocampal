@@ -24,3 +24,8 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 * **cfc_print.m:**  
 *Calls **xfreq.m** and **plot_cross.m** and saves figures in different formats.*
 
+* **cfc_side.m:**  
+*Plots the Baseline and Plusmaze CFC maps side by side for comparison.*
+<img src="cfc_comparison.png" width="400">
+
+
