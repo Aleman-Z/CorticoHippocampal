@@ -90,6 +90,7 @@ a=max([a1 a2]);
 allscreen()
 subplot(1,2,1)
 J=imagesc(30:1:100,0.5:0.5:15,e1);colormap(jet(256));
+set(gca,'YDir','normal')
 c=colorbar();
 % c.Limits(2)=0.0001;
 c.Limits(2)=a;
@@ -105,6 +106,7 @@ y.FontSize=12;
 %%
 subplot(1,2,2)
 J=imagesc(30:1:100,0.5:0.5:15,e2);
+set(gca,'YDir','normal')
 c=colorbar();
 % c.Limits(2)=0.0001;
 c.Limits(2)=a;
@@ -118,7 +120,7 @@ x=xlabel({label1{2*n2},'Freq (Hz)'})
 x.FontSize=12;
 y.FontSize=12;
 %%
-HI=mtit(strcat(label1{2*n1},'_\gamma','{ }','vs','{ }',label1{2*n2},'_\delta','_,','_\theta'));
+HI=mtit(strcat(label1{2*n1},'_\delta','_,','_\theta','{ }','vs','{ }',label1{2*n2},'_\gamma'));
  HI.th.FontSize=18;
 HI.th.Color=[1 0 0]
 %%
