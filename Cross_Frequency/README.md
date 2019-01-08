@@ -28,4 +28,7 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 *Plots the Baseline and Plusmaze CFC maps side by side for comparison.*
 <img src="cfc_comparison.png" width="600">
 
+* **stats_between_cfc.m:**  
+*Plots the cluster-corrected permutation statistics between the Baseline and Plusmaze CFC maps.*
+<img src="stats_cluster.png" width="400">
 
