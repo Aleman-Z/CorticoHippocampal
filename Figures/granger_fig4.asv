@@ -21,11 +21,11 @@ cfc_stat=1;
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -345,7 +345,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+for iii=4:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
 
@@ -572,7 +572,7 @@ if iii~=4 && sanity==1 %4 is Plusmaze!
  p=p(randrip);
  q=q(randrip);
 end
-%xo
+
 %Cross-coupling analysis. 
 if crosscop==1
     
@@ -650,77 +650,24 @@ if cfc_stat==0
 else
 %Stats
 
-firstrun=1;
 
-if firstrun==1
-%Inter brain regions 
-% [hpc_LF,hpc_HF]=crossfreq_single(pchannel(p,1),0.5:0.5:15,30:1:100,ro);%HPC
-% [par_LF,par_HF]=crossfreq_single(pchannel(p,2),0.5:0.5:15,30:1:100,ro);%PAR
-% [pfc_LF,pfc_HF]=crossfreq_single(pchannel(p,3),0.5:0.5:15,30:1:100,ro);%PFC
-
-[co_1_LF,co_1_HF]=crossfreq_single(pchannel(p,1),0.5:0.5:15,30:1:100,ro);%HPC
-[co_2_LF,co_2_HF]=crossfreq_single(pchannel(p,2),0.5:0.5:15,30:1:100,ro);%PAR
-[co_3_LF,co_3_HF]=crossfreq_single(pchannel(p,3),0.5:0.5:15,30:1:100,ro);%PFC
-
-no=0;
-f=waitbar(0,'Please wait...');
-for n1=1:3
-    for n2=1:3
-        cfc_save(n1,n2,co_1_LF,co_2_LF,co_3_LF,co_1_HF,co_2_HF,co_3_HF,labelconditions,iii);
-        no=no+1;
-        progress_bar(no,9,f)
-    end
-end
 
 xo
-[hpc_hpc]=xfreq(co_1_LF,co_1_HF,'coh','yes');
-
-%Calculate CFC
-[hpc_hpc]=xfreq(hpc_LF,hpc_HF,'coh','yes');
-save('1_1.mat','hpc_hpc')
-clear hpc_hpc
-
-[par_par]=xfreq(par_LF,par_HF,'coh','yes');
-[pfc_pfc]=xfreq(pfc_LF,pfc_HF,'coh','yes');
-%MIXED hpc
-[hpc_par]=xfreq(hpc_LF,par_HF,'coh','yes');
-[hpc_pfc]=xfreq(hpc_LF,pfc_HF,'coh','yes');
-%MIXED par
-[par_hpc]=xfreq(par_LF,hpc_HF,'coh','yes');
-[par_pfc]=xfreq(par_LF,pfc_HF,'coh','yes');
-%MIXED pfc
-[pfc_hpc]=xfreq(pfc_LF,hpc_HF,'coh','yes');
-[pfc_par]=xfreq(pfc_LF,par_HF,'coh','yes');
+%Inter brain regions 
+[hpc_LF,hpc_HF]=crossfreq_single(pchannel(p,1),0.5:0.5:15,30:1:100,ro);%HPC
+[par_LF,par_HF]=crossfreq_single(pchannel(p,2),0.5:0.5:15,30:1:100,ro);%PAR
+[pfc_LF,pfc_HF]=crossfreq_single(pchannel(p,3),0.5:0.5:15,30:1:100,ro);%PFC
 
 
-    
 
-else
- 
-%  n1=1;
-%  n2=1;
-no=0;
-f=waitbar(0,'Please wait...');
+[hpc_LF,hpc_HF]=crossfreq_single(pchannel(p,1),0.5:0.5:15,30:1:100,ro);%HPC 
+[Hpc_hpc]=xfreq(hpc_LF,hpc_HF,'coh','yes');
+xo
 
- for n1=1:3
-     for n2=1:3
- av1=load(strcat(num2str(n1),'_',num2str(n2),'_Baseline','.mat'));
- av1=av1.dumvar;
- av2=load(strcat(num2str(n1),'_',num2str(n2),'_PlusMaze','.mat'));
- av2=av2.dumvar;
-    
-%%
-% 
-% xo
-% 
-% [hpc_LF,hpc_HF]=crossfreq_single(pchannel(p,1),0.5:0.5:15,30:1:100,ro);%HPC 
-% [Hpc_hpc]=xfreq(hpc_LF,hpc_HF,'coh','yes');
-% xo
-% 
-% av1=load('Hpc_hpc_base.mat'); 
-% av1=av1.Hpc_hpc;
-% av2=load('Hpc_hpc_plus.mat');%Plus
-% av2=av2.Hpc_hpc;
+av1=load('Hpc_hpc_base.mat'); 
+av1=av1.Hpc_hpc;
+av2=load('Hpc_hpc_plus.mat');%Plus
+av2=av2.Hpc_hpc;
 
 AV1.powspctrm=(av1.crsspctrm);
 AV1.dimord= 'rpt_chan_freq_time';
@@ -743,9 +690,8 @@ AV2.time=av2.freqhigh;
 
 [stats]=stats_between_cfc(AV1,AV2,label1,1);
 %%
-allscreen()
 cfg = [];
-cfg.channel = label1{2*1-1}; %No use
+cfg.channel = label1{2*w-1};
 cfg.parameter = 'stat';
 cfg.maskparameter = 'mask';
 cfg.zlim = 'maxabs';
@@ -757,26 +703,15 @@ ft_singleplotTFR(cfg, stats);
 g=title(strcat(labelconditions{4},' vs No Learning'))
 g.FontSize=12;
 %title(strcat(labelconditions{iii},' vs No Learning'))
-% n1=1;
-% n2=1;
+n1=1;
+n2=1;
 
 y=ylabel({'Freq (Hz)',label1{2*n1}})
 x=xlabel({label1{2*n2},'Freq (Hz)'})
 x.FontSize=12;
 y.FontSize=12;
-%%
-printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
-close all
-no=no+1;
-progress_bar(no,9,f)
+end
 
-end
-end
-xo
-
-
-end
-end
 
 else %Not crossfreq. coupling
 
