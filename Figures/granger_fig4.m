@@ -345,7 +345,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+for iii=4:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
 
@@ -650,7 +650,7 @@ if cfc_stat==0
 else
 %Stats
 
-firstrun=1;
+firstrun=0;
 
 if firstrun==1
 %Inter brain regions 
