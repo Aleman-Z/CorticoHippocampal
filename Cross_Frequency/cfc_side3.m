@@ -156,6 +156,7 @@ y.FontSize=12;
 if clus==1
     e3=e3{1};
 end
+%xo
 %% Stats
 subplot(1,3,3)
 J=imagesc(30:1:100,0.5:0.5:15,e3);
@@ -173,8 +174,8 @@ x=xlabel({label1{2*n2},'Freq (Hz)'})
 x.FontSize=12;
 y.FontSize=12;
 %%
-%HI=mtit(strcat(label1{2*n1},'_\delta','_,','_\theta','{ }','vs','{ }',label1{2*n2},'_\gamma'));
-HI=mtit(strcat(label1{2*n2},'_\gamma','vs','{ }',label1{2*n1},'_\delta','_,','_\theta','{ }'));
+HI=mtit(strcat(label1{2*n1},'_\delta','_,','_\theta','{ }','vs','{ }',label1{2*n2},'_\gamma'));
+%HI=mtit(strcat(label1{2*n2},'_\gamma','vs','{ }',label1{2*n1},'_\delta','_,','_\theta','{ }'));
 
 HI.th.FontSize=18;
 HI.th.Color=[1 0 0]
