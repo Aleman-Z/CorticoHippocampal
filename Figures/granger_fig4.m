@@ -18,14 +18,15 @@ ripdur=1; % Duration of ripples.
 
 crosscop=1; % 1 for cross coupling analysis. 
 cfc_stat=1;
+clus=0;
 %%
 %Rat=26;
 for meth=4:4
-for RAT=2:2
+for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=1; %This should be 1  
+  base=2; %This should be 1  
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -740,8 +741,10 @@ AV2.dimord= 'rpt_chan_freq_time';
 AV2.label=av2.label;
 AV2.freq=av2.freqlow;
 AV2.time=av2.freqhigh;
-
+%xo
+if clus==1
 [stats]=stats_between_cfc(AV1,AV2,label1,1);
+
 %%
 allscreen()
 cfg = [];
@@ -764,8 +767,42 @@ y=ylabel({'Freq (Hz)',label1{2*n1}})
 x=xlabel({label1{2*n2},'Freq (Hz)'})
 x.FontSize=12;
 y.FontSize=12;
+else
+zmap=stats_high(AV1,AV2,1);
+
+allscreen()
+colormap(jet(256))
+zmap(zmap == 0) = NaN;
+J=imagesc(AV1.time,AV1.freq,zmap)
+y=ylabel({'Freq (Hz)',label1{2*n1}})
+x=xlabel({label1{2*n2},'Freq (Hz)'})
+x.FontSize=12;
+y.FontSize=12;
+%title('tf power map, thresholded')
+set(gca,'ydir','no')
+% c=narrow_colorbar()
+set(J,'AlphaData',~isnan(zmap))
+g=title(strcat(labelconditions{4},' vs No Learning'))
+g.FontSize=12;
+
+c=colorbar();
+cm=max(abs(c.Limits));
+c.Limits=[-cm cm];
+caxis([-cm cm])
+
+g=title(strcat(labelconditions{iii},' vs No Learning'));
+g.FontSize=12;
+
+end
+%xo
+
 %%
-printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
+if clus==1
+    printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
+else
+    printing(strcat('CFC_Stats_Pixel_',label1{n1*2},'_vs_',label1{n2*2}))
+end
+
 close all
 no=no+1;
 progress_bar(no,9,f)
