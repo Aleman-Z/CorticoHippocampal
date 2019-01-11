@@ -26,7 +26,7 @@ for RAT=1:1
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 1  
+  base=1; %This should be 1  
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -330,6 +330,7 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
+xo
 myColorMap = jet(8);                                                                                                                                                                                    
 myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
@@ -346,7 +347,7 @@ labelconditions=labelconditions([1 4 3 2]);
 
  
 for block_time=0:0 %Should start with 0
-for iii=4:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
+for iii=1:length(nFF) %Should be 1 for Granger. 4 is faster though. Good for debugging. 
 %for iii=1:1 %Should start with 2!
 %for vert=2:length(nFF)
 
@@ -593,12 +594,17 @@ if crosscop==1
 %     [mi]=crossfreq(p,0.5:0.5:15,30:1:100,ro,'mi');
 
 %Due to memory limits reduce this to same number of ripples as plusbase. 
-
-if iii~=2 %Not Plusmaze
+%xo
+if iii~=4 %Not Plusmaze
     if Rat==26
         n=180;
-    else
+    end
+    if Rat==27
         n=326;
+    end
+    if Rat==24
+        'Error>Insert RAT 24 n.'
+        xo
     end
             p=p(1:n);
 end
@@ -650,7 +656,7 @@ if cfc_stat==0
     
 else
 %Stats
-
+%xo
 firstrun=0;
 
 if firstrun==1
@@ -705,7 +711,7 @@ f=waitbar(0,'Please wait...');
 
  for n1=1:3
      for n2=1:3
- av1=load(strcat(num2str(n1),'_',num2str(n2),'_Baseline','.mat'));
+ av1=load(strcat(num2str(n1),'_',num2str(n2),'_Baseline2','.mat'));
  av1=av1.dumvar;
  av2=load(strcat(num2str(n1),'_',num2str(n2),'_PlusMaze','.mat'));
  av2=av2.dumvar;
@@ -800,7 +806,7 @@ end
 if clus==1
     printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
 else
-    printing(strcat('CFC_Stats_Pixel_',label1{n1*2},'_vs_',label1{n2*2}))
+    printing(strcat('CFC_Stats_Pixel2_',label1{n1*2},'_vs_',label1{n2*2}))
 end
 
 close all

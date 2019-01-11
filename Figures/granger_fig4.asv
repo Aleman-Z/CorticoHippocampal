@@ -594,12 +594,15 @@ if crosscop==1
 
 %Due to memory limits reduce this to same number of ripples as plusbase. 
 
-if iii~=2 %Not Plusmaze
+if iii~=4 %Not Plusmaze
     if Rat==26
         n=180;
-    else
+    end
+    if Rat==27
         n=326;
     end
+    if
+        en
             p=p(1:n);
 end
 
@@ -650,7 +653,7 @@ if cfc_stat==0
     
 else
 %Stats
-
+xo
 firstrun=0;
 
 if firstrun==1
@@ -741,7 +744,7 @@ AV2.dimord= 'rpt_chan_freq_time';
 AV2.label=av2.label;
 AV2.freq=av2.freqlow;
 AV2.time=av2.freqhigh;
-xo
+%xo
 if clus==1
 [stats]=stats_between_cfc(AV1,AV2,label1,1);
 
@@ -774,25 +777,35 @@ allscreen()
 colormap(jet(256))
 zmap(zmap == 0) = NaN;
 J=imagesc(AV1.time,AV1.freq,zmap)
-
-xlabel('Time (s)'), ylabel('Frequency (Hz)')
+y=ylabel({'Freq (Hz)',label1{2*n1}})
+x=xlabel({label1{2*n2},'Freq (Hz)'})
+x.FontSize=12;
+y.FontSize=12;
 %title('tf power map, thresholded')
-set(gca,'xlim',xlim,'ydir','no')
+set(gca,'ydir','no')
 % c=narrow_colorbar()
 set(J,'AlphaData',~isnan(zmap))
-c=narrow_colorbar()
- c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-c=narrow_colorbar()
+g=title(strcat(labelconditions{4},' vs No Learning'))
+g.FontSize=12;
+
+c=colorbar();
+cm=max(abs(c.Limits));
+c.Limits=[-cm cm];
+caxis([-cm cm])
 
 g=title(strcat(labelconditions{iii},' vs No Learning'));
 g.FontSize=12;
 
 end
-
+%xo
 
 %%
-printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
+if clus==1
+    printing(strcat('CFC_Stats_',label1{n1*2},'_vs_',label1{n2*2}))
+else
+    printing(strcat('CFC_Stats_Pixel_',label1{n1*2},'_vs_',label1{n2*2}))
+end
+
 close all
 no=no+1;
 progress_bar(no,9,f)
