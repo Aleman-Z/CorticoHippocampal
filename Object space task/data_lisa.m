@@ -20,19 +20,19 @@ if acer==0
 
 else
 
-    str1{1,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43';
-    str1{2,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial2_2017-09-25_12-17-49';
-    str1{3,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial3_2017-09-25_13-08-52';
-    str1{4,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial4_2017-09-25_14-01-00';
-    str1{5,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial5_2017-09-25_14-52-04';
+    str1{1,1}='F:/ephys/rat1/study_day_2_OR/post_trial1_2017-09-25_11-26-43';
+    str1{2,1}='F:/ephys/rat1/study_day_2_OR/post_trial2_2017-09-25_12-17-49';
+    str1{3,1}='F:/ephys/rat1/study_day_2_OR/post_trial3_2017-09-25_13-08-52';
+    str1{4,1}='F:/ephys/rat1/study_day_2_OR/post_trial4_2017-09-25_14-01-00';
+    str1{5,1}='F:/ephys/rat1/study_day_2_OR/post_trial5_2017-09-25_14-52-04';
     %str1{6,1}='F:/ObjectSpace/rat_1/study_day_2_OR/post_trial6_2017-09-26_11-10-21';
 
     str2=cell(5,1);
-    str2{1,1}='G:/Lisa_files/data/PT1';
-    str2{2,1}='G:/Lisa_files/data/PT2';
-    str2{3,1}='G:/Lisa_files/data/PT3';
-    str2{4,1}='G:/Lisa_files/data/PT4';
-    str2{5,1}='G:/Lisa_files/data/PT5';
+    str2{1,1}='F:/Lisa_files/data/PT1';
+    str2{2,1}='F:/Lisa_files/data/PT2';
+    str2{3,1}='F:/Lisa_files/data/PT3';
+    str2{4,1}='F:/Lisa_files/data/PT4';
+    str2{5,1}='F:/Lisa_files/data/PT5';
     %str2{6,1}='G:/Lisa_files/data/PT6';
 
 end
