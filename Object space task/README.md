@@ -15,3 +15,6 @@
 * **downsamp.m:**  
 *Downsamples CX.mat files into VX.mat files .* 
 
+* **findsleep.m:**  
+*Finds times when rat is not moving, i.e. is sleeping .* 
+
