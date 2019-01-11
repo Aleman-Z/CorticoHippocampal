@@ -1,6 +1,6 @@
 %% Figures for Lisa's experiment.  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%STUDENT: Ramiro Adrián Alemán Zapata. Master Student @ TU Eindhoven. 
+%STUDENT: Ramiro Adrian Aleman Zapata. Master Student @ TU Eindhoven. 
 %ADVISOR: Francesco Battaglia. Donders Institute of Brain, Cognition and
 %Behaviour. Radboud University. 
 %2017
@@ -18,32 +18,36 @@
 %And more to come
 %% LOADING DATA OF 2 MAIN CHANNELS AND REFERENCE
 fs=20000; %Sampling frequency of acquisition.  
-
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
-addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')  
-addpath('/home/raleman/Documents/internship')  
-
+addingpath(1);
+% addpath('/home/raleman/Documents/MATLAB/analysis-tools-master')  
+% addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')  
+% addpath('/home/raleman/Documents/internship')  
+acer=1;
 %%
 num=1;
-data_lisa(num)
+data_lisa(num,acer)
 %%
 num=2;
-data_lisa(num)
+data_lisa(num,acer)
 %%
 num=3;
-data_lisa(num)
+data_lisa(num,acer)
 %%
 num=4;
-data_lisa(num)
+data_lisa(num,acer)
 %%
 % num=5;
-% data_lisa(num)
+% data_lisa(num,acer)
 
 %%
 
 
 %%
+if acer~=1
 cd('/media/raleman/My Book/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43');
+else
+cd('F:/ObjectSpace/rat_1/study_day_2_OR/post_trial1_2017-09-25_11-26-43');    
+end
 
 [data9m, ~, ~] = load_open_ephys_data_faster('100_CH14.continuous');
 [data17m, ~, ~] = load_open_ephys_data_faster('100_CH46.continuous');
@@ -76,17 +80,21 @@ C17=data17m(vin).*(0.195);
 
 clear data17m data9m
 %%
+if acer~=1
 cd('/home/raleman/Documents/internship/Lisa_files/data/PT1')
+else
+cd('G:/Lisa_files/data/PT1')
+end
 save('C9.mat','C9')
 save('C17.mat','C17')
 
 
 %% FINITO
 
-downsamp(1);
-downsamp(2);
-downsamp(3);
-downsamp(4);
+downsamp(1,acer);
+downsamp(2,acer);
+downsamp(3,acer);
+downsamp(4,acer);
 %%
 load('V9.mat')
 load('V17.mat')

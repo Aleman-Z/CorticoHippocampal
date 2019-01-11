@@ -1,10 +1,23 @@
-function downsamp(num)
+function downsamp(num,acer)
 str2=cell(5,1);
-str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
-str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
-str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
-str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
-str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
+if acer==0
+
+    str2{1,1}='/home/raleman/Documents/internship/Lisa_files/data/PT1';
+    str2{2,1}='/home/raleman/Documents/internship/Lisa_files/data/PT2';
+    str2{3,1}='/home/raleman/Documents/internship/Lisa_files/data/PT3';
+    str2{4,1}='/home/raleman/Documents/internship/Lisa_files/data/PT4';
+    str2{5,1}='/home/raleman/Documents/internship/Lisa_files/data/PT5';
+    
+else
+
+    str2{1,1}='G:/Lisa_files/data/PT1';
+    str2{2,1}='G:/Lisa_files/data/PT2';
+    str2{3,1}='G:/Lisa_files/data/PT3';
+    str2{4,1}='G:/Lisa_files/data/PT4';
+    str2{5,1}='G:/Lisa_files/data/PT5';
+
+end
+
 %str2{6,1}='/home/raleman/Documents/internship/Lisa_files/data/PT6';
 cd(str2{num,1});
 fs=20000;
