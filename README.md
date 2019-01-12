@@ -4,10 +4,10 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 
 :mortar_board: *Defended on 16th November 2018 at TU Eindhoven, The Netherlands.* 
 
-Contact: jraleman10@gmail.com :mailbox: 
-
 <img src="giphy.gif" width="300">
 <!--- <img src="poster_Adrian8.png" width="800">--->
+
+Contact: jraleman10@gmail.com :mailbox: 
 
 --------------------------------
 ## Main Folders: :file_folder: 
