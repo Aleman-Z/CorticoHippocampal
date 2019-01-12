@@ -49,7 +49,19 @@ for num=1:length(str1)
     t=t*(1/fs);
 
     sos=ax1.^2+ax2.^2+ax3.^2;
+    [vtr]=findsleep(sos,0.006,t); %post_trial3
+%     vin=find(vtr~=1);
+
+[a1,a2] = unique(vtr);
+
+[G,ID] = findgroups(vtr);
+% out = double(diff([~vtr(1);vtr(:)]) == 1);
+% v = accumarray(cumsum(out).*vtr(:)+1,1);
+% out(out == 1) = v(2:end);
+    
     clear ax1 ax2 ax3 
+    %Create transition matrix
+    xo
         
 vr=getfield(channels,strcat('Rat',num2str(Rat)));%Electrode channels. 
 
