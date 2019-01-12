@@ -2,9 +2,9 @@
 
 MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/adri%C3%A1n-alem%C3%A1n-zapata-b1b727b2/) <img src="raised.png" width="25"> 
 
-Contact: jraleman10@gmail.com :mailbox: 
-
 :mortar_board: *Defended on 16th November 2018 at TU Eindhoven, The Netherlands.* 
+
+Contact: jraleman10@gmail.com :mailbox: 
 
 <img src="giphy.gif" width="300">
 <!--- <img src="poster_Adrian8.png" width="800">--->
