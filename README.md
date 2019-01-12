@@ -4,6 +4,7 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 
 :mortar_board: *Defended on 16th November 2018 at TU Eindhoven, The Netherlands.* 
 
+<img src="net.png" width="800">
 <!--- <img src="poster_Adrian8.png" width="800">--->
 --------------------------------
 ## Main Folders: :file_folder: 
