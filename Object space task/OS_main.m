@@ -14,20 +14,19 @@ Rat=rats(RAT);
 labelconditions=[
     { 
     
-    'OR'}
+    'OD'}
+    'OR'
     'CON'    
-    'OD'
     'OR_N'
     ];
 
 for iii=1:4 %Up to 4. 
     
 [BB]=select_folder(Rat,iii,labelconditions);
-cd(BB)   
-xo    
-    
-    
-    
+cd(BB)       
+[str1]=select_trial('post');    
+xo
+
 end
 
 

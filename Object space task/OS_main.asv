@@ -14,41 +14,19 @@ Rat=rats(RAT);
 labelconditions=[
     { 
     
-    'OR'}
+    'OD'}
+    'OR'
     'CON'    
-    'OD'
     'OR_N'
     ];
 
-for iii=1:1
-
-cd(strcat('F:/ephys/rat',num2str(Rat)));
-A = dir(cd);
-A={A.name};
-
-no=0;
-for j=1:length(A)
-B=A{j}
-k = strfind(B,labelconditions{iii})
-if k>=1
-    no=no+1;
-    BB{no}=B;
-end
-end
-xo
-if no==2 %Save BB with the plain OR. 
+for iii=1:4 %Up to 4. 
     
-    for
-    end
-    
-%     if strfind(BB{2},labelconditions{iii})>=1 
-%         BB=BB{2};
-%     else
-        BB=BB{1};
-%     end    
-end 
+[BB]=select_folder(Rat,iii,labelconditions);
+cd(BB)   
 xo    
-    
+    A = dir(cd);
+    A={A.name};    
     
     
 end
