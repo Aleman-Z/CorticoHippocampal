@@ -13,7 +13,8 @@ A=A.';
 str2=cell(size(A,1),1);
 
 for n=1:size(A,1)
-    str2{n,1}=strcat('F:\Lisa_files\',num2str(Rat),'\PT',num2str(n));
+%     str2{n,1}=strcat('F:\Lisa_files\',num2str(Rat),'\PT',num2str(n));
+    str2{n,1}=strcat('PT',num2str(n));
 end
 
 end
