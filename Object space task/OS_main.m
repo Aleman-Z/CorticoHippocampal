@@ -15,7 +15,7 @@ channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
 %%
-for RAT=1:4 %4
+for RAT=4:4 %4
 rats=[1 3 4 6]; %First drive
 Rat=rats(RAT); 
 
@@ -29,11 +29,25 @@ labelconditions=[
     'OR_N'
     ];
 
-for iii=1:4 %Up to 4 conditions. 
+labelconditions2=[
+    { 
     
+    'OD'}
+    'OR'
+    'CN'    %CON IS A RESERVED WORD FOR WINDOWS
+    'OR_N'
+    ];
+
+for iii=1:4 %Up to 4 conditions. 
+    %xo
 [BB]=select_folder(Rat,iii,labelconditions);
-cd(BB)       
-[str1,str2]=select_trial('post',Rat);    
+cd(BB)
+if Rat==6
+[str1,str2]=select_trial('Post_',Rat);    
+else
+[str1,str2]=select_trial('post_',Rat);        
+end
+
 f=waitbar(0,'Please wait...');
 for num=1:length(str1)
     progress_bar(num,length(str1),f)
@@ -75,10 +89,10 @@ V9=decimator(V9,20);
 
 cd(strcat('F:\Lisa_files\',num2str(Rat)))
 
-if ~exist(labelconditions{iii}, 'dir')
-   mkdir(labelconditions{iii})
+if ~exist(labelconditions2{iii}, 'dir')
+   mkdir(labelconditions2{iii})
 end
-cd(labelconditions{iii})
+cd(labelconditions2{iii})
 
 if ~exist(str2{num}, 'dir')
    mkdir(str2{num})
@@ -115,7 +129,7 @@ cd(str2{num})
         
     
 end
-
+%xo
 end
 
 end

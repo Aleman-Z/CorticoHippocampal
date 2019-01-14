@@ -1,8 +1,9 @@
 function [BB]=select_folder(Rat,iii,labelconditions)
 
     cd(strcat('F:/ephys/rat',num2str(Rat)));
-    A = dir(cd);
-    A={A.name};
+%     A = dir(cd);
+%     A={A.name};
+A=getfolder;
 
     no=0;
     for j=1:length(A)
