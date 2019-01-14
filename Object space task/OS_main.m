@@ -38,10 +38,15 @@ labelconditions2=[
     'OR_N'
     ];
 
-for iii=1:4 %Up to 4 conditions. 
+for iii=4:4 %Up to 4 conditions. 
     %xo
 [BB]=select_folder(Rat,iii,labelconditions);
 cd(BB)
+
+if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
+cd(BB)    
+end
+
 if Rat==6
 [str1,str2]=select_trial('Post_',Rat);    
 else
@@ -51,6 +56,11 @@ end
 f=waitbar(0,'Please wait...');
 for num=1:length(str1)
     progress_bar(num,length(str1),f)
+    
+if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
+cd(BB)    
+end
+    
     cd(str1{num,1});
     %xo
     [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
