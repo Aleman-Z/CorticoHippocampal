@@ -25,9 +25,25 @@ A=getfolder;
     end
     end
 
+    
+      
     if no==2 %Save BB with the plain OR. 
 
-    %     for j=1:length(BB)
+        if strfind(BB{1},'OD')>0
+        
+        
+           v1=strfind(BB{1},'OD-N');
+%            v2=strfind(BB{2},labelconditions{4});
+
+           if v1>0
+               BB=BB{2};
+           else
+               BB=BB{1};
+           end
+        
+        
+        else
+        
            v1=strfind(BB{1},labelconditions{4});
 %            v2=strfind(BB{2},labelconditions{4});
 
@@ -36,6 +52,11 @@ A=getfolder;
            else
                BB=BB{1};
            end
+
+            
+        end
+        
+    %     for j=1:length(BB)
     %         
     end 
 

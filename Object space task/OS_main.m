@@ -39,7 +39,7 @@ labelconditions2=[
     'OR_N'
     ];
 
-for iii=4:4 %Up to 4 conditions. 
+for iii=2:2 %Up to 4 conditions. 
     %xo
     if Rat==9 && iii==4
         labelconditions{4}='OR+NOV';
@@ -53,11 +53,11 @@ cd(BB)
 end
 
 if Rat==6 || Rat==9 || Rat==11
-[str1,str2]=select_trial('Post_',Rat);    
+[str1,str2]=select_trial('Post',Rat);    
 else
 [str1,str2]=select_trial('post_',Rat);        
 end
-
+xo
 f=waitbar(0,'Please wait...');
 for num=1:length(str1)
     progress_bar(num,length(str1),f)
@@ -210,7 +210,7 @@ cd(str2{num})
         
     
 end
-%xo
+xo
 end
 
 end
