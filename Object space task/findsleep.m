@@ -37,11 +37,11 @@ thr=(da>threshold);
 
 %th=da.*thr;
 
-
-ax=ax1-mean(ax1);
-ax=abs(ax);
-% ax=ax1;
-ax=ax./max(ax);
+% % % % % % % % % % % 
+% % % % % % % % % % % ax=ax1-mean(ax1);
+% % % % % % % % % % % ax=abs(ax);
+% % % % % % % % % % % % ax=ax1;
+% % % % % % % % % % % ax=ax./max(ax);
 
 %allscreen
 

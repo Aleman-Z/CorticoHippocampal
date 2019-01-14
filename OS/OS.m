@@ -15,7 +15,7 @@ channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
 %%
-for RAT=6:6 %4
+for RAT=1:6 %4
 % rats=[1 3 4 6]; %First drive
 rats=[1 3 4 6 9 11]; %First and second drive
 Rat=rats(RAT); 
@@ -27,7 +27,7 @@ labelconditions=[
     'OD'}
     'OR'
     'CON'    
-    'OR_N'
+%     'OR_N'
     ];
 
 labelconditions2=[
@@ -36,17 +36,57 @@ labelconditions2=[
     'OD'}
     'OR'
     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
-    'OR_N'
+%     'OR_N'
     ];
 
-for iii=2:length(labelconditions) %Up to 4 conditions. 
-    %xo
-    if Rat==9 && iii==4
-        labelconditions{4}='OR+NOV';
-    end
+cd(strcat('F:\Lisa_files\',num2str(rats(Rat))));
+% xo
+
+for iii=1:length(labelconditions) %Up to 4 conditions. 
     
-[BB]=select_folder(Rat,iii,labelconditions);
-cd(BB)
+cd( labelconditions{iii})
+g=getfolder;
+
+for k=1:length(g) %all conditions. 
+cd( g{1,k})
+V9=load('V9.mat');
+V9=V9.V9;
+
+sos=load('sos.mat');
+sos=sos.sos;
+
+% Verifying time
+l=length(sos); %samples
+t=1:l;
+t=t*(1/1000);
+
+[vtr]=findsleep(sos.',median(sos.')/100,t.'); %1 for those above threshold.
+vtr=not(vtr); %1 for "nrem times. 
+
+fivesec=5*1000; %Number of samples equivalent to 5 seconds. 
+
+
+
+v=vtr.';
+
+v2=ConsecutiveOnes(v);
+v3=(v2>fivesec);
+v3=v3.*v2;  %Only those above 5 seconds. 
+
+xo
+% v2 = zeros(size(v)); % Initialize vector of same length.
+% props = regionprops(logical(v), 'Area', 'PixelIdxList');
+% for k = 1 : length(props)
+%   v2(props(k).PixelIdxList(1)) = props(k).Area;
+% end
+
+
+
+% vin=find(vtr~=1); % index for "nrem" times. 
+
+xo
+
+end
 
 if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 cd(BB)    
