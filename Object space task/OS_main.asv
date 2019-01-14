@@ -15,8 +15,9 @@ channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
 %%
-for RAT=4:4 %4
-rats=[1 3 4 6]; %First drive
+for RAT=6:6 %4
+% rats=[1 3 4 6]; %First drive
+rats=[1 3 4 6 9 11]; %First and second drive
 Rat=rats(RAT); 
 
 
@@ -38,8 +39,12 @@ labelconditions2=[
     'OR_N'
     ];
 
-for iii=4:4 %Up to 4 conditions. 
+for iii=3:4 %Up to 4 conditions. 
     %xo
+    if Rat==9 && iii==4
+        labelconditions{4}='OR+NOV';
+    end
+    
 [BB]=select_folder(Rat,iii,labelconditions);
 cd(BB)
 
@@ -47,7 +52,7 @@ if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 cd(BB)    
 end
 
-if Rat==6
+if Rat==6 || Rat==9 || Rat==11
 [str1,str2]=select_trial('Post_',Rat);    
 else
 [str1,str2]=select_trial('post_',Rat);        
@@ -57,15 +62,28 @@ f=waitbar(0,'Please wait...');
 for num=1:length(str1)
     progress_bar(num,length(str1),f)
     
-if strcmp(BB,'Study_day7_OR_N_1_2mar2018') ^
+if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
 cd(BB)    
 end
     
     cd(str1{num,1});
     %xo
-    [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
-    [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
-    [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');
+    if Rat==11
+        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_0.continuous');
+        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_0.continuous');
+        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_0.continuous');   
+    else
+        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
+        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
+        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');    
+    end
+    
+    if Rat==11 ^
+        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_0.continuous');
+        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_0.continuous');
+        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_0.continuous');   
+    end
+    
    
     % Verifying time
      l=length(ax1); %samples
@@ -87,6 +105,21 @@ vr=getfield(channels,strcat('Rat',num2str(Rat)));%Electrode channels.
 
 %strcat('100_CH',num2str(vr(1)),'.continuous')
 
+if Rat==11
+
+%Hippocampus
+[V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'_0.continuous'));    
+V17=filtfilt(b,a,V17);
+V17=decimator(V17,20);
+
+%PFC
+[V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_0.continuous'));
+V9=filtfilt(b,a,V9);
+V9=decimator(V9,20);
+
+
+else
+
 %Hippocampus
 [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'.continuous'));    
 V17=filtfilt(b,a,V17);
@@ -96,6 +129,8 @@ V17=decimator(V17,20);
 [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'.continuous'));
 V9=filtfilt(b,a,V9);
 V9=decimator(V9,20);
+    
+end
 
 cd(strcat('F:\Lisa_files\',num2str(Rat)))
 
@@ -114,8 +149,18 @@ cd(str2{num})
  save('V17.mat','V17')
  save('sos.mat','sos')
     
+ if Rat<9
+     cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
+ else
+     cd(strcat('G:\ephys'))
+     aa=getfolder;
+     if Rat==9
+         cd(strcat(aa{2},'/',BB))
+     else
+         cd(strcat(aa{1},'/',BB))
+     end
+ end
  
- cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
 %     %%
 %    [vtr]=findsleep(sos,median(sos)/100,t); %Threshold. 0.006
 %

@@ -1,6 +1,16 @@
 function [BB]=select_folder(Rat,iii,labelconditions)
-
+if Rat<9
     cd(strcat('F:/ephys/rat',num2str(Rat)));
+else
+    cd(strcat('G:/ephys/'));
+    aa=getfolder;
+    if strfind(aa{1},strcat('Rat',num2str(Rat)))
+        cd(aa{1})
+    else
+        cd(aa{2})
+    end
+end
+    
 %     A = dir(cd);
 %     A={A.name};
 A=getfolder;
