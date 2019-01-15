@@ -15,7 +15,7 @@ channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
 %%
-for RAT=1:6 %4
+for RAT=3:6 %4
 % rats=[1 3 4 6]; %First drive
 rats=[1 3 4 6 9 11]; %First and second drive
 Rat=rats(RAT); 
@@ -39,41 +39,67 @@ labelconditions2=[
 %     'OR_N'
     ];
 
-cd(strcat('F:\Lisa_files\',num2str(rats(Rat))));
+cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
 % xo
 
-for iii=1:length(labelconditions) %Up to 4 conditions. 
+for iii=2:2 %OR
+    %length(labelconditions) %Up to 4 conditions. 
     
-cd( labelconditions{iii})
+cd( labelconditions2{iii})
 g=getfolder;
 
 for k=1:length(g) %all conditions. 
 cd( g{1,k})
-V9=load('V9.mat');
-V9=V9.V9;
 
 sos=load('sos.mat');
 sos=sos.sos;
 
-% Verifying time
-l=length(sos); %samples
-t=1:l;
-t=t*(1/1000);
+[a1]=sleep_criteria(sos);
 
-[vtr]=findsleep(sos.',median(sos.')/100,t.'); %1 for those above threshold.
-vtr=not(vtr); %1 for "nrem times. 
-
-fivesec=5*1000; %Number of samples equivalent to 5 seconds. 
+V9=load('V9.mat');
+V9=V9.V9;
+V17=load('V17.mat');
+V17=V17.V17;
 
 
+for h=1:length(a1)
+v9{h,1}=V9(a1(h,1):a1(h,2));
+v17{h,1}=V17(a1(h,1):a1(h,2));
+end
 
-v=vtr.';
+%xo
+[NC]=epocher(v9,2);
 
-v2=ConsecutiveOnes(v);
-v3=(v2>fivesec);
-v3=v3.*v2;  %Only those above 5 seconds. 
 
-xo
+av=mean(NC,1);
+av=artifacts(av,10);
+
+%Limits artifacts to a maximum of 10
+if sum(av)>=10
+av=artifacts(av,20);    
+end
+%xo
+av=not(av);
+%Removing artifacts.
+NC=NC(:,av);
+
+NCount(iii,1)=size(NC,2);
+
+%Notch filter
+Fsample=1000;
+Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
+
+[pxx,f]=pmtm(NC,4,[],1000);
+px=mean(pxx,2);
+s=semilogy(f,(px),'Color',[0 1 0],'LineWidth',2);
+s.Color(4) = 0.8;
+hold on
+% for k=1:length(iv3)
+%    if iv3(k)==1
+%        nb=nb+1;
+%    end
+% end
+
 % v2 = zeros(size(v)); % Initialize vector of same length.
 % props = regionprops(logical(v), 'Area', 'PixelIdxList');
 % for k = 1 : length(props)
@@ -84,9 +110,11 @@ xo
 
 % vin=find(vtr~=1); % index for "nrem" times. 
 
-xo
+cd ..
 
 end
+xlim([0 300])
+xo
 
 if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 cd(BB)    
