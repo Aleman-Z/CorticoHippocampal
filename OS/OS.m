@@ -67,7 +67,7 @@ v9{h,1}=V9(a1(h,1):a1(h,2));
 v17{h,1}=V17(a1(h,1):a1(h,2));
 end
 
-%xo
+xo
 [NC]=epocher(v9,2);
 
 
@@ -89,8 +89,17 @@ NCount(iii,1)=size(NC,2);
 Fsample=1000;
 Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
 
+% [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+
 [pxx,f]=pmtm(NC,4,[],1000);
+
+% PXX{iii}=pxx;
+
+
+
 px=mean(pxx,2);
+PX{iii}=px;
+
 s=semilogy(f,(px),'Color',[0 1 0],'LineWidth',2);
 s.Color(4) = 0.8;
 hold on
@@ -114,7 +123,22 @@ cd ..
 
 end
 xlim([0 300])
+xlabel('Frequency (Hz)')
+%ylabel('10 Log(x)')
+ylabel('Power')
+
+title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
+
 xo
+
+L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
+set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
+    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
+    'Marker','s'); 
+
+legend(L, labelconditions)
+
+
 
 if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 cd(BB)    

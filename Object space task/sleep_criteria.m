@@ -1,8 +1,7 @@
 function [a1,gr]=sleep_criteria(sos)
 
 % Verifying time
-l=length(sos); %samples
-t=1:l;
+t=1:length(sos);%samples
 t=t*(1/1000);
 
 [vtr]=findsleep(sos.',median(sos.')/100,t.'); %1 for those above threshold.
