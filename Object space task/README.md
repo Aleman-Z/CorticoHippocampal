@@ -1,5 +1,6 @@
-## Object Space task  :rat:
+# Object Space task  :rat:
 
+## Outdated (snf 2017):
 * **Figures_Lisa.m:**  
 *Main file. Converts Ephys data into Matlab data plus gets accelerometer information to estimate sleeping epochs.* 
 
@@ -16,5 +17,11 @@
 *Downsamples CX.mat files into VX.mat files .* 
 
 * **findsleep.m:**  
-*Finds times when rat is not moving, i.e. is sleeping .* 
+*Finds times when rat is not moving, i.e. is presumably sleeping .* 
 
+## Newests (2019):
+* **OS_main.m:**  
+*Script to extract data from harddrive, downsample and save it.* 
+
+* **OS.m:**  
+*Performs analyses on downsampled data .* 
