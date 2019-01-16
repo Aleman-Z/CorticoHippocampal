@@ -1,5 +1,5 @@
 close all
-clear all
+clear variables
 clc
 %OS main
 fs=20000; %Sampling frequency of acquisition.  

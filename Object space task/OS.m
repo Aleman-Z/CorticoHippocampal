@@ -1,5 +1,5 @@
 close all
-clear all
+clear variables
 clc
 %OS main
 fs=20000; %Sampling frequency of acquisition.  
@@ -8,18 +8,16 @@ addingpath(acer);
 
 %HPC, PFC, EEG FRONTAL, EEG PARIETAL.
 channels.Rat1 = [ 46 11 6 5];
-channels.Rat3 = [ 31 49 NaN 54];
-channels.Rat4 = [ 37 34 NaN NaN];
+channels.Rat3 = [ 31 49 NaN 54]; %To confirm
+channels.Rat4 = [ 37 34 NaN NaN];  %Two prefrontal. Right:29. Left:16. 
+%Two parietal: Anterior (5) , Posterior (12)
+
 channels.Rat6 = [ 2 33 34 36];
 channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
-%%
-for RAT=3:6 %4
 % rats=[1 3 4 6]; %First drive
 rats=[1 3 4 6 9 11]; %First and second drive
-Rat=rats(RAT); 
-
 
 labelconditions=[
     { 
@@ -39,37 +37,48 @@ labelconditions2=[
 %     'OR_N'
     ];
 
+%%
+for RAT=1:length(rats) %4
+Rat=rats(RAT); 
+
 cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
 % xo
 
-for iii=2:2 %OR
-    %length(labelconditions) %Up to 4 conditions. 
+for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
 
-for k=1:length(g) %all conditions. 
+
+PXX=cell(length(g),1);
+for k=1:length(g) %all trials. 
+myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
 
 sos=load('sos.mat');
 sos=sos.sos;
-
+%xo
 [a1]=sleep_criteria(sos);
 
 V9=load('V9.mat');
 V9=V9.V9;
+V9=V9.*(0.195);
 V17=load('V17.mat');
 V17=V17.V17;
+V17=V17.*(0.195);
 
-
-for h=1:length(a1)
+%xo
+v9=cell(size(a1,1),1);
+v17=cell(size(a1,1),1);
+for h=1:size(a1,1)
 v9{h,1}=V9(a1(h,1):a1(h,2));
 v17{h,1}=V17(a1(h,1):a1(h,2));
 end
 
-xo
-[NC]=epocher(v9,2);
 
+
+
+[NC]=epocher(v17,2);
 
 av=mean(NC,1);
 av=artifacts(av,10);
@@ -83,26 +92,43 @@ av=not(av);
 %Removing artifacts.
 NC=NC(:,av);
 
-NCount(iii,1)=size(NC,2);
+% NCount(iii,1)=size(NC,2);
 
 %Notch filter
 Fsample=1000;
-Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
+%Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
+Fline=[50 150];
+nu1=300;
+nu2=30;
+% xo
+% % % % % % % % % % % % if Rat==11 && iii==3 %&& k==5
+% % % % % % % % % % % % Fline=[31 32 33.2 34 66.4 99.6 166.5 232.9];
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % %[NC] = ft_notch(NC, Fsample,Fline,20,0.5);
+% % % % % % % % % % % % % [NC] = ft_notch(NC, Fsample,Fline,0.5,0.5);
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % nu1=500;
+% % % % % % % % % % % % nu2=200;
+% % % % % % % % % % % % % xo
+% % % % % % % % % % % % end
 
-% [NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+%[NC] = ft_notch(NC, Fsample,Fline,20,0.5);
+[NC] = ft_notch(NC, Fsample,Fline,nu1,nu2);
+
 
 [pxx,f]=pmtm(NC,4,[],1000);
 
-% PXX{iii}=pxx;
+PXX{k}=pxx;
 
 
 
 px=mean(pxx,2);
-PX{iii}=px;
-
-s=semilogy(f,(px),'Color',[0 1 0],'LineWidth',2);
+% PX{iii}=px;
+% figure()
+s=semilogy(f,(px),'Color',myColorMap(k,:),'LineWidth',2);
 s.Color(4) = 0.8;
 hold on
+%xo
 % for k=1:length(iv3)
 %    if iv3(k)==1
 %        nb=nb+1;
@@ -121,188 +147,34 @@ hold on
 
 cd ..
 
+
+clear v9 v17 NC 
+
 end
+
 xlim([0 300])
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
 ylabel('Power')
 
-title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
+%title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
+title(strcat('Power in NREM',{' '} ,'HPC' ,{' '},'signals'))
+%xo
 
-xo
-
-L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
+L = line(nan(length(g.')), nan(length(g.')),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
     {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
     'Marker','s'); 
 
-legend(L, labelconditions)
-
-
-
-if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
-cd(BB)    
-end
-
-if Rat==6 || Rat==9 || Rat==11
-[str1,str2]=select_trial('Post',Rat);    
-else
-[str1,str2]=select_trial('post_',Rat);        
-end
-xo
-f=waitbar(0,'Please wait...');
-for num=1:length(str1)
-    progress_bar(num,length(str1),f)
-    
-if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
-cd(BB)    
-end
-    
-    cd(str1{num,1});
-    %xo
-    if Rat==11
-        
-        if Rat==11 && num==5 && iii==3
-        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_2_0.continuous');
-        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_2_0.continuous');
-        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_2_0.continuous'); 
-        else
-        
-        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_0.continuous');
-        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_0.continuous');
-        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_0.continuous');   
-            
-        end
-  
-        
-    else
-        [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
-        [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
-        [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');    
-    end
-    
-    
-   
-    % Verifying time
-     l=length(ax1); %samples
-    % t=l*(1/fs); %  2.7276e+03  seconds
-    % Equivalent to 45.4596 minutes
-    t=1:l;
-    t=t*(1/fs);
-
-    sos=ax1.^2+ax2.^2+ax3.^2;    
-    clear ax1 ax2 ax3 
-
-    Wn=[500/(fs/2) ]; % Cutoff=500 Hz
-    [b,a] = butter(3,Wn); %Filter coefficients for LPF
-    
-    sos=filtfilt(b,a,sos);
-    sos=decimator(sos,20);
-
-vr=getfield(channels,strcat('Rat',num2str(Rat)));%Electrode channels. 
-
-%strcat('100_CH',num2str(vr(1)),'.continuous')
-
-if Rat==11
-
-    if Rat==11 && num==5 && iii==3
-    
-        
-        %Hippocampus
-        [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'_2_0.continuous'));    
-        V17=filtfilt(b,a,V17);
-        V17=decimator(V17,20);
-
-        %PFC
-        [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_2_0.continuous'));
-        V9=filtfilt(b,a,V9);
-        V9=decimator(V9,20);
-
-    
-    else
-
-        %Hippocampus
-        [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'_0.continuous'));    
-        V17=filtfilt(b,a,V17);
-        V17=decimator(V17,20);
-
-        %PFC
-        [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_0.continuous'));
-        V9=filtfilt(b,a,V9);
-        V9=decimator(V9,20);
-
-    end
-
-
-else
-
-%Hippocampus
-[V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'.continuous'));    
-V17=filtfilt(b,a,V17);
-V17=decimator(V17,20);
-
-%PFC
-[V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'.continuous'));
-V9=filtfilt(b,a,V9);
-V9=decimator(V9,20);
-    
-end
-
-
-
-cd(strcat('F:\Lisa_files\',num2str(Rat)))
-
-if ~exist(labelconditions2{iii}, 'dir')
-   mkdir(labelconditions2{iii})
-end
-cd(labelconditions2{iii})
-
-if ~exist(str2{num}, 'dir')
-   mkdir(str2{num})
-end
-
-cd(str2{num})
-
- save('V9.mat','V9')
- save('V17.mat','V17')
- save('sos.mat','sos')
-    
- if Rat<9
-     cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
- else
-     cd(strcat('G:\ephys'))
-     aa=getfolder;
-     if Rat==9
-         cd(strcat(aa{2},'/',BB))
-     else
-         cd(strcat(aa{1},'/',BB))
-     end
- end
- 
-%     %%
-%    [vtr]=findsleep(sos,median(sos)/100,t); %Threshold. 0.006
-%
-%     plot(sos(100000/2:400000))
-%     hold on
-%     stripes((vtr(100000/2:400000)),0.5)
-    %%
-%     vin=find(vtr~=1);
-
+legend(L, g.')
 % xo
-% [a1,a2] = unique(vtr);
-% 
-% [G,ID] = findgroups(vtr);
-% out = double(diff([~vtr(1);vtr(:)]) == 1);
-% v = accumarray(cumsum(out).*vtr(:)+1,1);
-% out(out == 1) = v(2:end);
-    
-    %Create transition matrix
-%    xo
-        
-        
-    
+%string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
+string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
+
+printing(string);
+close all
+cd ..
 end
-xo
-end
+%xo
 
 end
