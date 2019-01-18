@@ -14,12 +14,8 @@ channels.Rat6 = [ 2 33 34 36];
 channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
-%%
-for RAT=6:6 %4
 % rats=[1 3 4 6]; %First drive
 rats=[1 3 4 6 9 11]; %First and second drive
-Rat=rats(RAT); 
-
 
 labelconditions=[
     { 
@@ -38,6 +34,12 @@ labelconditions2=[
     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
     'OR_N'
     ];
+
+%%
+
+for RAT=6:6 %4
+Rat=rats(RAT); 
+
 
 for iii=2:length(labelconditions) %Up to 4 conditions. 
     %xo
