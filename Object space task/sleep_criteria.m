@@ -1,4 +1,4 @@
-function [a1]=sleep_criteria(sos)
+function [a1,nb]=sleep_criteria(sos)
 
 % Verifying time
 t=1:length(sos);%samples
@@ -20,7 +20,12 @@ for k=1:nb;
 %    a1(k,:)=[fi(1,k) fi(1,k)+v3(fi(1,k))-1];
 end
 
+if nb~=0
+   
 gr=gr.';
 [a1] = [cellfun(@min,gr) cellfun(@max,gr)];
-
+ 
+else
+ a1=[];   
+end
 end

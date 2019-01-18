@@ -36,9 +36,11 @@ labelconditions2=[
     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
 %     'OR_N'
     ];
-
+sidebyside=1; %Plots conditions side by side. 
 %%
+fbar=waitbar(0,'Please wait...');
 for RAT=1:length(rats) %4
+progress_bar(RAT,length(rats),fbar)    
 Rat=rats(RAT); 
 
 cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
@@ -49,8 +51,14 @@ for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
 cd( labelconditions2{iii})
 g=getfolder;
 
+if Rat==1 && iii==1 
+a = 1:length(g);
+a(a == 4) = [];
+g=g(a);
+end
 
 PXX=cell(length(g),1);
+%xo
 for k=1:length(g) %all trials. 
 myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
@@ -58,7 +66,20 @@ cd( g{1,k})
 sos=load('sos.mat');
 sos=sos.sos;
 %xo
-[a1]=sleep_criteria(sos);
+[a1,nb]=sleep_criteria(sos);
+
+%If no sleep is found ignore trial:
+if nb==0 %|| nb==1
+    
+a = 1:length(g);
+a(a == k) = [];
+g=g(a);
+myColorMap=myColorMap(1:length(g),:);
+cd ..
+
+    break
+end
+
 
 V9=load('V9.mat');
 V9=V9.V9;
@@ -68,6 +89,7 @@ V17=V17.V17;
 V17=V17.*(0.195);
 
 %xo
+
 v9=cell(size(a1,1),1);
 v17=cell(size(a1,1),1);
 for h=1:size(a1,1)
@@ -75,7 +97,7 @@ v9{h,1}=V9(a1(h,1):a1(h,2));
 v17{h,1}=V17(a1(h,1):a1(h,2));
 end
 
-
+% v17={V17};
 
 
 [NC]=epocher(v17,2);
@@ -97,9 +119,12 @@ NC=NC(:,av);
 %Notch filter
 Fsample=1000;
 %Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-Fline=[50 150];
+Fline=[50 150 250];
 nu1=300;
 nu2=30;
+% nu1=0.5;
+% nu2=0.5;
+
 % xo
 % % % % % % % % % % % % if Rat==11 && iii==3 %&& k==5
 % % % % % % % % % % % % Fline=[31 32 33.2 34 66.4 99.6 166.5 232.9];
@@ -113,7 +138,8 @@ nu2=30;
 % % % % % % % % % % % % end
 
 %[NC] = ft_notch(NC, Fsample,Fline,20,0.5);
-[NC] = ft_notch(NC, Fsample,Fline,nu1,nu2);
+
+%[NC] = ft_notch(NC, Fsample,Fline,nu1,nu2);
 
 
 [pxx,f]=pmtm(NC,4,[],1000);
@@ -124,6 +150,14 @@ PXX{k}=pxx;
 
 px=mean(pxx,2);
 % PX{iii}=px;
+if sidebyside==1 
+    if k==1
+        if iii==1
+            allscreen()
+        end
+        subplot(1,3,iii)
+    end
+end
 % figure()
 s=semilogy(f,(px),'Color',myColorMap(k,:),'LineWidth',2);
 s.Color(4) = 0.8;
@@ -151,15 +185,23 @@ cd ..
 clear v9 v17 NC 
 
 end
-
+%xo
 xlim([0 300])
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
 ylabel('Power')
 
 %title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-title(strcat('Power in NREM',{' '} ,'HPC' ,{' '},'signals'))
+if sidebyside==1
+title(strcat(labelconditions{iii},{' '} ,'HPC' ,{' '},'power'))    
+else
+title(strcat('Power in NREM',{' '} ,'HPC' ,{' '},'signals'));    
+end
 %xo
+
+if sum(cellfun(@(x) strcmp(x,'PT_retest') ,g))>=1
+    g(cellfun(@(x) strcmp(x,'PT_retest') ,g))={'PT_r_e_t_e_s_t'};
+end
 
 L = line(nan(length(g.')), nan(length(g.')),'LineStyle','none'); % 'nan' creates 'invisible' data
 set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
@@ -170,11 +212,25 @@ legend(L, g.')
 % xo
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
+% string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 
+if sidebyside==0
+    
 printing(string);
-close all
+close all    
+end
+
 cd ..
 end
-%xo
+% xo
+if sidebyside==1
+ string=strcat('300Hz_Rat',num2str(Rat),'_AllConditions_','HPC'); 
+ printing(string);
 
 end
+
+end
+
+%%
+
+
