@@ -36,11 +36,17 @@ labelconditions2=[
     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
 %     'OR_N'
     ];
+
+figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
+% figColorMap(3,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
+figColorMap(2,:)=[0, 0, 0]; %Black plusmaze
+figColorMap(3,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
+
 sidebyside=1; %Plots conditions side by side. 
+aver_trial=1;
 %%
 fbar=waitbar(0,'Please wait...');
 for RAT=1:length(rats) %4
-progress_bar(RAT,length(rats),fbar)    
 Rat=rats(RAT); 
 
 cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
@@ -58,6 +64,9 @@ g=g(a);
 end
 
 PXX=cell(length(g),1);
+%PX=cell(length(g),1);
+PX=[];
+%PX=double.empty(5,0);
 %xo
 for k=1:length(g) %all trials. 
 myColorMap = jet(length(g));                                                                                                                                                                                        
@@ -149,19 +158,24 @@ PXX{k}=pxx;
 
 
 px=mean(pxx,2);
-% PX{iii}=px;
-if sidebyside==1 
-    if k==1
-        if iii==1
-            allscreen()
+% PX{k}=px;
+PX(k,:)=px.';
+if aver_trial~=1
+    if sidebyside==1 
+        if k==1
+            if iii==1
+                allscreen()
+            end
+            subplot(1,3,iii)
         end
-        subplot(1,3,iii)
     end
 end
 % figure()
+if aver_trial~=1
 s=semilogy(f,(px),'Color',myColorMap(k,:),'LineWidth',2);
 s.Color(4) = 0.8;
 hold on
+end
 %xo
 % for k=1:length(iv3)
 %    if iv3(k)==1
@@ -186,13 +200,28 @@ clear v9 v17 NC
 
 end
 %xo
+
+if size(PX,1)==6
+   PX=PX(1:5,:); 
+end
+
+if aver_trial==1
+% subplot(1,3,iii)  
+acolor=figColorMap(iii,:);
+s=semilogy(f,(mean(PX)),'Color',acolor,'LineWidth',2);
+s.Color(4) = 0.8; 
+hold on
+fill([f.' fliplr(f.')],[mean(PX)+std(PX) fliplr(mean(PX)-std(PX))],acolor,'linestyle','none','FaceAlpha', 0.4);
+end
+
+
 xlim([0 300])
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
 ylabel('Power')
 
 %title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
-if sidebyside==1
+if sidebyside==1 && aver_trial~=1
 title(strcat(labelconditions{iii},{' '} ,'HPC' ,{' '},'power'))    
 else
 title(strcat('Power in NREM',{' '} ,'HPC' ,{' '},'signals'));    
@@ -203,12 +232,24 @@ if sum(cellfun(@(x) strcmp(x,'PT_retest') ,g))>=1
     g(cellfun(@(x) strcmp(x,'PT_retest') ,g))={'PT_r_e_t_e_s_t'};
 end
 
-L = line(nan(length(g.')), nan(length(g.')),'LineStyle','none'); % 'nan' creates 'invisible' data
-set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
-    {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
-    'Marker','s'); 
+if aver_trial~=1
+    L = line(nan(length(g.')), nan(length(g.')),'LineStyle','none'); % 'nan' creates 'invisible' data
+    set(L, {'MarkerEdgeColor'}, num2cell(myColorMap, 2),...
+        {'MarkerFaceColor'},num2cell(myColorMap, 2),... % setting the markers to filled squares
+        'Marker','s'); 
 
-legend(L, g.')
+    legend(L, g.')
+else
+    L = line(nan(length(labelconditions)), nan(length(labelconditions)),'LineStyle','none'); % 'nan' creates 'invisible' data
+    set(L, {'MarkerEdgeColor'}, num2cell(figColorMap, 2),...
+        {'MarkerFaceColor'},num2cell(figColorMap, 2),... % setting the markers to filled squares
+        'Marker','s'); 
+
+    legend(L, labelconditions) 
+end
+
+% sum(cellfun(@(x) isempty(x),PX))>=1
+
 % xo
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
@@ -224,11 +265,11 @@ cd ..
 end
 % xo
 if sidebyside==1
- string=strcat('300Hz_Rat',num2str(Rat),'_AllConditions_','HPC'); 
+ string=strcat('300Hz_Rat',num2str(Rat),'_AveragedTrialsSTD_','HPC'); 
  printing(string);
-
+close all
 end
-
+progress_bar(RAT,length(rats),fbar)    
 end
 
 %%
