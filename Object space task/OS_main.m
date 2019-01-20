@@ -24,6 +24,7 @@ labelconditions=[
     'OR'
     'CON'    
     'OR_N'
+    'HC'
     ];
 
 labelconditions2=[
@@ -33,15 +34,17 @@ labelconditions2=[
     'OR'
     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
     'OR_N'
+    'HC'
     ];
 
 %%
 
-for RAT=6:6 %4
+for RAT=6:6
+    %length(rats) %4
 Rat=rats(RAT); 
 
 
-for iii=2:length(labelconditions) %Up to 4 conditions. 
+for iii=5:length(labelconditions) %Up to 4 conditions. 
     %xo
     if Rat==9 && iii==4
         labelconditions{4}='OR+NOV';
@@ -59,11 +62,12 @@ if Rat==6 || Rat==9 || Rat==11
 else
 [str1,str2]=select_trial('post_',Rat);        
 end
-xo
+%xo
+% str2={'PT5'};
 f=waitbar(0,'Please wait...');
 for num=1:length(str1)
-    progress_bar(num,length(str1),f)
-    
+    %length(str1)
+       
 if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
 cd(BB)    
 end
@@ -176,7 +180,9 @@ cd(str2{num})
  save('V9.mat','V9')
  save('V17.mat','V17')
  save('sos.mat','sos')
-    
+
+clear V9 V17 sos
+
  if Rat<9
      cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
  else
@@ -210,9 +216,9 @@ cd(str2{num})
 %    xo
         
         
-    
+progress_bar(num,length(str1),f)    
 end
-xo
+%xo
 end
 
 end
