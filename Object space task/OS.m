@@ -19,45 +19,83 @@ channels.Rat11 = [ 11 45 55 56];
 % rats=[1 3 4 6]; %First drive
 rats=[1 3 4 6 9 11]; %First and second drive
 
-labelconditions=[
-    { 
-    
-    'OD'}
-    'OR'
-    'CON'    
-%     'OR_N'
-    ];
+% % labelconditions=[
+% %     { 
+% %     
+% %     'OD'}
+% %     'OR'
+% %     'CON'
+% %     'HC'
+% %     'OR_N'
+% %     ];
 
-labelconditions2=[
-    { 
-    
-    'OD'}
-    'OR'
-    'CN'    %CON IS A RESERVED WORD FOR WINDOWS
-%     'OR_N'
-    ];
-
-figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
-% figColorMap(3,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
-figColorMap(2,:)=[0, 0, 0]; %Black plusmaze
-figColorMap(3,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
+% % 
+% % labelconditions2=[
+% %     { 
+% %     
+% %     'OD'}
+% %     'OR'
+% %     'CN'    %CON IS A RESERVED WORD FOR WINDOWS
+% %     'HC'
+% % %     'OR_N'
+% %     ];
 
 sidebyside=1; %Plots conditions side by side. 
-aver_trial=1;
+aver_trial=0;
 %%
 fbar=waitbar(0,'Please wait...');
-for RAT=1:length(rats) %4
+for RAT=4:length(rats)
+    %length(rats) %4
 Rat=rats(RAT); 
 
 cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
-% xo
+gg=getfolder;
+gg=gg.';
+gg(ismember(gg,'OR_N'))=[];
+gg(ismember(gg,'OD_N(incomplete)'))=[];
+gg=sort(gg); %Sort alphabetically.
+labelconditions2=gg;
+gg(ismember(gg,'CN'))={'CON'};
+labelconditions=gg;
 
-for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
+
+%Alphabetical order:
+%     {'CON'}
+%     {'HC' }
+%     {'OD' }
+%     {'OR' }
+n=length(gg);
+switch n
+    case 4
+        figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
+        figColorMap(2,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
+        figColorMap(3,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
+        figColorMap(4,:)=[0, 0, 0]; %Black plusmaze    
+    case 5
+        figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
+        figColorMap(2,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
+        figColorMap(3,:)=[0.2, 0.9, 0.1]; %GREY CONTROL (HC2)
+        figColorMap(4,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
+        figColorMap(5,:)=[0, 0, 0]; %Black plusmaze   
+    case 6
+        figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
+        figColorMap(2,:)=[0.65, 0.65, 0.65]; %GREY CONTROL
+        figColorMap(3,:)=[0.2, 0.9, 0.1]; %GREY CONTROL
+        figColorMap(4,:)=[0.9, 0.3, 0.1]; %GREY CONTROL
+        figColorMap(5,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
+        figColorMap(6,:)=[0, 0, 0]; %Black plusmaze  
+    otherwise
+        xo;
+end
+%xo
+
+
+for iii=3:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
 
-if Rat==1 && iii==1 
+if Rat==1 && strcmp(labelconditions{iii},'OD') 
 a = 1:length(g);
 a(a == 4) = [];
 g=g(a);
@@ -67,7 +105,7 @@ PXX=cell(length(g),1);
 %PX=cell(length(g),1);
 PX=[];
 %PX=double.empty(5,0);
-%xo
+xo
 for k=1:length(g) %all trials. 
 myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
@@ -166,7 +204,16 @@ if aver_trial~=1
             if iii==1
                 allscreen()
             end
-            subplot(1,3,iii)
+            switch n
+                case 4
+                       subplot(1,4,iii)
+                case 5   
+                       subplot(1,5,iii)
+                case 6
+                       subplot(1,6,iii)
+                otherwise
+                    xo
+            end
         end
     end
 end
@@ -250,7 +297,7 @@ end
 
 % sum(cellfun(@(x) isempty(x),PX))>=1
 
-% xo
+ %xo
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
@@ -263,9 +310,9 @@ end
 
 cd ..
 end
-% xo
+xo
 if sidebyside==1
- string=strcat('300Hz_Rat',num2str(Rat),'_AveragedTrialsSTD_','HPC'); 
+ string=strcat('300Hz_Rat',num2str(Rat),'_AllTrials_','HPC'); 
  printing(string);
 close all
 end
