@@ -36,3 +36,4 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 *Plots the cluster-corrected permutation statistics between the Baseline and Plusmaze CFC maps following the maps of both conditions.*
 <img src="stats_cluster3.png" width="600">
 
+Function yet to test: pac.m from EEGLAB.  
