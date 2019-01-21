@@ -4,7 +4,6 @@ clc
 %OS main
 fs=20000; %Sampling frequency of acquisition.  
 acer=1;
-addingpath(acer);
 
 %HPC, PFC, EEG FRONTAL, EEG PARIETAL.
 channels.Rat1 = [ 46 11 6 5];
@@ -41,10 +40,10 @@ rats=[1 3 4 6 9 11]; %First and second drive
 % %     ];
 
 sidebyside=1; %Plots conditions side by side. 
-aver_trial=0;
+aver_trial=1;
 %%
 fbar=waitbar(0,'Please wait...');
-for RAT=4:length(rats)
+for RAT=6:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
 
@@ -90,7 +89,7 @@ end
 %xo
 
 
-for iii=3:length(labelconditions) %Up to 4 conditions. OR is 2.
+for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
@@ -105,8 +104,11 @@ PXX=cell(length(g),1);
 %PX=cell(length(g),1);
 PX=[];
 %PX=double.empty(5,0);
-xo
+%xo
 for k=1:length(g) %all trials. 
+    if k>length(g)
+        break
+    end
 myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
 
@@ -116,15 +118,29 @@ sos=sos.sos;
 [a1,nb]=sleep_criteria(sos);
 
 %If no sleep is found ignore trial:
-if nb==0 %|| nb==1
-    
-a = 1:length(g);
-a(a == k) = [];
-g=g(a);
+if nb==0  %|| nb==1
+g=g(~strcmp(g,g{k}));
 myColorMap=myColorMap(1:length(g),:);
 cd ..
+    
+if k>=length(g)   
+% a = 1:length(g);
+% a(a == k) = [];
+% g=g(a);
 
     break
+else
+cd( g{1,k})
+
+sos=load('sos.mat');
+sos=sos.sos;
+%xo
+[a1,nb]=sleep_criteria(sos);
+    if nb==0
+        xo
+    end
+    
+end
 end
 
 
@@ -246,7 +262,7 @@ cd ..
 clear v9 v17 NC 
 
 end
-%xo
+% xo
 
 if size(PX,1)==6
    PX=PX(1:5,:); 
@@ -258,7 +274,7 @@ acolor=figColorMap(iii,:);
 s=semilogy(f,(mean(PX)),'Color',acolor,'LineWidth',2);
 s.Color(4) = 0.8; 
 hold on
-fill([f.' fliplr(f.')],[mean(PX)+std(PX) fliplr(mean(PX)-std(PX))],acolor,'linestyle','none','FaceAlpha', 0.4);
+% fill([f.' fliplr(f.')],[mean(PX)+std(PX) fliplr(mean(PX)-std(PX))],acolor,'linestyle','none','FaceAlpha', 0.4);
 end
 
 
@@ -303,20 +319,22 @@ string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 
 if sidebyside==0
-    
+xo    
 printing(string);
 close all    
 end
 
 cd ..
 end
-xo
+
 if sidebyside==1
- string=strcat('300Hz_Rat',num2str(Rat),'_AllTrials_','HPC'); 
+ string=strcat('300Hz_Rat',num2str(Rat),'_AveragedTrialsHC_','HPC'); 
+% xo
  printing(string);
 close all
 end
-progress_bar(RAT,length(rats),fbar)    
+progress_bar(RAT,length(rats),fbar)
+clear figColorMap
 end
 
 %%

@@ -4,7 +4,6 @@ clc
 %OS main
 fs=20000; %Sampling frequency of acquisition.  
 acer=1;
-addingpath(acer);
 
 %HPC, PFC, EEG FRONTAL, EEG PARIETAL.
 channels.Rat1 = [ 46 11 6 5];
@@ -44,19 +43,19 @@ sidebyside=1; %Plots conditions side by side.
 aver_trial=0;
 %%
 fbar=waitbar(0,'Please wait...');
-for RAT=1:1
+for RAT=4:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
 
 cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
 gg=getfolder;
-g=gg.';
-g(ismember(g,'OR_N'))=[];
-g(ismember(g,'OR_N(incomplete)'))=[];
-g=sort(g); %Sort alphabetically.
-labelconditions2=g;
-g(ismember(g,'CN'))={'CON'};
-labelconditions=g;
+gg=gg.';
+gg(ismember(gg,'OR_N'))=[];
+gg(ismember(gg,'OD_N(incomplete)'))=[];
+gg=sort(gg); %Sort alphabetically.
+labelconditions2=gg;
+gg(ismember(gg,'CN'))={'CON'};
+labelconditions=gg;
 
 
 %Alphabetical order:
@@ -64,7 +63,7 @@ labelconditions=g;
 %     {'HC' }
 %     {'OD' }
 %     {'OR' }
-n=length(g);
+n=length(gg);
 switch n
     case 4
         figColorMap(1,:)=[0.49, 0.18, 0.56]; %Foraging Violet. 
@@ -85,12 +84,12 @@ switch n
         figColorMap(5,:)=[0.9290, 0.6940, 0.1250]; %Yellow Novelty
         figColorMap(6,:)=[0, 0, 0]; %Black plusmaze  
     otherwise
-        'Error';
+        xo;
 end
 %xo
 
 
-for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
+for iii=3:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
@@ -105,7 +104,7 @@ PXX=cell(length(g),1);
 %PX=cell(length(g),1);
 PX=[];
 %PX=double.empty(5,0);
-%xo
+xo
 for k=1:length(g) %all trials. 
 myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
@@ -204,7 +203,16 @@ if aver_trial~=1
             if iii==1
                 allscreen()
             end
-            subplot(1,4,iii)
+            switch n
+                case 4
+                       subplot(1,4,iii)
+                case 5   
+                       subplot(1,5,iii)
+                case 6
+                       subplot(1,6,iii)
+                otherwise
+                    xo
+            end
         end
     end
 end
@@ -288,7 +296,7 @@ end
 
 % sum(cellfun(@(x) isempty(x),PX))>=1
 
- xo
+ %xo
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
@@ -301,9 +309,9 @@ end
 
 cd ..
 end
-% xo
+xo
 if sidebyside==1
- string=strcat('300Hz_Rat',num2str(Rat),'_AveragedTrialsSTD_','HPC'); 
+ string=strcat('300Hz_Rat',num2str(Rat),'_AllTrials_','HPC'); 
  printing(string);
 close all
 end
