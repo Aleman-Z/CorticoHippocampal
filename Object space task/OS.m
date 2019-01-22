@@ -43,7 +43,7 @@ sidebyside=1; %Plots conditions side by side.
 aver_trial=1;
 %%
 fbar=waitbar(0,'Please wait...');
-for RAT=6:length(rats)
+for RAT=1:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
 
@@ -325,6 +325,7 @@ close all
 end
 
 cd ..
+clear myColorMap
 end
 
 if sidebyside==1
