@@ -4,6 +4,7 @@
 
 * **stats_high.m:**  
 *Computes permutation test statistics using Fieldtrip arranged samples as inputs.*
+<img src="example_high_freq_stats.png" width="400">
 
 * **stats_high2.m:**  
 *Computes permutation test statistics using 2 matrixes as inputs.*
