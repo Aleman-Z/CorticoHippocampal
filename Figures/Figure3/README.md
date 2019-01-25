@@ -33,9 +33,6 @@ Bar plots of the number of ripples found among conditions for a fixed baseline t
 *Corrected version of plot_inter_conditions_33, using an improved method to generate the stats.* (Update 25/08: Not suitable for further figure improvement. Best to run: *plot_inter_conditions_33* followed by *plot_inter_high_improve*).
 * **plot_inter_high_improve.m:**
 *Adaptation of plot_inter_conditions_33_high, only computing the High Gamma spectrograms*
-* **stats_high.m:**
-*Computes statistics on the high frequency spectrograms.*
-<img src="example_high_freq_stats.png" width="400">
 
 * **colorbar_among_conditions.m:**
 *Equalizes the colorbar ranges among conditions for a specific brain area*
