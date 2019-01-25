@@ -14,17 +14,15 @@ rippletable=0;
 sanity=0;
 quinientos=0;
 outlie=0;
-%%
-addingpath(acer); %Adds main folders and libraries to path.
 
 %%
 %Rat=26;
 for meth=4:4
-for RAT=1:1
+for RAT=2:2
  if meth==4
     s=struct; 
  end  
-  base=2; %This should be 2 
+  base=1; %This should be 2 for Rat 26. 1 for Rat 27. 
 % for base=1:2 %Baseline numeration.     
 while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
 riptable=zeros(4,3);        
@@ -552,7 +550,7 @@ ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal tim
 end
 
 %%
-%xo
+xo
 %[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 % if meth==3
 % [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
@@ -593,7 +591,7 @@ q=q(ache);
 %Find strongests ripples. 
 [p,q]=sort_rip(p,q);
 
-
+xo
 
 %Select n strongest
 % 
