@@ -1,9 +1,9 @@
 # List of functions used to generate Figures
 ------------------
 
-## :zap: Figure 2: 
+## :file_folder: Figure 2 
 
-## :zap: Figure 3:
+## :file_folder: Figure 3
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
