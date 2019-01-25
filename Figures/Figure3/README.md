@@ -1,5 +1,5 @@
 
-## :file_folder: Figure 3
+## :zap: Figure 3
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
