@@ -1,4 +1,4 @@
-# List of functions used to generate Figures
+# Content per folder.
 ------------------
 
 ## :file_folder: Figure 2:
