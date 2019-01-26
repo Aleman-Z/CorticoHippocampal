@@ -40,7 +40,7 @@ Different types of Granger causality:
 
     **stats_thesis.m: Kruskal-Wallis test.**
 
-Steps 3 to 4 contained in function: **gc_paper.m**. Similar implementation on **fieldtrip_adapted.m**
+Steps 3 to 4 contained in function: **gc_paper.m** (Conditional). Similar implementation on **fieldtrip_adapted.m** (Pairwise).
 
 Steps 5: Kruskal-Wallis Statystical Test. 
 
