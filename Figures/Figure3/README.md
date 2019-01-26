@@ -1,17 +1,16 @@
 
 ## :zap: Figure 3
 
-* **Poster_main_optimized:**
-*Generates non-normalized spectrograms and statistical tests using the complete recordings.*
-
-
 * **spectrogram_without_normalization.m:**
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
 <img src="example_figure_spectrogram.png" width="600">
 
 * **spec_loop_improve.m:**
-*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles. UPDATE: Avoid using. This approach gives wrong results for Non-learning baseline.*
+*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles. :warning: UPDATE: Avoid using. This approach gives wrong results for Non-learning baseline.*
 <img src="example_improve.png" width="600">
+
+* **Poster_main_optimized:**
+*Generates non-normalized spectrograms and statistical tests using the complete recordings.*
 
 * **fixed_threshold.m:**
 *Initial test ran to try the fixed_threshold approach. Later merged with spectrogram_withouth_normalization.m*
@@ -30,7 +29,7 @@
 *Equalizes the colorbar ranges among conditions for a specific brain area*
 
 
-####  :link: Post-Processing steps for spectrograms: 
+####  :link: Post-Processing steps for spectrograms: :warning: Outdated. Check next section. 
 
 1. **spec_loop_improve.m:**
 *Visualizes spindles.*
@@ -48,7 +47,7 @@
 *Equal Y-axis and colorbar among brain areas.*
 
 
-####  :link: NEW Post-Processing steps for spectrograms (19-9-18): 
+####  :link: NEW Post-Processing steps for spectrograms (19-9-18): :heavy_check_mark:
 Leaves spindles visualization RAW.
 
 1. **colorbar_among_conditions2.m:**
