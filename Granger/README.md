@@ -1,5 +1,22 @@
 -Spectral Granger Causality 
 ------------------
+Different types of Granger causality:
+
+<p align="center">
+<img src="gc_types.png" width="250">
+</p>
+
+* **createauto.m:**  
+*Computes _parametric_ spectral granger causality.* 
+
+* **createauto_np.m:**  
+*Computes _non-parametric_ spectral granger causality.* 
+
+* **createauto_conditional.m:**  
+*Computes _parametric_  __conditional __ spectral granger causality.* 
+
+* **createauto_np_cond.m:**  
+*Computes _non-parametric_  __conditional __ spectral granger causality.* 
 
 ####  :link: Steps to generate Spectral GC   _(Parametric approach)_: 
 
@@ -79,18 +96,6 @@ Steps 5: Kruskal-Wallis Statystical Test.
  * **autotest_single.m:**  
 *Plots granger causality for the non-parametric and parametric models.*
      <img src="autotest_single.png" width="500">
-
-* **createauto.m:**  
-*Computes _parametric_ spectral granger causality.* 
-
-* **createauto_np.m:**  
-*Computes _non-parametric_ spectral granger causality.* 
-
-* **createauto_conditional.m:**  
-*Computes _parametric_  __conditional __ spectral granger causality.* 
-
-* **createauto_np_cond.m:**  
-*Computes _non-parametric_  __conditional __ spectral granger causality.* 
 
 * **gc_stripes.m:**  
 *Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
