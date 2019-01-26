@@ -1,4 +1,4 @@
-# Content per folder.
+# List of Figures. 
 ------------------
 
 ## :file_folder: Figure 2:
