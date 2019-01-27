@@ -40,7 +40,8 @@ switch Rat
     otherwise
         disp('Enter Baseline manually')
         base=1;
-        xo %Comment this line after selecting the right base value.
+                xo %Comment this line after selecting the base.
+
 end
 
 % for base=1:2 %Baseline numeration.     

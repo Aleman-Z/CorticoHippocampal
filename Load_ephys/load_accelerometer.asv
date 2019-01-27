@@ -1,0 +1,203 @@
+%% Get accelerometer data file names and paths
+[file,path] = uigetfile('*.continuous','Select Accelerometer data','MultiSelect','on');
+selpath = uigetdir('','Select folder where data will be saved');
+%% Get sleep labels. 
+cd(path)
+fileList = dir('*-states.mat') %Gets states data. 
+st=fileList.name;
+load(st) %Load states
+%%
+%% Extract only NREM signals. (1 for awake, 3 for NREM)
+fs=20000; %Sampling frequency of acquisition.  
+c=find(transitions(:,1)==3); 
+newtrans=transitions(c,2:3); %Only use the NREM times. 
+transamp=newtrans.*(fs); %Convert from seconds to samples 
+
+%%
+%acdata=cell(length(file),1);% Void cell
+Vx=cell(length(transamp),length(file));
+sos=[];
+%Low pass filter design. 
+Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+[b,a] = butter(3,Wn); %Filter coefficients for LPF
+
+%Load and store 
+counter=0;
+f=waitbar(counter,'Please wait...');
+%%
+for j=1:length(file)
+[ac, ~, ~]=load_open_ephys_data_faster(file{j}); %Load file
+    for k=1:length(transamp)
+        probemos=transamp(k,:);
+        %Select NREM data
+        V=ac(round(probemos(1)):round(probemos(2)));
+        %Apply downsampling
+        V=filtfilt(b,a,V);
+        V=decimator(V,20).';
+        Vx{k,j}=V.^2;
+        sos=Vx{k,j?-*]*???'098;
+        counter=counter+1;
+        progress_bar(counter,length(file)*length(transamp),f)
+    end
+
+
+%acdata{j,:}
+end
+% C6{i}=data6m(round(probemos(1)):round(probemos(2))).*(0.195); % Open Ephys BitVolt CORRECTION FACTOR 
+cellfun()
+%% "Project: Large scale interactions in the cortico-hippocampal network" 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%STUDENT: Ramiro Adri??n Alem??n Zapata. Master Student @ TU Eindhoven. 
+%ADVISORS: Francesco Battaglia and Lisa Genzel
+%Donders Institute of Brain, Cognition and Behaviour. Radboud University. 
+%2017
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% AIM:
+% The aim of this study is to perform an analysis, comparison and classification of the electrical
+% activity in the brain regions involved in the memory consolidation process, which occurs during the
+% NREM sleep stage and involves a particular hippocampal oscillatory pattern called the Sharp Wave ripple.
+ 
+% INPUT DATA:
+% 32 Channels of brain signals were recorded over a period of 4 hours with a sampling frequency of
+% 20kHz for different tasks that involved learning, memory and sleep. Each of the channels
+% corresponded to a different brain area, of which we are mainly interested in the Prefrontal Cortex
+% (PFC), the Parietal lobe and the Hippocampus (Channels 9, 12 and 17 for Rat #26).
+
+
+% REQUIRED FUNCTIONS:
+%load_open_ephys_data_faster()
+%And more to come
+%% LOADING DATA OF 3 MAIN CHANNELS AND REFERENCE
+
+%Reference
+[data6m, timestamps6, ~] = load_open_ephys_data_faster('100_CH6_merged.continuous');
+%PFC
+[data9m, ~, ~] = load_open_ephys_data_faster('100_CH9_merged.continuous');
+%Parietal lobe
+[data12m, ~, ~] = load_open_ephys_data_faster('100_CH12_merged.continuous');
+%Hippocampus
+[data17m, ~, ~] = load_open_ephys_data_faster('100_CH17_merged.continuous');
+
+%Load states vectors 
+load('rat26_plusmaze_base_2016-03-08_10-24-41-states.mat');
+%% Extract only NREM signals. (1 for awake, 3 for NREM)
+fs=20000; %Sampling frequency of acquisition.  
+c=find(transitions(:,1)==3); 
+newtrans=transitions(c,2:3); %Only use the NREM times. 
+transamp=newtrans.*(fs); %Convert from seconds to samples 
+
+%Defining void vectors to save NREM signals. 
+C6=cell(length(transamp),1);%NREM Reference signals
+C9=cell(length(transamp),1);%NREM Reference signals
+C12=cell(length(transamp),1);%NREM Reference signals
+C17=cell(length(transamp),1);%NREM Reference signals
+
+T6=cell(length(transamp),1);% NREM Reference timestamps (Identical for all channels)
+tiempo=nan(length(transamp),1); %Time duration per epoch
+
+%Extract signals per channel and time  
+for i=1:length(transamp)
+probemos=transamp(i,:);
+C6{i}=data6m(round(probemos(1)):round(probemos(2))).*(0.195); % Open Ephys BitVolt CORRECTION FACTOR 
+C9{i}=data9m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR
+C12{i}=data12m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR
+C17{i}=data17m(round(probemos(1)):round(probemos(2))).*(0.195); %Open Ephys BitVolt CORRECTION FACTOR
+
+T6{i}=timestamps6(round(probemos(1)):round(probemos(2)));
+tiempo(i)=length(C6{i})*(1/fs); %Seconds
+end
+
+% Saving data for future use
+save('T6.mat','T6');
+save('C6.mat','C6');
+save('C9.mat','C9');
+save('C12.mat','C12');
+save('C17.mat','C17');
+save('tiempo.mat','tiempo');
+%% Load saved NREM data (Avoids running previous code)
+%Reference
+C6=load('C6.mat');
+C6=C6.C6;
+%PFC
+C9=load('C9.mat');
+C9=C9.C9;
+%Parietal
+C12=load('C12.mat');
+C12=C12.C12;
+%Hippocampus
+C17=load('C17.mat');
+C17=C17.C17;
+%Timestamps 
+T6=load('T6.mat');
+T6=T6.T6;
+%Time lenght per epoch
+tiempo=load('tiempo.mat');
+tiempo=tiempo.tiempo;
+fs=20000; % Sampling frequency. 
+
+%% Downsampling x20. New sampling frequency: 1000 Hz.
+
+Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+[b,a] = butter(3,Wn); %Filter coefficients for LPF
+%Monopolar
+V9=cell(length(C12),1);
+V6=cell(length(C12),1);
+V12=cell(length(C12),1);
+V17=cell(length(C12),1);
+%Bipolar
+S9=cell(length(C12),1);
+S12=cell(length(C12),1);
+S17=cell(length(C12),1);
+
+for i=1:length(C12)
+%Monipolar    
+V9{i,1}=filtfilt(b,a,C9{i,1});
+V9{i,1}=decimator(V9{i,1},20).';
+V6{i,1}=filtfilt(b,a,C6{i,1});
+V6{i,1}=decimator(V6{i,1},20).';
+V12{i,1}=filtfilt(b,a,C12{i,1});
+V12{i,1}=decimator(V12{i,1},20).';
+V17{i,1}=filtfilt(b,a,C17{i,1});
+V17{i,1}=decimator(V17{i,1},20).';
+
+%Bipolar
+S9{i,1}=V9{i,1}-V6{i,1};
+S12{i,1}=V12{i,1}-V6{i,1};
+S17{i,1}=V17{i,1}-V6{i,1};
+end
+fn=1000; %New sampling frequency
+%%
+%Bipolar
+save('S17.mat','S17');
+save('S12.mat','S12');
+save('S9.mat','S9');
+
+%Monopolar
+save('V17.mat','V17');
+save('V12.mat','V12');
+save('V9.mat','V9');
+save('V6.mat','V6');
+
+%%
+S17=load('S17.mat');
+S17=S17.S17;
+
+S12=load('S12.mat');
+S12=S12.S12;
+
+S9=load('S9.mat');
+S9=S9.S9;
+
+V17=load('V17.mat');
+V17=V17.V17;
+
+V12=load('V12.mat');
+V12=V12.V12;
+
+V9=load('V9.mat');
+V9=V9.V9;
+
+V6=load('V6.mat');
+V6=V6.V6;
+

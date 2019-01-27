@@ -1,6 +1,6 @@
 %% "Project: Large scale interactions in the cortico-hippocampal network" 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%STUDENT: Ramiro Adrián Alemán Zapata. Master Student @ TU Eindhoven. 
+%STUDENT: Ramiro Adri??n Alem??n Zapata. Master Student @ TU Eindhoven. 
 %ADVISORS: Francesco Battaglia and Lisa Genzel
 %Donders Institute of Brain, Cognition and Behaviour. Radboud University. 
 %2017
@@ -22,9 +22,6 @@
 %load_open_ephys_data_faster()
 %And more to come
 %% LOADING DATA OF 3 MAIN CHANNELS AND REFERENCE
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-cd('/home/raleman/Documents/internship')
 
 %Reference
 [data6m, timestamps6, ~] = load_open_ephys_data_faster('100_CH6_merged.continuous');
