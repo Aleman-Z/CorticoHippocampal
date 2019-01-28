@@ -60,6 +60,9 @@ Leaves spindles visualization RAW.
 *Equal Y-axis and colorbar among brain areas.*
 
 ## :zap: Controls for spectrograms.
+<p align="center">
+<img src="gui_parameters.PNG" width="300">
+</p>
 
 1. **sanity=1:**
 *This control test consists on selecting the same n random number of ripples among conditions. Since Plusmaze generates less ripples, this condition defines the value of n.*
