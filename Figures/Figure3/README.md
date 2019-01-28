@@ -5,10 +5,6 @@
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
 <img src="example_figure_spectrogram.png" width="600">
 
-* **spec_loop_improve.m:**
-*Calls .fig files with non-normalized spectrograms and changes color scaling settings to improve visualization of spindles. :warning: UPDATE: Avoid using. This approach gives wrong results for Non-learning baseline.*
-<img src="example_improve.png" width="600">
-
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
 
