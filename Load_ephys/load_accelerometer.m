@@ -51,8 +51,11 @@ save('sos.mat','sos');
 
 clear variables
 %%
+% % load sos
 for j=1:length(sos)
 
 plot(sos{j})
+%plot(abs(diff(sos{j})))
+
 pause(1)
 end

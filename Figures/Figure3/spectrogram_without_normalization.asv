@@ -10,18 +10,21 @@ Block{3}='block2';
 
 %PARAMETER SELECTION.
 %-------------------------------------
-%Merge baselines? 0:No, 1:Yes. 
-mergebaseline=0; %Make sure baselines's while loop condition is never equal to 2.
-%Maximum number of ripples. 
-FiveHun=2; % Options: 0 all, 1 current (500), 2 1000?
-%Swaps baseline sessions for testing purposes:
+% %Merge baselines? 0:No, 1:Yes. 
+% mergebaseline=0; %Make sure baselines's while loop condition is never equal to 2.
+% %Maximum number of ripples. 
+% FiveHun=2; % Options: 0 all, 1 current (500), 2 1000?
+% %Swaps baseline sessions for testing purposes:
+% %Controls for Spectrograms: 0:NO, 1:YES. 
+% rippletable=0; %Generate table with ripple information. 
+% sanity=0; %Sanity check. 
+% quinientos=0;
+% outlie=0; %More aggressive outlier detection. 
+
+
+gui_parameters
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
-%Controls for Spectrograms: 0:NO, 1:YES. 
-rippletable=0; %Generate table with ripple information. 
-sanity=0; %Sanity check. 
-quinientos=0;
-outlie=0; %More aggressive outlier detection. 
 
 %%
 for meth=4:4 %Method of Ripple selection. Method 4 gives best results. 
@@ -40,8 +43,7 @@ switch Rat
     otherwise
         disp('Enter Baseline manually')
         base=1;
-                xo %Comment this line after selecting the base.
-
+        xo %Comment this line after selecting the right base value.
 end
 
 % for base=1:2 %Baseline numeration.     

@@ -8,21 +8,24 @@ Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
 
-%PARAMETER SELECTION.
+%PARAMETER SELECTION> Sent to GUI. 
 %-------------------------------------
-%Merge baselines? 0:No, 1:Yes. 
-mergebaseline=0; %Make sure baselines's while loop condition is never equal to 2.
-%Maximum number of ripples. 
-FiveHun=2; % Options: 0 all, 1 current (500), 2 1000?
-%Swaps baseline sessions for testing purposes:
+% %Merge baselines? 0:No, 1:Yes. 
+% mergebaseline=0; %Make sure baselines's while loop condition is never equal to 2.
+% %Maximum number of ripples. 
+% FiveHun=2; % Options: 0 all, 1 current (500), 2 1000?
+% %Swaps baseline sessions for testing purposes:
+% %Controls for Spectrograms: 0:NO, 1:YES. 
+% rippletable=0; %Generate table with ripple information. 
+% sanity=0; %Sanity check. 
+% quinientos=0;
+% outlie=0; %More aggressive outlier detection. 
+
+%Call GUI
+gui_parameters % Will close automatically with Default values after 8 seconds. 
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
-%Controls for Spectrograms: 0:NO, 1:YES. 
-rippletable=0; %Generate table with ripple information. 
-sanity=0; %Sanity check. 
-quinientos=0;
-outlie=0; %More aggressive outlier detection. 
-
+xo
 %%
 for meth=4:4 %Method of Ripple selection. Method 4 gives best results. 
 for RAT=2:2 %Rat index
