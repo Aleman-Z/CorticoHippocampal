@@ -73,6 +73,7 @@ end
 
 %Bipolar
 % S17=V17-V6;
+
 S17=load('S17.mat');
 S17=S17.S17;
 
@@ -162,6 +163,15 @@ Bip9=cellfun(@(equis) filtfilt(b1,a1,equis), S9 ,'UniformOutput',false);
 % 
 % V6=load('V6.mat');
 % V6=V6.V6;
+
+%Load accelerometer data in case it was saved. 
+fileList = dir('sos.mat');
+if size(fileList,1)==1
+load(fileList.name) 
+else
+    sos=[];
+end
+
 'Loaded channels'
 
 %Total amount of time spent sleeping:
@@ -268,7 +278,7 @@ sig2=cell(7,1);
 % %sig2{10}=SSS9;
 % sig2{7}=V6;
 sig2{1}=V17;
-sig2{2}=[];
+sig2{2}=sos; % Accelerometer data. 
 sig2{3}=V12;
 % sig2{4}=R12;
 sig2{4}=[];

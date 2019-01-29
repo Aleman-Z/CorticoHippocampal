@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 28-Jan-2019 15:56:52
+% Last Modified by GUIDE v2.5 28-Jan-2019 19:50:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,6 +59,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 %Default parameters
+RAT=1;
 mergebaseline=0; %Make sure baselines's while loop condition is never equal to 2.
 %Maximum number of ripples. 
 FiveHun=2; % Options: 0 all, 1 current (500), 2 1000?
@@ -73,6 +74,7 @@ outlie=0; %More aggressive outlier detection.
 acer=1;
 
 assignin('base', 'acer', acer)
+assignin('base', 'RAT', RAT)
 assignin('base', 'mergebaseline', mergebaseline)
 assignin('base', 'FiveHun', FiveHun)
 assignin('base', 'rat26session3', rat26session3)
@@ -309,7 +311,31 @@ end
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
 close all
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on selection change in listbox1.
+function listbox1_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+RAT=get(hObject,'Value')
+assignin('base', 'RAT', RAT)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox1
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

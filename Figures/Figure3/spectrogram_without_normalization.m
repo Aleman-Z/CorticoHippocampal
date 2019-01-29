@@ -1,3 +1,6 @@
+close all
+clear variables
+%%
 acer=1; %Computer being used. 
 rats=[26 27 24 21]; %Rats' labels. 
 %S[ectrogram window durations.
@@ -25,10 +28,20 @@ Block{3}='block2';
 gui_parameters % Will close automatically with Default values after 8 seconds. 
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
-xo
+meth=4;%Method of Ripple selection. Method 4 gives best results.
+datapath='F:\Lisa_files\'; %Folder where data is saved. 
+%% Select experiment to perform. 
+% inter=1;
+%Select length of window in seconds:
+% coher=0;
+% selectripples=1;
+notch=0;
+% nrem=3;
+% Score=1;
 %%
-for meth=4:4 %Method of Ripple selection. Method 4 gives best results. 
-for RAT=2:2 %Rat index
+%for meth=4:4  
+
+%for RAT=1:1 %Rat index
  if meth==4
     s=struct; %Declare struct for saving ripple info. 
  end  
@@ -48,17 +61,28 @@ end
 
 % for base=1:2 %Baseline numeration.     
 while base<=2-mergebaseline %Should be 1 for MERGED BASELINES otherwise 2.
-riptable=zeros(4,3);        
-for rat24base=1:1 %Must be 2 for Rat 24.
- 
-  if RAT~=3 && rat24base==2
-      break
-  end
+riptable=zeros(4,3); 
+%for rat24base=1:1 %Must be 2 for Rat 24.
+if Rat==24
+    rat24base=2;
+else
+    rat24base=1;
+end
+%xo
 
-for dura=1:1 %Starts with 1
+    if RAT~=3 && rat24base==2
+      break
+    end
+%for dura=1:1 %Starts with 1
+dura=1; %Whole duration   
+%Window duration (ms)
+if dura==1
+ro=[1200];
+else
+ro=[10200];    
+end
     
-    
-% for Rat=26:26
+%% Rat 26
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -118,6 +142,7 @@ labelconditions=[
 
 
 end
+%% RAT 27
 if Rat==27
 nFF=[
      {'rat27_nl_base_2016-03-28_15-01-17'                   } %Baseline 2: Use this one. 
@@ -175,33 +200,7 @@ labelconditions=[
 
     
 end
-
-if Rat==21
- 
- nFF=[  
-    {'2015-11-27_13-50-07 5h baseline'             }
-    {'rat21 baselin2015-12-11_12-52-58'            }
-    {'rat21_learningbaseline2_2015-12-10_15-24-17' }
-    {'rat21with45minlearning_2015-12-02_14-25-12'  }
-    %{'rat21t_maze_2015-12-14_13-29-07'             }
-    {'rat21 post t-maze 2015-12-14_13-30-52'       }
-    
-];
-
-%%
-labelconditions=[
-    {    
-     'Learning Baseline'
-                }
-     
-     '45minLearning'
-     'Novelty_2'
-     't-maze'
-     'Post t-maze'
-    ];
-    
-end
-
+%% Rat 24
 if Rat==24
 nFF=[  
     {'Baseline1'}
@@ -239,7 +238,32 @@ labelconditions=[
 
 NFF=[];
 end
+%% Rat 21
+if Rat==21
+ 
+ nFF=[  
+    {'2015-11-27_13-50-07 5h baseline'             }
+    {'rat21 baselin2015-12-11_12-52-58'            }
+    {'rat21_learningbaseline2_2015-12-10_15-24-17' }
+    {'rat21with45minlearning_2015-12-02_14-25-12'  }
+    %{'rat21t_maze_2015-12-14_13-29-07'             }
+    {'rat21 post t-maze 2015-12-14_13-30-52'       }
+    
+];
 
+%%
+labelconditions=[
+    {    
+     'Learning Baseline'
+                }
+     
+     '45minLearning'
+     'Novelty_2'
+     't-maze'
+     'Post t-maze'
+    ];
+    
+end
 %% Check if experiment has been run before.
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -293,75 +317,46 @@ if base==3
     break
 end
 
-
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    addpath /home/raleman/Documents/internship/fieldtrip-master/
-    InitFieldtrip()
-
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
-    addpath D:\internship\fieldtrip-master
-    InitFieldtrip()
-
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,num2str(Rat)))
     clc
 end
 
-%% Select experiment to perform. 
-% inter=1;
-%Select length of window in seconds:
-if dura==1
-ro=[1200];
-else
-ro=[10200];    
-end
-% coher=0;
-% selectripples=1;
-notch=0;
-nrem=3;
-myColorMap = jet(8);
-% Score=1;
-%%
 
+%%
 %Make labels
 label1=cell(7,1);
-label1{1}='Hippo';
-label1{2}='Hippo';
-label1{3}='Parietal';
-label1{4}='Parietal';
+label1{1}='HPC';
+label1{2}='HPC';
+label1{3}='PAR';
+label1{4}='PAR';
 label1{5}='PFC';
 label1{6}='PFC';
 label1{7}='Reference';
 
 label2=cell(7,1);
-label2{1}='Monopolar';
-label2{2}='Bipolar';
-label2{3}='Monopolar';
-label2{4}='Bipolar';
-label2{5}='Monopolar';
-label2{6}='Bipolar';
-label2{7}='Monopolar';
+
 
 %%
-myColorMap = jet(8);                                                                                                                                                                                    
-myColorMap =myColorMap([2 4 5 7],:);
-myColorMap(2,:)=[0, 204/255, 0];
-myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+% myColorMap = jet(8);                                                                                                                                                                                    
+% myColorMap =myColorMap([2 4 5 7],:);
+% myColorMap(2,:)=[0, 204/255, 0];
+% myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
 %Rat 24
 % if Rat==24
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
 % end
 
- 
-for block_time=0:0 %Should start with 0
+%for block_time=0:0 %Should start with 0
+block_time=0;
+
 for iii=2:length(nFF) %Should start with 2!
-%xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
@@ -456,49 +451,50 @@ end
  %for level=1:1
      
 
- 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,num2str(Rat)))
 end
 
 cd(nFF{iii})
-lepoch=2;
 
- level=1;
+% lepoch=2;
+level=1;
  
 %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+% [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
 %xo
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
-% [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
+%[sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
+% [Sig1,Sig2,Ripple,cara,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
-    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
-%     [Nsig1,Nsig2,Nripple,Ncarajo,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
+    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+%     [Nsig1,Nsig2,Nripple,Ncara,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
 end
 
 if meth==2
-    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
 end
 
 if meth==3
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 end
 %%
+%xo
 if meth==4   
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,num2str(Rat)))
 end
 
+%Go to Baseline
 cd(nFF{1})
 
 [timeasleep]=find_thr_base;
@@ -544,39 +540,39 @@ close
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,num2str(Rat)))
 end
 
+%Plusmaze or other condition. 
 cd(nFF{iii})
-    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 riptable(iii,1)=ripple;
 riptable(iii,2)=timeasleep;
 riptable(iii,3)=RipFreq2;
 
 end
-
 %Nose=[Nose RipFreq2];
 
 
-%% Select time block 
+%% Select time block  (Ignore if using whole signal, i.e. block_time==0).
 if block_time==1
-[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
-ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,30,0);
+ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
 end
 
 if block_time==2
-[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
-ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,60,30);
+ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
 end
 
 %%
 xo
-%[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
+%[NSig1,NSig2,NRipple,Ncara,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 % if meth==3
-% [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
+% [p,q,~,~,~,~]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
 % else
-[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
+[p,q,~,~,~,~]=getwin2(cara{:,:},veamos{1},sig1,sig2,ro);    
 %,ripple(level),CHTM(level+1)
 % end
 clear sig1 sig2
@@ -655,31 +651,31 @@ end
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,num2str(Rat)))
 end
 
 cd(nFF{1}) %Baseline
 
 %run('newest_load_data_nl.m')
-%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+%[sig1_nl,sig2_nl,ripple2_nl,cara_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 
 if meth==1
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
 end
 
 if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
+    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
 end
 
 if meth==3
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
 end
 
 if meth==4
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
 riptable(1,1)=ripple_nl;
 riptable(1,2)=timeasleep2;
@@ -689,13 +685,13 @@ end
 %%
 
 if block_time==1
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
+[cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));
 end
 
 if block_time==2
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
-ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
+[cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));    
 end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
@@ -705,18 +701,18 @@ for w=2:3
 
 %%
  xo
-% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
+% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,randrip);
-%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,randrip);
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
 else
  P1=0;
  P2=0;
     
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base);
-%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base);
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
-%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
+%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %xo
 %% Move to the middle
 pos = get(h,'Position');
@@ -818,11 +814,11 @@ end
 
 end
 
-end
+%end
 
 %%
 %clearvars -except acer Rat
-end
+%end
 xo
 if meth==4
 
@@ -844,7 +840,7 @@ if meth==4
     [s.(Base{base})]=riptable;
 end
 
-end
+%end
 xo
 if rippletable==0
 spec_loop_improve(RAT,block_time,sanity,dura,quinientos,outlie);
@@ -925,5 +921,5 @@ if rippletable==1
 end
 base=1;
 
-end
-end
+%end
+%end

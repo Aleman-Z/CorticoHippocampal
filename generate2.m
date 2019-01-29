@@ -1,15 +1,15 @@
 %Hippocampus Bipolar
 %Hippocampus Monopolar
 
-%function [p3, p5,cellx,cellr,cfs,f]=generate2(carajo,veamos, Bip17,S17,label1,label2,Num)
-function [p3, p5,cellx,cellr]=generate2(carajo,veamos, Bip17,S17,label1,label2,Num)
+%function [p3, p5,cellx,cellr,cfs,f]=generate2(cara,veamos, Bip17,S17,label1,label2,Num)
+function [p3, p5,cellx,cellr]=generate2(cara,veamos, Bip17,S17,Num)
 
 fn=1000;
 % figure('units','normalized','outerposition',[0 0 1 1])
-%[~,~, cellx,cellr,~,~]=win(carajo,veamos,Bip17,S17,Num);
+%[~,~, cellx,cellr,~,~]=win(cara,veamos,Bip17,S17,Num);
 
 %Generates windows
-[cellx,cellr]=win(carajo,veamos,Bip17,S17,Num);
+[cellx,cellr]=win(cara,veamos,Bip17,S17,Num);
 %Clears nans
 [cellx,cellr]=clean(cellx,cellr);
 
