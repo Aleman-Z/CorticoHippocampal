@@ -572,7 +572,7 @@ xo
 % if meth==3
 % [p,q,~,~,~,~]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
 % else
-[p,q,~,~,~,~]=getwin2(cara{:,:},veamos{1},sig1,sig2,ro);    
+[p,q,~,sos]=getwin2(cara,veamos,sig1,sig2,ro);    
 %,ripple(level),CHTM(level+1)
 % end
 clear sig1 sig2
