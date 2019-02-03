@@ -2,7 +2,7 @@
 
 :dart:Example code for Cluster statistics.
 * **compute_statistics.m**
-
+<img src="example_stats.png" width="400">
 
 :dart:Max-pixel-based method
 
