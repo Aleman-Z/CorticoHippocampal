@@ -1,5 +1,9 @@
 ### Statistical Analysis
 
+:dart:Example code for Cluster statistics.
+* **compute_statistics.m**
+
+
 :dart:Max-pixel-based method
 
 * **stats_high.m:**  
