@@ -10,18 +10,19 @@ ft_data1.time = (timecell);
 
 
 %ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
-ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
+ft_data1.label = {'HPC'; 'PAR'; 'PFC'};
 
 cfg = [];
 
-    cfg.channel            = 'all';
-    cfg.trials             = 'all';
-    cfg.covariance         = 'no';
-    cfg.covariancewindow   = 'all';
-    cfg.keeptrials         = 'yes';
-    cfg.removemean         = 'no';
-    cfg.vartrllength       = 0;
+%     cfg.channel            = 'all';
+%     cfg.trials             = 'all';
+%     cfg.covariance         = 'no';
+%     cfg.covariancewindow   = 'all';
+%     cfg.keeptrials         = 'yes';
+%     cfg.removemean         = 'no';
+%     cfg.vartrllength       = 0;
     
    avg= ft_timelockanalysis(cfg,ft_data1);
    P2=avg.avg;
+%    P2=avg;
 end

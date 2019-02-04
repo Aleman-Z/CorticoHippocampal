@@ -1,8 +1,7 @@
 %function [p,q,timecell,Q,P1,P2]=getwin2(cara,veamos,sig1,sig2,ro)
 function [p,q,Q,sos]=getwin2(cara,veamos,sig1,sig2,ro)
 
-cara=cara{:,:};
-veamos=veamos{1};
+
 %,ripple,thr
 % fn=1000;
 % isempty(sig2{2})
