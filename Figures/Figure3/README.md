@@ -14,6 +14,8 @@
 *The use of this control activates a more agressive detection of outliers.*
 
 ## :zap: Figure 3
+* **spectrogram_working_version.m:**
+*Best version up to Feb 2019.* :heavy_check_mark:
 
 * **spectrogram_without_normalization.m:**
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
@@ -34,7 +36,8 @@
 *Corrected version of plot_inter_conditions_33, using an improved method to generate the stats.* (Update 25/08: Not suitable for further figure improvement. Best to run: *plot_inter_conditions_33* followed by *plot_inter_high_improve*).
 * **plot_inter_high_improve.m:**
 *Adaptation of plot_inter_conditions_33_high, only computing the High Gamma spectrograms*
-
+* **plot_inter_conditions_33.m:**
+*Best version up to Feb/2019. Use this one.* :heavy_check_mark:
 * **colorbar_among_conditions.m:**
 *Equalizes the colorbar ranges among conditions for a specific brain area*
 
