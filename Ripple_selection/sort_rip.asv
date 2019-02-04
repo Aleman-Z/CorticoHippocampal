@@ -1,5 +1,5 @@
-function [P,Q,SOS]=sort_rip(p,q,varargin)
-    
+function [P,Q]=sort_rip(p,qm)
+
     av=cat(1,p{1:end});
     %av=cat(1,q{1:end});
 
@@ -14,16 +14,7 @@ function [P,Q,SOS]=sort_rip(p,q,varargin)
     
     P=p(ran);
     Q=q(ran);
-    if size(varargin,1)==1
-       sos=varargin{1};
-       SOS=sos(ran);   
-       SOS=SOS(11:end);
-    else
-        SOS=[];
-    end
-    
     P=P(11:end); %Ignore first 10 highest ripples cause they might be artifacts. 
     Q=Q(11:end);
-    
 end
 

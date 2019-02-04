@@ -475,19 +475,27 @@ lepoch=2;
 
  level=1;
  
+%Get averaged time signal.
+% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+% if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
+% [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
+% else
+%xo
+%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
+% [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
-    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
-%     [Nsig1,Nsig2,Nripple,Ncara,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+%     [Nsig1,Nsig2,Nripple,Ncarajo,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
 end
 
 if meth==2
-    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
 end
 
 if meth==3
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 end
 %%
@@ -547,7 +555,7 @@ else
 end
 
 cd(nFF{iii})
-    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 riptable(iii,1)=ripple;
 riptable(iii,2)=timeasleep;
@@ -560,23 +568,97 @@ end
 
 %% Select time block 
 if block_time==1
-[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,30,0);
-ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
+ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
 end
 
 if block_time==2
-[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,60,30);
-ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
+[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
+ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
 end
 
 %%
-xo
-%[p,q,~,sos]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,ro); 
-[p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
+%xo
+%[NSig1,NSig2,NRipple,NCarajo,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
+% if meth==3
+% [p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
+% else
+[p,q,~,sos]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,ro); 
+%,ripple(level),CHTM(level+1)
+% end
 
-% clear sig1 sig2
+clear sig1 sig2
 %Ripple selection. Memory free. 
-[p,q,sos]=ripple_selection(p,q,sos,Rat);
+%xo
+
+% % % % % % if quinientos==0
+% % % % % % %xd
+% % % % % % if outlie==1 
+% % % % % % ache=max_outlier(p);
+% % % % % % p=p(ache);
+% % % % % % q=q(ache);
+% % % % % % end
+% % % % % % 
+% % % % % % [ran]=select_rip(p,FiveHun);
+% % % % % % p=p([ran]);
+% % % % % % q=q([ran]);
+% % % % % % 
+% % % % % % else
+% % % % % %      if iii~=2
+% % % % % %         [ran]=select_quinientos(p,length(randrip)); 
+% % % % % %         p=p([ran]);
+% % % % % %         q=q([ran]);
+% % % % % %      %    ran=1:length(randrip);
+% % % % % %      end
+% % % % % % end
+
+%Ripple selection. 
+%No outliers
+ache=max_outlier(p);
+p=p(ache);
+q=q(ache);
+isempty(sos)
+if 
+else
+end
+sos=sos(ache);
+%Find strongests ripples. 
+[p,q]=sort_rip(p,q);
+xo
+
+if ~isempty(sos) && Rat==24
+    xo
+    'Find outlier'
+    K=[];
+    for k=1:length(sos)
+        [vtr]=findsleep(sos{k}.',2*median(sos{k}.')); %1 for those above threshold.
+        if sum(vtr)>0
+            K=[K k];
+        end
+    end
+ p=p(K);   
+
+end
+
+%Select n strongest
+% 
+% switch Rat
+%     case 24
+% %         n=550;
+%         n=552;
+%     case 26
+% %         n=180;
+%         n=385;
+%     case 27
+% %         n=326;
+%         n=339;
+% end
+% 
+% p=p(1:n);
+% q=q(1:n);
+
+
+%
 
 if iii~=2 && sanity==1 && quinientos==0 
  p=p(randrip);
@@ -605,25 +687,25 @@ end
 cd(nFF{1}) %Baseline
 
 %run('newest_load_data_nl.m')
-%[sig1_nl,sig2_nl,ripple2_nl,cara_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
 
 if meth==1
-[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
 end
 
 if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
+    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
 end
 
 if meth==3
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
 end
 
 if meth==4
-[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM2=[chtm chtm];
 riptable(1,1)=ripple_nl;
 riptable(1,2)=timeasleep2;
@@ -633,13 +715,13 @@ end
 %%
 
 if block_time==1
-[cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,30,0);
-ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,30,0);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));
 end
 
 if block_time==2
-[cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,60,30);
-ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));    
+[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,60,30);
+ripple_nl=sum(cellfun('length',carajo_nl{1}(:,1)));    
 end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
@@ -649,18 +731,18 @@ for w=2:3
 
 %%
  xo
-% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
+% h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,randrip);
-%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,randrip);
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
 else
  P1=0;
  P2=0;
     
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
-%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
+%[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
-%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
+%h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %xo
 %% Move to the middle
 pos = get(h,'Position');

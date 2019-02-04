@@ -25,6 +25,8 @@ i=5;
 %Look for accelerometer windows. 
 if ~isempty(sig2{2})
 i=2;
+disp(sig1)
+disp(sig2)
 [sos]=generate2(cara,veamos, sig1{i},sig2{i},ro); 
 sos=cellfun(@transpose,sos,'UniformOutput',0);
 % sos=sos.';
