@@ -3,7 +3,13 @@
 selpath = uigetdir('','Select folder where data will be saved');
 %% Get sleep labels. 
 cd(path)
-fileList = dir('*-states.mat') %Gets states data. 
+fileList = dir('*-states.mat') %Gets sctates data. 
+% xo
+if size(fileList,1)>=2
+    'Multiple labels on folder. Select one'
+    xo
+    fil={fileList.name};
+end
 st=fileList.name;
 load(st) %Load states
 %%
@@ -52,10 +58,11 @@ save('sos.mat','sos');
 clear variables
 %%
 % % load sos
-for j=1:length(sos)
 
-plot(sos{j})
-%plot(abs(diff(sos{j})))
-
-pause(1)
-end
+% for j=1:length(sos)
+% 
+% plot(sos{j})
+% %plot(abs(diff(sos{j})))
+% 
+% pause(1)
+% end
