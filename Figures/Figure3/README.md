@@ -41,8 +41,14 @@
 * **colorbar_among_conditions.m:**
 *Equalizes the colorbar ranges among conditions for a specific brain area*
 
+####  :link: Post-Processing steps for spectrograms: 
+Simply run this function:
 
-####  :link: NEW Post-Processing steps for spectrograms (19-9-18): :heavy_check_mark:
+**post_spectro.m** :heavy_check_mark:
+
+
+Based on the following steps:
+####  Post-Processing steps for spectrograms (19-9-18):
 Leaves spindles visualization RAW.
 
 1. **colorbar_among_conditions2.m:**
