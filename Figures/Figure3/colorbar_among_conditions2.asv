@@ -1,4 +1,4 @@
-function [Rat,selpath,ldura]=colorbar_among_conditions2()
+function colorbar_among_conditions2()
 close all
 clear all
 
@@ -68,67 +68,56 @@ RAT=str2num(answer{1});
 
 switch RAT
     case 26
-        Rat=1;
     case 27
-        Rat=2;
-    case 24
-        Rat=3
+    case 
     otherwise
-        'Wrong rat number'
-        xo
 end
-%xo
+xo
 %for Rat=3:3
-selpath = uigetdir([],'Select folder with spectrograms to process');
-cd(selpath)
+Rat=3;    
+if Rat==1
+    
+    if acer==0
+         cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
           if ldura==2
               cd('..')
               cd('10sec')
           end
-% xo
-% if Rat==1
-%     
-%     if acer==0
-%          cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
-%           if ldura==2
-%               cd('..')
-%               cd('10sec')
-%           end
-%     else
-%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat))) 
-%           cd('C:\Users\addri\Dropbox\Figures\Figure3\26\Newest_first')
-%           if ldura==2
-%               cd('..')
-%               cd('10sec')
-%           end
-%     end
-% end
-% 
-% if Rat==2
-%     
-%     if acer==0
-%          cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
-%           if ldura==2
-%               cd('..')
-%               cd('10sec')
-%           end
-%     else
-%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-%           cd('C:\Users\addri\Dropbox\Figures\Figure3\27\Newest_first')
-%           if ldura==2
-%               cd('..')
-%               cd('10sec')
-%           end
-%     end
-% end
-% 
-% if Rat==3
-%     if acer==0
-%      cd('/home/raleman/Dropbox/Figures/Figure3/24/LaMasMejor')
-%     else
-%         cd('C:/Users/addri/Dropbox/Figures/Figure3/24/LaMasMejor')
-%     end
-% end
+    else
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat))) 
+          cd('C:\Users\addri\Dropbox\Figures\Figure3\26\Newest_first')
+          if ldura==2
+              cd('..')
+              cd('10sec')
+          end
+    end
+end
+
+if Rat==2
+    
+    if acer==0
+         cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
+          if ldura==2
+              cd('..')
+              cd('10sec')
+          end
+    else
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+          cd('C:\Users\addri\Dropbox\Figures\Figure3\27\Newest_first')
+          if ldura==2
+              cd('..')
+              cd('10sec')
+          end
+    end
+end
+
+if Rat==3
+    if acer==0
+     cd('/home/raleman/Dropbox/Figures/Figure3/24/LaMasMejor')
+    else
+        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/LaMasMejor')
+    end
+end
 %xo
     %%
 for dura=ldura:ldura
@@ -136,30 +125,21 @@ for block_time=0:0
 for w=2:3 
     %xo
     for iii=2:length(labelconditions)
-        if iii==2 && w==2
-        opts.Resize = 'on';
-        opts.WindowStyle = 'modal';
-        opts.Interpreter = 'tex';
-        prompt='\bf Enter file name';
-        str = inputdlg(prompt,'Input',[2 30],{'Spec_removed_artifact_Newbase'},opts);
-        str=str{1};
+        if sanity~=1
+            if outlie==1
+                  string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
+            else
+                  string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
+            end   
+        else
+            if quinientos==1
+                string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+
+            else
+                string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+
+            end
         end
-        string=strcat(str,labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-%         if sanity~=1
-%             if outlie==1
-%                   string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
-%             else
-%                   string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig'); 
-%             end   
-%         else
-%             if quinientos==1
-%                 string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
-% 
-%             else
-%                 string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
-% 
-%             end
-%         end
         %xo
         openfig(string)  
         
@@ -172,25 +152,23 @@ for w=2:3
     mVER1=[ min(VER1(:,1)) max(VER1(:,2))];
     mVER2=[ min(VER2(:,1)) max(VER2(:,2))];
     close all
-%    xo
+    
     for iii=2:length(labelconditions)
     
     
-%     if sanity~=1
-%     if  outlie==1  
-%     string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-%     else
-%     string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
-%     end
-%     else
-%         if quinientos==1
-%              string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
-%         else
-%              string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');       
-%         end
-%     end
-        string=strcat(str,labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-
+    if sanity~=1
+    if  outlie==1  
+    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+    else
+    string=strcat('Spec_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+    end
+    else
+        if quinientos==1
+             string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
+        else
+             string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');       
+        end
+    end
         openfig(string)    
     %figure(1)
     h = gcf; %current figure handle
@@ -385,5 +363,4 @@ end
 end
 end
 %end
-close all
 end

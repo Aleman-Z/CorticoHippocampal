@@ -1,7 +1,8 @@
-close all
-clear all
+function same_axis2(Rat,ldura,selpath)
+% close all
+% clear all
 
-acer=1;
+% acer=1;
 labelconditions=[
     {     
     'Baseline'}
@@ -36,10 +37,11 @@ Block{2}='block1';
 Block{3}='block2';
 sanity=0;
 quinientos=0;
-ldura=1; %1 for 1 sec, 2 for 10 sec. 
+%ldura=1; %1 for 1 sec, 2 for 10 sec. 
 outlie=1;
 %%
-addingpath(acer)
+%addingpath(acer)
+
 % if acer==0
 % addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 % addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
@@ -57,52 +59,57 @@ addingpath(acer)
 % end
 %%
 
-for Rat=3:3
+%for Rat=3:3
     
-if Rat==1
-    
-    if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
+% if Rat==1
+%     
+%     if acer==0
+%      cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     else
+%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%           cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     end
+% end
+% 
+% if Rat==2
+%     
+%     if acer==0
+%      cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     else
+%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%           cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     end
+% end
+% 
+% 
+% if Rat==3
+%     if acer==0
+%         cd('/home/raleman/Dropbox/Figures/Figure3/24/LaMasMejor')
+%     else
+%         cd('C:/Users/addri/Dropbox/Figures/Figure3/24/LaMasMejor')
+%     end
+% end
+cd(selpath)
           if ldura==2
               cd('..')
               cd('10sec')
           end
-    else
-          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    end
-end
-
-if Rat==2
-    
-    if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    else
-          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    end
-end
-
-
-if Rat==3
-    if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24/NewestNL')
-    else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/NewestNL')
-    end
-end
 % xo
     %%
 for dura=ldura:ldura

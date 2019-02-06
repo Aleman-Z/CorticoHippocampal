@@ -1,7 +1,7 @@
-close all
-clear all
-
-acer=1;
+% close all
+% clear all
+function axis_among_conditions2(Rat,selpath,ldura)
+%acer=1;
 labelconditions=[
     {     
     'Baseline'}
@@ -21,8 +21,8 @@ labelconditions=[
     ];
 
 label1=cell(7,1);
-label1{1}='Hippo';
-label1{2}='Hippo';
+label1{1}='HPC';
+label1{2}='HPC';
 label1{3}='Parietal';
 label1{4}='Parietal';
 label1{5}='PFC';
@@ -36,10 +36,10 @@ Block{2}='block1';
 Block{3}='block2';
 sanity=0;
 quinientos=0;
-ldura=1; %1 for 1 sec, 2 for 10 sec. 
+% ldura=1; %1 for 1 sec, 2 for 10 sec. 
 outlie=1;
 %%
-addingpath(acer)
+%addingpath(acer)
 % if acer==0
 % addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
 % addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
@@ -57,74 +57,81 @@ addingpath(acer)
 % end
 %%
 
-for Rat=3:3
+%for Rat=3:3
+cd(selpath)
+          if ldura==2
+              cd('..')
+              cd('10sec')
+          end
     
-if Rat==1
-    
-    if acer==0
-     cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    else
-          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    end
-end
-
-if Rat==2
-    
-    if acer==0
-   cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    else
-          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-          cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Newest_first')
-          if ldura==2
-              cd('..')
-              cd('10sec')
-          end
-    end
-end
-
-if Rat==3
-    if acer==0
-        cd('/home/raleman/Dropbox/Figures/Figure3/24/NewestNL')
-    else
-        cd('C:/Users/addri/Dropbox/Figures/Figure3/24/NewestNL')
-    end
-end
+% if Rat==1
+%     
+%     if acer==0
+%      cd('/home/raleman/Dropbox/Figures/Figure3/26/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     else
+%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%           cd('C:/Users/addri/Dropbox/Figures/Figure3/26/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     end
+% end
+% 
+% if Rat==2
+%     
+%     if acer==0
+%    cd('/home/raleman/Dropbox/Figures/Figure3/27/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     else
+%           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%           cd('C:/Users/addri/Dropbox/Figures/Figure3/27/Newest_first')
+%           if ldura==2
+%               cd('..')
+%               cd('10sec')
+%           end
+%     end
+% end
+% 
+% if Rat==3
+%     if acer==0
+%         cd('/home/raleman/Dropbox/Figures/Figure3/24/LaMasMejor')
+%     else
+%         cd('C:/Users/addri/Dropbox/Figures/Figure3/24/LaMasMejor')
+%     end
+% end
 %xo
     %%
 for dura=ldura:ldura
 for block_time=0:0
 for w=2:3    
     for iii=2:length(labelconditions)
-        if sanity~=1
-            if outlie==1
-                 string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');                    
-            else
-                 string=strcat('Spec2_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');                   
-            end
-            
-        else
-            if quinientos==1
-                string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+%         if sanity~=1
+%             if outlie==1
+%                  string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');                    
+%             else
+%                  string=strcat('Spec2_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');                   
+%             end
+%             
+%         else
+%             if quinientos==1
+%                 string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+% 
+%             else
+%                 string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+% 
+%             end
+%         end
+string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-            else
-                string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
-
-            end
-        end
-        %xo
+%xo
         openfig(string)  
         
         h = gcf; %current figure handle
@@ -140,20 +147,22 @@ for w=2:3
     for iii=2:length(labelconditions)
     
     
-    if sanity~=1
-        if outlie==1
-           string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');               
-        else
-           string=strcat('Spec2_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
-        end
- 
-    else
-        if quinientos==1
-             string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
-        else
-             string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');       
-        end
-    end
+%     if sanity~=1
+%         if outlie==1
+%            string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');               
+%         else
+%            string=strcat('Spec2_outliers_control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');    
+%         end
+%  
+%     else
+%         if quinientos==1
+%              string=strcat('Control_500_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');           
+%         else
+%              string=strcat('Control_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');       
+%         end
+%     end
+string=strcat('Spec2_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+
         openfig(string)    
     %figure(1)
     h = gcf; %current figure handle
@@ -341,4 +350,5 @@ end
 end
 end
 end
+close all
 end
