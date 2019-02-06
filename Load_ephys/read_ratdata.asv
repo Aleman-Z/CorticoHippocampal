@@ -89,11 +89,9 @@ end
     for ii=1:length(Files)
     load(Files(ii).name)
     end
-    
-    
-    'Reference'
+     'Reference'  
 %     [V6,~]=save_samples('100_CH6_merged.continuous',transitions);
-    [V6,~]=save_samples(strcat('100_CH',num2str(vr(2)),'_merged.continuous')...
+    [V6,~]=save_samples(strcat('100_CH',num2str(vr(2)),'_2.continuous')...
 ,transitions);
 
 
@@ -112,7 +110,7 @@ end
 
     'PFC'
     
-    [V9,~]=save_samples(strcat('100_CH',num2str(vr(3)),'_merged.continuous')...
+    [V9,~]=save_samples(strcat('100_CH',num2str(vr(3)),'_2.continuous')...
     ,transitions);
 
     cd(selpath2)
@@ -129,37 +127,31 @@ end
     
     'Parietal'
     
-    [V12,tiempo]=save_samples(strcat('100_CH',num2str(vr(4)),'_merged.continuous')...
+    [V12,tiempo]=save_samples(strcat('100_CH',num2str(vr(4)),'_2.continuous')...
     ,transitions);
     
-    cd(selpath2)
-    if create_fold==1
+    cd(selpath)
     cd(nFF{iii})
-    end
     save('V12.mat','V12')
     clear V12
     
-cd(selpath)
-if create_fold==1
+cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 cd(nFF{iii})
-end
 
-'HPC'
+'Channel 17'
 
-[V17,~]=save_samples(strcat('100_CH',num2str(vr(1)),'_merged.continuous')...
-,transitions);
+[V17,~]=save_samples('100_CH17_merged.continuous',transitions);
 
-cd(selpath2)
-if create_fold==1
+cd('/home/raleman/Documents/internship/26')
 cd(nFF{iii})
-end
 save('V17.mat','V17')
 clear V17
 
-xo
-%% Bipolar recordings (Not needed)
-clear all
+%cd('/media/raleman/My Book/SWRDisruptionPlusMaze/rat_26')
 
+
+
+clear all
 a=dir(fullfile(cd,'*.mat'))
 
 for ii=1:length(a)
