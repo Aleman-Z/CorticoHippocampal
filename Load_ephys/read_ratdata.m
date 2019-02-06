@@ -157,8 +157,8 @@ save('V17.mat','V17')
 clear V17
 
 xo
-%% Bipolar recordings (Not needed)
-clear all
+%% Bipolar recordings
+cd(selpath2)
 
 a=dir(fullfile(cd,'*.mat'))
 

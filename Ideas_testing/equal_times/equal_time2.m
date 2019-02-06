@@ -1,9 +1,9 @@
-function [carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,tdura,tdura2) 
+function [cara,veamos]=equal_time2(sig1,sig2,cara,veamos,tdura,tdura2) 
 fn=1000;
 signal2=cellfun(@(equis) times((1/0.195), equis)  ,sig1{1},'UniformOutput',false);
 ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
 
-consig=carajo{1};
+consig=cara{1};
 
 c1=consig(:,1);
 c2=consig(:,2);
@@ -26,9 +26,9 @@ t_index=ceil(t_pre);
 
 
 
-%sig1 sig2  carajo veamos
+%sig1 sig2  cara veamos
 %Redefine variables:
-carajo={carajo{1}(1:t_index,:)};
+cara={cara{1}(1:t_index,:)};
 
 
 % veamos={veamos{1}(veamos{1}<=t_index)};
@@ -36,19 +36,19 @@ veamos={veamos{1}(1:t_index,:)}; %THIS MIGHT BE WRONG, nah mate.
 
 
 
-%Modify carajo
+%Modify cara
 
 B_sleep(t_index-1); %Lower bound
 B_sleep(t_index); %Upper bound
 
 t_dif=tdura-B_sleep(t_index-1); %seconds
-aja=carajo{1}(end,:);
+aja=cara{1}(end,:);
 
 aja{1}=aja{1}((aja{1}<=t_dif));
 aja{2}=aja{2}((aja{1}<=t_dif));
 aja{3}=aja{3}((aja{1}<=t_dif));
 
-carajo{1}(end,:)=aja;
+cara{1}(end,:)=aja;
 
 
 %
@@ -56,7 +56,7 @@ if tdura2~=0
 tdura2=tdura2*60;
 t_pre2=interp1(B_sleep,[1:length(B_sleep)],tdura2);
 t_index2=floor(t_pre2);
-carajo={carajo{1}(t_index2:end,:)};
+cara={cara{1}(t_index2:end,:)};
 veamos={veamos{1}(t_index2:end,:)};
 
 B_sleep(t_index2); %Lower bound
@@ -68,13 +68,13 @@ t_dif2=abs(tdura2-B_sleep(t_index2+1)); %seconds
 
 
 %Lower bound
-aja=carajo{1}(1,:);
+aja=cara{1}(1,:);
 
 aja{1}=aja{1}((aja{1}>=t_dif2));
 aja{2}=aja{2}((aja{1}>=t_dif2));
 aja{3}=aja{3}((aja{1}>=t_dif2));
 
-carajo{1}(1,:)=aja;
+cara{1}(1,:)=aja;
 end
 
 end
