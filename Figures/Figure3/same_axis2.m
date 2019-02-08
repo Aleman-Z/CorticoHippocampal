@@ -327,11 +327,11 @@ set(gca, 'YTick',[1  size(i,1)/4 size(i,1)/2 size(i,1)/4*3    size(i,1)] , 'YTic
 %%
 if sanity ~=1
     if outlie==1
-string=strcat('Spec4_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec4_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec4_outliers_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec4_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
         
     else
