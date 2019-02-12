@@ -331,7 +331,7 @@ end
 % selectripples=1;
 notch=0;
 nrem=3;
-myColorMap = jet(8);
+% myColorMap = jet(8);
 % Score=1;
 %%
 
@@ -355,19 +355,10 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-myColorMap = jet(8);                                                                                                                                                                                    
-myColorMap =myColorMap([2 4 5 7],:);
-myColorMap(2,:)=[0, 204/255, 0];
-myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-
-%Rat 24
-% if Rat==24
-%     myColorMap = jet(length(nFF));                                                                                                                                                                                    
-% end
-
  
 for block_time=0:0 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
+    %length(nFF) 
 %xo
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -570,13 +561,16 @@ ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times
 end
 
 %%
-xo
+% xo
 %[p,q,~,sos]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,ro); 
 [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
-
-% clear sig1 sig2
-%Ripple selection. Memory free. 
+% xo
+clear sig1 sig2
+%Ripple selection. Memory free.
+if Rat~=24
 [p,q,sos]=ripple_selection(p,q,sos,Rat);
+end
+% 
 
 if iii~=2 && sanity==1 && quinientos==0 
  p=p(randrip);
@@ -648,7 +642,7 @@ if rippletable==0
 for w=2:3
 
 %%
- xo
+ 
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,randrip);
@@ -656,7 +650,7 @@ if sanity==1
 else
  P1=0;
  P2=0;
-    
+xo    
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
 %[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
@@ -718,11 +712,11 @@ else
 % print(string,'-depsc')
 % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
 figure_function(gcf,[],string,[]);
-string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
 print(string,'-depsc')
-string=strcat('Spec_no_artifact_bestNL_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 saveas(gcf,string)
     
 end
