@@ -334,19 +334,16 @@ if length(p)>1000
     p=p(1:1000);
 end
 
-if iii==2
-    if length(p_nl)>1000
-        p_nl=p_nl(1:1000);
-    end
+if
+if length(p_nl)>1000
+    p_nl=p_nl(1:1000);
 end
+
 %By not equalizing the sizes of p and p_nl we assure that the spectrogram
 %for NL wont change throughout the sessions.  There might be an issue with
 %memory here. Would need to be solved using a max of i.e. 1000 ripples. 
 
-if iii==2
 freq1=justtesting(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,10,toy);
-end
-
 freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
 % 
 % FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
