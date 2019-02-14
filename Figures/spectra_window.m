@@ -1,4 +1,4 @@
-function [h]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,varargin)
+function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
@@ -312,81 +312,6 @@ end
 allscreen() 
 %% Time Frequency plots
 % Calculate Freq1 and Freq2
-if ro==1200   
-toy = [-1.2:.01:1.2];
-else
-%toy = [-10.2:.1:10.2];
-toy = [-10.2:.01:10.2];
-end
-
-%toy = [-1.2:.01:1.2];
-
-% if length(p)>length(p_nl)
-% p=p(1:length(p_nl));        
-% %timecell=timecell(1:length(p_nl));
-% end
-% 
-% if length(p)<length(p_nl)
-% p_nl=p_nl(1:length(p));
-% %timecell_nl=timecell_nl(1:length(p));
-% end
-if length(p)>1000
-    p=p(1:1000);
-end
-
-if iii==2
-    if length(p_nl)>1000
-        p_nl=p_nl(1:1000);
-    end
-end
-%By not equalizing the sizes of p and p_nl we assure that the spectrogram
-%for NL wont change throughout the sessions.  There might be an issue with
-%memory here. Would need to be solved using a max of i.e. 1000 ripples. 
-
-if iii==2
-freq1=justtesting(p_nl,create_timecell(ro,length(p_nl)),[1:0.5:30],w,10,toy);
-end
-
-freq2=justtesting(p,create_timecell(ro,length(p)),[1:0.5:30],w,0.5,toy);
-% 
-% FREQ1=justtesting(p_nl,timecell_nl,[0.5:0.5:30],w,10,toy);
-% FREQ2=justtesting(p,timecell,[0.5:0.5:30],w,0.5,toy);
-
-
-% Calculate zlim
-%%
-
-% Freq10=ft_freqbaseline(cfg,FREQ1);
-% Freq20=ft_freqbaseline(cfg,FREQ2);
-
-%%
-cfg              = [];
-cfg.channel      = freq1.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq1);
-[zmin2, zmax2] = ft_getminmax(cfg, freq2);
-
-zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
-
-% zlim=[-max(abs(zlim)) max(abs(zlim))];
-
-%%
-cfg              = [];
-cfg.zlim=zlim;% Uncomment this!
-cfg.channel      = freq1.label{w};
-cfg.colormap=colormap(jet(256));
-
-% % cfg.baseline       = 'yes';
-% % % cfg.baseline       = [ -0.1];
-% % 
-% % cfg.baselinetype   =  'absolute'; 
-% % cfg.renderer       = [];
-% % %cfg.renderer       = 'painters', 'zbuffer', ' opengl' or 'none' (default = [])
-% %     cfg.colorbar       = 'yes';
-
-
-%%  
-%Calculate Freq3 and Freq4
-%First they need to be calculated using all q and q_nl. 
 
 %toy=[-1:.01:1];
 if ro==1200
@@ -396,85 +321,77 @@ else
 %toy=[-10:.1:10];    
 toy = [-10:.01:10];
 end
-
-% if length(q)>length(q_nl)
-% q=q(1:length(q_nl));        
-% % timecell=timecell(1:length(q_nl));
-% end
-% 
-% if length(q)<length(q_nl)
-% q_nl=q_nl(1:length(q));
-% % timecell_nl=timecell_nl(1:length(q));
-% end
+%toy = [-1.2:.01:1.2];
 
 if length(q)>1000
     q=q(1:1000);
 end
 
+if iii==2
 if length(q_nl)>1000
     q_nl=q_nl(1:1000);
 end
-
-if ro==1200
-freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
-freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
-else
-freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:2:300],w,toy); %Memory reasons
-freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:2:300],w,toy);
 end
 
 
-%%
+%By not equalizing the sizes of p and p_nl we assure that the spectrogram
+%for NL wont change throughout the sessions.  There might be an issue with
+%memory here. Would need to be solved using a max of i.e. 1000 ripples. 
 
-% % % % % % % % % % cfg=[];
-% % % % % % % % % % cfg.baseline=[-1 -0.5];
-% % % % % % % % % % %cfg.baseline='yes';
-% % % % % % % % % % cfg.baselinetype='db';
-% % % % % % % % % % freq30=ft_freqbaseline(cfg,freq3);
-% % % % % % % % % % freq40=ft_freqbaseline(cfg,freq4);
+if iii==2    
+freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
+end
+freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
 
 
-%%
 % Calculate zlim
 
-%U might want to uncomment this if you use a smaller step: (Memory purposes)
+%%
+if iii==2
 cfg              = [];
 cfg.channel      = freq3.label{w};
 [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
 [zmin2, zmax2] = ft_getminmax(cfg, freq4);
 
 zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+else
+cfg              = [];
+cfg.channel      = freq4.label{w};
+[zmin2, zmax2] = ft_getminmax(cfg, freq4);
+zlim=[zmin2 zmax2];
+end
 
 % zlim=[-max(abs(zlim)) max(abs(zlim))];
 
-
 %%
-
 cfg              = [];
-cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-cfg.channel      = freq3.label{w};
+cfg.zlim=zlim;% Uncomment this!
+cfg.channel      = freq4.label{w};
 cfg.colormap=colormap(jet(256));
 
 %%
-h(1)=subplot(1,4,1)
+if iii==2
+h(1)=subplot(w,4,1)
 ft_singleplotTFR(cfg, freq3); 
 % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
-g=title('High Gamma No Learning');
+g=title('No Learning');
 g.FontSize=12;
 xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
+end
 %%
 %clear freq3
 %%
 % 
-h(2)=subplot(1,4,2)
+h(iii)=subplot(w,4,iii)
 
 % freq4=barplot2_ft(q,timecell,[100:1:300],w)
 %freq=justtesting(q,timecell,[100:1:300],w,0.5)
 %title('High Gamma RIPPLE')
 ft_singleplotTFR(cfg, freq4); 
-g=title(strcat('High Gamma',{' '},labelconditions{iii}));
+% g=title(strcat('High Gamma',{' '},labelconditions{iii}));
+g=title(strcat(labelconditions{iii}));
 g.FontSize=12;
 %title(strcat('High Gamma',{' '},labelconditions{iii}))
 %xo

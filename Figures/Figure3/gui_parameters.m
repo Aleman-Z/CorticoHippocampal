@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 28-Jan-2019 19:50:23
+% Last Modified by GUIDE v2.5 14-Feb-2019 16:43:58
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -72,6 +72,7 @@ sanity=0; %Sanity check.
 quinientos=0;
 outlie=0; %More aggressive outlier detection. 
 acer=1;
+win_ten=0;
 
 assignin('base', 'acer', acer)
 assignin('base', 'RAT', RAT)
@@ -83,6 +84,8 @@ assignin('base', 'rippletable', rippletable)
 assignin('base', 'sanity', sanity)
 assignin('base', 'quinientos', quinientos)
 assignin('base', 'outlie', outlie)
+assignin('base', 'win_ten', win_ten)
+
 
 
 
@@ -339,3 +342,14 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in checkbox2.
+function checkbox2_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox2 (see GCBO)
+win_ten=hObject.Value;
+assignin('base', 'win_ten', win_ten)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox2
