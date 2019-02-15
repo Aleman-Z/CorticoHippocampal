@@ -1,4 +1,4 @@
-function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,varargin)
+function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
@@ -309,7 +309,9 @@ end
 % cd(nFF{iii})
 %%
 %Plot both: No ripples and Ripples. 
+if w==1 && iii==2
 allscreen() 
+end
 %% Time Frequency plots
 % Calculate Freq1 and Freq2
 
@@ -331,6 +333,9 @@ if iii==2
 if length(q_nl)>1000
     q_nl=q_nl(1:1000);
 end
+        if w==1 && Rat==24
+        [q_nl]=rip_magnitude(q_nl,w);  %Magnitude correction
+        end
 end
 
 
@@ -371,7 +376,7 @@ cfg.colormap=colormap(jet(256));
 
 %%
 if iii==2
-h(1)=subplot(w,4,1)
+h(1)=subplot(3,4,4*(w-1)+1)
 ft_singleplotTFR(cfg, freq3); 
 % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
 g=title('No Learning');
@@ -379,12 +384,13 @@ g.FontSize=12;
 xlabel('Time (s)')
 %ylabel('uV')
 ylabel('Frequency (Hz)')
+ylim([100 250])
 end
 %%
 %clear freq3
 %%
 % 
-h(iii)=subplot(w,4,iii)
+h(iii)=subplot(3,4,4*(w-1)+iii)
 
 % freq4=barplot2_ft(q,timecell,[100:1:300],w)
 %freq=justtesting(q,timecell,[100:1:300],w,0.5)
@@ -400,5 +406,5 @@ xlabel('Time (s)')
 ylabel('Frequency (Hz)')
 
 % xlim([-.1 .1])
-%ylim([100 250])
+ylim([100 250])
 end
