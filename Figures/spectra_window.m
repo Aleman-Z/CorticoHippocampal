@@ -1,4 +1,4 @@
-function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,varargin)
+function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
@@ -23,15 +23,17 @@ if Rat==24
     end
 
     %PLUSMAZE PFC CORRECTION
-        if iii==2
-            for cn=1:length(p)
-    %             p{cn}(3,:)= p{cn}(3,:).*0.195;
-                q{cn}(w,:)= q{cn}(w,:).*0.195;
-            end
+        if iii==2 && w~=1
+%             for cn=1:length(p)
+%                 q{cn}(w,:)= q{cn}(w,:).*0.195;
+%             end
+            [q]=rip_magnitude(q,w);
             if w==3
-                for cn=1:length(p)
-                    q{cn}(w,:)= q{cn}(w,:).*0.195;
-                end
+%                 for cn=1:length(p)
+%                     q{cn}(w,:)= q{cn}(w,:).*0.195;
+%                 end
+            [q]=rip_magnitude(q,w);
+
     %         else
     %             for cn=1:length(p)
     %                 p{cn}(w,:)= p{cn}(w,:).*(1/0.195);
@@ -333,9 +335,9 @@ if iii==2
 if length(q_nl)>1000
     q_nl=q_nl(1:1000);
 end
-        if w==1 && Rat==24
-        [q_nl]=rip_magnitude(q_nl,w);  %Magnitude correction
-        end
+%         if w==1 && Rat==24
+%         [q_nl]=rip_magnitude(q_nl,w);  %Magnitude correction
+%         end
 end
 
 
@@ -352,18 +354,22 @@ freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
 % Calculate zlim
 
 %%
-if iii==2
-cfg              = [];
-cfg.channel      = freq3.label{w};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-[zmin2, zmax2] = ft_getminmax(cfg, freq4);
+if spectra_winval==1
+        if iii==2
+        cfg              = [];
+        cfg.channel      = freq3.label{w};
+        [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
+        [zmin2, zmax2] = ft_getminmax(cfg, freq4);
 
-zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+        zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+        else
+        cfg              = [];
+        cfg.channel      = freq4.label{w};
+        [zmin2, zmax2] = ft_getminmax(cfg, freq4);
+        zlim=[zmin2 zmax2];
+        end
 else
-cfg              = [];
-cfg.channel      = freq4.label{w};
-[zmin2, zmax2] = ft_getminmax(cfg, freq4);
-zlim=[zmin2 zmax2];
+    zlim=Zlim(w,:);
 end
 
 % zlim=[-max(abs(zlim)) max(abs(zlim))];
@@ -379,7 +385,9 @@ if iii==2
 h(1)=subplot(3,4,4*(w-1)+1)
 ft_singleplotTFR(cfg, freq3); 
 % freq3=barplot2_ft(q_nl,timecell_nl,[100:1:300],w);
+%if w==1
 g=title('No Learning');
+%end
 g.FontSize=12;
 xlabel('Time (s)')
 %ylabel('uV')
@@ -397,7 +405,9 @@ h(iii)=subplot(3,4,4*(w-1)+iii)
 %title('High Gamma RIPPLE')
 ft_singleplotTFR(cfg, freq4); 
 % g=title(strcat('High Gamma',{' '},labelconditions{iii}));
+%if w==1
 g=title(strcat(labelconditions{iii}));
+%end
 g.FontSize=12;
 %title(strcat('High Gamma',{' '},labelconditions{iii}))
 %xo
