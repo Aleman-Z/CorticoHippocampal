@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 14-Feb-2019 16:43:58
+% Last Modified by GUIDE v2.5 19-Feb-2019 03:42:17
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -348,8 +348,25 @@ end
 function checkbox2_Callback(hObject, eventdata, handles)
 % hObject    handle to checkbox2 (see GCBO)
 win_ten=hObject.Value;
+win_comp=0;
 assignin('base', 'win_ten', win_ten)
+assignin('base', 'win_comp', win_comp)
+
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox2
+
+
+% --- Executes on button press in checkbox3.
+function checkbox3_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox3 (see GCBO)
+win_ten=hObject.Value;
+win_comp=1;
+assignin('base', 'win_ten', win_ten)
+assignin('base', 'win_comp', win_comp)
+
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox3
