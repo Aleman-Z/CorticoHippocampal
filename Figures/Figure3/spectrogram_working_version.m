@@ -61,7 +61,7 @@ end
   if RAT~=3 && rat24base==2
       break
   end
-for spectra_winval=2:2
+for spectra_winval=1:2
 for dura=1:1 %Starts with 1
     
 %Rat=rats(RAT);    
@@ -578,6 +578,11 @@ if iii~=2 && sanity==1 && quinientos==0
  q=q(randrip);
 end
 
+%Memory reasons:
+if iii>2 && length(p)>1000 && Rat~=24 %Novelty or Foraging
+ p=p(1,1:1000);
+ q=q(1,1:1000);
+end
 %Q=Q([ran]);
 %timecell=timecell([ran]);
 [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
@@ -601,30 +606,31 @@ cd(nFF{1}) %Baseline
 
 %run('newest_load_data_nl.m')
 %[sig1_nl,sig2_nl,ripple2_nl,cara_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+if win_ten==0 || win_ten==1 && iii==2
 
-if meth==1
-[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+        if meth==1
+        [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+        end
+
+        if meth==2
+            [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
+        end
+
+        if meth==3
+        chtm=load('vq_loop2.mat');
+        chtm=chtm.vq;
+            [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+        CHTM2=[chtm chtm];
+        end
+
+        if meth==4 
+        [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+        CHTM2=[chtm chtm];
+        riptable(1,1)=ripple_nl;
+        riptable(1,2)=timeasleep2;
+        riptable(1,3)=RipFreq3;
+        end
 end
-
-if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
-end
-
-if meth==3
-chtm=load('vq_loop2.mat');
-chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-end
-
-if meth==4
-[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-CHTM2=[chtm chtm];
-riptable(1,1)=ripple_nl;
-riptable(1,2)=timeasleep2;
-riptable(1,3)=RipFreq3;
-end
-
 %%
 
 if block_time==1
@@ -662,7 +668,7 @@ Zlim3=[Zlim3 zlim3];
 % zlim{iii-1}=[zlim1; zlim2 ;zlim3];
    else
 %        Zlim =[ 0.0118   48.7217; 0.0007    0.3018; 0.0002    0.1765];
-       Zlim =[  0.0074   48.6926; 0.0006    0.3018; 0.0002    0.1759];
+%        Zlim =[  0.0074   48.6926; 0.0006    0.3018; 0.0002    0.1759];
 [~]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
 [~]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
 [~]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);       
@@ -690,27 +696,8 @@ xo
 end
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);
 %xo
-%% Move to the middle
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(1:2)));
-set(h(9),'Position',[new,pos{9}(2:end)])
-
-pos = get(h,'Position');
-new = mean(cellfun(@(v)v(1),pos(3:4)));
-set(h(10),'Position',[new,pos{10}(2:end)])
-%%
-set(h(1),'Position',[pos{1}(1:2),pos{1+4}(3:end)])
-set(h(2),'Position',[pos{2}(1:2),pos{2+4}(3:end)])
-set(h(3),'Position',[pos{3}(1:2),pos{3+4}(3:end)])
-set(h(4),'Position',[pos{4}(1:2),pos{4+4}(3:end)])
-
-%%
-H=gcf;
-ca = get(H, 'Children');  %axes handles
-Pos = get(ca,'Position');
-
-set(ca(2),'Position', [Pos{1}(1)+0.1496,Pos{2}(2:end)])
-set(ca(8),'Position', [Pos{7}(1)+Pos{7}(3)+0.0078 ,Pos{8}(2:end)])
+%% Move statistics to the middle
+center_stats(h)
 %%
 
 %xo
@@ -787,7 +774,10 @@ end
 if iii==length(nFF)
    break 
 end
-
+%xo
+clear sig1_nl sig2_nl p q
+sig1_nl=[];
+sig2_nl=[];
 end
 
 end
@@ -796,18 +786,26 @@ end
 %clearvars -except acer Rat
 end
     if spectra_winval==1
-        xo
+        %xo
         Zlim=[min(Zlim1) max(Zlim1); min(Zlim2) max(Zlim2); min(Zlim3) max(Zlim3)];
         close all
     end
 end
-xo
+%xo
 
 if win_ten==1
 %Add Ylabels    
 tg=mtit('HPC','fontsize',14,'xoff',-.6,'yoff',-.16);
 tg=mtit('PAR','fontsize',14,'xoff',-.6,'yoff',-.525);
 tg=mtit('PFC','fontsize',14,'xoff',-.6,'yoff',-.895);
+cd('C:\Users\addri\Dropbox\Window')
+cd(num2str(Rat))
+if win_comp==1
+    printing('1sec')
+else
+    printing('100ms')
+end
+xo
 end
 
 if meth==4
