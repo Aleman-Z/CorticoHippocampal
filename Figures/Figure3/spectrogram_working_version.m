@@ -788,6 +788,13 @@ end
     if spectra_winval==1
         %xo
         Zlim=[min(Zlim1) max(Zlim1); min(Zlim2) max(Zlim2); min(Zlim3) max(Zlim3)];
+        cd('C:\Users\addri\Dropbox\Window')
+        cd(num2str(Rat))
+        if win_comp==1
+                save(strcat('Zlim_1sec.mat'),'Zlim')
+        else
+                save(strcat('Zlim_100ms.mat'),'Zlim')
+        end
         close all
     end
 end
@@ -805,6 +812,7 @@ if win_comp==1
 else
     printing('100ms')
 end
+close all
 xo
 end
 
