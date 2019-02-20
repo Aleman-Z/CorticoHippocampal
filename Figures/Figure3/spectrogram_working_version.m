@@ -18,12 +18,13 @@ Block{3}='block2';
 % quinientos=0;
 % outlie=0;
 gui_parameters
+
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 
 meth=4;%Method of Ripple selection. Method 4 gives best results.
 datapath='D:\internship\';
-
+%xo
 %%
 %Rat=26;
 %for meth=4:4
@@ -60,7 +61,7 @@ end
   if RAT~=3 && rat24base==2
       break
   end
-
+for spectra_winval=2:2
 for dura=1:1 %Starts with 1
     
 %Rat=rats(RAT);    
@@ -323,9 +324,9 @@ end
 % inter=1;
 %Select length of window in seconds:
 if dura==1
-ro=[1200];
+ro=1200;
 else
-ro=[10200];    
+ro=10200;    
 end
 % coher=0;
 % selectripples=1;
@@ -354,8 +355,8 @@ label2{5}='Monopolar';
 label2{6}='Bipolar';
 label2{7}='Monopolar';
 
+zlim=cell(1,3);
 %%
- 
 for block_time=0:0 %Should start with 0
 for iii=2:length(nFF) %Should start with 2!
     %length(nFF) 
@@ -588,7 +589,7 @@ end
 
 
 %[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
-
+%xo
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -638,6 +639,38 @@ end
 % end
 %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
 %%
+%xo
+if win_ten==1    
+   if spectra_winval==1    
+% Call a new function to generate what Lisa asked. 
+Zlim=[];
+if iii==2
+Zlim1=[];
+Zlim2=[];
+Zlim3=[];
+end
+
+[zlim1]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
+[zlim2]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
+[zlim3]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
+
+Zlim1=[Zlim1 zlim1];
+Zlim2=[Zlim2 zlim2];
+Zlim3=[Zlim3 zlim3];
+
+
+% zlim{iii-1}=[zlim1; zlim2 ;zlim3];
+   else
+%        Zlim =[ 0.0118   48.7217; 0.0007    0.3018; 0.0002    0.1765];
+       Zlim =[  0.0074   48.6926; 0.0006    0.3018; 0.0002    0.1759];
+[~]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
+[~]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);
+[~]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp);       
+   end
+else
+
+
+%%
 if rippletable==0
 for w=2:3
 
@@ -650,7 +683,8 @@ if sanity==1
 else
  P1=0;
  P2=0;
-xo    
+xo
+
 [h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
 %[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
@@ -748,7 +782,7 @@ close all
 end
 %xo
 end
-%end
+end
 
 if iii==length(nFF)
    break 
@@ -761,7 +795,21 @@ end
 %%
 %clearvars -except acer Rat
 end
+    if spectra_winval==1
+        xo
+        Zlim=[min(Zlim1) max(Zlim1); min(Zlim2) max(Zlim2); min(Zlim3) max(Zlim3)];
+        close all
+    end
+end
 xo
+
+if win_ten==1
+%Add Ylabels    
+tg=mtit('HPC','fontsize',14,'xoff',-.6,'yoff',-.16);
+tg=mtit('PAR','fontsize',14,'xoff',-.6,'yoff',-.525);
+tg=mtit('PFC','fontsize',14,'xoff',-.6,'yoff',-.895);
+end
+
 if meth==4
 
     if Rat==26
