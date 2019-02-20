@@ -53,7 +53,7 @@ if iii==2
 
 %Ripple selection
 if Rat~=24
-[p_nl2,q_nl,sos_nl]=ripple_selection(p_nl,q_nl,sos_nl,Rat);
+[p_nl,q_nl,sos_nl]=ripple_selection(p_nl,q_nl,sos_nl,Rat);
 end
 % [length(p_nl) length(p_nl2)]
 % disp(sos_nl)
