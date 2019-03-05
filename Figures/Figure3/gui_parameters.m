@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 19-Feb-2019 03:42:17
+% Last Modified by GUIDE v2.5 05-Mar-2019 03:20:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,6 +73,7 @@ quinientos=0;
 outlie=0; %More aggressive outlier detection. 
 acer=1;
 win_ten=0;
+equal_num=0;
 
 assignin('base', 'acer', acer)
 assignin('base', 'RAT', RAT)
@@ -85,6 +86,7 @@ assignin('base', 'sanity', sanity)
 assignin('base', 'quinientos', quinientos)
 assignin('base', 'outlie', outlie)
 assignin('base', 'win_ten', win_ten)
+assignin('base', 'equal_num', equal_num)
 
 
 
@@ -370,3 +372,16 @@ assignin('base', 'win_comp', win_comp)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox3
+
+
+% --- Executes on button press in radiobutton4.
+function radiobutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+equal_num=hObject.Value;
+assignin('base', 'equal_num', equal_num)
+
+
+
+% Hint: get(hObject,'Value') returns toggle state of radiobutton4
