@@ -1,4 +1,4 @@
-function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,varargin)
+function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
@@ -45,7 +45,7 @@ if Rat==24
 end
 
 %Non-learning
-if iii==2
+if iii==2 %Only run on the Plusmaze session.
 
 %[p_nl,q_nl,~,sos_nl]=getwin2(cara_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,ro);    
 [p_nl,q_nl,~,sos_nl]=getwin2(cara_nl{1},veamos_nl{1},sig1_nl,sig2_nl,ro);    
@@ -98,7 +98,8 @@ end
 % % % % % % % % % % % % % % % % % % % % % % % % [p_nl,q_nl]=sort_rip(p_nl,q_nl);
 
 %if Rat~=24 && rat24base~=2
-if Rat~=24
+%Equalize number of ripples. 
+if equal_num==1 && Rat~=24
 %Select n strongest
 switch Rat
     case 24
@@ -114,6 +115,12 @@ end
 p_nl=p_nl(1:n);
 q_nl=q_nl(1:n);
 % % % % % % % % % % % % % % % %Need to add sos_nl 
+end
+
+%Memory reasons:
+if length(p_nl)>1000 && Rat~=24 %Novelty or Foraging
+ p_nl=p_nl(1,1:1000);
+ q_nl=q_nl(1,1:1000);
 end
 %end
 % switch Rat
