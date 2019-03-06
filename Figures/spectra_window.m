@@ -1,4 +1,4 @@
-function [zlim]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,varargin)
+function [zlim,mdam]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
@@ -374,11 +374,18 @@ if spectra_winval==1
         [zmin2, zmax2] = ft_getminmax(cfg, freq4);
 
         zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+        
+        %Smaller windows values
+        [mdam(1,1),mdam(2,1)]=smaller_window(freq3,w);
+        [mdam(1,2),mdam(2,2)]=smaller_window(freq4,w);
+        
         else
         cfg              = [];
         cfg.channel      = freq4.label{w};
         [zmin2, zmax2] = ft_getminmax(cfg, freq4);
         zlim=[zmin2 zmax2];
+        
+        [mdam(1,iii),mdam(2,iii)]=smaller_window(freq4,w);
         end
 else
     zlim=Zlim(w,:);
