@@ -1,5 +1,12 @@
+acer=1;
 Rat=27;
-cd('/home/raleman/Dropbox/Window')
+
+if acer==1
+cd('C:\Users\addri\Dropbox\Window')
+else
+cd('/home/raleman/Dropbox/Window')    
+end
+
 cd(num2str(Rat))
 
 load('Mdam.mat')
