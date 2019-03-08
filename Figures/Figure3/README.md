@@ -21,6 +21,9 @@
 *Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
 <img src="example_figure_spectrogram.png" width="600">
 
+* **table_values.m:**
+*Generates table with average value per condition, per brain area.*
+
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
 
