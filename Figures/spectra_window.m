@@ -375,9 +375,13 @@ if spectra_winval==1
 
         zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
         
-        %Smaller windows values
-        [mdam(1,1),mdam(2,1)]=smaller_window(freq3,w);
-        [mdam(1,2),mdam(2,2)]=smaller_window(freq4,w);
+                if win_comp==0
+                %Smaller windows values
+                [mdam(1,1),mdam(2,1)]=smaller_window(freq3,w);
+                [mdam(1,2),mdam(2,2)]=smaller_window(freq4,w);
+                else
+                    mdam=[];
+                end
         
         else
         cfg              = [];
@@ -385,7 +389,12 @@ if spectra_winval==1
         [zmin2, zmax2] = ft_getminmax(cfg, freq4);
         zlim=[zmin2 zmax2];
         
-        [mdam(1,iii),mdam(2,iii)]=smaller_window(freq4,w);
+                        if win_comp==0
+                            %Smaller windows values
+                            [mdam(1,1),mdam(2,1)]=smaller_window(freq4,w);
+                        else
+                            mdam=[];
+                        end        
         end
 else
     zlim=Zlim(w,:);
