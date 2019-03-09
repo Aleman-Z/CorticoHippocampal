@@ -24,13 +24,13 @@
 </p>
 
 * **spectra_window.m:**
-*Plots power windows for all conditions and regions.*
+*Plots power windows for all conditions and regions.* :heavy_check_mark:
 <p align="center">
 <img src="spectral_table.PNG" width="600">
 </p>
 
 * **table_values.m:**
-*Generates table with average value per condition, per brain area.*
+*Generates table with average value per condition, per brain area.* :heavy_check_mark:
 <p align="center">
 <img src="table.png" width="600">
 </p>
