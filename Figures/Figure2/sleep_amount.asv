@@ -750,8 +750,8 @@ end
 
 cd(num2str(26))
 
-writetable(VV{1},'Sleep_stages.xlsm','Sheet',1,'Range','B2:F6')
-writetable(VV{2},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
-writetable(VV{3},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
+writetable(VV{1},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
+% writetable(VV{2},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
+% writetable(VV{3},'Sleep_stages.xls','Sheet',1,'Range','B16:F20')
 
 
