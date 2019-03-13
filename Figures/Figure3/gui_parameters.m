@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 05-Mar-2019 03:20:28
+% Last Modified by GUIDE v2.5 13-Mar-2019 02:57:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -385,3 +385,12 @@ assignin('base', 'equal_num', equal_num)
 
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton4
+
+
+% --- Executes on button press in pushbutton3.
+function pushbutton3_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+rippletable=hObject.Value;
+assignin('base', 'rippletable', rippletable)
