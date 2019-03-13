@@ -11,7 +11,7 @@ c = categorical(labelconditions);
 
 %%
 
-for Rat=3:3
+for Rat=1:1
     
 if Rat==1
     

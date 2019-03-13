@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,carajo,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr_Vfiles(vq,notch)
+function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr_Vfiles(vq,notch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -246,10 +246,10 @@ ripple2=sum(s172); %When using same threshold per epoch.
 % Windowing
 for ind=1:size(s172,2)
 veamos{:,ind}=find(s172(:,ind)~=0);  %Epochs with ripples detected
-carajo{:,:,ind}=swr172(veamos{:,ind},:,ind);
+cara{:,:,ind}=swr172(veamos{:,ind},:,ind);
 
 % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
-% carajo2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
+% cara2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
 end
 
 
