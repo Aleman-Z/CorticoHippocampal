@@ -15,18 +15,18 @@ rippletable=0;
 sanity=0;
 ripdur=1; % Duration of ripples. 
 %%
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
-addpath('/home/raleman/Documents/internship')
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
-%addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-   
-end
+% % % if acer==0
+% % % addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
+% % % addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
+% % % addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
+% % % addpath('/home/raleman/Documents/internship')
+% % % else
+% % % addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
+% % % addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+% % % addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
+% % % %addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+% % %    
+% % % end
 %%
 %Rat=26;
 for meth=4:4
@@ -286,15 +286,15 @@ end
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    addpath /home/raleman/Documents/internship/fieldtrip-master/
-    InitFieldtrip()
+%     addpath /home/raleman/Documents/internship/fieldtrip-master/
+%     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
     cd(strcat('D:\internship\',num2str(Rat)))
-    addpath D:\internship\fieldtrip-master
-    InitFieldtrip()
+%     addpath D:\internship\fieldtrip-master
+%     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     cd(strcat('D:\internship\',num2str(Rat)))

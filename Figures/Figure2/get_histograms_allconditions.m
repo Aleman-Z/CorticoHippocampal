@@ -13,20 +13,20 @@ rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 rippletable=0;
 sanity=0;
-ripdur=0; % Duration of ripples. 
+ripdur=1; % Duration of ripples. 
 %%
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
-addpath('/home/raleman/Documents/internship')
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
-%addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-   
-end
+% % if acer==0
+% % addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
+% % addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
+% % addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
+% % addpath('/home/raleman/Documents/internship')
+% % else
+% % addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
+% % addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+% % addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
+% % %addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
+% %    
+% % end
 %%
 %Rat=26;
 for meth=4:4
@@ -286,15 +286,15 @@ end
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    addpath /home/raleman/Documents/internship/fieldtrip-master/
-    InitFieldtrip()
+%     addpath /home/raleman/Documents/internship/fieldtrip-master/
+%     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
     cd(strcat('D:\internship\',num2str(Rat)))
-    addpath D:\internship\fieldtrip-master
-    InitFieldtrip()
+%     addpath D:\internship\fieldtrip-master
+%     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     cd(strcat('D:\internship\',num2str(Rat)))
@@ -566,7 +566,7 @@ ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal tim
 end
 
 %%
-
+%xo
 %%
 consig=carajo{1};
 
@@ -649,17 +649,20 @@ legend(labelconditions)
 for tailed=1:2
 %%
 if ripdur==1
-%%    
-% % % d=categorical(labelconditions)
-% % % bar(d,cccc)
-% % % %ylim([35 50])
-% % % title('Median duration of ripples')
-% % % ylabel('Time (ms)')
-% % % hold on
-% % % ylim([40 70])
-% % % ee=errorbar(d,cccc,Sem*1000,'.')
-% % % ee.Color=[0 0 0]
+%%
 
+%Barplot
+d=categorical(labelconditions)
+bar(d,cc)
+%ylim([35 50])
+title('Median duration of ripples')
+ylabel('Time (ms)')
+hold on
+ylim([40 70])
+ee=errorbar(d,cccc,Sem*1000,'.')
+ee.Color=[0 0 0]
+
+%Not barplot
 tvar=CC{1};
 CCC{1}=tvar(~isoutlier(tvar));
 tvar=CC{2};
