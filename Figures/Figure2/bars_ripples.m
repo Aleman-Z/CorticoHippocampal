@@ -58,7 +58,7 @@ bar(c,vr(:,1))
 ylabel('Number of ripples')
 ylim([0 4700])
 % title(Base{cont})
-% xo
+ xo
 
 string=strcat('Number_ripples_',Base{cont},'.fig');
 saveas(gcf,string)

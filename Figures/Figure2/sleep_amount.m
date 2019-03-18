@@ -226,7 +226,7 @@ end
 
 cd(nFF{iii})
 
-%xo
+xo
 if Rat==24
    load('states.mat')
 else
@@ -247,8 +247,9 @@ L= length(states)/60%min
  g3=sum(states==3)/60; %NREM
  g4=sum(states==4)/60; %Transitional Sleep
  g5=sum(states==5)/60; %REM
-
- G=[g1 g3 g4 g5];
+%FYI: Some states have a value of 0, so it is normal that sum(G) is not
+%same as L.
+ G=[g1 g3 g4 g5]; 
  g=G;
  G=G/L*100
 
