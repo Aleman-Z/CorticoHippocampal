@@ -31,9 +31,11 @@
 
 * **table_values.m:**
 *Generates table with average value per condition, per brain area.* :heavy_check_mark:
+<!---
 <p align="center">
 <img src="table.png" width="600">
 </p>
+--->
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
