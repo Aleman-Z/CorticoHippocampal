@@ -15,10 +15,7 @@
 
 ## :zap: Figure 3
 * **spectrogram_working_version.m:**
-*Best version up to Feb 2019.* :heavy_check_mark:
-
-* **spectrogram_without_normalization.m:**
-*Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes.*
+*Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes. Best version up to Feb 2019.* :heavy_check_mark:
 <p align="center">
 <img src="example_figure_spectrogram.png" width="600">
 </p>
@@ -36,6 +33,9 @@
 <img src="table.png" width="600">
 </p>
 --->
+
+* **spectrogram_without_normalization.m:**
+*Generates non-normalized spectrograms on the wideband and bandpassed signals for different conditions, durations and window sizes. (Outdated)*
 
 * **Poster_main_optimized:**
 *Generates non-normalized spectrograms and statistical tests using the complete recordings.*
