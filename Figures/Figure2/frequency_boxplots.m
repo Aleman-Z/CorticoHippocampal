@@ -1,34 +1,37 @@
 close all
 clear all
-acer=1;
-% rat24base=1;
+
+%Rat numbers
+rats=[26 27 24 21]; 
+
+%Variables used for different segments of time.
 DUR{1}='1sec';
 DUR{2}='10sec';
 Block{1}='complete';
 Block{2}='block1';
 Block{3}='block2';
-mergebaseline=0; %Make sure base's while loop condition is never equal to 2.
-FiveHun=2; % Options: 0 all, 1 current, 2 1000?
-%meth=1;
-rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
-rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
-rippletable=0;
-sanity=0;
+
+%Calls GUI to select analysis and parameters;
+gui_parameters
+
+%Method of Ripple selection. Method 4 gives best results.
+meth=4;
+s=struct;
+
+%Data location
+datapath='D:\internship\';
+
 ripdur=1; % Duration of ripples. 
 %%
-%Rat=26;
-%for meth=4:4
-meth=4;    
-for RAT=3:3
- if meth==4
-    s=struct; 
- end 
+Rat=rats(RAT);  %Rat number to use. 
+
+%for RAT=3:3
  
  switch RAT   
     case 1
          base=2;
     case 2
-         base=1;
+         base=1; %Base 1 actually calls baseline 2.
     case 3
         %xo
         base=2; %Should be 2
@@ -37,26 +40,23 @@ for RAT=3:3
         xo
  end
 
-%   base=2; %This should be 1  
-% for base=1:2 %Baseline numeration.     
-while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
-riptable=zeros(4,3);        
-%for rat24base=1:1
-if RAT==3
-    rat24base=2;
-else
-    rat24base=1;
-end
+%While loop previously used for merging baselines.  
+while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
 
-  if RAT~=3 && rat24base==2
-      break
-  end
+    riptable=zeros(4,3);% Variable used to save number of ripples.        
+
+    if RAT==3
+        rat24base=2;
+    else
+        rat24base=1;
+    end
+
+    if RAT~=3 && rat24base==2
+          break
+    end
 
 for dura=1:1 %Starts with 1
-    
-rats=[26 27 24 21];
-Rat=rats(RAT);    
-    
+        
 % for Rat=26:26
 if Rat==26
 nFF=[
@@ -754,7 +754,7 @@ end
 
 %%
 %clearvars -except acer Rat
-end
+%end
 xo
 
 %end

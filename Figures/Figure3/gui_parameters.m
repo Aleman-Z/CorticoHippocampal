@@ -75,6 +75,10 @@ acer=1;
 win_ten=0;
 equal_num=0;
 
+%For testing purposes only.
+rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
+rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
+
 assignin('base', 'acer', acer)
 assignin('base', 'RAT', RAT)
 assignin('base', 'mergebaseline', mergebaseline)
@@ -87,6 +91,8 @@ assignin('base', 'quinientos', quinientos)
 assignin('base', 'outlie', outlie)
 assignin('base', 'win_ten', win_ten)
 assignin('base', 'equal_num', equal_num)
+assignin('base', 'rat26session3', rat26session3)
+assignin('base', 'rat27session3', rat27session3)
 
 
 
