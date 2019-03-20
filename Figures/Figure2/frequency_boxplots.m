@@ -16,31 +16,38 @@ rippletable=0;
 sanity=0;
 ripdur=1; % Duration of ripples. 
 %%
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath(genpath('/home/raleman/Documents/GitHub/CorticoHippocampal'))
-addpath(genpath('/home/raleman/Documents/GitHub/ADRITOOLS'))
-addpath('/home/raleman/Documents/internship')
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath(genpath('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-addpath(genpath('C:\Users\addri\Documents\GitHub\ADRITOOLS'))
-%addpath(('C:\Users\addri\Documents\internship\CorticoHippocampal'))
-   
-end
-%%
 %Rat=26;
-for meth=4:4
-for RAT=2:2
+%for meth=4:4
+meth=4;    
+for RAT=3:3
  if meth==4
     s=struct; 
- end  
-  base=1; %This should be 1  
-% for base=1:2 %Baseline numeration.     
-while base<=1 %Should be 1 for MERGEDBASELINES otherwise 2.
-riptable=zeros(4,3);        
-for rat24base=1:1
+ end 
  
+ switch RAT   
+    case 1
+         base=2;
+    case 2
+         base=1;
+    case 3
+        %xo
+        base=2; %Should be 2
+    otherwise
+        disp('Rat 21 not available')
+        xo
+ end
+
+%   base=2; %This should be 1  
+% for base=1:2 %Baseline numeration.     
+while base<=2 %Should be 1 for MERGEDBASELINES otherwise 2.
+riptable=zeros(4,3);        
+%for rat24base=1:1
+if RAT==3
+    rat24base=2;
+else
+    rat24base=1;
+end
+
   if RAT~=3 && rat24base==2
       break
   end
@@ -240,9 +247,9 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-if Rat==24
-    cd(nFF{1})
-end
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
@@ -275,7 +282,7 @@ end
 % end
 %%
 % Use other baseline, beware when using mergebaseline
-if base==2
+if base==2 && Rat~=24
     nFF{1}=NFF{1};
 end
 
@@ -287,15 +294,15 @@ end
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    addpath /home/raleman/Documents/internship/fieldtrip-master/
-    InitFieldtrip()
+%     addpath /home/raleman/Documents/internship/fieldtrip-master/
+%     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
     cd(strcat('D:\internship\',num2str(Rat)))
-    addpath D:\internship\fieldtrip-master
-    InitFieldtrip()
+%     addpath D:\internship\fieldtrip-master
+%     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     cd(strcat('D:\internship\',num2str(Rat)))
@@ -365,9 +372,9 @@ else
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
 end
 
-if Rat==24
-    cd(nFF{1})
-end
+% if Rat==24
+%     cd(nFF{1})
+% end
 
 if dura==2
     cd('10sec')
@@ -465,26 +472,26 @@ lepoch=2;
  level=1;
  
 %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+% [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
 % [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,Score);
 % else
 %xo
-%[sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
-% [Sig1,Sig2,Ripple,Carajo,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
+%[sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=NREM_get_ripples(level,nrem,notch,w,lepoch,Score)
+% [Sig1,Sig2,Ripple,cara,Veamos,CHTM2,RipFreq22,Timeasleep]=newest_only_ripple_level(level,lepoch)
 if meth==1
-    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
-%     [Nsig1,Nsig2,Nripple,Ncarajo,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
+    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+%     [Nsig1,Nsig2,Nripple,Ncara,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
 end
 
 if meth==2
-    [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
+    [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
 end
 
 if meth==3
 chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
-    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 end
 %%
@@ -508,7 +515,7 @@ ror=2000/timeasleep;
     end
     
 
-if Rat==26
+if Rat==26 || Rat==24
 Base=[{'Baseline1'} {'Baseline2'}];
 end
 if Rat==26 && rat26session3==1
@@ -544,7 +551,7 @@ else
 end
 
 cd(nFF{iii})
-    [sig1,sig2,ripple,carajo,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+    [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
 CHTM=[chtm chtm];
 riptable(iii,1)=ripple;
 riptable(iii,2)=timeasleep;
@@ -557,20 +564,20 @@ end
 
 %% Select time block 
 if block_time==1
-[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
-ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,30,0);
+ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
 end
 
 if block_time==2
-[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
-ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times.
+[cara,veamos]=equal_time2(sig1,sig2,cara,veamos,60,30);
+ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
 end
 
 %%
 
 %%
 %xo
-[p,q,~,~,]=getwin2_new(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
+[p,q,~,~,]=getwin2_new(cara{:,:,level},veamos{level},sig1,sig2,label1,label2,ro);    
 xq=0:0.5:500;
 %xo
 
@@ -591,7 +598,8 @@ end
 
 %%
 clear U VQ MU
-
+bar_init=waitbar(0,'Please wait...');
+messbox(labelconditions{iii},'Current condition')
 for k=1:length(q)
 % plot(q{k})   
 %  hold on
@@ -607,13 +615,13 @@ MU(k)=interp1(VQ(k,:),xq,max(VQ(k,:)));
 %  semilogy(f,(pxx))
 %  hold on
 %  semilogy(xq,(vq1))
- k/length(q)*100
+ progress_bar(k,length(q),bar_init)
 end
 UU{iii}=U;
 MUU{iii}=MU;
 %%
 
-consig=carajo{1};
+consig=cara{1};
 
 bon=consig(:,1:2);
 C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
@@ -698,66 +706,37 @@ end
 %%
 if sanity==1
 
-string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Control_Peak_Frequency_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 
 else
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Peak_Frequency_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
     
 
-string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Peak_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 end
 %%
 if sanity==1
 
-string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Control_Average_Frequency_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 
 else
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Average_Frequency_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 
-string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
+string=strcat('Average_Frequency_Violin_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 
 end
 %%
 %%
 xo
 %%
-string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.eps');
-print(string,'-depsc')
-string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_','.fig');
-saveas(gcf,string)
-
+string=strcat('Control_RippleDuration_','Allconditions','_',Block{block_time+1},'_');
+printing(string);
 %%
 %%
 %histogram(aver,'Normalization','probability','BinWidth',0.1); xlim([0 4])
@@ -769,7 +748,7 @@ if iii==length(nFF)
    break 
 end
 
-end
+%end
 
 end
 
@@ -778,5 +757,5 @@ end
 end
 xo
 
-end
-%xo
+%end
+
