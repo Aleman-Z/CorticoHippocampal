@@ -19,6 +19,8 @@
 <p align="center">
 <img src="example_figure_spectrogram.png" width="600">
 </p>
+* **stats_vs_nl.m:**
+*Best version up to March/2019.* :heavy_check_mark:
 
 * **spectra_window.m:**
 *Plots power windows for all conditions and regions.* :heavy_check_mark:
@@ -52,8 +54,6 @@
 *Corrected version of plot_inter_conditions_33, using an improved method to generate the stats.* (Update 25/08: Not suitable for further figure improvement. Best to run: *plot_inter_conditions_33* followed by *plot_inter_high_improve*).
 * **plot_inter_high_improve.m:**
 *Adaptation of plot_inter_conditions_33_high, only computing the High Gamma spectrograms*
-* **plot_inter_conditions_33.m:**
-*Best version up to Feb/2019. Use this one.* :heavy_check_mark:
 * **colorbar_among_conditions.m:**
 *Equalizes the colorbar ranges among conditions for a specific brain area*
 
