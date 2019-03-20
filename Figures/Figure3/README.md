@@ -1,7 +1,7 @@
 
 ## :zap: Controls for spectrograms.
 <p align="center">
-<img src="gui_parameters.PNG" width="300">
+<img src="gui_parameters.PNG" width="500">
 </p>
 
 <!---
