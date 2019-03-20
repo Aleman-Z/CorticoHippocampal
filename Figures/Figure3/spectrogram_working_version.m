@@ -68,24 +68,9 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     for dura=1:1 %Whole duration of signal.
     % Folder names with data per rat.  
     [nFF,NFF,labelconditions,label1,label2]=rat_foldernames(Rat,rat26session3,rat27session3,rat24base);
-%         %% Check if experiment has been run before.
-%         if acer==0
-%             cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
-%         else
-%               %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-%               cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
-%         end
-% 
-%         % if Rat==24
-%         %     cd(nFF{1})
-%         % end
-% 
-%         if dura==2
-%             cd('10sec')
-%         end
      
     
-    % Use other baseline, beware when using mergebaseline
+    % Use other baseline, caution when using mergebaseline
     if Rat~=24
         if base==2
             nFF{1}=NFF{1};
@@ -97,7 +82,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     end
 
 
-    %% Go to main directory
+    %% Go to main directory, add to path, initiate Fieldtrip.
     if acer==0
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         addpath /home/raleman/Documents/internship/fieldtrip-master/
@@ -241,11 +226,11 @@ switch meth
 
         cd(nFF{iii})
         %xo
-        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-        CHTM=[chtm chtm];
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);      
+        CHTM=[chtm chtm]; %Threshold
         
         %Fill table with ripple information.
-        riptable(iii,1)=ripple;
+        riptable(iii,1)=ripple; %Number of ripples.
         riptable(iii,2)=timeasleep;
         riptable(iii,3)=RipFreq2;
 
@@ -274,20 +259,25 @@ end
     
     %% Generate +/- time window for each ripple found.
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
-    xo
+    %p: Wideband signal windows.
+    %q: Bandpassed signal (100-300Hz) windows.
+    
     clear sig1 sig2
-    %Ripple selection. Memory free.
+    xo
+    
+    %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 
     if Rat~=24
     [p,q,sos]=ripple_selection(p,q,sos,Rat);
     end
-    % 
-
+     
+    %Sanity test. No longer used.
     if iii~=2 && sanity==1 && quinientos==0 
      p=p(randrip);
      q=q(randrip);
     end
 
     %Equalize number of ripples. 
+    %(Same number of ripples found on Plusmaze after ripple selection). 
     if equal_num==1 %&& Rat~=24
        switch Rat
         case 24
@@ -305,38 +295,33 @@ end
         p=p(1:n);
         q=q(1:n);
 
-
     end
 
-    %Memory reasons:
+    %Freeing Memory. Use maximum of 1000 strongests ripples. 
     if length(p)>1000 && Rat~=24 %Novelty or Foraging
      p=p(1,1:1000);
      q=q(1,1:1000);
     end
-    %Q=Q([ran]);
-    %timecell=timecell([ran]);
+    
+    %Notch filter
     [q]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-    %[p]=filter_ripples(q,[66.67 100 150 266.7 133.3 200 300 333.3 266.7 233.3 250 166.7 133.3],.5,.5);
-
+    
     %For Older version: Uncomment this.
     % P1=avg_samples(q,create_timecell(ro,length(p)));
     % P2=avg_samples(p,create_timecell(ro,length(p)));
 
 
-    %[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level(level,nrem,notch,w,lepoch,1);    
-    %xo
     %Non learning condition.
     if acer==0
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     else
         cd(strcat('D:\internship\',num2str(Rat)))
     end
-
     cd(nFF{1}) %Baseline
-
-    %run('newest_load_data_nl.m')
-    %[sig1_nl,sig2_nl,ripple2_nl,cara_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
-    if win_ten==0 || win_ten==1 && iii==2
+    
+%Ripple detection on Baseline condition.
+    
+    if win_ten==0 || win_ten==1 && iii==2 
 
             if meth==1
             [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
@@ -361,7 +346,7 @@ end
             riptable(1,3)=RipFreq3;
             end
     end
-    %%
+    %% Select time block (Not used now)
     if block_time==1
     [cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,30,0);
     ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));
@@ -371,7 +356,7 @@ end
     [cara_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,cara_nl,veamos_nl,60,30);
     ripple_nl=sum(cellfun('length',cara_nl{1}(:,1)));    
     end
-
+%% Calculate median duration of ripples (No learning)
     consig=cara_nl{1};
 
     bon=consig(:,1:2);
@@ -380,15 +365,11 @@ end
     c=median(C)*1000; %Miliseconds
     cc(1)=c;
 
-
-    % end
-    %  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
     %%
     if rippletable==0
-    %xo
-    if win_ten==1    
-       if spectra_winval==1    
-                        % Call a new function to generate what Lisa asked. 
+    
+    if win_ten==1  % Executes when Spectral windows option was selected on GUI.   
+       if spectra_winval==1     
                         Zlim=[];
                         if iii==2
                         Zlim1=[];
