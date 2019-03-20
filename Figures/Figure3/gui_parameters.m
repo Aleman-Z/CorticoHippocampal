@@ -75,6 +75,14 @@ acer=1;
 win_ten=0;
 equal_num=0;
 
+
+%     sanity=1: This control test consists on selecting the same n random number of ripples among conditions. Since Plusmaze generates less ripples, this condition defines the value of n.
+% 
+%     quinientos=1: Similar to control above but this one makes sure to take the top 500 ripples instead of their random version. Could be more vulnerable to outliers.
+% 
+%     outlie=1: The use of this control activates a more agressive detection of outliers.
+
+
 %For testing purposes only.
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.

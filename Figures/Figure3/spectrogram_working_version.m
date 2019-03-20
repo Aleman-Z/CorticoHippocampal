@@ -130,7 +130,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     for block_time=0:0 %Should start with 0
         
     %CONDITION LOOP. (Main loop).    
-    for iii=2:length(nFF) %Should start with 2
+    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        
     if acer==0
         cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -147,6 +147,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
         cd('10sec')
     end
 
+    %Sanity test option. Random number of ripples. Not currently used. 
     if iii==2 && sanity==1
        run('sanity_test.m')
     end
@@ -168,91 +169,90 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     lepoch=2;
     level=1;
 
-    if meth==1
-        [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
-    %     [Nsig1,Nsig2,Nripple,Ncara,Nveamos,NCHTM,NRipFreq2,Ntimeasleep]=newest_only_ripple_nl_level(level);
-    end
+%Ripple detection methods. Currently method 4 is being used. Descriptions
+%on Dropbox .ppt.
 
-    if meth==2
-        [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=median_std;    
-    end
-
-    if meth==3
-    chtm=load('vq_loop2.mat');
-    chtm=chtm.vq;
+switch meth
+    case 1
+      [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
+    case 2
+        [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=median_std;        
+    case 3
+        chtm=load('vq_loop2.mat');
+        chtm=chtm.vq;
         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-    CHTM=[chtm chtm];
-    end
-    %%
-    if meth==4   
-    if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    else
-        cd(strcat('D:\internship\',num2str(Rat)))
-    end
-
-    cd(nFF{1})
-
-    [timeasleep]=find_thr_base;
-    ror=2000/timeasleep;
-
+        CHTM=[chtm chtm];
+        
+    case 4
+        
         if acer==0
-            cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         else
-              %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-              cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+            cd(strcat('D:\internship\',num2str(Rat)))
         end
 
+        cd(nFF{1})
 
-    if Rat==26 || Rat==24 
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
+        [timeasleep]=find_thr_base;
+        ror=2000/timeasleep;
 
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
+            if acer==0
+                cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+            else
+                  %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+                  cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+            end
 
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-    %openfig('Ripples_per_condition_best.fig')
-    openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-    h = gcf; %current figure handle
-    axesObjs = get(h, 'Children');  %axes handles
-    dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+        if Rat==26 || Rat==24 
+        Base=[{'Baseline1'} {'Baseline2'}];
+        end
+        if Rat==26 && rat26session3==1
+        Base=[{'Baseline3'} {'Baseline2'}];
+        end
 
-    ydata=dataObjs{2}(8).YData;
-    xdata=dataObjs{2}(8).XData;
-    % figure()
-    % plot(xdata,ydata)
-    chtm = interp1(ydata,xdata,ror);
-    close
+        if Rat==27 
+        Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+        end
 
-    %xo
-    if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    else
-        cd(strcat('D:\internship\',num2str(Rat)))
-    end
+        if Rat==27 && rat27session3==1
+        Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+        end
+        %openfig('Ripples_per_condition_best.fig')
+        openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-    cd(nFF{iii})
-    %xo
+        h = gcf; %current figure handle
+        axesObjs = get(h, 'Children');  %axes handles
+        dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+
+        ydata=dataObjs{2}(8).YData;
+        xdata=dataObjs{2}(8).XData;
+        % figure()
+        % plot(xdata,ydata)
+        chtm = interp1(ydata,xdata,ror);
+        close
+
+        %xo
+        if acer==0
+            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        else
+            cd(strcat('D:\internship\',num2str(Rat)))
+        end
+
+        cd(nFF{iii})
+        %xo
         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-    CHTM=[chtm chtm];
-    riptable(iii,1)=ripple;
-    riptable(iii,2)=timeasleep;
-    riptable(iii,3)=RipFreq2;
+        CHTM=[chtm chtm];
+        
+        %Fill table with ripple information.
+        riptable(iii,1)=ripple;
+        riptable(iii,2)=timeasleep;
+        riptable(iii,3)=RipFreq2;
 
-    end
-
-    %Nose=[Nose RipFreq2];
+end
 
 
-    %% Select time block 
+    %% Select time block (Not used now)
     if block_time==1
     [cara,veamos]=equal_time2(sig1,sig2,cara,veamos,30,0);
     ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
@@ -263,18 +263,18 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
     end
 
+%% Calculate median duration of ripples    
     consig=cara{1};
-
     bon=consig(:,1:2);
+    %Difference between starting time and end time of ripple.
     C = cellfun(@minus,bon(:,2),bon(:,1),'UniformOutput',false);
     C=cell2mat(C.');
     c=median(C)*1000; %Miliseconds
-    cc(iii)=c;
-    %%
-     %xo
-    %[p,q,~,sos]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,ro); 
+    cc(iii)=c; %Store for all conditions.
+    
+    %% Generate +/- time window for each ripple found.
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
-     %xo
+    xo
     clear sig1 sig2
     %Ripple selection. Memory free.
     if Rat~=24
