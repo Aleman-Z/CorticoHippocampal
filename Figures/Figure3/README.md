@@ -19,6 +19,7 @@
 <p align="center">
 <img src="example_figure_spectrogram.png" width="600">
 </p>
+
 * **stats_vs_nl.m:**
 *Best version up to March/2019.* :heavy_check_mark:
 
