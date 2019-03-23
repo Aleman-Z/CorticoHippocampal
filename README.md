@@ -12,8 +12,9 @@ Contact: jraleman10@gmail.com :mailbox:
 
 --------------------------------
 ## Main Folders: :file_folder: 
-1. Figures: Main functions for generating paper figures. :bar_chart: 
-2. Granger: Implementation of Spectral Granger Causality. 
-3. Ripple_selection: Detection and selection of ripples.
-4. Pre_midterm: Scripts of tests performed prior to midterm presentation. 
+1. Load_ephys: Converts .continuous channels into downsampled (1kHz) .mat files. :floppy_disk:
+2. Figures: Main functions for generating paper figures. :bar_chart: 
+3. Granger: Implementation of Spectral Granger Causality. 
+4. Ripple_selection: Detection and selection of ripples.
+5. Pre_midterm: Scripts of tests performed prior to midterm presentation. 
 --------------------------------
