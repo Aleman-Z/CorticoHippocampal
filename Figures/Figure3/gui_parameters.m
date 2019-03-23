@@ -116,6 +116,12 @@ function varargout = gui_parameters_OutputFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % Get default command line output from handles structure
+% push_but=(handles.pushbutton1.Value)
+% while ~push_but
+% pause(10)
+uiwait
+% end
+'Closing'
 varargout{1} = handles.output;
 % pause(8) %Wait for 8 seconds. 
 %close all
