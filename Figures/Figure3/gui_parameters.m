@@ -117,8 +117,8 @@ function varargout = gui_parameters_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
-pause(8) %Wait for 8 seconds. 
-close all
+% pause(8) %Wait for 8 seconds. 
+%close all
 %varargout{1} = getappdata(hObject,'result');
 
 
@@ -330,7 +330,11 @@ end
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
-close all
+cl_button=get(hObject,'Value');
+if cl_button==1
+    close all
+end
+% close all
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -340,7 +344,7 @@ function listbox1_Callback(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-RAT=get(hObject,'Value')
+RAT=get(hObject,'Value');
 assignin('base', 'RAT', RAT)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
