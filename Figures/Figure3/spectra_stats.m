@@ -395,9 +395,16 @@ set(gca,'xlim',xlim,'ydir','no')
 % c=narrow_colorbar()
 set(J,'AlphaData',~isnan(zmap))
 c=narrow_colorbar()
+if spectra_winval==1
  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
 caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
 zlim=c.YLim;
+else
+ c.YLim=Zlim(w,:);
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+zlim=c.YLim;    
+end
+
 c=narrow_colorbar()
 
 g=title(strcat(labelconditions{iii},' vs No Learning'));
