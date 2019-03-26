@@ -217,9 +217,9 @@ end
 
 base=2; %VERY IMPORTANT!
 %openfig('Ripples_per_condition_best.fig')
-openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+h=openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-h = gcf; %current figure handle
+%h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 
@@ -228,7 +228,7 @@ xdata=dataObjs{2}(8).XData;
 % figure()
 % plot(xdata,ydata)
 chtm = interp1(ydata,xdata,ror);
-close
+close(h)
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -407,9 +407,10 @@ end
 
 c=narrow_colorbar()
 
+if w==1
 g=title(strcat(labelconditions{iii},' vs No Learning'));
 g.FontSize=12;
-
+end
 % Calculate zlim
 
 % %%
