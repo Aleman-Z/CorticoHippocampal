@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 13-Mar-2019 02:57:28
+% Last Modified by GUIDE v2.5 26-Mar-2019 03:21:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -75,7 +75,7 @@ acer=1;
 win_ten=0;
 equal_num=0;
 
-
+win_stats=0;
 %     sanity=1: This control test consists on selecting the same n random number of ripples among conditions. Since Plusmaze generates less ripples, this condition defines the value of n.
 % 
 %     quinientos=1: Similar to control above but this one makes sure to take the top 500 ripples instead of their random version. Could be more vulnerable to outliers.
@@ -101,6 +101,8 @@ assignin('base', 'win_ten', win_ten)
 assignin('base', 'equal_num', equal_num)
 assignin('base', 'rat26session3', rat26session3)
 assignin('base', 'rat27session3', rat27session3)
+assignin('base', 'win_stats', win_stats)
+
 
 
 
@@ -418,3 +420,12 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 rippletable=hObject.Value;
 assignin('base', 'rippletable', rippletable)
+
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+win_stats=hObject.Value;
+assignin('base', 'win_stats', win_stats)
