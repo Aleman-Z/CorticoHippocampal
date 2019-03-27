@@ -21,7 +21,7 @@
 </p>
 
 * **stats_vs_nl.m:**
-*Best version up to March/2019.* :heavy_check_mark:
+*Called by the function above. Computes spectrogram statistics vs No-learning. Best version up to March/2019.* :heavy_check_mark:
 
 * **spectra_window.m:**
 *Plots power windows for all conditions and regions.* :heavy_check_mark:
