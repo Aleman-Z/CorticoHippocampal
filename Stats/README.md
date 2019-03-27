@@ -6,7 +6,7 @@
 
 :dart:Max-pixel-based method
 
-* **stats_high.m:**  
+* **stats_high.m:**  :heavy_check_mark:
 *Computes permutation test statistics using Fieldtrip arranged samples as inputs.*
 <img src="example_high_freq_stats.png" width="400">
 
@@ -15,11 +15,7 @@
 
 :dart:Cluster-based method*
 
-
-* **stats_freq2.m:**  
-*Identical copy of **stats_freq1.m**. Uses a matrix of zeros as baseline. Just for testing.* 
-
-* **stats_between_trials.m:**
+* **stats_between_trials.m:** :heavy_check_mark:
 *Used on Figure 3 for statistics on spindle range.  Uses 'ft_statfun_indepsamplesT'.* 
 
 * **stats_between_trials2.m:**
@@ -27,6 +23,10 @@
 
 * **stats_between_trials10.m:**
 *Identical as above. Used when window is 10 sec long before and after.*  
+
+* **stats_freq2.m:**  
+*Identical copy of **stats_freq1.m**. Uses a matrix of zeros as baseline. Just for testing.* 
+
 
 :dart:Permutation test
 * **perm_stats.m:**
