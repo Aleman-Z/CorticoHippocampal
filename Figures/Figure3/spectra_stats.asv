@@ -388,65 +388,56 @@ freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],w,toy);
 % % end
 freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],w,toy);
 
-if cluster_stats==1
-    %Cluster-based
-    [stats]=stats_between_trials(freq3,freq4,label1,w);
-    h=subplot(3,3,(iii-1)+3.*(w-1));
-    cfg = [];
-    cfg.channel = label1{2*w-1};
-    cfg.parameter = 'stat';
-    cfg.maskparameter = 'mask';
-    cfg.zlim = 'maxabs';
-    cfg.colorbar       = 'yes';
-    cfg.colormap=colormap(jet(256));
-    %grid minor
-    ft_singleplotTFR(cfg, stats);
-    xlabel('Time (s)')
-    %ylabel('uV')
-    ylabel('Frequency (Hz)')
-    ylim([100 250]);
-    zlim=[h.CLim];
-else
-    zmap=stats_high(freq3,freq4,w);
+if 
+    el
+%Cluster-based
+[stats]=stats_between_trials(freq3,freq4,label1,w);
+h=subplot(3,3,(iii-1)+3.*(w-1));
+cfg = [];
+cfg.channel = label1{2*w-1};
+cfg.parameter = 'stat';
+cfg.maskparameter = 'mask';
+cfg.zlim = 'maxabs';
+cfg.colorbar       = 'yes';
+cfg.colormap=colormap(jet(256));
+%grid minor
+ft_singleplotTFR(cfg, stats);
+xlabel('Time (s)')
+%ylabel('uV')
+ylabel('Frequency (Hz)')
+ylim([100 250]);
+zlim=[h.CLim];
 
-    h=subplot(3,3,(iii-1)+3.*(w-1));
-    colormap(jet(256))
-    zmap(zmap == 0) = NaN;
 
-    J=imagesc(freq3.time,freq3.freq,zmap)
-    xlabel('Time (s)'), ylabel('Frequency (Hz)')
-    %title('tf power map, thresholded')
-    set(gca,'xlim',xlim,'ydir','no')
-    % c=narrow_colorbar()
-    set(J,'AlphaData',~isnan(zmap))
-    c=narrow_colorbar()
-    if spectra_winval==1
-     c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-    caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-    zlim=c.YLim;
-    else
-     c.YLim=Zlim(w,:);
-    caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-    zlim=c.YLim;    
-    end
+% % % % % % % % % % % % zmap=stats_high(freq3,freq4,w);
+% % % % % % % % % % % % 
+% % % % % % % % % % % % h=subplot(3,3,(iii-1)+3.*(w-1));
+% % % % % % % % % % % % colormap(jet(256))
+% % % % % % % % % % % % zmap(zmap == 0) = NaN;
+% % % % % % % % % % % % 
+% % % % % % % % % % % % J=imagesc(freq3.time,freq3.freq,zmap)
+% % % % % % % % % % % % xlabel('Time (s)'), ylabel('Frequency (Hz)')
+% % % % % % % % % % % % %title('tf power map, thresholded')
+% % % % % % % % % % % % set(gca,'xlim',xlim,'ydir','no')
+% % % % % % % % % % % % % c=narrow_colorbar()
+% % % % % % % % % % % % set(J,'AlphaData',~isnan(zmap))
+% % % % % % % % % % % % c=narrow_colorbar()
+% % % % % % % % % % % % if spectra_winval==1
+% % % % % % % % % % % %  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+% % % % % % % % % % % % caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+% % % % % % % % % % % % zlim=c.YLim;
+% % % % % % % % % % % % else
+% % % % % % % % % % % %  c.YLim=Zlim(w,:);
+% % % % % % % % % % % % caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+% % % % % % % % % % % % zlim=c.YLim;    
+% % % % % % % % % % % % end
+% % % % % % % % % % % % 
+% % % % % % % % % % % % c=narrow_colorbar()
 
-    c=narrow_colorbar()    
+if w==3
+g=title(strcat(labelconditions{iii},' vs No Learning'));
+g.FontSize=12;
 end
-
-
-if cluster_stats==0
-    if w==1
-    g=title(strcat(labelconditions{iii},' vs No Learning'));
-    g.FontSize=12;
-    end
-    
-else
-    if w==3
-    g=title(strcat(labelconditions{iii},' vs No Learning'));
-    g.FontSize=12;
-    end    
-end
-
 % Calculate zlim
 
 % %%

@@ -22,6 +22,7 @@ s=struct;
 
 %Data location
 datapath='D:\internship\';
+cluster_stats=0;
 %%
 Rat=rats(RAT);  %Rat number to use. 
 
@@ -204,9 +205,10 @@ switch meth
         Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
         end
         %openfig('Ripples_per_condition_best.fig')
-        openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+    
+        h=openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-        h = gcf; %current figure handle
+        %h = gcf; %current figure handle
         axesObjs = get(h, 'Children');  %axes handles
         dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 
@@ -215,7 +217,7 @@ switch meth
         % figure()
         % plot(xdata,ydata)
         chtm = interp1(ydata,xdata,ror);
-        close
+        close(h)
 
         %xo
         if acer==0
@@ -263,7 +265,6 @@ end
     %q: Bandpassed signal (100-300Hz) windows.
     
     clear sig1 sig2
-    xo
     
     %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 
     if Rat~=24
@@ -321,30 +322,48 @@ end
     
 %Ripple detection on Baseline condition.
     
-    if win_ten==0 || win_ten==1 && iii==2 
+    if win_ten==0 || win_ten==1 && iii==2 || win_ten==1 && win_stats==1
+            switch meth
+                case 1
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+                case 2
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;        
+                case 3
+                    chtm=load('vq_loop2.mat');
+                    chtm=chtm.vq;
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+                    CHTM2=[chtm chtm];              
+                case 4
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+                    CHTM2=[chtm chtm];
+                    riptable(1,1)=ripple_nl;
+                    riptable(1,2)=timeasleep2;
+                    riptable(1,3)=RipFreq3;
 
-            if meth==1
-            [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
             end
+%             
+%             if meth==1
+%             [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+%             end
 
-            if meth==2
-                [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
-            end
+%             if meth==2
+%                 [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
+%             end
 
-            if meth==3
-            chtm=load('vq_loop2.mat');
-            chtm=chtm.vq;
-                [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-            CHTM2=[chtm chtm];
-            end
+%             if meth==3
+%             chtm=load('vq_loop2.mat');
+%             chtm=chtm.vq;
+%                 [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+%             CHTM2=[chtm chtm];
+%             end
 
-            if meth==4 
-            [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-            CHTM2=[chtm chtm];
-            riptable(1,1)=ripple_nl;
-            riptable(1,2)=timeasleep2;
-            riptable(1,3)=RipFreq3;
-            end
+%             if meth==4 
+%             [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+%             CHTM2=[chtm chtm];
+%             riptable(1,1)=ripple_nl;
+%             riptable(1,2)=timeasleep2;
+%             riptable(1,3)=RipFreq3;
+%             end
     end
     %% Select time block (Not used now)
     if block_time==1
@@ -364,7 +383,7 @@ end
     C=cell2mat(C.');
     c=median(C)*1000; %Miliseconds
     cc(1)=c;
-
+%xo
     %%
     if rippletable==0
     
@@ -379,7 +398,7 @@ end
                         Mdam2=[];
                         Mdam3=[];
                         end
-
+if win_stats==0
                         [zlim1,mdam1]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
                         [zlim2,mdam2]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
                         [zlim3,mdam3]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
@@ -391,15 +410,44 @@ end
                         Mdam1=[Mdam1 mdam1];
                         Mdam2=[Mdam2 mdam2];
                         Mdam3=[Mdam3 mdam3];
+else %Statistical test
+    if cluster_stats==0
+                          [zlim1]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          Zlim1=[Zlim1 zlim1];
 
+                          [zlim2]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          Zlim2=[Zlim2 zlim2];
+    end
+                          [zlim3]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          Zlim3=[Zlim3 zlim3];
+
+end
 
                         % zlim{iii-1}=[zlim1; zlim2 ;zlim3];
        else
                         %        Zlim =[ 0.0118   48.7217; 0.0007    0.3018; 0.0002    0.1765];
                         %        Zlim =[  0.0074   48.6926; 0.0006    0.3018; 0.0002    0.1759];
+                      if win_stats==0
                         [~]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
                         [~]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
-                        [~]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);       
+                        [~]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num);
+                      else
+%                            if Rat==26
+% %                            Zlim=[-58.2064   58.2064
+% %                                -0.2661    0.2661
+% %                                -1.0000    1.0000];
+%   Zlim=[-60.9514   60.9514
+%    -0.2670    0.2670
+%    -1.0000    1.0000];
+%                           end
+    if cluster_stats==0
+
+                          [~]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [~]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+    end 
+                          [~]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+
+                      end
        end
     else
 
@@ -517,12 +565,14 @@ end
                 if equal_num==0
                      cd('all_rip')
                 end
-
-            if win_comp==1
-                    save(strcat('Zlim_1sec.mat'),'Zlim')
-            else
-                    save(strcat('Zlim_100ms.mat'),'Zlim')
-            end
+if win_stats==0
+                if win_comp==1
+                        save(strcat('Zlim_1sec.mat'),'Zlim')
+                else
+                        save(strcat('Zlim_100ms.mat'),'Zlim')
+                end
+end
+xo
             close all
         end
     end
@@ -540,19 +590,27 @@ cd(num2str(Rat))
 if equal_num==0
     cd('all_rip')
 end
-
-if win_comp==1
-    printing('1sec')
+xo
+if win_stats==0
+        if win_comp==1
+            printing('1sec')
+        else
+            printing('100ms')
+        end
 else
-    printing('100ms')
+        if win_comp==1
+            printing('Stats_1sec')
+        else
+            printing('Stats_100ms')
+        end
 end
 close all
-        if win_comp==0
+        if win_comp==0 && win_stats==0
             Mdam=[Mdam1; Mdam2; Mdam3];
             save('Mdam.mat','Mdam')
         end        
 end
-xo
+
 if meth==4
 
     if Rat==26
@@ -572,58 +630,58 @@ if meth==4
 
     [s.(Base{base})]=riptable;
 end
-
-%end
 xo
-if rippletable==0
-spec_loop_improve(RAT,block_time,sanity,dura,quinientos,outlie);
-%save in right folder
-list = dir();
-list([list.isdir]) = [];
-list={list.name};
-FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-if Rat==26
-Base=[{'Baseline1'} {'Baseline2'}];
-end
-if Rat==26 && rat26session3==1
-Base=[{'Baseline3'} {'Baseline2'}];
-end
-
-if Rat==27 
-Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-end
-
-if Rat==27 && rat27session3==1
-   Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-end
-
-if meth==1
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-else
-Method=[{'Method2' 'Method3' 'Method4'}];
-folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-end
-
-if mergebaseline==1
-    if meth==1
-    folder=strcat('Merged','_',FolderRip{FiveHun+1});
-    else
-    Method=[{'Method2' 'Method3' 'Method4'}];
-    folder=strcat('Merged','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-    end
-end
-
-if exist(folder)~=7
-(mkdir(folder))
-end
-
-for nmd=1:length(list)
-movefile (list{nmd}, folder)
-end
-
-
-clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
-end
+%end
+%xo
+% % % % % % if rippletable==0
+% % % % % % spec_loop_improve(RAT,block_time,sanity,dura,quinientos,outlie);
+% % % % % % %save in right folder
+% % % % % % list = dir();
+% % % % % % list([list.isdir]) = [];
+% % % % % % list={list.name};
+% % % % % % FolderRip=[{'all_ripples'} {'500'} {'1000'}];
+% % % % % % if Rat==26
+% % % % % % Base=[{'Baseline1'} {'Baseline2'}];
+% % % % % % end
+% % % % % % if Rat==26 && rat26session3==1
+% % % % % % Base=[{'Baseline3'} {'Baseline2'}];
+% % % % % % end
+% % % % % % 
+% % % % % % if Rat==27 
+% % % % % % Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+% % % % % % end
+% % % % % % 
+% % % % % % if Rat==27 && rat27session3==1
+% % % % % %    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+% % % % % % end
+% % % % % % 
+% % % % % % if meth==1
+% % % % % % folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
+% % % % % % else
+% % % % % % Method=[{'Method2' 'Method3' 'Method4'}];
+% % % % % % folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+% % % % % % end
+% % % % % % 
+% % % % % % if mergebaseline==1
+% % % % % %     if meth==1
+% % % % % %     folder=strcat('Merged','_',FolderRip{FiveHun+1});
+% % % % % %     else
+% % % % % %     Method=[{'Method2' 'Method3' 'Method4'}];
+% % % % % %     folder=strcat('Merged','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+% % % % % %     end
+% % % % % % end
+% % % % % % 
+% % % % % % if exist(folder)~=7
+% % % % % % (mkdir(folder))
+% % % % % % end
+% % % % % % 
+% % % % % % for nmd=1:length(list)
+% % % % % % movefile (list{nmd}, folder)
+% % % % % % end
+% % % % % % 
+% % % % % % 
+% % % % % % clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
+% % % % % % end
 if base>=2
     break
 end
