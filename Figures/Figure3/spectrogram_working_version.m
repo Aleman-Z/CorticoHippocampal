@@ -341,29 +341,7 @@ end
                     riptable(1,3)=RipFreq3;
 
             end
-%             
-%             if meth==1
-%             [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
-%             end
 
-%             if meth==2
-%                 [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;    
-%             end
-
-%             if meth==3
-%             chtm=load('vq_loop2.mat');
-%             chtm=chtm.vq;
-%                 [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-%             CHTM2=[chtm chtm];
-%             end
-
-%             if meth==4 
-%             [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-%             CHTM2=[chtm chtm];
-%             riptable(1,1)=ripple_nl;
-%             riptable(1,2)=timeasleep2;
-%             riptable(1,3)=RipFreq3;
-%             end
     end
     %% Select time block (Not used now)
     if block_time==1
