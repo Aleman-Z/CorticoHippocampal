@@ -14,9 +14,9 @@
 5. **select_quinientos.m**: Selects strongests 500 ripples among those found.*
 
 6. **butterfly_plot.m**: Generates butterfly plot of all ripples and their grand average.
-
-<img src="butterfly.png" width="500">
-
+<p align="center">
+<img src="butterfly.png" width="700">
+</p>
 7. **rat24_artifact.m**: Script with several test ran to remove artifacts from Rat 24.
 
 
