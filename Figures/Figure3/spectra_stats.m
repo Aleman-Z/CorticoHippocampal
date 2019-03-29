@@ -429,8 +429,9 @@ else
     caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
     zlim=c.YLim;    
     end
-
-    c=narrow_colorbar()    
+     
+    c=narrow_colorbar()
+    ylim([100 250])
 end
 
 

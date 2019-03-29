@@ -550,12 +550,12 @@ if win_stats==0
                         save(strcat('Zlim_100ms.mat'),'Zlim')
                 end
 end
-xo
+%xo
             close all
         end
     end
     end
-%xo
+xo
 
 if win_ten==1
 %Add Ylabels    
@@ -568,7 +568,7 @@ cd(num2str(Rat))
 if equal_num==0
     cd('all_rip')
 end
-xo
+%xo
 if win_stats==0
         if win_comp==1
             printing('1sec')
