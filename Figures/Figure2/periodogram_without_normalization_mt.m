@@ -2,10 +2,19 @@ acer=1;
 rat24base=2;
 %%
 %Rat=26;
-
-for Rat=2:2
-rats=[26 27 24 21];
-Rat=rats(Rat);    
+%Select rat number
+opts.Resize = 'on';
+opts.WindowStyle = 'modal';
+opts.Interpreter = 'tex';
+prompt='\bf Which rat number?';
+answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+Rat=str2num(answer{1});
+%xo
+%Uncomment for Loop.
+%for Rat=2:2
+% rats=[26 27 24 21];
+% Rat=rats(Rat);
+%%
 if Rat==26
 nFF=[
 %    {'rat26_Base_II_2016-03-24'                         }
@@ -163,10 +172,6 @@ labelconditions=[
 %labelconditions=nFF;
 end
  
-%% Go to main directory
-addingpath(acer)
-
-
 %% Select experiment to perform. 
 nrem=3;
 notch=0;
@@ -257,16 +262,15 @@ f_signal=sig2{2*w-1};
 
 %If not complete recording, pick time block. 
 if block_time~=0
-    if block_time==1
-       NC=NC(:,[1:round(size(NC,2)/3)]);
-    end
-
-    if block_time==2
-       NC=NC(:,[round(size(NC,2)/3)+1: round(size(NC,2)/3*2)]);
-    end
-    
-    if block_time==3
-       NC=NC(:,[round(size(NC,2)/3*2)+1: size(NC,2)]);
+    switch block_time
+        case 1
+               NC=NC(:,[1:round(size(NC,2)/3)]);    
+        case 2
+               NC=NC(:,[round(size(NC,2)/3)+1: round(size(NC,2)/3*2)]);
+        case 3
+               NC=NC(:,[round(size(NC,2)/3*2)+1: size(NC,2)]);
+        otherwise
+            xo
     end
 end
 
@@ -465,5 +469,5 @@ close all
 end
 %%
 clearvars -except acer Rat
-end
+%end
 %end
