@@ -17,6 +17,7 @@
 <p align="center">
 <img src="butterfly.png" width="700">
 </p>
+
 7. **rat24_artifact.m**: Script with several test ran to remove artifacts from Rat 24.
 
 
