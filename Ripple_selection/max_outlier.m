@@ -1,11 +1,19 @@
-function [H]=max_outlier(p)
+function [chidos]=max_outlier(p,Rat)
 P=cell2mat(p);
-P=P(1,:);
+P=P(1,:); %Focused on HPC.
 P=P.';
-R=reshape(P,[length(p) size(p{1},2)]);
-R=max(R.');
+if Rat~=24
+    R=reshape(P,[length(p) size(p{1},2)]);
+    R=max(R.');
+else
+    R=reshape(P,[size(p{1},2) length(p)]);  
+    R=max(abs(R));
+    [ff,r2]=sort(R,'descend');
+    R=R(r2(50:end))
+    p=p(r2(50:end));
+end
 
-H=~isoutlier(R,'quartiles'); %Not an outlier>1. Else 0. 
+H=~isoutlier(R,'quartiles'); %Not an outlier=1. Else 0. 
 
 %Look for unique:
 Vec=1:length(p);

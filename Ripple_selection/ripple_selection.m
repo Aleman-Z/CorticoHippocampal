@@ -21,7 +21,7 @@ function [p,q,sos]=ripple_selection(p,q,sos,Rat)
 % % % % % % end
 
     %No outliers
-    ache=max_outlier(p);
+    ache=max_outlier(p,Rat);
     p=p(ache);
     q=q(ache);
 
