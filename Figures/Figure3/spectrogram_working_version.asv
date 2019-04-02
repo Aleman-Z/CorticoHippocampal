@@ -392,13 +392,13 @@ if win_stats==0
                         Mdam3=[Mdam3 mdam3];
 else %Statistical test
     if cluster_stats==0
-                          [zlim1]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [zlim1]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
                           Zlim1=[Zlim1 zlim1];
 
-                          [zlim2]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [zlim2]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
                           Zlim2=[Zlim2 zlim2];
     end
-                          [zlim3]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [zlim3]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
                           Zlim3=[Zlim3 zlim3];
 
 end
@@ -422,10 +422,10 @@ end
 %                           end
     if cluster_stats==0
 
-                          [~]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
-                          [~]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [~]=spectra_stats(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
+                          [~]=spectra_stats(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
     end 
-                          [~]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats);
+                          [~]=spectra_stats(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,cluster_stats,RAT24_test);
 
                       end
        end
@@ -575,13 +575,13 @@ if win_stats==0
         if win_comp==1
             printing('1sec')
         else
-            printing('100ms')
+            printing('100ms_mejorado')
         end
 else
         if win_comp==1
             printing('Stats_1sec')
         else
-            printing('Stats_100ms')
+            printing('Stats_100ms_mejorado')
         end
 end
 close all

@@ -33,7 +33,7 @@ end
 %                 for cn=1:length(p)
 %                     q{cn}(w,:)= q{cn}(w,:).*0.195;
 %                 end
-            [q]=rip_magnitude(q,w);
+            %[q]=rip_magnitude(q,w);
 
     %         else
     %             for cn=1:length(p)
