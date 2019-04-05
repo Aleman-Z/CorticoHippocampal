@@ -36,7 +36,7 @@ This method requires the estimation of the AR coefﬁcients , the noise covarian
 
     **stats_thesis.m: Kruskal-Wallis test.**
 
-Steps 3 to 4 contained in function: **gc_paper.m** (Conditional). Similar implementation on **fieldtrip_adapted.m** (Pairwise).
+Steps 3 to 4 contained in function: **gc_paper.m** (Conditional). Similar implementation on **fieldtrip_adapted.m** (Pairwise) Use this one preferably.
 
 Steps 5: Kruskal-Wallis Statystical Test. 
 
