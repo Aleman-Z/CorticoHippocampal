@@ -47,7 +47,7 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
 
-### :zap: Useful functions: 
+### :zap: Plotting functions: 
 
 * **granger_paper3.m:**  
 *Plots spectral granger causality among brain regions for a single condition.* 
@@ -100,9 +100,6 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 *Plots granger causality for the non-parametric and parametric models.*
      <img src="autotest_single.png" width="500">
 
-* **gc_stripes.m:**  
-*Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
-
 * **granger_baseline_learning.m:**  
 *Plots S-GC for Learning and Non-learning.* 
 
@@ -110,6 +107,9 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 *Plots S-GC for Learning and Non-learning with significant statistics (Used on Thesis).* 
 
 Other:
+
+* **gc_stripes.m:**  
+*Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
 -pal_test_ft_granger_cond.m
 
