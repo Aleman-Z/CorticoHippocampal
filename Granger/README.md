@@ -6,6 +6,14 @@ Different types of Granger causality:
 <img src="gc_types.png" width="250">
 </p>
 
+**Parametric:**
+The parametric approach assumes a model for the k neural signals, which are typically modeled as bivariate linear AR time series plus a noise term. 
+This method requires the estimation of the AR coefﬁcients , the noise covariance matrix  and a selection of the model order.
+
+**Non-Parametric:**
+A non-parametric method using a Multitaper frequency analysis can also be used to estimate the spectral matrix and compute the spectral causality of the signals.
+
+
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
 
