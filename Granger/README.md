@@ -10,21 +10,12 @@ Different types of Granger causality:
 The parametric approach assumes a model for the k neural signals, which are typically modeled as bivariate linear AR time series plus a noise term. 
 This method requires the estimation of the AR coefﬁcients , the noise covariance matrix  and a selection of the model order.
 
-**Non-Parametric:**
-A non-parametric method using a Multitaper frequency analysis can also be used to estimate the spectral matrix and compute the spectral causality of the signals.
-
-
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
-
-* **createauto_np.m:**  
-*Computes _non-parametric_ spectral granger causality.* 
 
 * **createauto_conditional.m:**  
 *Computes _parametric_  __conditional __ spectral granger causality.* 
 
-* **createauto_np_cond.m:**  
-*Computes _non-parametric_  __conditional __ spectral granger causality.* 
 
 ####  :link: Steps to generate Spectral GC   _(Parametric approach)_: 
 
@@ -51,6 +42,17 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 Steps 3 to 4 contained in function: **gc_paper.m** (Conditional). Similar implementation on **fieldtrip_adapted.m** (Pairwise).
 
 Steps 5: Kruskal-Wallis Statystical Test. 
+
+
+**Non-Parametric:**
+A non-parametric method using a Multitaper frequency analysis can also be used to estimate the spectral matrix and compute the spectral causality of the signals.
+
+* **createauto_np.m:**  
+*Computes _non-parametric_ spectral granger causality.* 
+
+* **createauto_np_cond.m:**  
+*Computes _non-parametric_  __conditional __ spectral granger causality.* 
+
 
 ### :zap: Useful functions: 
 
