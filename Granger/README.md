@@ -13,9 +13,6 @@ This method requires the estimation of the AR coefﬁcients , the noise covarian
 * **createauto.m:**  
 *Computes _parametric_ spectral granger causality.* 
 
-* **createauto_conditional.m:**  
-*Computes _parametric_  __conditional __ spectral granger causality.* 
-
 
 ####  :link: Steps to generate Spectral GC   _(Parametric approach)_: 
 
@@ -49,10 +46,6 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
-
-* **createauto_np_cond.m:**  
-*Computes _non-parametric_  __conditional __ spectral granger causality.* 
-
 
 ### :zap: Useful functions: 
 
