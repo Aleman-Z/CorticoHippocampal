@@ -1,4 +1,4 @@
-function [granger2]=createauto(data1,order)
+function [granger2]=createauto(data1,order,condition)
 %Parametric model Order 20
 cfg2         = [];
 cfg2.order   = order;
@@ -11,6 +11,13 @@ mfreq2      = ft_freqanalysis(cfg2, mdata2);
 
 cfg2           = [];
 cfg2.method    = 'granger';
+
+if strcmp(condition,'yes')
+    cfg2.granger.feedback    = 'yes';
+    cfg2.granger    = [];
+    cfg2.granger.conditional    = 'yes';   
+end
+
 granger2       = ft_connectivityanalysis(cfg2, mfreq2);
 
 end

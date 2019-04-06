@@ -77,43 +77,8 @@ cfg = [];
  kk=1;
  for k=1:3
      for l=1:3
-     subplot(3,3,kk)
+     subplot(3,3,k)
       im(squeeze(granger.grangerspctrm(k,l,:,:)))
-      kk=kk+1;
-      title(strcat(granger.label{k},' >> ',granger.label{l}))
      end
-     
  end
-%%
-ft_data1 = [];
-ft_data1.fsample = 1000;
-ft_data1.trial = p(1,1:end); % q should be larger than +/-500 ms. Better to use 1 sec. 
-
-timecell=create_timecell(ro,length(p));
-ft_data1.time = (timecell(1,1:end));
-
-ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
-
-% Compute Multitaper
-freqrange=[100:1:150];       
-cfg = [];
-cfg.method = 'mtmconvol';
-
-cfg.taper = 'hanning';
-% cfg.pad='nextpow2';
-cfg.pad=3;
-%cfg.padtype='edge';
-cfg.foi = freqrange;
-%  cfg.t_ftimwin = 0.4 * ones(size(cfg.foi));
-cfg.t_ftimwin = 0.5.*ones(size(4./cfg.foi')); 
-cfg.tapsmofrq = equis*cfg.foi;
-
-%cfg.toi=toy;
-cfg.toi       = -1:0.01:1;
-%cfg.output         = 'pow';
-cfg.output         = 'fourier';
-
-cfg.keeptrials = 'yes';
-
-
-freq = ft_freqanalysis(cfg, ft_data1);
+  

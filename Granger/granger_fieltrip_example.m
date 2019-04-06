@@ -1,4 +1,4 @@
-addpath(genpath('C:\Users\addri\Documents\MATLAB\mvgc_v1.0'))
+% addpath(genpath('C:\Users\addri\Documents\MATLAB\mvgc_v1.0'))
 
 cfg             = [];
 cfg.ntrials     = 500;

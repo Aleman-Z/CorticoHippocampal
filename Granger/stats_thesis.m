@@ -11,15 +11,15 @@ data1.trial=q(kk);
 data1.time= create_timecell(ro,1); %Might have to change this one 
 data1.fsample=fn;
 data1.label=cell(3,1);
-data1.label{1}='Hippocampus';
-data1.label{2}='Parietal';
+data1.label{1}='HPC';
+data1.label{2}='PAR';
 data1.label{3}='PFC';
 %data1.label{4}='Reference';
 
 %Parametric model
- [granger1]=createauto(data1,ord); %this is the good one .
+ [granger1]=createauto(data1,ord,[]); %this is the good one .
  GRGR_base{kk}=granger1.grangerspctrm;
- [granger]=createauto_np(data1,[0:2:300]);
+ [granger]=createauto_np(data1,[0:2:300],[]);
  GRGRNP_base{kk}=granger.grangerspctrm;
 end
 

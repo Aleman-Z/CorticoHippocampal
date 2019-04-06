@@ -13,7 +13,7 @@ data1.label{3}='PFC';
 %Parametric model
  %[granger1]=createauto(data1,ord); %this is the good one .
  %[granger1_cond]=createauto_conditional(data1,ord);
- [granger1]=createauto_conditional(data1,ord);  
+ [granger1]=createauto(data1,ord,'yes');  
  
 % cfg         = [];
 % cfg.order   = ord;
@@ -27,10 +27,10 @@ data1.label{3}='PFC';
 
 
 %Non parametric
-[granger]=createauto_np(data1,freqrange);
+[granger]=createauto_np(data1,freqrange,[]);
 
 
-[granger_cond]=createauto_np_cond(data1,freqrange);
+[granger_cond]=createauto_np(data1,freqrange,'?es');
 
 
 % cfg           = [];

@@ -5,16 +5,16 @@ function [gra,gra2]=fieldtrip_adapted(q,ord,ro)
     data1.time= timecell; %Might have to change this one 
     data1.fsample=fn;
     data1.label=cell(3,1);
-    data1.label{1}='Hippocampus';
-    data1.label{2}='Parietal';
+    data1.label{1}='HPC';
+    data1.label{2}='PAR';
     data1.label{3}='PFC';
     %data1.label{4}='Reference';
 
     %Parametric model
-    [granger1]=createauto(data1,ord)
+    [granger1]=createauto(data1,ord,[])
 
     %Non-parametric model
-    [granger2]=createauto_np(data1,[0:1:500])
+    [granger2]=createauto_np(data1,[0:1:500],[])
     
     %cfg         = [];
     %cfg.order   = ord;

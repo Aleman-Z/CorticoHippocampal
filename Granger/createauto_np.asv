@@ -1,8 +1,8 @@
 function [granger]=createauto_np(data1,freqrange,condition)
     cfg           = [];
     cfg.method    = 'mtmfft';
-    cfg.taper     = 'dpss'; 
-    cfg.output    = 'fourier'; 
+    cfg.taper     = 'dpss'; % Chek
+    cfg.output    = 'fourier';
     cfg.tapsmofrq = 2; %1/1.2
     cfg.pad = 10;
     cfg.foi=freqrange;
@@ -15,7 +15,7 @@ function [granger]=createauto_np(data1,freqrange,condition)
     if strcmp('yes',condition)
         cfg.granger.feedback    = 'yes';
         cfg.granger    = [];
-        cfg.granger.conditional    = 'yes'; %Switch to no for pairwise. 
+        cfg.granger.conditional    = 'yes';
     end
     
     granger = ft_connectivityanalysis(cfg, freq);
