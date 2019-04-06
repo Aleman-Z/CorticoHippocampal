@@ -111,7 +111,7 @@ Other:
 * **gc_stripes.m:**  
 *Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
-* **-pal_test_ft_granger_cond.m**
+* **pal_test_ft_granger_cond.m:**
 *Test function used to implement CONDITIONAL Granger Causality.*
 
 -plot_field.m
