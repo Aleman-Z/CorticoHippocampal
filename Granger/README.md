@@ -106,13 +106,19 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 * **granger_baseline_learning_stats.m:**  
 *Plots S-GC for Learning and Non-learning with significant statistics (Used on Thesis).* 
 
-Other:
+## **Conditional Granger Causality:**
+
+* **pal_test_ft_granger_cond.m:**
+*Test function used to implement CONDITIONAL Granger Causality.*
+
+* **granger_fieltrip_example**
+*Example to implement CONDITIONAL Granger Causality.*
+
+Other functions:
 
 * **gc_stripes.m:**  
 *Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
 
-* **pal_test_ft_granger_cond.m:**
-*Test function used to implement CONDITIONAL Granger Causality.*
 
 -plot_field.m
 
