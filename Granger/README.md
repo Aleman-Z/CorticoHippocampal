@@ -47,6 +47,28 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
 
+## **Conditional Granger Causality:**
+
+* **pal_test_ft_granger_cond.m:**
+*Test function used to implement CONDITIONAL Granger Causality.*
+
+* **granger_fieltrip_example**
+*Example to implement CONDITIONAL Granger Causality.*
+
+## **Time-frequency Granger Causality:**
+* **time_freq_gran_lisandro**
+*Example to implement a Time-Frequency Granger Causality.*
+
+Other functions:
+
+* **gc_stripes.m:**  
+*Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
+
+-plot_field.m
+
+-Granger_bootstrap_ripple.m
+
+
 ### :zap: Plotting functions: 
 
 * **granger_paper3.m:**  
@@ -106,23 +128,6 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 * **granger_baseline_learning_stats.m:**  
 *Plots S-GC for Learning and Non-learning with significant statistics (Used on Thesis).* 
 
-## **Conditional Granger Causality:**
-
-* **pal_test_ft_granger_cond.m:**
-*Test function used to implement CONDITIONAL Granger Causality.*
-
-* **granger_fieltrip_example**
-*Example to implement CONDITIONAL Granger Causality.*
-
-Other functions:
-
-* **gc_stripes.m:**  
-*Visualizes previously calculated GC values and the significant frequency stripes for all directions. Used on the permutation statistical approach.* 
-
-
--plot_field.m
-
--Granger_bootstrap_ripple.m
 
 ## :zap: MVGC-based functions: 
 * **mvgc_adapted.m:**  
