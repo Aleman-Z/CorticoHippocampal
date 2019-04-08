@@ -30,7 +30,7 @@ data1.label{3}='PFC';
 [granger]=createauto_np(data1,freqrange,[]);
 
 
-[granger_cond]=createauto_np(data1,freqrange,'?es');
+[granger_cond]=createauto_np(data1,freqrange,'yes');
 
 
 % cfg           = [];

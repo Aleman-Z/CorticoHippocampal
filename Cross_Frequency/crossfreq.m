@@ -6,8 +6,11 @@ data.time=  create_timecell(ro,length(p)); %Might have to change this one
 avf=create_timecell(ro,1);
 data.fsample=fn;
 data.label=cell(3,1);
-data.label{1}='Hippocampus';
-data.label{2}='Parietal';
+% data.label{1}='Hippocampus';
+% data.label{2}='Parietal';
+% data.label{3}='PFC';
+data.label{1}='HPC';
+data.label{2}='PAR';
 data.label{3}='PFC';
 
 
