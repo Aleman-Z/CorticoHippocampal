@@ -2,7 +2,7 @@
 
 function granger_paper4(g,g_f,labelconditions,freqrange)
 allscreen()
- 
+myColorMap=StandardColors; 
 F= [1 2; 1 3; 2 3] ;
 
 lab=cell(6,1);
@@ -33,11 +33,11 @@ lab{6}='PFC -> Parietal';
  subplot(3,2,2*j-1)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(1),f(2),:)),'Color',[1 0 0])
 % hold on
- plot(g_f, squeeze(g{1}(f(1),f(2),:)),'LineWidth',2)
+ plot(g_f, squeeze(g{1}(f(1),f(2),:)),'LineWidth',2,'Color',myColorMap(1,:))
  hold on
- plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2)
- plot(g_f, squeeze(g{3}(f(1),f(2),:)),'LineWidth',2)
- plot(g_f, squeeze(g{4}(f(1),f(2),:)),'LineWidth',2)
+ plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2,'Color',myColorMap(2,:))
+ plot(g_f, squeeze(g{3}(f(1),f(2),:)),'LineWidth',2,'Color',myColorMap(3,:))
+ plot(g_f, squeeze(g{4}(f(1),f(2),:)),'LineWidth',2,'Color',myColorMap(4,:))
  
  xlim(freqrange)
  ylim([0 mmax])
@@ -53,11 +53,11 @@ lab{6}='PFC -> Parietal';
  subplot(3,2,2*j)
 %  plot(granger1.freq, squeeze(granger1.grangerspctrm(f(2),f(1),:)),'Color',[1 0 0])
 %  hold on
- plot(g_f, squeeze(g{1}(f(2),f(1),:)),'LineWidth',2)
+ plot(g_f, squeeze(g{1}(f(2),f(1),:)),'LineWidth',2,'Color',myColorMap(1,:))
  hold on
- plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2)
- plot(g_f, squeeze(g{3}(f(2),f(1),:)),'LineWidth',2)
- plot(g_f, squeeze(g{4}(f(2),f(1),:)),'LineWidth',2)
+ plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2,'Color',myColorMap(2,:))
+ plot(g_f, squeeze(g{3}(f(2),f(1),:)),'LineWidth',2,'Color',myColorMap(3,:))
+ plot(g_f, squeeze(g{4}(f(2),f(1),:)),'LineWidth',2,'Color',myColorMap(4,:))
 
  
  xlim(freqrange)

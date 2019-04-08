@@ -37,7 +37,7 @@ lab{6}='PFC -> PAR';
  hold on
  %plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2)
  %plot(g_f, squeeze(g{3}(f(1),f(2),:)),'LineWidth',2)
- plot(g_f, squeeze(g{4}(f(1),f(2),:)),'LineWidth',2,'Color',[0 0 0])
+ plot(g_f, squeeze(g{2}(f(1),f(2),:)),'LineWidth',2,'Color',[0 0 0])
  
  xlim(freqrange)
  ylim([0 mmax])
@@ -57,7 +57,7 @@ lab{6}='PFC -> PAR';
  hold on
  %plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2)
  %plot(g_f, squeeze(g{3}(f(2),f(1),:)),'LineWidth',2)
- plot(g_f, squeeze(g{4}(f(2),f(1),:)),'LineWidth',2,'Color',[0 0 0])
+ plot(g_f, squeeze(g{2}(f(2),f(1),:)),'LineWidth',2,'Color',[0 0 0])
 
  
  xlim(freqrange)
@@ -66,8 +66,8 @@ lab{6}='PFC -> PAR';
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
 if j==1
-labcon=[labelconditions(1);labelconditions(4)]    
-labcon=['Control';labelconditions(4)]
+labcon=[labelconditions(1);labelconditions(2)]    
+labcon=['Control';labelconditions(2)]
 legend(labcon,'Location','best') %Might have to change to default. 
 end
 title(lab{2*j})
