@@ -78,6 +78,9 @@ Other functions:
 * **granger_paper4.m:**  
 *Plots spectral granger causality among brain regions for all conditions.* 
       <img src="gr_all.png" width="500">
+      
+* **granger_paper4_row.m:**  
+*Same as above. Prints granger causality per row. Facilitates its use on _LaTeX_.*       
 
 * **granger_paper4_with_stripes.m:**  
 *Plots spectral granger causality among brain regions for all conditions with their significant frequency bands.* 
@@ -86,9 +89,6 @@ Other functions:
 *Same as above but with only learning and Control conditions.*       
 * **granger_paper4_stripes.m:**  
 *Same as above but used for permutation test.* 
-
-* **granger_paper4_row.m:**  
-*Prints granger causality per row to use on _LaTeX_.* 
 
 * **granger_2D_baseplus_stats.m:**  
 *Prints 2D Granger for Baseline and Plusmaze plus their bootstrapped statistics.* 
