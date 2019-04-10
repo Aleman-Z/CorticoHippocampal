@@ -1,4 +1,4 @@
-function granger_2D_testall_nostats(g1,g1_f,labelconditions,freqrange)
+function granger_2D_testall_nostats(g1,g1_f,labelconditions,freqrange,logarithmic)
 allscreen()
 F= [1 2; 1 3; 2 3] ;
 
@@ -37,7 +37,11 @@ mmin2=min([min(squeeze(g1{1}(ff(2),ff(1),:))) min(squeeze(g1{2}(ff(2),ff(1),:)))
 
 mmin=min([mmin1 mmin2]);
 
-mrange(jj,:)=log([mmin mmax]);
+if strcmp(logarithmic,'yes')
+mrange(jj,:)=log([mmin mmax]);    
+else
+mrange(jj,:)=([mmin mmax]);    
+end
 end
 Mrange=[min(min(mrange)) max(max(mrange))];
 %%
@@ -46,7 +50,11 @@ for j=1:3
 f=F(j,:);
 I=subplot(3,2,2*j-1)
 turnim=[squeeze(g1{1}(f(1),f(2),:)).'; squeeze(g1{2}(f(1),f(2),:)).' ;squeeze(g1{3}(f(1),f(2),:)).' ;squeeze(g1{4}(f(1),f(2),:)).'];
-imagesc(g1_f,[1:4],log(turnim));
+if strcmp(logarithmic,'yes')
+imagesc(g1_f,[1:4],log(turnim));    
+else
+imagesc(g1_f,[1:4],(turnim));    
+end
 colormap(jet(256))
 
 
@@ -65,7 +73,11 @@ title(lab{2*j-1})
 %Opposite direction
 I=subplot(3,2,2*j)
 turnim2=[squeeze(g1{1}(f(2),f(1),:)).'; squeeze(g1{2}(f(2),f(1),:)).' ;squeeze(g1{3}(f(2),f(1),:)).' ;squeeze(g1{4}(f(2),f(1),:)).'];
+if strcmp(logarithmic,'yes')
 imagesc(g1_f,[1:4],log(turnim2));
+else
+imagesc(g1_f,[1:4],(turnim2));    
+end
 colormap(jet(256))
 % colorbar()
 cc=colorbar();
