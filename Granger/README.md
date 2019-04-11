@@ -50,14 +50,18 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 ## **Conditional Granger Causality:**
 
 * **pal_test_ft_granger_cond.m:**
-*Test function used to implement CONDITIONAL Granger Causality.*
+*Test function used to implement CONDITIONAL Spectral Granger Causality.*
 
 * **granger_fieltrip_example**
-*Example to implement CONDITIONAL Granger Causality.*
+*Example to implement CONDITIONAL Spectral Granger Causality.*
 
 ## **Time-frequency Granger Causality:**
 * **time_freq_gran_lisandro**
-*Example to implement a Time-Frequency Granger Causality.*
+*Example to implement a Time-Frequency Spectral Granger Causality.*
+
+* **createauto_timefreq**
+*Computes _non-parametric_ Time-Frequency Spectral Granger Causality.*
+ 
 
 Other functions:
 
