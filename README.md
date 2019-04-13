@@ -10,6 +10,8 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 
 Contact: jraleman10@gmail.com :mailbox: 
 
+:warning: Makes use of functions from [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repository.
+
 --------------------------------
 ## Main Folders: :file_folder: 
 1. Load_ephys: Converts .continuous channels into downsampled (1kHz) .mat files. :floppy_disk:
