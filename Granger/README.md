@@ -47,6 +47,14 @@ A non-parametric method using a Multitaper frequency analysis can also be used t
 * **createauto_np.m:**  
 *Computes _non-parametric_ spectral granger causality.* 
 
+## **GC Values extraction per Frequency bands:**
+
+* **gc_freqbands.m:**  
+*Extract GC values per frequency band and finds average value.* 
+
+* **granger_table.m:**  
+*Generates table with GC values to be copied on spreadsheet.* 
+
 ## **Conditional Granger Causality:**
 
 * **pal_test_ft_granger_cond.m:**
