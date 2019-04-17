@@ -1,6 +1,6 @@
 acer=1;
 rat24base=2;
-pw_meth='welsh';
+pw_meth='no_welsh';
 %%
 %Select rat number
 opts.Resize = 'on';
@@ -336,11 +336,8 @@ end
 % NC=zscore(NC);
 % % % % % % NC=NC(:,end-1845+1:end);
 %xo
-if strcmp(pw_meth,'welsh')
-[pxx,f]=pwelch(NC,[],[],[],1000);
-else
-[pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);    
-end
+[pxx,f]= periodogram(NC,hann(size(NC,1)),size(NC,1),1000);
+%[pxx,f]=pwelch(NC,[],[],[],1000);
 PXX{iii}=pxx;
 %hann(length(NC))
 px=mean(pxx,2);
@@ -386,7 +383,7 @@ legend(L, labelconditions)
 % %set(gca,'Color','k')
 % ax=gca;
 % ax.GridColor=[ 0,0,0];
-% xo
+xo
 %string=strcat('Power_50B_1850_NOTCH_NREM_',label1{2*w-1},'.png');
 if acer==0
     cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
@@ -404,16 +401,14 @@ end
 % cd((labelconditions{iii}))
 % fig=gcf;
 % fig.InvertHardcopy='off';
-%xo
+xo
 if Rat~=24
 string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1});
 printing(string);
 
 else
     if strcmp(pw_meth,'welsh')
-        string=strcat('300Hz_Welsh_',nFF{1},'_',label1{2*w-1});
     else
-        string=strcat('300Hz_Per_',nFF{1},'_',label1{2*w-1});
     end
 printing(string);
     
@@ -434,11 +429,7 @@ if Rat~=24
 string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1});
 printing(string);
 else
-    if strcmp(pw_meth,'welsh')
-        string=strcat('30Hz_Welsh_',nFF{1},'_',label1{2*w-1});
-    else
-        string=strcat('30Hz_Per_',nFF{1},'_',label1{2*w-1});
-    end
+string=strcat('30Hz_',nFF{1},'_',label1{2*w-1});
 printing(string);
 end
     
