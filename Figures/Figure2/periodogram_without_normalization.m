@@ -1,6 +1,6 @@
 acer=1;
 rat24base=2;
-pw_meth='welsh';
+pw_meth='no_welsh';
 %%
 %Select rat number
 opts.Resize = 'on';

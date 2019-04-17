@@ -1,17 +1,7 @@
 clear variables
 acer=1;
-rat24base=1;
+rat24base=2; %Rat 24 base.
 plot_sleep=0;
-%%
-% if acer==0
-% addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-% addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-% addpath('/home/raleman/Documents/internship')
-% else
-% addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-% addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
-%    
-% end
 %%
 %Rat=26;
 for RAT=1:3
