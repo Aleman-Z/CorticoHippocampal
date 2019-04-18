@@ -14,12 +14,12 @@
 *Merges time blocks of periodograms.* 
 <img src="time_blocks.png" width="600">
 
-* **thr_vs_rip.m:**   
+* **thr_vs_rip_vs.m:** :heavy_check_mark:
 *Plots the relationship between amplitude threshold for SWR and the rate of ripple occurrence per condition.* 
 <img src="Ripples_per_condition.png" width="400">
 
-* **thr_vs_rip_vs.m:**   
-*Does the same thing as the function above but using vx.mat files and different baselines.*
+* **thr_vs_rip.m:**   
+*Does the same thing as the function above but NOT using vx.mat files and different baselines. Omit.*
 
 * **test_fix_thr.m:**
 *Plots and saves the threshold vs ripple plot per rat and baseline, indicating the fixed threshold used on Method 4.*
