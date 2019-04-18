@@ -29,7 +29,8 @@ gui_parameters % Will close automatically with Default values after 8 seconds.
 rat26session3=0; %Swaps session 1 for session 3 on Rat 26.
 rat27session3=0; %Swaps session 1 for session 3 on Rat 26.
 meth=4;%Method of Ripple selection. Method 4 gives best results.
-datapath='F:\Lisa_files\'; %Folder where data is saved. 
+%datapath='F:\Lisa_files\'; %Folder where data is saved. 
+datapath='D:\internship\'; %Folder where data is saved. 
 %% Select experiment to perform. 
 % inter=1;
 %Select length of window in seconds:
@@ -567,14 +568,37 @@ ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times
 end
 
 %%
-xo
 %[NSig1,NSig2,NRipple,Ncara,NVeamos,NCHTM2,NRipFreq22,NTimeasleep]=data_newest_only_ripple_level(level,lepoch)
 % if meth==3
 % [p,q,~,~,~,~]=getwin2(cara{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple(level),chtm);        
 % else
-[p,q,~,sos]=getwin2(cara,veamos,sig1,sig2,ro);    
+[p,q,~,sos]=getwin2(cara{:,:},veamos{1},sig1,sig2,ro); 
 %,ripple(level),CHTM(level+1)
 % end
+if ~isempty(sos) && Rat==24
+    'Find outlier'
+    %%
+    K=[];
+    for k=1:length(sos)
+        [vtr]=findsleep(sos{k}.',2*median(sos{k}.')); %1 for those above threshold.
+        if sum(vtr)>0
+            K=[K k];
+        end
+    end
+ p=p(K);   
+%     [vtr]=findsleep(sos{k}.',2*median(sos{k}.')); %1 for those above threshold.
+%     stripesig(vtr,sos{k})
+
+%%
+% ax1=sos{1};    
+% da=diff([ax1 ax1(end)]);
+% da=abs(da);
+% (find(da(isoutlier(da))))
+% [bb1,bb2]=outlier(da,3);
+% stripesig(vtr,sos{1})
+
+end
+
 clear sig1 sig2
 %Ripple selection. Memory free. 
 %xo
@@ -608,7 +632,7 @@ q=q(ache);
 %Find strongests ripples. 
 [p,q]=sort_rip(p,q);
 
-xo
+% xo
 
 %Select n strongest
 % 
@@ -703,13 +727,13 @@ for w=2:3
  xo
 % h=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch);
 if sanity==1
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,randrip);
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,randrip);
 %[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,randrip);
 else
  P1=0;
  P2=0;
     
-[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base);
+[h]=plot_inter_conditions_33(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
 %[h]=plot_inter_prueba(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie);    
 end
 %h=plot_inter_conditions_filtering(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer);

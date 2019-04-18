@@ -1,7 +1,7 @@
 function [MA]=convcond(grangercon)
     clear MA
-    Aver=grangercon.grangerspctrm;
-    %Aver=grangercon;
+     Aver=grangercon.grangerspctrm;
+%    Aver=grangercon;
 
 %     Aver=granger22.grangerspctrm;
 

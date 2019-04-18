@@ -1,12 +1,13 @@
-function [zlim,mdam]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,varargin)
+function [zlim,mdam]=spectra_window(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,p,timecell,sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,RAT24_test,varargin)
 
 randrip=varargin;
 randrip=cell2mat(randrip);
 
-if Rat==24
+if Rat==24 % && RAT24_test==0
 %Remove artifact from Rat 24. 
 % run('rat24_december.m')
-    if w==2
+if RAT24_test==0
+    if w==2  
     p=p(1,end-60:end);
     q=q(1,end-60:end);
 
@@ -21,7 +22,7 @@ if Rat==24
 
         end   
     end
-
+end
     %PLUSMAZE PFC CORRECTION
         if iii==2 && w~=1
 %             for cn=1:length(p)
@@ -32,7 +33,7 @@ if Rat==24
 %                 for cn=1:length(p)
 %                     q{cn}(w,:)= q{cn}(w,:).*0.195;
 %                 end
-            [q]=rip_magnitude(q,w);
+           % [q]=rip_magnitude(q,w);
 
     %         else
     %             for cn=1:length(p)
@@ -52,7 +53,7 @@ if iii==2 %Only run on the Plusmaze session.
 
 
 %Ripple selection
-if Rat~=24
+if Rat~=24 || RAT24_test==1
 [p_nl,q_nl,sos_nl]=ripple_selection(p_nl,q_nl,sos_nl,Rat);
 end
 % [length(p_nl) length(p_nl2)]
@@ -65,10 +66,13 @@ end
 % p_nl=p_nl(1,end-120:end-60);
 % q_nl=q_nl(1,end-120:end-60);    
 % end
-if Rat==24
-p_nl=p_nl(1,end-120:end-60);
-q_nl=q_nl(1,end-120:end-60);    
-end
+
+%ATTENTION
+% % % % % % % % % % % % % % % % % % % if Rat==24
+% % % % % % % % % % % % % % % % % % % p_nl=p_nl(1,end-120:end-60);
+% % % % % % % % % % % % % % % % % % % q_nl=q_nl(1,end-120:end-60);    
+% % % % % % % % % % % % % % % % % % % end
+
 % % if outlie==1 
 % % ache=max_outlier(p_nl);
 % % p_nl=p_nl(ache);
@@ -99,11 +103,13 @@ end
 
 %if Rat~=24 && rat24base~=2
 %Equalize number of ripples. 
-if equal_num==1 && Rat~=24
+if equal_num==1 %&& Rat~=24
 %Select n strongest
 switch Rat
     case 24
-        n=550;
+        %n=550;
+        %n=308;
+        n=133;
     case 26
         n=180;
     case 27
@@ -115,10 +121,15 @@ end
 p_nl=p_nl(1:n);
 q_nl=q_nl(1:n);
 % % % % % % % % % % % % % % % %Need to add sos_nl 
+else
+        if Rat==24 && RAT24_test==0
+        p_nl=p_nl(1,end-120:end-60);
+        q_nl=q_nl(1,end-120:end-60);    
+        end
 end
 
 %Memory reasons:
-if length(p_nl)>1000 && Rat~=24 %Novelty or Foraging
+if length(p_nl)>1000 %&& Rat~=24 %Novelty or Foraging
  p_nl=p_nl(1,1:1000);
  q_nl=q_nl(1,1:1000);
 end
@@ -208,9 +219,9 @@ end
 
 base=2; %VERY IMPORTANT!
 %openfig('Ripples_per_condition_best.fig')
-openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+h=openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
 
-h = gcf; %current figure handle
+%h = gcf; %current figure handle
 axesObjs = get(h, 'Children');  %axes handles
 dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
 
@@ -219,7 +230,7 @@ xdata=dataObjs{2}(8).XData;
 % figure()
 % plot(xdata,ydata)
 chtm = interp1(ydata,xdata,ror);
-close
+close(h)
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))

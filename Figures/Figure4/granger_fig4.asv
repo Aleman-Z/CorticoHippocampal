@@ -674,17 +674,15 @@ end
     
     %GRANGER ANALYSIS    
     %Widepassed
-    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:1:300]);
+    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
     %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
-
+xo
     g{iii}=gran.grangerspctrm;%Non-parametric (Pairwise)
     g1{iii}=gran1.grangerspctrm;%Parametric
     g2{iii}=grangercon.grangerspctrm;%Non-parametric (Conditional)
     %g3{iii}=gran1.grangerspctrm;
-[FB{iii}]=gc_freqbands(gran,0);
-[FB1{iii}]=gc_freqbands(gran1,0);
-[FB2{iii}]=gc_freqbands(grangercon,1);
-%xo
+[INN3]=gc_freqbands(gran);
+[INN3]=gc_freqbands(gran);
 
 %     if iii==4
 %         error('stop here')
@@ -728,9 +726,7 @@ cd('April')
 if equal_num==0
 cd('All_ripples')    
 end
-% xo
-save('FreqVal2.mat','FB','FB1','FB2')
-xo
+
 % C = cell(1,4);
 % C{1}=convcond(g2{1});
 % C{2}=convcond(g2{2});
