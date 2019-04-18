@@ -1,21 +1,20 @@
 acer=1;
 rat24base=2;
+rats=[26 27 21 24];
 
 %%
-if acer==0
-addpath('/home/raleman/Documents/MATLAB/analysis-tools-master'); %Open Ephys data loader. 
-addpath('/home/raleman/Documents/GitHub/CorticoHippocampal')
-addpath('/home/raleman/Documents/internship')
-else
-addpath('D:\internship\analysis-tools-master'); %Open Ephys data loader.
-addpath('C:\Users\addri\Documents\internship\CorticoHippocampal')
-   
-end
-%%
+%Select rat number
+opts.Resize = 'on';
+opts.WindowStyle = 'modal';
+opts.Interpreter = 'tex';
+prompt='\bf Which rat number?';
+answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+Rat=str2num(answer{1});
+
 %Rat=26;
-for Rat=4:4
-rats=[26 27 21 24];
-Rat=rats(Rat);    
+%Rat=1;
+%for Rat=4:4
+%Rat=rats(Rat);    
     
 % for Rat=26:26
 if Rat==26
@@ -179,15 +178,15 @@ end
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    addpath /home/raleman/Documents/internship/fieldtrip-master/
-    InitFieldtrip()
+%     addpath /home/raleman/Documents/internship/fieldtrip-master/
+%     InitFieldtrip()
 
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
     cd(strcat('D:\internship\',num2str(Rat)))
-    addpath D:\internship\fieldtrip-master
-    InitFieldtrip()
+%     addpath D:\internship\fieldtrip-master
+%     InitFieldtrip()
 
     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     cd(strcat('D:\internship\',num2str(Rat)))
@@ -227,16 +226,16 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-myColorMap = jet(8);                                                                                                                                                                                    
-myColorMap =myColorMap([2 4 5 7],:);
-myColorMap(2,:)=[0, 204/255, 0];
-myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
-
+% myColorMap = jet(8);                                                                                                                                                                                    
+% myColorMap =myColorMap([2 4 5 7],:);
+% myColorMap(2,:)=[0, 204/255, 0];
+% myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
+myColorMap =StandardColors;
 %Rat 24
 % if Rat==24
 %     myColorMap = jet(length(nFF));                                                                                                                                                                                    
 % end
-
+xo
 
 for iii=1:length(nFF)
 
@@ -247,8 +246,8 @@ for iii=1:length(nFF)
 
 %for level=1:length(ripple)-1;    
  %for level=1:1
-     
-for w=1:1
+w=1;     
+%for w=1:1
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -312,7 +311,7 @@ title('Rate of ripples per Threshold value')
 
 %%
 
-end
+%end
 
 %end
 
@@ -351,17 +350,11 @@ if Score==2
 end
 
 if Rat~=24
-string=strcat('Ripples_per_condition_best','.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Ripples_per_condition_best','.eps');
-print(string,'-depsc')
+string=strcat('Ripples_per_condition_best');
+printing();
 else
-string=strcat('Ripples_per_condition_',nFF{1},'.pdf');
-figure_function(gcf,[],string,[]);
-string=strcat('Ripples_per_condition_',nFF{1},'.eps');
-print(string,'-depsc')    
-string=strcat('Ripples_per_condition_',nFF{1},'.fig');
-saveas(gcf,string)
+string=strcat('Ripples_per_condition_',nFF{1});
+printing(string);
 
 end
 
@@ -372,5 +365,5 @@ close all
 
 %%
 clearvars -except acer Rat
-end
+%end
 %end
