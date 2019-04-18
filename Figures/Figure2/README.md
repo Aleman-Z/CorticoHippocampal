@@ -14,8 +14,8 @@
 *Merges time blocks of periodograms.* 
 <img src="time_blocks.png" width="600">
 
-* **thr_vs_rip_vs.m:** :heavy_check_mark:
-*Plots the relationship between amplitude threshold for SWR and the rate of ripple occurrence per condition.* 
+* **thr_vs_rip_vs.m:**
+*Plots the relationship between amplitude threshold for SWR and the rate of ripple occurrence per condition.* :heavy_check_mark:
 <img src="Ripples_per_condition.png" width="400">
 
 * **thr_vs_rip.m:**   
