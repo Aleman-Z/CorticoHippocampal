@@ -1,5 +1,7 @@
 -Spectral Granger Causality 
 ------------------
+_Main file:_ granger_fig4.m
+
 Different types of Granger causality:
 
 <p align="center">
