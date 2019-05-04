@@ -9,7 +9,7 @@ Main script is shared with Granger causality analysis main script: **granger_fig
 *Fieldtrip function used to perform CFC analysis. Methods: coh, plv, mvl and mi * 
 
 * **pchannel.m:**  
-*Extracts ripples of a specific region from p.* 
+*Extracts ripples of a specific brain region from p.* 
 
 * **crossfreq_single.m:**  
 *Extracts High and Low frequencies spectrums of a region to be used in further CFC analysis.* 
