@@ -10,7 +10,7 @@ MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/a
 
 Contact: jraleman10@gmail.com :mailbox: 
 
-:warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories.
+:warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories.
 
 --------------------------------
 ## Main Folders: :file_folder: 
