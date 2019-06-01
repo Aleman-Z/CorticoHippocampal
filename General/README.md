@@ -1,19 +1,21 @@
-General functions
+# General functions
+------------------
 
-  *StandardColors.m 	
+
+* **StandardColors.m** 
   
- *avg_samples.m 	
+* **avg_samples.m** 	
   
-*create_timecell.m 	
+* **create_timecell.m** 	
   
-*format_data.m 	
+* **format_data.m** 	
   
-*ft_notch.m 	
+* **ft_notch.m** 	
   
-*move_folder.m 	
+* **move_folder.m** 	
   
-*rat_foldernames.m 	
+* **rat_foldernames.m** 	
+
+* **rip_magnitude.m** 	
   
-*rip_magnitude.m 	
-  
-*sanity_test.m
+* **sanity_test.m**
