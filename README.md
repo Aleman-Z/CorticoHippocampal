@@ -19,4 +19,5 @@ Contact: jraleman10@gmail.com :mailbox:
 3. Granger: Implementation of Spectral Granger Causality. 
 4. Ripple_selection: Detection and selection of ripples.
 5. Pre_midterm: Scripts of tests performed prior to midterm presentation. 
+6. GUI: Currently work in progress....
 --------------------------------
