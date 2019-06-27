@@ -1,6 +1,7 @@
 function [NC]=epocher(input,e_t)
 %%
-% Create epochs. 
+% Creates epochs with length of e_t seconds. 
+%[NC]=epocher(input,e_t)
 
 % input=Bip17;
 %e_t=2; %Seconds 
