@@ -3,7 +3,6 @@ function [NC]=epocher(input,e_t)
 % Creates epochs with length of e_t seconds. 
 %[NC]=epocher(input,e_t)
 
-% input=Bip17;
 %e_t=2; %Seconds 
 e_samples=e_t*(1000);
 
@@ -22,11 +21,5 @@ nc=floor(length(va)/e_samples);
           cont=cont+1;
         end
 end
-
-%1 2000
-
-%2001 4000
-
-%4001 6000
 
 end

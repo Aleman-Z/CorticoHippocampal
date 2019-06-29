@@ -15,8 +15,9 @@ channels.Rat6 = [ 2 33 34 36];
 channels.Rat9 = [ 49 30 3 9];
 channels.Rat11 = [ 11 45 55 56];
 
-% rats=[1 3 4 6]; %First drive
-rats=[1 3 4 6 9 11]; %First and second drive
+rats=[1 3 4 6]; %First drive
+%rats=[1 3 4 6 9 11]; %First and second drive
+% rats=[1]; %First and second drive
 
 % % labelconditions=[
 % %     { 
@@ -39,15 +40,59 @@ rats=[1 3 4 6 9 11]; %First and second drive
 % % %     'OR_N'
 % %     ];
 
-sidebyside=1; %Plots conditions side by side. 
-aver_trial=1;
+% sidebyside=1; %Plots conditions side by side. 
+% aver_trial=0;
+% scoring=1;
+%%
+% figure('Renderer', 'painters', 'Position', [50 50 200 300])
+f=figure()
+movegui(gcf,'center')
+f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3]
+movegui(gcf,'center')
+
+%Checkboxes
+sidebyside = uicontrol('Style','checkbox','String','Side by side plot','Position',[10 f.Position(4)-30 200 20]);
+sidebyside.FontSize=11;
+% sidebyside=c_side.Value;
+aver_trial = uicontrol('Style','checkbox','String','Average trials','Position',[10 f.Position(4)-60 200 20]);
+aver_trial.FontSize=11;
+% aver_trial=c.Value;
+scoring = uicontrol('Style','checkbox','String','Use scoring labels','Position',[10 f.Position(4)-90 200 20]);
+scoring.FontSize=11;
+% scoring=c.Value;
+
+set(f, 'NumberTitle', 'off', ...
+    'Name', 'Select an option');
+
+%Push button
+c = uicontrol;
+c.String = 'Continue';
+c.FontSize=10;
+c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)]
+
+%Callback
+c.Callback='uiresume(gcbf)';
+uiwait(gcf); 
+scoring=scoring.Value;
+sidebyside=sidebyside.Value;
+aver_trial=aver_trial.Value;
+close(f);
+
+
+%%
+
+% % f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)];
+% scrf=14;
+% Pix_SS = get(0,'screensize');
+% f.Position=[Pix_SS(3)/4 Pix_SS(4)/4 300 300];
+
 %%
 fbar=waitbar(0,'Please wait...');
 for RAT=1:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
 
-cd(strcat('F:\Lisa_files\',num2str(rats(RAT))));
+cd(strcat('G:\Lisa_files\',num2str(rats(RAT))));
 gg=getfolder;
 gg=gg.';
 gg(ismember(gg,'OR_N'))=[];
@@ -93,6 +138,11 @@ for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
+g=g(contains(g,{'PT'}));
+% if scoring==1
+%    g=g(~contains(g,{'_'})); 
+% end
+%%
 
 if Rat==1 && strcmp(labelconditions{iii},'OD') 
 a = 1:length(g);
@@ -111,39 +161,69 @@ for k=1:length(g) %all trials.
     end
 myColorMap = jet(length(g));                                                                                                                                                                                        
 cd( g{1,k})
+% xo
+    A = dir('*states*.mat');
+    A={A.name};
+     
+    if scoring==1 && ~isempty(A)
+           cellfun(@load,A);
+    end
+%         %If no labelled data is found
+%          if isempty(A) %&& scoring==1
+%            messbox('No states file found. Switching to own method','Error') 
+%            xo
+%            scoring=0;
+%          else
+%            scoring=1;
+%          end
+        
+if scoring==1 && ~isempty(A) && ~isempty(find(transitions(:,1)==3))
+    % A = dir(cd);
+    % A=A(~ismember({A.name},{'.','..'})); %Remove dots
+    % A={A.name}
 
-sos=load('sos.mat');
-sos=sos.sos;
-%xo
-[a1,nb]=sleep_criteria(sos);
+    [transitions]=sort_scoring(transitions,3); %NREM
 
-%If no sleep is found ignore trial:
-if nb==0  %|| nb==1
-g=g(~strcmp(g,g{k}));
-myColorMap=myColorMap(1:length(g),:);
-cd ..
-    
-if k>=length(g)   
-% a = 1:length(g);
-% a(a == k) = [];
-% g=g(a);
-
-    break
 else
-cd( g{1,k})
-
-sos=load('sos.mat');
-sos=sos.sos;
-%xo
-[a1,nb]=sleep_criteria(sos);
-    if nb==0
-        xo
+    
+    if scoring==1
+                  messbox('No states file found or no stage data.','Error')  
+                  g{k}=strcat(g{k},'_A_c_c_e_l');
     end
     
-end
+    sos=load('sos.mat');
+    sos=sos.sos; 
+    %xo
+    [a1,nb]=sleep_criteria(sos);
+    %end
+    %If no sleep is found ignore trial:
+    if nb==0  %|| nb==1
+        g=g(~strcmp(g,g{k}));
+        myColorMap=myColorMap(1:length(g),:);
+        cd ..
+
+        if k>=length(g)   
+        % a = 1:length(g);
+        % a(a == k) = [];
+        % g=g(a);
+
+            break
+        else
+        cd( g{1,k})
+
+        sos=load('sos.mat');
+        sos=sos.sos;
+        %xo
+        [a1,nb]=sleep_criteria(sos);
+            if nb==0
+                xo
+            end
+
+        end
+    end
 end
 
-
+%Load data
 V9=load('V9.mat');
 V9=V9.V9;
 V9=V9.*(0.195);
@@ -153,11 +233,17 @@ V17=V17.*(0.195);
 
 %xo
 
-v9=cell(size(a1,1),1);
-v17=cell(size(a1,1),1);
-for h=1:size(a1,1)
-v9{h,1}=V9(a1(h,1):a1(h,2));
-v17{h,1}=V17(a1(h,1):a1(h,2));
+if scoring==1 && ~isempty(A) && ~isempty(find(transitions(:,1)==3))
+[v9,~]=reduce_data(V9,transitions,1000,3);
+[v17,~]=reduce_data(V17,transitions,1000,3);
+
+else
+    v9=cell(size(a1,1),1);
+    v17=cell(size(a1,1),1);
+    for h=1:size(a1,1)
+    v9{h,1}=V9(a1(h,1):a1(h,2));
+    v17{h,1}=V17(a1(h,1):a1(h,2));
+    end    
 end
 
 % v17={V17};
@@ -188,7 +274,7 @@ nu2=30;
 % nu1=0.5;
 % nu2=0.5;
 
-% xo
+%xo
 % % % % % % % % % % % % if Rat==11 && iii==3 %&& k==5
 % % % % % % % % % % % % Fline=[31 32 33.2 34 66.4 99.6 166.5 232.9];
 % % % % % % % % % % % % % 
@@ -262,28 +348,26 @@ cd ..
 clear v9 v17 NC 
 
 end
-% xo
+%  xo
 
 if size(PX,1)==6
    PX=PX(1:5,:); 
 end
 
 if aver_trial==1
-% subplot(1,3,iii)  
-acolor=figColorMap(iii,:);
-s=semilogy(f,(mean(PX)),'Color',acolor,'LineWidth',2);
-s.Color(4) = 0.8; 
-hold on
-% fill([f.' fliplr(f.')],[mean(PX)+std(PX) fliplr(mean(PX)-std(PX))],acolor,'linestyle','none','FaceAlpha', 0.4);
+    % subplot(1,3,iii)  
+    acolor=figColorMap(iii,:);
+    s=semilogy(f,(mean(PX)),'Color',acolor,'LineWidth',2);
+    s.Color(4) = 0.8; 
+    hold on
+    % fill([f.' fliplr(f.')],[mean(PX)+std(PX) fliplr(mean(PX)-std(PX))],acolor,'linestyle','none','FaceAlpha', 0.4);
 end
 
 
 xlim([0 300])
 xlabel('Frequency (Hz)')
-%ylabel('10 Log(x)')
 ylabel('Power')
 
-%title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 if sidebyside==1 && aver_trial~=1
 title(strcat(labelconditions{iii},{' '} ,'HPC' ,{' '},'power'))    
 else
@@ -310,12 +394,9 @@ else
 
     legend(L, labelconditions) 
 end
-
-% sum(cellfun(@(x) isempty(x),PX))>=1
-
- %xo
+%xo
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
-string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
+string=strcat('300Hz_Rat_',num2str(Rat),'_NREM_',labelconditions{iii},'_','HPC','.pdf');
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 
 if sidebyside==0
@@ -327,9 +408,10 @@ end
 cd ..
 clear myColorMap
 end
+xo
 
 if sidebyside==1
- string=strcat('300Hz_Rat',num2str(Rat),'_AveragedTrialsHC_','HPC'); 
+ string=strcat('300Hz_Rat',num2str(Rat),'_NREM_','HPC'); 
 % xo
  printing(string);
 close all
@@ -339,5 +421,4 @@ clear figColorMap
 end
 
 %%
-
 
