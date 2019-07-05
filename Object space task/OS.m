@@ -144,11 +144,12 @@ g=g(contains(g,{'PT'}));
 % end
 %%
 
-if Rat==1 && strcmp(labelconditions{iii},'OD') 
-a = 1:length(g);
-a(a == 4) = [];
-g=g(a);
-end
+%Something about trial 4th
+% if Rat==1 && strcmp(labelconditions{iii},'OD') 
+% a = 1:length(g);
+% a(a == 4) = [];
+% g=g(a);
+% end
 
 PXX=cell(length(g),1);
 %PX=cell(length(g),1);
@@ -325,6 +326,8 @@ s=semilogy(f,(px),'Color',myColorMap(k,:),'LineWidth',2);
 s.Color(4) = 0.8;
 hold on
 end
+
+
 %xo
 % for k=1:length(iv3)
 %    if iv3(k)==1
@@ -348,10 +351,18 @@ cd ..
 clear v9 v17 NC 
 
 end
-%  xo
-
-if size(PX,1)==6
-   PX=PX(1:5,:); 
+  %xo
+%Find index of values closer to 100 and 250 Hz.
+[~,l1]=min(abs(f-100));
+[~,l2]=min(abs(f-250));
+New_PX{iii}=mean(PX(:,l1:l2),2);
+% if size(PX,1)==6
+%    PX=PX(1:5,:); 
+% end
+if iii>=2
+[z]=merge_mat(z,New_PX{iii});
+else
+z=New_PX{iii};    
 end
 
 if aver_trial==1
@@ -408,12 +419,15 @@ end
 cd ..
 clear myColorMap
 end
-xo
+ xo
+tab=array2table(z,'VariableNames',labelconditions);
+filename = 'tab.xlsx';
+% writetable(tab,filename,'Sheet',1,'Range','A1')
 
 if sidebyside==1
  string=strcat('300Hz_Rat',num2str(Rat),'_NREM_','HPC'); 
 % xo
- printing(string);
+%  printing(string);
 close all
 end
 progress_bar(RAT,length(rats),fbar)
