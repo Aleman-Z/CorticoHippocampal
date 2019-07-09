@@ -214,7 +214,31 @@ function New_experiment_Callback(hObject, eventdata, handles)
 % hObject    handle to New_experiment (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+% gui_new_experiment
+% global x
+x = inputdlg({'Rats ID number','Condition Names','Brain Areas'},'Fill and separate with commas', [1 70; 1 70; 1 70]) 
+rats=str2num(x{1});
+label1=split(x{3},',');
+labelconditions=split(x{2},',');
 
+%Avoid Windows reserved word CON.
+labelconditions2=labelconditions;
+labelconditions2(ismember(labelconditions,'CON'))={'CN'}
+
+z= zeros(length(label1),length(rats));
+
+assignin('base','rats',rats)
+assignin('base','labelconditions',labelconditions)
+assignin('base','labelconditions2',labelconditions2)
+assignin('base','label1',label1)
+assignin('base','z',z)
+gui_table_channels
+
+
+
+% guidata( hObject, handles);
+% av=x;
+% rats=str2num(av{1});
 
 % --------------------------------------------------------------------
 function Ripples_amount_Callback(hObject, eventdata, handles)
@@ -249,3 +273,5 @@ function Github_Callback(hObject, eventdata, handles)
 % hObject    handle to Github (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+url = 'https://github.com/Aleman-Z/CorticoHippocampal/tree/master/GUI';
+web(url,'-browser')
