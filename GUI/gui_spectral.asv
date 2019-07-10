@@ -260,12 +260,9 @@ function Load_experiment_Callback(hObject, eventdata, handles)
 % uiopen('*.mat')
 [file,pat]=uigetfile('*.mat','Select the experiment file');
 f_name=fullfile(pat,file);
-load(f_name, 'rats','labelconditions','labelconditions2','label1','channels');
+load(f_name, 'rats','labelconditions');
 assignin('base','rats',rats)
-assignin('base','labelconditions',labelconditions)
-assignin('base','labelconditions2',labelconditions2)
-assignin('base','label1',label1)
-assignin('base','channels',channels)
+
 
 
 % % load(f_name)
