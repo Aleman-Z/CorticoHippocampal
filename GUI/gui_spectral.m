@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 09-Jul-2019 06:55:05
+% Last Modified by GUIDE v2.5 10-Jul-2019 21:20:10
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -88,14 +88,15 @@ function File_Callback(hObject, eventdata, handles)
 
 
 % --------------------------------------------------------------------
-function Load_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Load_data (see GCBO)
+function Load_Ephys_data_Callback(hObject, eventdata, handles)
+% hObject    handle to Load_Ephys_data (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+'Loading data'
 
 % --------------------------------------------------------------------
-function Export_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Export_data (see GCBO)
+function Load_Matlab_data_Callback(hObject, eventdata, handles)
+% hObject    handle to Load_Matlab_data (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -178,6 +179,13 @@ function Periodogram_Callback(hObject, eventdata, handles)
 % hObject    handle to Periodogram (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+channels = evalin('base','channels');
+label1 = evalin('base','label1');
+labelconditions = evalin('base','labelconditions');
+labelconditions2 = evalin('base','labelconditions2');
+rats = evalin('base','rats');
+
+gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
 
 
 % --------------------------------------------------------------------
@@ -266,6 +274,9 @@ assignin('base','labelconditions',labelconditions)
 assignin('base','labelconditions2',labelconditions2)
 assignin('base','label1',label1)
 assignin('base','channels',channels)
+ [mh]=messbox('Experiment was loaded','Success')
+
+% f = msgbox('Experiment was loaded','Success');
 
 
 % % load(f_name)
