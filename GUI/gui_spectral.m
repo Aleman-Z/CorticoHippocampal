@@ -65,7 +65,7 @@ imshow('memdyn.png')
 
 axes(handles.axes1)
 %imshow('trace.PNG')
-[gifImage cmap] = imread('rip_colour4.gif', 'Frames', 'all');
+[gifImage cmap] = imread('rip_colour.gif', 'Frames', 'all');
 [rows, columns, numColorChannels, numImages] = size(gifImage);
 % Construct an RGB movie.
 rgbImage = zeros(rows, columns, 3, numImages, 'uint8'); % Initialize dimensions.
