@@ -89,13 +89,16 @@ for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
 cd( labelconditions2{iii})
 g=getfolder;
 
+if iii==1
 answer = questdlg('Should we use all trials?', ...
 	'Trial selection', ...
 	'Use all','Select trials','Select trials');
+
 % Handle response
 switch answer
     case 'Use all'
         disp(['Using all.'])
+        an=[];
     case 'Select trials'
         prompt = {'Enter trials name common word without index:'};
         dlgtitle = 'Input';
@@ -104,13 +107,16 @@ switch answer
         an = inputdlg(prompt,dlgtitle,dims);
         %an=char(an);
 %        g=g(contains(g,{'PT'}));
-        g=g(contains(g,an));
-
+end
 
 end
 
+if ~isempty(an)
+g=g(contains(g,an));
+end
 %xo
-g=g(contains(g,{'PT'}));
+% g=g(contains(g,{'PT'}));
+
 % if scoring==1
 %    g=g(~contains(g,{'_'})); 
 % end
@@ -160,7 +166,8 @@ if scoring==1 && ~isempty(A) && ~isempty(find(transitions(:,1)==3))
 else
     
     if scoring==1
-                  messbox('No states file found or no stage data.','Error')  
+%                  messbox('No states file found or no stage data.','Error')
+                   errordlg(strcat('Scoring File not found for Rat',num2str(Rat),{' '},labelconditions{iii},{' '},g{k}),'Error');
                   g{k}=strcat(g{k},'_A_c_c_e_l');
     end
     
@@ -294,6 +301,7 @@ if aver_trial~=1
 end
 % figure()
 if aver_trial~=1
+figure(1)    
 s=semilogy(f,(px),'Color',myColorMap(k,:),'LineWidth',2);
 s.Color(4) = 0.8;
 hold on

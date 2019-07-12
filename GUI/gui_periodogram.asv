@@ -1,10 +1,11 @@
 function gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
 %%
+dname=uigetdir([],'Select folder with Matlab data');
 % figure('Renderer', 'painters', 'Position', [50 50 200 300])
-f=figure()
-movegui(gcf,'center')
-f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3]
-movegui(gcf,'center')
+f=figure();
+movegui(gcf,'center');
+f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3];
+movegui(gcf,'center');
 
 %Checkboxes
 sidebyside = uicontrol('Style','checkbox','String','Side by side plot','Position',[10 f.Position(4)-30 200 20]);
@@ -24,7 +25,7 @@ set(f, 'NumberTitle', 'off', ...
 c = uicontrol;
 c.String = 'Continue';
 c.FontSize=10;
-c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)]
+c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
 
 %Callback
 c.Callback='uiresume(gcbf)';
@@ -35,13 +36,13 @@ aver_trial=aver_trial.Value;
 close(f);
 
 %%
+
 fbar=waitbar(0,'Please wait...');
 for RAT=1:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
-xo
-uigetdir(??,'MATLAB Root Folder');
-cd(strcat('G:\Lisa_files\',num2str(rats(RAT))));
+cd(strcat(dname,'/',num2str(rats(RAT))));
+%xo
 gg=getfolder;
 gg=gg.';
 gg(ismember(gg,'OR_N'))=[];
@@ -87,7 +88,35 @@ for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
     
 cd( labelconditions2{iii})
 g=getfolder;
-g=g(contains(g,{'PT'}));
+
+if iii==1
+answer = questdlg('Should we use all trials?', ...
+	'Trial selection', ...
+	'Use all','Select trials','Select trials');
+
+% Handle response
+switch answer
+    case 'Use all'
+        disp(['Using all.'])
+        an=[];
+    case 'Select trials'
+        prompt = {'Enter trials name common word without index:'};
+        dlgtitle = 'Input';
+        dims = [1 35];
+        %definput = {'20','hsv'};
+        an = inputdlg(prompt,dlgtitle,dims);
+        %an=char(an);
+%        g=g(contains(g,{'PT'}));
+end
+
+end
+
+if ~isempty(an)
+g=g(contains(g,an));
+end
+%xo
+% g=g(contains(g,{'PT'}));
+
 % if scoring==1
 %    g=g(~contains(g,{'_'})); 
 % end
@@ -137,7 +166,8 @@ if scoring==1 && ~isempty(A) && ~isempty(find(transitions(:,1)==3))
 else
     
     if scoring==1
-                  messbox('No states file found or no stage data.','Error')  
+%                   messbox('No states file found or no stage data.','Error')
+%                   errordlg(strcat('Scoring File not found for Rat',num2str(Rat),{' '},labelconditions{iii},{' '},g{k}),'Error');
                   g{k}=strcat(g{k},'_A_c_c_e_l');
     end
     

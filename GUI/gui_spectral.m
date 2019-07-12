@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 10-Jul-2019 21:20:10
+% Last Modified by GUIDE v2.5 12-Jul-2019 01:30:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -64,7 +64,56 @@ axes(handles.axes2)
 imshow('memdyn.png')
 
 axes(handles.axes1)
-imshow('trace.png')
+%imshow('trace.PNG')
+[gifImage cmap] = imread('rip_colour4.gif', 'Frames', 'all');
+[rows, columns, numColorChannels, numImages] = size(gifImage);
+% Construct an RGB movie.
+rgbImage = zeros(rows, columns, 3, numImages, 'uint8'); % Initialize dimensions.
+% set(hObject, 'DeleteFcn', @myhandle)
+% get(hObject)
+% get(hObject,'DeleteFcn')
+% ishandle(gui_spectral)
+set(0,'userdata',0)
+
+%while 1
+for k = 1 : numImages
+  thisFrame = gifImage(:,:,:, k);
+  thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
+  imshow(thisRGB);
+  pause(0.05)
+  rgbImage(:,:,:,k) = thisRGB;
+%   caption = sprintf('Frame %#d of %d', k, numImages);
+%   title(caption);
+   drawnow;
+end
+% % % % % if get(0,'userdata')
+% % % % % break
+% % % % % end
+% % % % % % 
+% % % % % % fi = get(groot,'CurrentFigure');
+% % % % % % fi_val=isvalid(fi);
+% % % % % % if fi_val==0
+% % % % % %     break
+% % % % % % end
+% % % % % 
+% % % % % end
+% % % % %     close all
+% % % % %     delete(hObject)
+
+% while 1<2
+% for k = 1 : numImages
+%   thisFrame = gifImage(:,:,:, k);
+%   thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
+%   imshow(thisRGB);
+%   pause(0.1)
+%   rgbImage(:,:,:,k) = thisRGB;
+% %   caption = sprintf('Frame %#d of %d', k, numImages);
+% %   title(caption);
+% %    drawnow;
+% end
+% end
+
+% imshow('trace.png')
 
 
 % --- Outputs from this function are returned to the command line.
@@ -311,3 +360,22 @@ function MemoryDynamics_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 url = ' http://memorydynamics.org/';
 web(url,'-browser')
+
+
+% --- Executes when user attempts to close figure1.
+function figure1_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% Hint: delete(hObject) closes the figure
+% close all
+set(0,'userdata',1)
+delete(hObject);
+
+
+
+% --- Executes during object deletion, before destroying properties.
+function figure1_DeleteFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
