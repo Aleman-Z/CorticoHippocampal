@@ -1,5 +1,10 @@
 # Spectral analysis GUI :crystal_ball:
 
+To start the GUI please type:
+```matlab
+gui_spectral
+```
+
 PART 1
 <p align="center">
 <img src="gif1.gif" width="1500">
