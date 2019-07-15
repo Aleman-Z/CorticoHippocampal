@@ -182,15 +182,15 @@ switch meth
 
         [timeasleep]=find_thr_base;
         ror=2000/timeasleep;
-         %xo
+%         xo
         A = dir('*states*.mat');
         A={A.name};
      
         if  ~isempty(A)
                cellfun(@load,A);
                    [transitions2]=sort_scoring(transitions); %NREM
-                   [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2);
         else
+            error('No scoring found')
             errordlg('No scoring found','File Error');
             xo
         end
@@ -276,7 +276,7 @@ end
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
     %p: Wideband signal windows.
     %q: Bandpassed signal (100-300Hz) windows.
-    xo
+%    xo
     clear sig1 sig2
     
     %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 
