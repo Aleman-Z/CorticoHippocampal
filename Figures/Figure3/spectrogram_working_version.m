@@ -183,17 +183,17 @@ switch meth
         [timeasleep]=find_thr_base;
         ror=2000/timeasleep;
          %xo
-        A = dir('*states*.mat');
-        A={A.name};
-     
-        if  ~isempty(A)
-               cellfun(@load,A);
-                   [transitions2]=sort_scoring(transitions); %NREM
-                   [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2);
-        else
-            errordlg('No scoring found','File Error');
-            xo
-        end
+%         A = dir('*states*.mat');
+%         A={A.name};
+%      
+%         if  ~isempty(A)
+%                cellfun(@load,A);
+%                    [transitions2]=sort_scoring(transitions); %NREM
+%                    [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2);
+%         else
+%             errordlg('No scoring found','File Error');
+%             xo
+%         end
 
             if acer==0
                 cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
@@ -241,7 +241,7 @@ switch meth
 
         cd(nFF{iii})
         %xo
-        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,~]=nrem_fixed_thr_Vfiles(chtm,notch);      
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch);      
         CHTM=[chtm chtm]; %Threshold
         
         %Fill table with ripple information.
@@ -262,6 +262,19 @@ end
     [cara,veamos]=equal_time2(sig1,sig2,cara,veamos,60,30);
     ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
     end
+%% Create ripple occurrence histogram.
+rip_times=cara_times{1}(:,3);
+rip_times=[rip_times{:}];
+aver=histcounts(rip_times,[0:1: max(labels)]);
+plot(aver)
+%%
+figure()
+stripes(vec_trans,0.2,labels/60/60,'g')
+hold on
+stripes(vec_rem,0.2,labels/60/60)
+stripes(vec_nrem,0.2,labels/60/60,'b')
+
+
 
 %% Calculate median duration of ripples    
     consig=cara{1};
@@ -276,7 +289,11 @@ end
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
     %p: Wideband signal windows.
     %q: Bandpassed signal (100-300Hz) windows.
-    xo
+     xo
+%     ave=cara{1};
+%     for co=1:size(ave,1)
+%         no{co}=aver{co,3};
+%     end
     clear sig1 sig2
     
     %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 

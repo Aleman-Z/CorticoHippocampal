@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti]=nrem_fixed_thr_Vfiles(vq,notch)
+function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(vq,notch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -215,24 +215,54 @@ timeasleep=sum(cellfun('length',V9))*(1/1000)/60; % In minutes
 % % % % % % % 
 % % % % % % % % chtm2=min(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
 % % % % % % % CHTM=floor([chtm chtm/2 chtm/4 chtm/8 chtm/16]);
+A = dir('*states*.mat');
+        A={A.name};
+     
+        if  ~isempty(A)
+               cellfun(@load,A);
+                   [transitions2]=sort_scoring(transitions); %NREM
+                   [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2);
+             transitions=transitions((find(transitions(:,1)==3)),:);
+             transitions2=transitions2((find(transitions2(:,1)==3)),:);
+
+        else
+            errordlg('No scoring found','File Error');
+            xo
+        end
+
+
+
 
 %Scale magnitude,create time vector
 % signal=cellfun(@(equis) times((1/0.195), equis)  ,Bip17,'UniformOutput',false);
-signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
-ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
+signal2=cellfun(@(x) times((1/0.195), x)  ,Mono17,'UniformOutput',false);
+% ti=cellfun(@(x) linspace(0, length(x)-1,length(x))*(1/fn) ,signal2,'UniformOutput',false);
 
+for kk=1:size(signal2,1)
+   % ti2{kk,1}=(transitions(kk,2):1/1000:transitions(kk,3));
+     ti{kk,1}=linspace(transitions(kk,2),transitions(kk,3),length(signal2{kk}));
+end
+
+%ti2=cellfun(@(x) linspace(0, length(x)-1,length(x))*(1/fn) ,signal2,'UniformOutput',false);
 
 %Find ripples
 % for k=1:rep-1
 % for k=1:rep-2
 
+%Find times when ripples occured.
+%S:Start, E:Ending, M:Main peak.
+
 [S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', vq, (vq)*(1/2), [] ), signal2,ti,'UniformOutput',false);    
-swr172(:,:,1)=[S2x E2x M2x];
+rip_times(:,:,1)=[S2x E2x M2x]; %Stack them
+
+ti=cellfun(@(x) linspace(0, length(x)-1,length(x))*(1/fn) ,signal2,'UniformOutput',false);
+[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', vq, (vq)*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+swr172(:,:,1)=[S2x E2x M2x]; %Stack them
 s172(:,1)=cellfun('length',S2x);
 
 % end
 
-RipFreq2=sum(s172)/(timeasleep*(60));
+RipFreq2=sum(s172)/(timeasleep*(60));%Ripples per second.
 
 %To display number of events use:
 ripple2=sum(s172); %When using same threshold per epoch.
@@ -247,6 +277,7 @@ ripple2=sum(s172); %When using same threshold per epoch.
 for ind=1:size(s172,2)
 veamos{:,ind}=find(s172(:,ind)~=0);  %Epochs with ripples detected
 cara{:,:,ind}=swr172(veamos{:,ind},:,ind);
+cara_times{:,:,ind}=rip_times(veamos{:,ind},:,ind);
 
 % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
 % cara2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
@@ -291,5 +322,4 @@ sig2{7}=V6;
  
 % ripple=length(M);
 % ripple=sum(s172);
-
 end
