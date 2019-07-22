@@ -21,7 +21,9 @@ meth=4;
 s=struct;
 
 %Data location
-datapath='D:\internship\';
+% datapath='D:\internship\';
+% datapath = uigetdir('C:\Users\addri\Documents\internship','Please select folder with downsampled Matlab data')
+datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
 cluster_stats=0;
 RAT24_test=1;
 %%
@@ -83,7 +85,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
         break
     end
 
-
+%xo
     %% Go to main directory, add to path, initiate Fieldtrip.
     if acer==0
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -93,12 +95,11 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         clc
     else
-        cd(strcat('D:\internship\',num2str(Rat)))
-        addpath D:\internship\fieldtrip-master
-        InitFieldtrip()
+        cd(strcat(datapath,'/',num2str(Rat)))
+%         addpath D:\internship\fieldtrip-master
+%         InitFieldtrip()
 
-        % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-        cd(strcat('D:\internship\',num2str(Rat)))
+        cd(strcat(datapath,'/',num2str(Rat)))
         clc
     end
 
@@ -117,7 +118,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     for block_time=0:0 %Should start with 0
         
     %CONDITION LOOP. (Main loop).    
-    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        
     if acer==0
         cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -147,7 +148,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     if acer==0
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     else
-        cd(strcat('D:\internship\',num2str(Rat)))
+        cd(strcat(datapath,'/',num2str(Rat)))
     end
 
 %Change current folder according to Condition.    
@@ -175,7 +176,7 @@ switch meth
         if acer==0
             cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         else
-            cd(strcat('D:\internship\',num2str(Rat)))
+            cd(strcat(datapath,'/',num2str(Rat)))
         end
 
         cd(nFF{1})
@@ -236,12 +237,12 @@ switch meth
         if acer==0
             cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         else
-            cd(strcat('D:\internship\',num2str(Rat)))
+            cd(strcat(datapath,'/',num2str(Rat)))
         end
 
         cd(nFF{iii})
-        %xo
-        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch);      
+        
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch);      
         CHTM=[chtm chtm]; %Threshold
         
         %Fill table with ripple information.
@@ -251,7 +252,7 @@ switch meth
 
 end
 
-
+%xo
     %% Select time block (Not used now)
     if block_time==1
     [cara,veamos]=equal_time2(sig1,sig2,cara,veamos,30,0);
@@ -262,20 +263,51 @@ end
     [cara,veamos]=equal_time2(sig1,sig2,cara,veamos,60,30);
     ripple=sum(cellfun('length',cara{1}(:,1))); %Number of ripples after equal times.
     end
+if rip_hist    
 %% Create ripple occurrence histogram.
+allscreen()
 rip_times=cara_times{1}(:,3);
 rip_times=[rip_times{:}];
-aver=histcounts(rip_times,[0:1: max(labels)]);
-plot(aver)
+aver=histcounts(rip_times,[0:10: max(labels)+1]);
+maver=max(aver);
+maver=30;
+% stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
+%plot(linspace(0,max(labels)/60/60,length(aver)),aver,'Color','b')
+
 %%
-figure()
-stripes(vec_trans,0.2,labels/60/60,'g')
 hold on
-stripes(vec_rem,0.2,labels/60/60)
-stripes(vec_nrem,0.2,labels/60/60,'b')
+vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
 
+%Plot wake
+% stripes((vec_wake),0.2,labels/60/60,'w',maver)
+xlabel('Time (Hours)','FontSize',12)
+ylabel('Amount of ripples','FontSize',12)
+title('Histogram of ripples','FontSize',12)
+%%
+%figure()
+hold on
+stripes(vec_trans,0.2,labels/60/60,[0.5 0.5 0.5],maver)
+stripes(vec_rem,0.2,labels/60/60,'r',maver)
+stripes(vec_nrem,0.9,labels/60/60,'k',maver)
 
+stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
 
+xlim([0 4])
+ylim([0 30])
+yticks([0:2:30])
+%%
+cd('C:\Users\addri\Dropbox\preparando')
+% printing(strcat('Histogram','_Rat_',num2str(Rat),'_',labelconditions{iii}))
+
+close all
+%stripes(vec_nrem,0.2,labels/60/60,'b',maver)
+%break
+continue
+%%
+end
+xo     
+   
+ 
 %% Calculate median duration of ripples    
     consig=cara{1};
     bon=consig(:,1:2);
@@ -289,7 +321,7 @@ stripes(vec_nrem,0.2,labels/60/60,'b')
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
     %p: Wideband signal windows.
     %q: Bandpassed signal (100-300Hz) windows.
-     xo
+%     xo
 %     ave=cara{1};
 %     for co=1:size(ave,1)
 %         no{co}=aver{co,3};
@@ -691,12 +723,15 @@ xo
 % % % % % % 
 % % % % % % clearvars -except RAT acer DUR Block mergebaseline FiveHun meth block_time base rat26session3 rat27session3 randrip sanity
 % % % % % % end
+
+
 if base>=2
     break
 end
 base=2;
-end
-xo
+    
+end  
+
 
 if rippletable==1
             if acer==0

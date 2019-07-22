@@ -1,4 +1,4 @@
-function [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2)
+function [vec_nrem, vec_trans ,vec_rem,vec_wake,labels]=stages_stripes(transitions2)
 %Find maximum time value
 m_time=max(max(transitions2(:,2:3)));
 labels=(0:1:m_time);
@@ -12,7 +12,7 @@ for j=1:size(u,1)
     tr2=(transitions2(find(transitions2(:,1)==u(j)),2:3)); %Use specific stage
     tr3=(diff(tr2.'));
         if u(j)~=1 % When not awake
-            tr2=(tr2(find(tr3<7200),:)); %Discard scores longer than two hours.
+            tr2=(tr2(find(tr3<10800),:)); %Discard scores longer than two hours.
         end
         
     for k=1:size(tr2,1)
@@ -38,7 +38,7 @@ for j=1:size(u,1)
 %     tr2=[u(j)*ones(size(tr2,1),1) tr2];%Sets output in same fashion as 'transitions'.
 %     TR2=[TR2; tr2];
 end
-%%
+%% Logic part
 vec_trans=and(vec_trans,not(vec_rem)); %The not is used on the vector with higher priority.
 vec_nrem=and(vec_nrem,not(vec_trans));
 vec_nrem=and(vec_nrem,not(vec_rem));

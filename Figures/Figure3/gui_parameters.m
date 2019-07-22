@@ -22,7 +22,7 @@ function varargout = gui_parameters(varargin)
 
 % Edit the above text to modify the response to help gui_parameters
 
-% Last Modified by GUIDE v2.5 27-Mar-2019 21:32:28
+% Last Modified by GUIDE v2.5 22-Jul-2019 05:27:21
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -76,6 +76,8 @@ win_ten=0;
 equal_num=0;
 
 win_stats=0;
+
+rip_hist=0;
 %     sanity=1: This control test consists on selecting the same n random number of ripples among conditions. Since Plusmaze generates less ripples, this condition defines the value of n.
 % 
 %     quinientos=1: Similar to control above but this one makes sure to take the top 500 ripples instead of their random version. Could be more vulnerable to outliers.
@@ -102,6 +104,7 @@ assignin('base', 'equal_num', equal_num)
 assignin('base', 'rat26session3', rat26session3)
 assignin('base', 'rat27session3', rat27session3)
 assignin('base', 'win_stats', win_stats)
+assignin('base', 'rip_hist', rip_hist)
 
 
 
@@ -123,7 +126,6 @@ function varargout = gui_parameters_OutputFcn(hObject, eventdata, handles)
 % pause(10)
 uiwait
 % end
-'Closing'
 varargout{1} = handles.output;
 % pause(8) %Wait for 8 seconds. 
 %close all
@@ -429,3 +431,13 @@ function radiobutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 win_stats=hObject.Value;
 assignin('base', 'win_stats', win_stats)
+
+
+% --- Executes on button press in checkbox6.
+function checkbox6_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+rip_hist=hObject.Value;
+assignin('base', 'rip_hist', rip_hist)
+% Hint: get(hObject,'Value') returns toggle state of checkbox6

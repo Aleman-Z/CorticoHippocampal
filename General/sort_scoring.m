@@ -12,9 +12,9 @@ for j=1:size(u,1)
     tr2=(transitions(find(transitions(:,1)==u(j)),2:3)); %Use specific stage
     tr3=(diff(tr2.'));
         if u(j)~=1 % When not awake
-            tr2=(tr2(find(tr3<7200),:)); %Discard scores longer than two hours.
+            tr2=(tr2(find(tr3<10800),:)); %Discard scores longer than 3 hours.
         end
-    [tr2]=merge_intervals(tr2);%Merges intervals that overlap.
+      [tr2]=merge_intervals(tr2);%Merges intervals that overlap.
     ripples_per_stage(tr2,u(j),0)    
     tr2=[u(j)*ones(size(tr2,1),1) tr2];%Sets output in same fashion as 'transitions'.
     TR2=[TR2; tr2];
