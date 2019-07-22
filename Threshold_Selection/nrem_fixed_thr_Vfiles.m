@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(vq,notch)
+function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(vq,notch)
 %{
 LOAD DATA, easy and quick. 
 
@@ -221,7 +221,7 @@ A = dir('*states*.mat');
         if  ~isempty(A)
                cellfun(@load,A);
                    [transitions2]=sort_scoring(transitions); %NREM
-                   [vec_nrem, vec_trans ,vec_rem,labels]=stages_stripes(transitions2);
+                   [vec_nrem, vec_trans ,vec_rem,vec_wake,labels]=stages_stripes(transitions2);
              transitions=transitions((find(transitions(:,1)==3)),:);
              transitions2=transitions2((find(transitions2(:,1)==3)),:);
 
