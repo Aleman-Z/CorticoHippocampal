@@ -141,35 +141,93 @@ function File_Callback(hObject, eventdata, handles)
 beepnoise
 pause(.1)
 
-% --------------------------------------------------------------------
-function Load_Ephys_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Load_Ephys_data (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-'Loading data'
 
-% --------------------------------------------------------------------
-function Load_Matlab_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Load_Matlab_data (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function New_experiment_Callback(hObject, eventdata, handles)
+        % hObject    handle to New_experiment (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        % gui_new_experiment
+        % global x
+        x = inputdlg({'Rats ID number','Condition Names','Brain Areas'},'Fill and separate with commas', [1 70; 1 70; 1 70]) 
+        rats=str2num(x{1});
+        label1=split(x{3},',');
+        labelconditions=split(x{2},',');
+
+        %Avoid Windows reserved word CON.
+        labelconditions2=labelconditions;
+        labelconditions2(ismember(labelconditions,'CON'))={'CN'}
+
+        z= zeros(length(label1),length(rats));
+        [channels]=gui_table_channels(z,rats,label1);
+
+        assignin('base','rats',rats)
+        assignin('base','labelconditions',labelconditions)
+        assignin('base','labelconditions2',labelconditions2)
+        assignin('base','label1',label1)
+        assignin('base','channels',channels)
+        % dname = uigetdir([],'Select folder to save experiment data');
+        [file,dname,~] = uiputfile('TypeExperimentNameHere.mat','Select folder to save experiment data');
+        cd(dname)
+        save (file, 'rats','labelconditions','labelconditions2','label1','channels')
+
+        % --------------------------------------------------------------------
+        function Load_experiment_Callback(hObject, eventdata, handles)
+        % hObject    handle to Load_experiment (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        % uiopen('*.mat')
+        [file,pat]=uigetfile('*.mat','Select the experiment file');
+        f_name=fullfile(pat,file);
+        load(f_name, 'rats','labelconditions','labelconditions2','label1','channels');
+        assignin('base','rats',rats)
+        assignin('base','labelconditions',labelconditions)
+        assignin('base','labelconditions2',labelconditions2)
+        assignin('base','label1',label1)
+        assignin('base','channels',channels)
+         [mh]=messbox('Experiment was loaded','Success')
+
+        % f = msgbox('Experiment was loaded','Success');
 
 
-% --------------------------------------------------------------------
-function save_figure_Callback(hObject, eventdata, handles)
-% hObject    handle to save_figure (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % % load(f_name)
+        % 'HOLA'
+        % assignin('base','rats',rats)
+        % assignin('base','labelconditions',labelconditions)
+        % assignin('base','labelconditions2',labelconditions2)
+        % assignin('base','label1',label1)
+        % assignin('base','channels',channels)
+
+                
+        % --------------------------------------------------------------------
+        function Load_Ephys_data_Callback(hObject, eventdata, handles)
+        % hObject    handle to Load_Ephys_data (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        'Loading data'
+
+        % --------------------------------------------------------------------
+        function Load_Matlab_data_Callback(hObject, eventdata, handles)
+        % hObject    handle to Load_Matlab_data (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function exit_gui_Callback(hObject, eventdata, handles)
-% hObject    handle to exit_gui (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-beepnoise
-pause(.1)
-close all
+        % --------------------------------------------------------------------
+        function save_figure_Callback(hObject, eventdata, handles)
+        % hObject    handle to save_figure (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+
+
+        % --------------------------------------------------------------------
+        function exit_gui_Callback(hObject, eventdata, handles)
+        % hObject    handle to exit_gui (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        beepnoise
+        pause(.1)
+        close all
 
 
 %PREPROCESSING
@@ -183,25 +241,25 @@ beepnoise
 pause(.1)
 
 
-% --------------------------------------------------------------------
-function Downsample_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Downsample_data (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function Downsample_data_Callback(hObject, eventdata, handles)
+        % hObject    handle to Downsample_data (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function Extract_stages_Callback(hObject, eventdata, handles)
-% hObject    handle to Extract_stages (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function Extract_stages_Callback(hObject, eventdata, handles)
+        % hObject    handle to Extract_stages (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function Filter_data_Callback(hObject, eventdata, handles)
-% hObject    handle to Filter_data (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function Filter_data_Callback(hObject, eventdata, handles)
+        % hObject    handle to Filter_data (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 
 % --------------------------------------------------------------------
@@ -212,12 +270,25 @@ function SWR_detection_Callback(hObject, eventdata, handles)
 beepnoise
 pause(.1)
 
-% --------------------------------------------------------------------
-function Run_SWR_Callback(hObject, eventdata, handles)
-% hObject    handle to Run_SWR (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function Threshold_plots_Callback(hObject, eventdata, handles)
+        % hObject    handle to Threshold_plots (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
+        % --------------------------------------------------------------------
+        function Run_SWR_Callback(hObject, eventdata, handles)
+        % hObject    handle to Run_SWR (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+
+        % --------------------------------------------------------------------
+        function Ripple_Selection_Callback(hObject, eventdata, handles)
+        % hObject    handle to Ripple_Selection (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        
+        
 
 % --------------------------------------------------------------------
 function Data_description_Callback(hObject, eventdata, handles)
@@ -227,7 +298,26 @@ function Data_description_Callback(hObject, eventdata, handles)
 beepnoise
 pause(.1)
 
+        % --------------------------------------------------------------------
+        function Sleep_amount_Callback(hObject, eventdata, handles)
+        % hObject    handle to Sleep_amount (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
+        % --------------------------------------------------------------------
+        function Ripples_amount_Callback(hObject, eventdata, handles)
+        % hObject    handle to Ripples_amount (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+
+        % --------------------------------------------------------------------
+        function Hypnogram_Callback(hObject, eventdata, handles)
+        % hObject    handle to Hypnogram (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        
+        
+        
 % --------------------------------------------------------------------
 function Spectral_analysis_Callback(hObject, eventdata, handles)
 % hObject    handle to Spectral_analysis (see GCBO)
@@ -236,119 +326,32 @@ function Spectral_analysis_Callback(hObject, eventdata, handles)
 beepnoise
 pause(.1)
 
-% --------------------------------------------------------------------
-function Periodogram_Callback(hObject, eventdata, handles)
-% hObject    handle to Periodogram (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-channels = evalin('base','channels');
-label1 = evalin('base','label1');
-labelconditions = evalin('base','labelconditions');
-labelconditions2 = evalin('base','labelconditions2');
-rats = evalin('base','rats');
+        % --------------------------------------------------------------------
+        function Periodogram_Callback(hObject, eventdata, handles)
+        % hObject    handle to Periodogram (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
 
-gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
-
-
-% --------------------------------------------------------------------
-function Spectrogram_Callback(hObject, eventdata, handles)
-% hObject    handle to Spectrogram (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
 
 
-% --------------------------------------------------------------------
-function Granger_causality_Callback(hObject, eventdata, handles)
-% hObject    handle to Granger_causality (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+        % --------------------------------------------------------------------
+        function Spectrogram_Callback(hObject, eventdata, handles)
+        % hObject    handle to Spectrogram (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function Sleep_amount_Callback(hObject, eventdata, handles)
-% hObject    handle to Sleep_amount (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function Threshold_plots_Callback(hObject, eventdata, handles)
-% hObject    handle to Threshold_plots (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function New_experiment_Callback(hObject, eventdata, handles)
-% hObject    handle to New_experiment (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% gui_new_experiment
-% global x
-x = inputdlg({'Rats ID number','Condition Names','Brain Areas'},'Fill and separate with commas', [1 70; 1 70; 1 70]) 
-rats=str2num(x{1});
-label1=split(x{3},',');
-labelconditions=split(x{2},',');
-
-%Avoid Windows reserved word CON.
-labelconditions2=labelconditions;
-labelconditions2(ismember(labelconditions,'CON'))={'CN'}
-
-z= zeros(length(label1),length(rats));
-[channels]=gui_table_channels(z,rats,label1);
-
-assignin('base','rats',rats)
-assignin('base','labelconditions',labelconditions)
-assignin('base','labelconditions2',labelconditions2)
-assignin('base','label1',label1)
-assignin('base','channels',channels)
-% dname = uigetdir([],'Select folder to save experiment data');
-[file,dname,~] = uiputfile('TypeExperimentNameHere.mat','Select folder to save experiment data');
-cd(dname)
-save (file, 'rats','labelconditions','labelconditions2','label1','channels')
-
-
-% --------------------------------------------------------------------
-function Ripples_amount_Callback(hObject, eventdata, handles)
-% hObject    handle to Ripples_amount (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function Ripple_Selection_Callback(hObject, eventdata, handles)
-% hObject    handle to Ripple_Selection (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function Load_experiment_Callback(hObject, eventdata, handles)
-% hObject    handle to Load_experiment (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% uiopen('*.mat')
-[file,pat]=uigetfile('*.mat','Select the experiment file');
-f_name=fullfile(pat,file);
-load(f_name, 'rats','labelconditions','labelconditions2','label1','channels');
-assignin('base','rats',rats)
-assignin('base','labelconditions',labelconditions)
-assignin('base','labelconditions2',labelconditions2)
-assignin('base','label1',label1)
-assignin('base','channels',channels)
- [mh]=messbox('Experiment was loaded','Success')
-
-% f = msgbox('Experiment was loaded','Success');
-
-
-% % load(f_name)
-% 'HOLA'
-% assignin('base','rats',rats)
-% assignin('base','labelconditions',labelconditions)
-% assignin('base','labelconditions2',labelconditions2)
-% assignin('base','label1',label1)
-% assignin('base','channels',channels)
-
+        % --------------------------------------------------------------------
+        function Granger_causality_Callback(hObject, eventdata, handles)
+        % hObject    handle to Granger_causality (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
 
 % --------------------------------------------------------------------
 function Help_Callback(hObject, eventdata, handles)
@@ -358,22 +361,22 @@ function Help_Callback(hObject, eventdata, handles)
 beepnoise
 pause(.1)
 
-% --------------------------------------------------------------------
-function Github_Callback(hObject, eventdata, handles)
-% hObject    handle to Github (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-url = 'https://github.com/Aleman-Z/CorticoHippocampal/tree/master/GUI';
-web(url,'-browser')
+        % --------------------------------------------------------------------
+        function Github_Callback(hObject, eventdata, handles)
+        % hObject    handle to Github (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        url = 'https://github.com/Aleman-Z/CorticoHippocampal/tree/master/GUI';
+        web(url,'-browser')
 
 
-% --------------------------------------------------------------------
-function MemoryDynamics_Callback(hObject, eventdata, handles)
-% hObject    handle to MemoryDynamics (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-url = ' http://memorydynamics.org/';
-web(url,'-browser')
+        % --------------------------------------------------------------------
+        function MemoryDynamics_Callback(hObject, eventdata, handles)
+        % hObject    handle to MemoryDynamics (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        url = ' http://memorydynamics.org/';
+        web(url,'-browser')
 
 
 % --- Executes when user attempts to close figure1.
@@ -386,8 +389,6 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 set(0,'userdata',1)
 delete(hObject);
 
-
-
 % --- Executes during object deletion, before destroying properties.
 function figure1_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
@@ -395,8 +396,3 @@ function figure1_DeleteFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-% --------------------------------------------------------------------
-function Hypnogram_Callback(hObject, eventdata, handles)
-% hObject    handle to Hypnogram (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
