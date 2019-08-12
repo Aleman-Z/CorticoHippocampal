@@ -32,6 +32,6 @@ addpath(genpath(uigetdir('C:\','Select ADRITOOLS folder')));
 2. Figures: Main functions for generating paper figures. :bar_chart: 
 3. Granger: Implementation of Spectral Granger Causality. 
 4. Ripple_selection: Detection and selection of ripples.
-5. Pre_midterm: Scripts of tests performed prior to midterm presentation. 
-6. GUI: Currently work in progress.
+5. Pre_midterm: Scripts of tests performed prior to midterm presentation. (Old stuff)
+6. GUI: Currently work in progress :hammer:
 --------------------------------
