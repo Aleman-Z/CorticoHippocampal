@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 12-Jul-2019 01:30:14
+% Last Modified by GUIDE v2.5 12-Aug-2019 08:36:56
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -77,10 +77,10 @@ set(0,'userdata',0)
 
 %while 1
 for k = 1 : numImages
-    if k==1
-        load gong.mat
-        sound(y)
-    end
+%     if k==1
+%         load gong.mat
+%         sound(y)
+%     end
   thisFrame = gifImage(:,:,:, k);
   thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
   imshow(thisRGB);
@@ -391,5 +391,12 @@ delete(hObject);
 % --- Executes during object deletion, before destroying properties.
 function figure1_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function Hypnogram_Callback(hObject, eventdata, handles)
+% hObject    handle to Hypnogram (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
