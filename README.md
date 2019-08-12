@@ -12,6 +12,20 @@ Contact: jraleman10@gmail.com :mailbox:
 
 :warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories.
 
+Copy and run this code to add them to your path:
+```matlab
+%Open Ephys
+addpath(uigetdir('C:\','Select Open Ephys functions folder'));
+
+%Fieldtrip
+addpath(uigetdir('C:\','Select Fieldtrip folder'));
+
+%CorticoHippocampal
+addpath(genpath(uigetdir('C:\','Select CorticoHippocampal folder')));
+
+%ADRITOOLS
+addpath(genpath(uigetdir('C:\','Select ADRITOOLS folder')));
+```
 --------------------------------
 ## Main Folders: :file_folder: 
 1. Load_ephys: Converts .continuous channels into downsampled (1kHz) .mat files. :floppy_disk:
