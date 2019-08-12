@@ -77,6 +77,10 @@ set(0,'userdata',0)
 
 %while 1
 for k = 1 : numImages
+    if k==1
+        load gong.mat
+        sound(y)
+    end
   thisFrame = gifImage(:,:,:, k);
   thisRGB = uint8(255 * ind2rgb(thisFrame, cmap));
   imshow(thisRGB);
@@ -134,7 +138,8 @@ function File_Callback(hObject, eventdata, handles)
 % hObject    handle to File (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+beepnoise
+pause(.1)
 
 % --------------------------------------------------------------------
 function Load_Ephys_data_Callback(hObject, eventdata, handles)
@@ -162,6 +167,8 @@ function exit_gui_Callback(hObject, eventdata, handles)
 % hObject    handle to exit_gui (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+beepnoise
+pause(.1)
 close all
 
 
@@ -172,6 +179,8 @@ function Preprocessing_Callback(hObject, eventdata, handles)
 % hObject    handle to Preprocessing (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+beepnoise
+pause(.1)
 
 
 % --------------------------------------------------------------------
@@ -200,6 +209,8 @@ function SWR_detection_Callback(hObject, eventdata, handles)
 % hObject    handle to SWR_detection (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+beepnoise
+pause(.1)
 
 % --------------------------------------------------------------------
 function Run_SWR_Callback(hObject, eventdata, handles)
@@ -213,7 +224,8 @@ function Data_description_Callback(hObject, eventdata, handles)
 % hObject    handle to Data_description (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+beepnoise
+pause(.1)
 
 
 % --------------------------------------------------------------------
@@ -221,7 +233,8 @@ function Spectral_analysis_Callback(hObject, eventdata, handles)
 % hObject    handle to Spectral_analysis (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+beepnoise
+pause(.1)
 
 % --------------------------------------------------------------------
 function Periodogram_Callback(hObject, eventdata, handles)
@@ -342,7 +355,8 @@ function Help_Callback(hObject, eventdata, handles)
 % hObject    handle to Help (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+beepnoise
+pause(.1)
 
 % --------------------------------------------------------------------
 function Github_Callback(hObject, eventdata, handles)
