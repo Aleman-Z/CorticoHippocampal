@@ -1,4 +1,5 @@
 %gui_sleep_amount
+function gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats)
 plot_sleep=0;
 dname=uigetdir([],'Select folder with Matlab data');
 
@@ -77,7 +78,7 @@ L= length(states)/60%min
 %same as L.
  G=[g1 g3 g4 g5]; 
  gy=G;
- G=G/L*100
+ G=G/L*100;
  
  
 Z{k}=G;
@@ -100,6 +101,7 @@ lg.FontSize=14
 ax = gca;
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 16;
+set(bb,{'FaceColor'},{'w';'k';[0.5 0.5 0.5];'r'});
 xo
 
 Stage= {'Wake';'NREM';'Transitional Sleep';'REM'};
@@ -127,4 +129,5 @@ writetable(VV{1},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
 
 end
     
+end
 end

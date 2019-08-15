@@ -303,6 +303,13 @@ pause(.1)
         % hObject    handle to Sleep_amount (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
+        
+        gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats);
 
         % --------------------------------------------------------------------
         function Ripples_amount_Callback(hObject, eventdata, handles)

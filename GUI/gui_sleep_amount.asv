@@ -1,4 +1,5 @@
 %gui_sleep_amount
+function gui_sleep_amount(channels,)
 plot_sleep=0;
 dname=uigetdir([],'Select folder with Matlab data');
 
@@ -120,11 +121,12 @@ TT=eval(strcat('table(Stage,',ch,')'));
 VV{RAT}=TT;
 
 
-uigetdir('C:','Select folder to save tabl')
-
-cd(num2str(Rat))
+uigetdir('C:','Select folder to save table values')
+ 
+% cd(num2str(Rat))
 writetable(VV{1},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
 
 end
     
+end
 end

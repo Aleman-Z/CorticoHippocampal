@@ -285,6 +285,7 @@ if plot_sleep==1
         ax = gca;
         ax.XAxis.FontSize = 16;
         ax.YAxis.FontSize = 16;
+        set(bb,{'FaceColor'},{'w';'k';[0.5 0.5 0.5];'r'});
         %%
 %         dim = [.14 .2 .2 .2];
 %         st1=strcat('Wake: ','{  }',num2str(round(X{1}(1))), ' min','{      }');
