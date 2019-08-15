@@ -1,5 +1,5 @@
 %gui_sleep_amount
-function gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats)
+%function gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats)
 plot_sleep=0;
 dname=uigetdir([],'Select folder with Matlab data');
 
@@ -54,6 +54,35 @@ if ~isempty(an)
 g=g(contains(g,an));
 end
 
+%Find trials without scoring
+Gg=[];
+g_length=length(g);
+for kk=1:g_length
+cd(strcat(dname,'/',num2str(rats(RAT))));
+cd( labelconditions2{iii})
+cd( g{1,kk})
+%xo
+A = dir('*states*.mat');
+A={A.name};
+
+if  isempty(A)
+    warning('No scoring found')
+%     g(find(strcmp(g, g{1,kk})))=[]; %Remove trial without scoring.
+%     xo
+    %continue
+else
+Gg=[Gg g(kk)];
+
+end
+
+end
+g=Gg;
+
+if isempty(g)
+    continue
+end
+
+
 for k=1:length(g) %all trials. 
 myColorMap = jet(length(g));
 cd(strcat(dname,'/',num2str(rats(RAT))));
@@ -63,9 +92,15 @@ cd( g{1,k})
 A = dir('*states*.mat');
 A={A.name};
 
-if  ~isempty(A)
-       cellfun(@load,A);
-end
+cellfun(@load,A);
+% if  ~isempty(A)
+%        cellfun(@load,A);
+% else
+%     warning('No scoring found')
+%     g(find(strcmp(g, g{1,k})))=[]; %Remove trial without scoring.
+% %     xo
+%     continue
+% end
 
 
 L= length(states)/60%min
@@ -89,6 +124,10 @@ XX(k,:)=gy;
  
 end
 
+if iii==1 && RAT==1
+ndir=uigetdir('C:','Select folder to save table values');
+end
+cd(ndir)
 
 y=reshape(cell2mat(Z.'),[length(g) 4]);
 c = categorical(g);
@@ -102,7 +141,10 @@ ax = gca;
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 16;
 set(bb,{'FaceColor'},{'w';'k';[0.5 0.5 0.5];'r'});
-xo
+ylim([0 100])
+%xo
+printing(strcat('Sleep_stages','_Rat',num2str(rats(RAT)),'_',labelconditions{iii}))
+close all
 
 Stage= {'Wake';'NREM';'Transitional Sleep';'REM'};
 % NoLearning=XX(1,:);
@@ -122,12 +164,12 @@ TT=eval(strcat('table(Stage,',ch,')'));
 VV{RAT}=TT;
 
 
-uigetdir('C:','Select folder to save table values')
- 
-% cd(num2str(Rat))
-writetable(VV{1},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
 
+% cd(num2str(Rat))
+writetable(VV{1},strcat('Sleep_stages','_Rat',num2str(rats(RAT)),'_',labelconditions{iii},'.xls'),'Sheet',1,'Range','B2:F6')
+
+clear Z g X XX
 end
     
 end
-end
+% end

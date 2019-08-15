@@ -309,8 +309,9 @@ pause(.1)
         labelconditions2 = evalin('base','labelconditions2');
         rats = evalin('base','rats');
         
-        gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats);
-
+%         gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats);
+        gui_sleep_amount;
+        
         % --------------------------------------------------------------------
         function Ripples_amount_Callback(hObject, eventdata, handles)
         % hObject    handle to Ripples_amount (see GCBO)
