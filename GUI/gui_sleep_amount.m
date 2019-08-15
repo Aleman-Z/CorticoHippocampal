@@ -101,6 +101,30 @@ ax = gca;
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 16;
 xo
+
+Stage= {'Wake';'NREM';'Transitional Sleep';'REM'};
+% NoLearning=XX(1,:);
+% PlusMaze=XX(2,:);
+% Novelty=XX(3,:);
+% Foraging=XX(4,:);
+
+for l=1:length(g)
+aver={(strcat(num2str(XX([l],1))));(strcat(num2str(XX([l],2))));(strcat(num2str(XX([l],3))));(strcat(num2str(XX([l],4))));};
+eval([g{l},strcat('=aver;')]);
+end
+
+
+ch=join(g,",");
+ch=ch{1};
+TT=eval(strcat('table(Stage,',ch,')'));
+VV{RAT}=TT;
+
+
+uigetdir('C:','Select folder to save table values')
+ 
+% cd(num2str(Rat))
+writetable(VV{1},'Sleep_stages.xls','Sheet',1,'Range','B2:F6')
+
 end
     
 end
