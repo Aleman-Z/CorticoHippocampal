@@ -26,7 +26,7 @@ gui_spectral
    * Ripple Selection.
  
  * Data description
-   * Sleep amount. 
+   * Sleep amount. :heavy_check_mark:
    * Ripples amount. 
    * Hypnogram.
  
