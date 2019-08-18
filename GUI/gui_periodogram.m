@@ -1,5 +1,6 @@
-function gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
+%function gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
 %%
+close all
 dname=uigetdir([],'Select folder with Matlab data');
 % figure('Renderer', 'painters', 'Position', [50 50 200 300])
 f=figure();
@@ -37,7 +38,7 @@ close(f);
 
 %%
 
-fbar=waitbar(0,'Please wait...');
+% fbar=waitbar(0,'Please wait...');
 for RAT=1:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
@@ -121,14 +122,23 @@ end
 %    g=g(~contains(g,{'_'})); 
 % end
 %%
-
+% xo
 %Something about trial 4th
 % if Rat==1 && strcmp(labelconditions{iii},'OD') 
 % a = 1:length(g);
 % a(a == 4) = [];
 % g=g(a);
 % end
+answer_filter='No';
+ans_filt='50,100,150,200,250,300';
 
+while (1)
+g=getfolder;
+if ~isempty(an)
+g=g(contains(g,an));
+end
+% cd( labelconditions2{iii})
+    
 PXX=cell(length(g),1);
 %PX=cell(length(g),1);
 PX=[];
@@ -248,12 +258,15 @@ NC=NC(:,av);
 %Notch filter
 Fsample=1000;
 %Fline=[50 100 150 200 250 300 66.5 133.5 266.5];
-Fline=[50 150 250];
+% Fline=[50 150 250];
 nu1=300;
 nu2=30;
 % nu1=0.5;
 % nu2=0.5;
-
+if strcmp(answer_filter,'Yes')
+[NC] = ft_notch(NC.', Fsample,Fline,0.5,0.5);
+NC=NC.';
+end
 %xo
 % % % % % % % % % % % % if Rat==11 && iii==3 %&& k==5
 % % % % % % % % % % % % Fline=[31 32 33.2 34 66.4 99.6 166.5 232.9];
@@ -285,6 +298,9 @@ if aver_trial~=1
         if k==1
             if iii==1
                 allscreen()
+                    if strcmp(answer_filter,'Yes')
+                        close
+                    end
             end
             switch n
                 case 4
@@ -331,7 +347,29 @@ cd ..
 clear v9 v17 NC 
 
 end
-  %xo
+
+answer_filter = questdlg('Do you wish to filter any artifacts?', ...
+	'Menu', ...
+	'Yes','No','No');
+
+    if strcmp(answer_filter,'No')
+        break
+    else
+        prompt = {'Select frequencies to filter. Use commas inbetween values'};
+        dlgtitle = 'Filtering';
+        dims = [1 40];
+        definput = {ans_filt};
+        options.Resize='on';
+        options.WindowStyle='normal';
+        options.Intepreter='tex';
+        ans_filt = inputdlg(prompt,dlgtitle,dims,definput,options)
+        ans_filt=ans_filt{1};
+        Fline=str2num(ans_filt);
+        cla
+    end
+
+end
+%    xo
 %Find index of values closer to 100 and 250 Hz.
 [~,l1]=min(abs(f-100));
 [~,l2]=min(abs(f-250));
@@ -399,10 +437,11 @@ end
 cd ..
 clear myColorMap
 end
- xo
+
+%  xo
 tab=array2table(z,'VariableNames',labelconditions);
-filename = 'tab.xlsx';
-% writetable(tab,filename,'Sheet',1,'Range','A1')
+filename = 'tab2.xlsx';
+writetable(tab,filename,'Sheet',1,'Range','A1')
 
 if sidebyside==1
  string=strcat('300Hz_Rat',num2str(Rat),'_NREM_','HPC'); 
@@ -410,8 +449,8 @@ if sidebyside==1
 %  printing(string);
 close all
 end
-progress_bar(RAT,length(rats),fbar)
+% progress_bar(RAT,length(rats),fbar)
 clear figColorMap
 end
 
-end
+%end
