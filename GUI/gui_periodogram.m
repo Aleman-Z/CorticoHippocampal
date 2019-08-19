@@ -446,7 +446,7 @@ writetable(tab,filename,'Sheet',1,'Range','A1')
 if sidebyside==1
  string=strcat('300Hz_Rat',num2str(Rat),'_NREM_','HPC'); 
 % xo
-%  printing(string);
+printing(string);
 close all
 end
 % progress_bar(RAT,length(rats),fbar)
