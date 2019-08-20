@@ -1,0 +1,2 @@
+%Gui spectrogram
+'Displays spectrogram'

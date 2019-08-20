@@ -182,7 +182,6 @@ ripple2=sum(s172); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
  
 %Adjustment to prevent decrease 
-DEMAIS2=DEMAIS;
 DEMAIS=DEMAIS(2:end-1);
 % size(DEMAIS)
 % size(ripple2)

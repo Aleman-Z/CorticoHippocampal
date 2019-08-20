@@ -1,0 +1,38 @@
+%gui_threshold_ripples
+%% Find location
+close all
+dname=uigetdir([],'Select folder with Matlab data');
+cd(dname)
+%%
+%Select rat number
+opts.Resize = 'on';
+opts.WindowStyle = 'modal';
+opts.Interpreter = 'tex';
+prompt=strcat('\bf Which rat number? Op:','{ }',num2str(rats));
+answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+Rat=str2num(answer{1});
+
+%% Select experiment to perform. 
+inter=1;
+%Select length of window in seconds:
+ro=[1200];
+coher=0;
+selectripples=1;
+notch=0; %Might need to be 1.
+nrem=3;
+level=1;
+%%
+w=1;
+lepoch=2;
+[ripple,timeasleep,DEMAIS,y1]=gui_ripple_level(level,nrem,notch,w,lepoch)
+%%
+% plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
+plot(DEMAIS,ripple/(timeasleep*60),'*')
+xlabel('Threshold value (uV)')
+ylabel('Ripples per second')
+
+hold on
+%plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
+plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2)
+title('Rate of ripples per Threshold value')
+
