@@ -21,7 +21,7 @@ gui_spectral
    * Filter data.
  
  * SWR detection
-   * Threshold plots. 
+   * Threshold plots. :heavy_check_mark:
    * Run detection. 
    * Ripple Selection.
  
