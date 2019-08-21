@@ -62,3 +62,6 @@ Unlisted videos on Youtube:
 [Periodogram DEMO](https://www.youtube.com/watch?v=TUbLwjfCAMI&feature=youtu.be)
 
 [Sleep stages](https://www.youtube.com/watch?v=KMN62T7EluY&feature=youtu.be)
+
+[Ripple thresholds](https://www.youtube.com/watch?v=IMpiQVgEH4g&feature=youtu.be)
+
