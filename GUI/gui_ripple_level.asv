@@ -20,8 +20,8 @@ A={A.name};
 if  ~isempty(A)
        cellfun(@load,A);
 else
-    error('No Scoring found')
-    errordlg( strcat('No Scoring found:','{ }',),'Error')
+%     error('No Scoring found')
+%     errordlg( strcat('No Scoring found:',cd),'Error')
     ripple2=[];
     timeasleep=[];
     DEMAIS=[];
@@ -32,6 +32,16 @@ else
 end
 
 [transitions]=sort_scoring(transitions); %
+%When no NREM is detected
+if isempty(find(transitions(:,1)==3))
+%     errordlg( strcat('No NREM detected:',cd),'Error')
+    ripple2=[];
+    timeasleep=[];
+    DEMAIS=[];
+    y1=[];
+    return    
+end
+
 [v17,~]=reduce_data(V17,transitions,1000,3);
 
 %
@@ -44,14 +54,34 @@ Mono17=cellfun(@(equis) filtfilt(b1,a1,equis), V17 ,'UniformOutput',false);
 timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 
 %%
-[NC]=epocher(Mono17,lepoch);
+%Artifact detection stage
+[NC,trackcont]=epocher(Mono17,lepoch);
 % ncmax=max(NC)*(1/0.195);
 % chtm=median(ncmax);
 
 %ncmax=quantile(NC,0.999)*(1/0.195);
 ncmax=max(NC)*(1/0.195);
-chtm=median(ncmax);
+% chtm=median(ncmax);
+av=artifacts(ncmax,10);% Looks for artifacts
 
+if sum(av)~=0 %If artifacts are found
+    av=not(av);
+    ind=find(diff([0 av])==1);
+    [labeledX, numRegions] = bwlabel(av);
+    % Get lengths of each region
+    props = regionprops(labeledX, 'Area', 'PixelList');
+    regionLengths = [props.Area];
+
+    ind=sort([ind trackcont(1:end-1)]);
+
+    newMono=cell(length(ind),1);
+    for l=1:length(ind)
+        tempmat=NC(:,ind(l):ind(l)+regionLengths(l)-1);
+        size(tempmat,2)
+       newMono{l,1}=tempmat(:).';
+    end
+    Mono17=newMono;
+end
 %Might need to comment this:
 chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
 
@@ -74,16 +104,22 @@ s172(:,k)=cellfun('length',S2x);
 k
 end
 
-RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second. 
+if isvector(s172)
+RipFreq2=(s172)/(timeasleep*(60)); %RIpples per second.         
+ripple2=s172;
 
+else
+RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second.     
 %To display number of events use:
 ripple2=sum(s172); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
- 
+end
+
 %Adjustment to prevent decrease 
 DEMAIS=DEMAIS(2:end-1);
 
-[p,S,mu]=polyfit(DEMAIS,ripple2,9);
+
+[p,S,mu]=polyfit(DEMAIS,ripple2,9);%10
 y1=polyval(p,DEMAIS,[],mu);
 
 

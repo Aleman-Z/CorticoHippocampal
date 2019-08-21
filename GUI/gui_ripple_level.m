@@ -21,7 +21,7 @@ if  ~isempty(A)
        cellfun(@load,A);
 else
 %     error('No Scoring found')
-    errordlg( strcat('No Scoring found:',cd),'Error')
+%     errordlg( strcat('No Scoring found:',cd),'Error')
     ripple2=[];
     timeasleep=[];
     DEMAIS=[];
@@ -34,7 +34,7 @@ end
 [transitions]=sort_scoring(transitions); %
 %When no NREM is detected
 if isempty(find(transitions(:,1)==3))
-    errordlg( strcat('No NREM detected:',cd),'Error')
+%     errordlg( strcat('No NREM detected:',cd),'Error')
     ripple2=[];
     timeasleep=[];
     DEMAIS=[];
@@ -54,14 +54,38 @@ Mono17=cellfun(@(equis) filtfilt(b1,a1,equis), V17 ,'UniformOutput',false);
 timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 
 %%
-[NC]=epocher(Mono17,lepoch);
+%Artifact detection stage
+[NC,trackcont]=epocher(Mono17,lepoch);
 % ncmax=max(NC)*(1/0.195);
 % chtm=median(ncmax);
 
 %ncmax=quantile(NC,0.999)*(1/0.195);
 ncmax=max(NC)*(1/0.195);
-chtm=median(ncmax);
+% chtm=median(ncmax);
+av=artifacts(ncmax,10);% Looks for artifacts
 
+if sum(av)~=0 %If artifacts are found
+    av=not(av);
+    %Add NREM epochs division
+    av(trackcont)=0;
+
+    ind=find(diff([0 av])==1);
+    [labeledX, numRegions] = bwlabel(av);
+    
+    % Get lengths of each region
+    props = regionprops(labeledX, 'Area', 'PixelList');
+    regionLengths = [props.Area];
+
+%     ind2=sort([ind trackcont]);
+
+    newMono=cell(length(ind),1);
+    for l=1:length(ind)
+        tempmat=NC(:,ind(l):ind(l)+regionLengths(l)-1);
+        %size(tempmat,2);
+       newMono{l,1}=tempmat(:).';
+    end
+    Mono17=newMono;
+end
 %Might need to comment this:
 chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
 
@@ -99,7 +123,7 @@ end
 DEMAIS=DEMAIS(2:end-1);
 
 
-[p,S,mu]=polyfit(DEMAIS,ripple2,9);
+[p,S,mu]=polyfit(DEMAIS,ripple2,10);%9
 y1=polyval(p,DEMAIS,[],mu);
 
 

@@ -71,7 +71,7 @@ myColorMap=jet(n);
     cd(g{k})    
     w=1;
     lepoch=2;
-%      xo
+      %xo
     [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level(level,nrem,notch,w,lepoch)
     if isempty(y1)
         g{k}='N/A'
@@ -101,6 +101,7 @@ myColorMap=jet(n);
     set(gca, 'XDir','reverse')
     h=add_legend(g,myColorMap)
     set(h,'Location','Northwest')
+%     xo
     string=strcat('Ripple_thresholds_Rat',num2str(Rat),'_',labelconditions{iii}); 
     printing(string)
     close all
