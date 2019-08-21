@@ -39,7 +39,7 @@ gui_spectral
    * Github. :heavy_check_mark:
    * MemoryDynamics. :heavy_check_mark:
           
-# Video 
+# Videos 
 <!--- 
 PART 1
 <p align="center">
@@ -57,6 +57,8 @@ PART 3
 
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
+Unlisted videos on Youtube:
 
+[Periodogram DEMO](https://www.youtube.com/watch?v=TUbLwjfCAMI&feature=youtu.be)
 
-[For Youtube video click here](https://www.youtube.com/watch?v=TUbLwjfCAMI&feature=youtu.be)
+[Sleep stages](https://www.youtube.com/watch?v=KMN62T7EluY&feature=youtu.be)
