@@ -66,7 +66,7 @@ A = dir('*states*.mat');
 A={A.name};
 
 if  isempty(A)
-    warning(['No scoring found for',' ',g{1,kk}])
+    warning(strcat('No scoring found'))
 %     g(find(strcmp(g, g{1,kk})))=[]; %Remove trial without scoring.
 %     xo
     %continue

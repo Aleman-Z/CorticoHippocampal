@@ -48,7 +48,7 @@ for iii=1:length(labelconditions)
                 disp(['Using all.'])
                 an=[];
             case 'Select trials'
-                prompt = {'Enter trials name common word without index:'};
+                prompt = {['Enter trials name common word without index:' sprintf('\n') '(Use commas for multiple names)']};
                 dlgtitle = 'Input';
                 dims = [1 35];
                 %definput = {'20','hsv'};
@@ -60,7 +60,7 @@ for iii=1:length(labelconditions)
     end
 
     if ~isempty(an)
-    g=g(contains(g,an));
+    g=g(contains(g,strsplit(an{1},',')));
     end
 %% Colormap
 n=length(g);

@@ -101,7 +101,7 @@ switch answer
         disp(['Using all.'])
         an=[];
     case 'Select trials'
-        prompt = {'Enter trials name common word without index:'};
+        prompt = {['Enter trials name common word without index:' sprintf('\n') '(Use commas for multiple names)']};
         dlgtitle = 'Input';
         dims = [1 35];
         %definput = {'20','hsv'};
@@ -113,7 +113,7 @@ end
 end
 
 if ~isempty(an)
-g=g(contains(g,an));
+g=g(contains(g,strsplit(an{1},',')));
 end
 %xo
 % g=g(contains(g,{'PT'}));
