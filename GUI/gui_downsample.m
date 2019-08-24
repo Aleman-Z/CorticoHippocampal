@@ -34,9 +34,15 @@ switch answer
 end
 
 stage=an;
-stage=stage(contains(an,','));
-stage=stage{1};
-stage=strsplit(stage,',');
+
+%Multiple trials
+if ~isempty(stage(contains(an,',')))
+    stage=stage(contains(an,','));
+    stage=stage{1};
+    stage=strsplit(stage,',');
+end
+
+
 
 iter_no_saving=0; 
 
@@ -52,6 +58,8 @@ Rat=str2num(answer{1});
 %for RAT=1:length(rats) %4
 % Rat=rats(RAT); 
 dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
+
+dname2=uigetdir([],strcat('Select folder where downsampled data should be saved'));
 
 for iii=1:length(labelconditions) 
     
@@ -177,7 +185,7 @@ for num=1:length(str1)
 % end
     
     cd(str1{num,1});
-     xo
+%     xo
  if iter_no_saving~=1   
 %         if Rat==11
 % 
@@ -203,88 +211,71 @@ for num=1:length(str1)
 
 
         % Verifying time
-         l=length(ax1); %samples
-        % t=l*(1/fs); %  2.7276e+03  seconds
-        % Equivalent to 45.4596 minutes
-        t=1:l;
-        t=t*(1/fs);
+%          l=length(ax1); %samples
+%         % t=l*(1/fs); %  2.7276e+03  seconds
+%         % Equivalent to 45.4596 minutes
+%         t=1:l;
+%         t=t*(1/fs);
 
 %         sos=ax1.^2+ax2.^2+ax3.^2;    
 %         clear ax1 ax2 ax3 
 
-%         Wn=[500/(fs/2) ]; % Cutoff=500 Hz
-%         [b,a] = butter(3,Wn); %Filter coefficients for LPF
+        Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+        [b,a] = butter(3,Wn); %Filter coefficients for LPF
 % 
 %         sos=filtfilt(b,a,sos);
 %         sos=decimator(sos,20);
 
     vr=getfield(channels,strcat('Rat',num2str(Rat)));%Electrode channels. 
 
-    %strcat('100_CH',num2str(vr(1)),'.continuous')
-
-    if Rat==11
-
-        if Rat==11 && num==5 && iii==3
-
-
-            %Hippocampus
-            [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'_2_0.continuous'));    
-            V17=filtfilt(b,a,V17);
-            V17=decimator(V17,20);
-
-            %PFC
-            [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_2_0.continuous'));
-            V9=filtfilt(b,a,V9);
-            V9=decimator(V9,20);
-
-
-        else
-
-            %Hippocampus
-            [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'_0.continuous'));    
-            V17=filtfilt(b,a,V17);
-            V17=decimator(V17,20);
-
-            %PFC
-            [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_0.continuous'));
-            V9=filtfilt(b,a,V9);
-            V9=decimator(V9,20);
-
-        end
-
-
-    else
+    cfold=dir;
+    cfold={cfold.name};
+    cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));
+    
+    cf1=cfold(cellfun(@(x) contains(x,num2str(vr(1))),cfold));
+    cf2=cfold(cellfun(@(x) contains(x,num2str(vr(2))),cfold));
+    
+    if size(cf1,1)~=1 || size(cf2,1)~=1 
+        error('Ambiguous channel')
+        xo
+    end
 
     %Hippocampus
-    [V17, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(1)),'.continuous'));    
+    [V17, ~, ~] = load_open_ephys_data_faster(cf1{1});    
     V17=filtfilt(b,a,V17);
     V17=decimator(V17,20);
 
     %PFC
-    [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'.continuous'));
+    [V9, ~, ~] = load_open_ephys_data_faster(cf2{1});
     V9=filtfilt(b,a,V9);
     V9=decimator(V9,20);
 
-    end
+    %strcat('100_CH',num2str(vr(1)),'.continuous')
 
  end
 
-cd(strcat('F:\Lisa_files\',num2str(Rat)))
+% cd(strcat('F:\Lisa_files\',num2str(Rat)))
+cd(dname2)
+if ~exist(num2str(Rat))
+    mkdir(num2str(Rat))
+end
+cd(num2str(Rat))
 
 if ~exist(labelconditions2{iii}, 'dir')
    mkdir(labelconditions2{iii})
 end
 cd(labelconditions2{iii})
-xo
+%xo
 
 % cd(stage(1))
 % mkdir(stage{1})
 % mkdir(stage{2})
-G=getfolder;
-if sum(cellfun(@(x) strcmp(x,'Pre_trial'), G))>=1
-rmdir Pre_trial 
-rmdir Post_trial
-end
+
+% G=getfolder;
+% if sum(cellfun(@(x) strcmp(x,'Pre_trial'), G))>=1
+% rmdir Pre_trial 
+% rmdir Post_trial
+% end
 
 if ~exist(str2{num}, 'dir')
    mkdir(str2{num})
@@ -294,21 +285,24 @@ cd(str2{num})
 if iter_no_saving~=1
  save('V9.mat','V9')
  save('V17.mat','V17')
- save('sos.mat','sos')
+%  save('sos.mat','sos')
 end
-clear V9 V17 sos
+clear V9 V17 %sos
 
- if Rat<9
-     cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
- else
-     cd(strcat('G:\ephys'))
-     aa=getfolder;
-     if Rat==9
-         cd(strcat(aa{2},'/',BB))
-     else
-         cd(strcat(aa{1},'/',BB))
-     end
- end
+%xo
+cd(strcat(dname,'/',BB))
+
+%  if Rat<9
+%      cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
+%  else
+%      cd(strcat('G:\ephys'))
+%      aa=getfolder;
+%      if Rat==9
+%          cd(strcat(aa{2},'/',BB))
+%      else
+%          cd(strcat(aa{1},'/',BB))
+%      end
+%  end
  
 %     %%
 %    [vtr]=findsleep(sos,median(sos)/100,t); %Threshold. 0.006

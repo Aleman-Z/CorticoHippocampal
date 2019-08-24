@@ -38,7 +38,7 @@ stage=stage(contains(an,','));
 stage=stage{1};
 stage=strsplit(stage,',');
 
-iter_no_saving=1; 
+iter_no_saving=0; 
 
 %Select rat number
 opts.Resize = 'on';
@@ -51,7 +51,7 @@ Rat=str2num(answer{1});
 %xo
 %for RAT=1:length(rats) %4
 % Rat=rats(RAT); 
-dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(RAT)));
+dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
 
 for iii=1:length(labelconditions) 
     
@@ -76,7 +76,7 @@ cd(BB)
 %%
 A=getfolder;
 
-var=zeros(size(A))
+var=zeros(size(A));
 for j=1:length(stage)
 aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
 aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
@@ -122,75 +122,83 @@ str2=cell(size(A,1),1);
 %%
 f = figure(2);
 
-c = uicontrol('Style','text','Position',[1 380 300 20]);
-c.String = {'Fill the table with the correct trial name'};
+c = uicontrol('Style','text','Position',[1 380 450 20]);
+c.String = {'Edit the Label column with the correct trial index according to the dates.'};
 c.FontSize=10;
 c.FontAngle='italic';
-%%
+
 % label = uilabel(f,...
 %     'Position',[100 164 100 15],...
 %     'Text','Enter Comments:');
 uit = uitable(f);
 % d = {A,str2};
 uit.Data = [A str2];
-uit.ColumnName=['']
+uit.ColumnName={'File name'; 'Label'};
+uit.ColumnWidth= {200,50};;
 % uit.Position = [20 20 258 78];
 
 
 % t = uitable('Parent',f,'Data',dat,'ColumnName',cnames,... 
 %             'RowName',rnames,'Position',[20 280 450 100]);
         
-set(uit,'ColumnEditable',true(1,2))        
-aver= get(uit,'Data');   
+set(uit,'ColumnEditable',true(1,2))
+h = uicontrol('Position',[350 20 100 40],'String','Confirm',...
+              'Callback','uiresume(gcbf)');
+h.FontSize=10;
+uiwait(gcf); 
+str2= get(uit,'Data');   
+str2=str2(:,2);
+close(f);
+str1=A;
 %%
 % if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 % cd(BB)    
 % end
-%xo
-if Rat==6 || Rat==9 || Rat==11
-[str1,str2]=select_trial('Pre',Rat,stage);    
-else
-[str1,str2]=select_trial('pre',Rat,stage);        
-end
-xo
-%Reverse order of wrong strings. 
-S=sum(cell2mat(cellfun(@(x) strfind(x,'pre-sleep'), str1,'UniformOutput',0)));
-if S==1 && length(str1)>1
-str1=sortrows(str1,[-1 1]);    
-end
+% %xo
+% if Rat==6 || Rat==9 || Rat==11
+% [str1,str2]=select_trial('Pre',Rat,stage);    
+% else
+% [str1,str2]=select_trial('pre',Rat,stage);        
+% end
+% xo
+% %Reverse order of wrong strings. 
+% S=sum(cell2mat(cellfun(@(x) strfind(x,'pre-sleep'), str1,'UniformOutput',0)));
+% if S==1 && length(str1)>1
+% str1=sortrows(str1,[-1 1]);    
+% end
 
 % str2={'PT5'};
 f=waitbar(0,'Please wait...');
 for num=1:length(str1)
     %length(str1)
        
-if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
-cd(BB)    
-end
+% if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
+% cd(BB)    
+% end
     
     cd(str1{num,1});
-    xo
+     xo
  if iter_no_saving~=1   
-        if Rat==11
-
-            if Rat==11 && num==5 && iii==3
-            [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_2_0.continuous');
-            [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_2_0.continuous');
-            [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_2_0.continuous'); 
-            else
-
-            [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_0.continuous');
-            [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_0.continuous');
-            [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_0.continuous');   
-
-            end
-
-
-        else
-            [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
-            [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
-            [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');    
-        end
+%         if Rat==11
+% 
+%             if Rat==11 && num==5 && iii==3
+%             [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_2_0.continuous');
+%             [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_2_0.continuous');
+%             [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_2_0.continuous'); 
+%             else
+% 
+%             [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1_0.continuous');
+%             [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2_0.continuous');
+%             [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3_0.continuous');   
+% 
+%             end
+% 
+% 
+%         else
+%             [ax1, ~, ~] = load_open_ephys_data_faster('100_AUX1.continuous');
+%             [ax2, ~, ~] = load_open_ephys_data_faster('100_AUX2.continuous');
+%             [ax3, ~, ~] = load_open_ephys_data_faster('100_AUX3.continuous');    
+%         end
 
 
 
@@ -201,16 +209,38 @@ end
         t=1:l;
         t=t*(1/fs);
 
-        sos=ax1.^2+ax2.^2+ax3.^2;    
-        clear ax1 ax2 ax3 
+%         sos=ax1.^2+ax2.^2+ax3.^2;    
+%         clear ax1 ax2 ax3 
 
-        Wn=[500/(fs/2) ]; % Cutoff=500 Hz
-        [b,a] = butter(3,Wn); %Filter coefficients for LPF
-
-        sos=filtfilt(b,a,sos);
-        sos=decimator(sos,20);
+%         Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+%         [b,a] = butter(3,Wn); %Filter coefficients for LPF
+% 
+%         sos=filtfilt(b,a,sos);
+%         sos=decimator(sos,20);
 
     vr=getfield(channels,strcat('Rat',num2str(Rat)));%Electrode channels. 
+
+    cfold=dir;
+    cfold={cfold.name};
+    cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));
+    
+    cf1=cfold(cellfun(@(x) contains(x,num2str(vr(1))),cfold));
+    cf2=cfold(cellfun(@(x) contains(x,num2str(vr(2))),cfold));
+    
+    if size(cf1,1)~=1 || size(cf2,1)~=1 
+        error('Ambiguous channel')
+        xo
+    end
+
+    %Hippocampus
+    [V17, ~, ~] = load_open_ephys_data_faster(cf1{1});    
+    V17=filtfilt(b,a,V17);
+    V17=decimator(V17,20);
+
+    %PFC
+    [V9, ~, ~] = load_open_ephys_data_faster(strcat('100_CH',num2str(vr(2)),'_2_0.continuous'));
+    V9=filtfilt(b,a,V9);
+    V9=decimator(V9,20);
 
     %strcat('100_CH',num2str(vr(1)),'.continuous')
 
