@@ -1,8 +1,8 @@
 %gui_downsample
 %Downsamples ephys data.
-
-close all
-clc
+function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
+%close all
+%clc
 %fs=20000; %Sampling frequency of acquisition.  
 
 prompt = {'Enter acquisition frequency (Hz):','Enter downsampling frequency (Hz):'};
@@ -31,6 +31,17 @@ switch answer
         an = inputdlg(prompt,dlgtitle,dims);
         %an=char(an);
 %        g=g(contains(g,{'PT'}));
+end
+
+%Adds trials containing an initial capital letter.
+idx = isstrprop(an,'upper') ;
+for indexup=1:length(idx)
+     varind=idx{indexup};
+     if varind(1)~=1
+         vj=an{indexup};
+         vj(1)=upper(vj(1));
+         an= [an vj];
+     end
 end
 
 stage=an;
@@ -80,7 +91,6 @@ cd(dname)
 % xo
 [BB]=select_folder(Rat,iii,labelconditions);
 cd(BB)
-
 %%
 A=getfolder;
 
@@ -130,8 +140,11 @@ str2=cell(size(A,1),1);
 %%
 f = figure(2);
 
-c = uicontrol('Style','text','Position',[1 380 450 20]);
-c.String = {'Edit the Label column with the correct trial index according to the dates.'};
+c = uicontrol('Style','text','Position',[1 380 450 30]);
+% c = uicontrol('Style','text','Position',[1 380 450 20]);
+% c.String = {'Edit the Label column with the correct trial index according to the dates.'};
+c.String =sprintf('%s\n%s','Edit the Label column with the correct trial index according to the dates.','Leave blank if trial is corrupted.');
+%{'Edit the Label column with the correct trial index according to the dates' 'Leave blank if trial is corrupted.'};
 c.FontSize=10;
 c.FontAngle='italic';
 
@@ -156,8 +169,12 @@ h.FontSize=10;
 uiwait(gcf); 
 str2= get(uit,'Data');   
 str2=str2(:,2);
+%Remove corrupted trials.
 close(f);
 str1=A;
+str1=str1(not(cellfun('isempty',str2)));
+A=A(not(cellfun('isempty',str2)));
+str2=str2(not(cellfun('isempty',str2)));
 %%
 % if strcmp(BB,'Study_day7_OR_N_1_2mar2018')
 % cd(BB)    
@@ -286,6 +303,8 @@ if iter_no_saving~=1
  save('V9.mat','V9')
  save('V17.mat','V17')
 %  save('sos.mat','sos')
+ ftext = fopen( str1{num}, 'w' );  
+ fclose(ftext);
 end
 clear V9 V17 %sos
 
@@ -330,7 +349,7 @@ end
 %xo
 end
 
-% end
+end
 
 
 

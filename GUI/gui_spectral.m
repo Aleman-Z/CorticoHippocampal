@@ -246,7 +246,13 @@ pause(.1)
         % hObject    handle to Downsample_data (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-        gui_downsample;
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
+        
+        gui_downsample(channels,label1,labelconditions,labelconditions2,rats);
 
         % --------------------------------------------------------------------
         function Extract_stages_Callback(hObject, eventdata, handles)
