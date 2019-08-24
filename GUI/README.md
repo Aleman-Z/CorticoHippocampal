@@ -16,7 +16,7 @@ gui_spectral
    * Exit GUI. :heavy_check_mark:
    
  * Preprocessing
-   * Downsample data.
+   * Downsample data. :heavy_check_mark:
    * Extract labelled stages.
    * Filter data.
  
