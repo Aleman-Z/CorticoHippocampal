@@ -1,6 +1,6 @@
 %gui_downsample
 %Downsamples ephys data.
-function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
+% function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
 %close all
 %clc
 %fs=20000; %Sampling frequency of acquisition.  
@@ -71,9 +71,9 @@ Rat=str2num(answer{1});
 dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
 
 dname2=uigetdir([],strcat('Select folder where downsampled data should be saved'));
-iii=1;
-% for iii=4:length(labelconditions) 
- while iii<=length(labelconditions)  
+
+for iii=4:length(labelconditions) 
+    
 %     if Rat==9 && strcmp(labelconditions{iii},'OR_N')
 %         labelconditions{4}='OR+NOV';
 %     end
@@ -89,7 +89,7 @@ cd(dname)
 % end
 
 %xo
-[BB,labelconditions,labelconditions2]=select_folder(Rat,iii,labelconditions,labelconditions2);
+[BB,labelconditions]=select_folder(Rat,iii,labelconditions);
 cd(BB)
 %%
 A=getfolder;
@@ -140,7 +140,7 @@ str2=cell(size(A,1),1);
 %%
 f = figure(2);
 set(f, 'NumberTitle', 'off', ...
-    'Name',strcat('Rat',num2str(Rat),'_',labelconditions{iii}));
+    'Name',strcat(labelconditions{iii}));
 
 c = uicontrol('Style','text','Position',[1 380 450 30]);
 % c = uicontrol('Style','text','Position',[1 380 450 20]);
@@ -350,11 +350,10 @@ cd(strcat(dname,'/',BB))
         
 progress_bar(num,length(str1),f)    
 end
-iii=iii+1;
 %xo
 end
 
-end
+% end
 
 
 
