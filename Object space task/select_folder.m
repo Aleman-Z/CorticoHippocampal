@@ -28,13 +28,13 @@ A=getfolder;
 
     
       
-    if no==2 %Save BB with the plain OR. 
+    if no>=2 %Save BB with the plain OR. 
         %xo
         labelconditions{iii}=BB{1};
-        labelconditions=[labelconditions; BB(2)];
+        labelconditions=[labelconditions; BB(2:end).'];
         
         labelconditions2{iii}=BB{1};
-        labelconditions2=[labelconditions2; BB(2)];
+        labelconditions2=[labelconditions2; BB(2:end).'];
 %         if strfind(BB{1},'OD')>0
 %         
 %         

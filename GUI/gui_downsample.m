@@ -33,27 +33,25 @@ switch answer
 %        g=g(contains(g,{'PT'}));
 end
 
-%Adds trials containing an initial capital letter.
-idx = isstrprop(an,'upper') ;
-for indexup=1:length(idx)
-     varind=idx{indexup};
-     if varind(1)~=1
-         vj=an{indexup};
-         vj(1)=upper(vj(1));
-         an= [an vj];
-     end
-end
-
 stage=an;
 
-%Multiple trials
+%Splits Multiple trials
 if ~isempty(stage(contains(an,',')))
     stage=stage(contains(an,','));
     stage=stage{1};
     stage=strsplit(stage,',');
 end
 
-
+%Adds trials containing an initial capital letter.
+idx = isstrprop(stage,'upper') ;
+for indexup=1:length(idx)
+     varind=idx{indexup};
+     if varind(1)~=1
+         vj=stage{indexup};
+         vj(1)=upper(vj(1));
+         stage= [stage vj];
+     end
+end
 
 iter_no_saving=0; 
 
@@ -99,6 +97,19 @@ for j=1:length(stage)
 aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
 aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
 var=or(cell2mat(aver),var);
+end
+
+%In case of extra folder
+if var==0
+ cd(A{1})
+        A=getfolder;
+        %Look for trial
+        var=zeros(size(A));
+        for j=1:length(stage)
+        aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
+        aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
+        var=or(cell2mat(aver),var);
+        end 
 end
 
 A=A(var);
@@ -202,7 +213,11 @@ for num=1:length(str1)
 % if strcmp(BB,'Study_day7_OR_N_1_2mar2018') && num>1
 % cd(BB)    
 % end
-    
+ chfol=getfolder;
+ if length(chfol)==1
+     cd(chfol{1})
+ end
+ 
     cd(str1{num,1});
 %     xo
  if iter_no_saving~=1   
