@@ -12,7 +12,7 @@ gui_spectral
    * Load experiment. :heavy_check_mark:
    * Load Ephys data.
    * Load Matlab data.
-   * Save Figure.
+   * Save Figure.  :heavy_check_mark:
    * Exit GUI. :heavy_check_mark:
    
  * Preprocessing
