@@ -38,7 +38,21 @@ gui_spectral
  * Help
    * Github. :heavy_check_mark:
    * MemoryDynamics. :heavy_check_mark:
-          
+
+# Pipeline of methods:
+
+1. Define a new experiment.
+2. Downsample data and store.
+
+# How Ephys data is organized (General to specific):
+
+1. Rat ID.
+2. Condition.
+3. Trial.
+4. Channels.
+
+
+
 # Videos 
 <!--- 
 PART 1
