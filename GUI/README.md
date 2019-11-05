@@ -44,7 +44,7 @@ gui_spectral
 1. Define a new experiment.
 2. Downsample data and store.
 
-# How Ephys data is organized (General to specific):
+# How Ephys data is organized (From general to specific):
 
 1. Rat ID.
 2. Condition.
