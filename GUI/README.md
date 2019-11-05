@@ -41,7 +41,7 @@ gui_spectral
 
 # Pipeline of methods:
 
-1. Define a new experiment.
+1. Define a new experiment / Load previously saved experiment.
 2. Downsample data and store.
 
 # How Ephys data is organized (From general to specific):
