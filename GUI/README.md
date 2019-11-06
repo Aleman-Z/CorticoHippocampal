@@ -48,6 +48,7 @@ gui_spectral
 
     * Periodograms.
     * Sleep stages plots.
+    * Ripple threshold plots.
 
 # How OS Ephys data is organized (From general to specific):
 
