@@ -43,7 +43,11 @@ gui_spectral
 
 1. Define a new experiment.
 2. Downsample data and store.
-
+3. Perform analysis.
+   * Sleep stages.
+   * Periodograms.
+   * Ripple thresholds.
+ 
 # How Ephys data is organized (From general to specific):
 
 1. Rat ID.
