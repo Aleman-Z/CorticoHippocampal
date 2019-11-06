@@ -41,8 +41,13 @@ gui_spectral
 
 # Pipeline of methods:
 
-1. Define a new experiment 
+1. Define a new experiment. 
 2. Downsample data and store.
+3. Add sleep scorings.
+4. Perform analysis:
+
+    * Periodograms.
+    * Sleep stages plots.
 
 # How OS Ephys data is organized (From general to specific):
 
