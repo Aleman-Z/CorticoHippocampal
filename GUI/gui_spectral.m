@@ -58,7 +58,7 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% UIWAIT makes gui_spectral wait for user response (see UIRESUME)
+% MEMORY DYNAMICS LOGO
 % uiwait(handles.figure1);
 axes(handles.axes2)
 imshow('memdyn.png')
@@ -75,7 +75,8 @@ rgbImage = zeros(rows, columns, 3, numImages, 'uint8'); % Initialize dimensions.
 % ishandle(gui_spectral)
 set(0,'userdata',0)
 
-%while 1
+
+% RIPPLE CHANGING COLOR
 for k = 1 : numImages
 %     if k==1
 %         load gong.mat
@@ -90,6 +91,9 @@ for k = 1 : numImages
 %   title(caption);
    drawnow;
 end
+
+%% Animation attempt.
+
 % % % % % if get(0,'userdata')
 % % % % % break
 % % % % % end
@@ -118,7 +122,7 @@ end
 % end
 
 % imshow('trace.png')
-
+%%
 
 % --- Outputs from this function are returned to the command line.
 function varargout = gui_spectral_OutputFcn(hObject, eventdata, handles) 
@@ -131,8 +135,7 @@ function varargout = gui_spectral_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% FILE
-
+%BEEP sound.
 % --------------------------------------------------------------------
 function File_Callback(hObject, eventdata, handles)
 % hObject    handle to File (see GCBO)
@@ -141,6 +144,7 @@ function File_Callback(hObject, eventdata, handles)
 % beepnoise
 % pause(.1)
 
+%GUI BUTTONS.
 
         % --------------------------------------------------------------------
         function New_experiment_Callback(hObject, eventdata, handles)
@@ -149,6 +153,8 @@ function File_Callback(hObject, eventdata, handles)
         % handles    structure with handles and user data (see GUIDATA)
         % gui_new_experiment
         % global x
+        
+        %Ask for experiment information.
         x = inputdlg({'Rats ID number','Condition Names','Brain Areas'},'Fill and separate with commas', [1 70; 1 70; 1 70]) 
         rats=str2num(x{1});
         label1=split(x{3},',');
@@ -167,10 +173,14 @@ function File_Callback(hObject, eventdata, handles)
         assignin('base','label1',label1)
         assignin('base','channels',channels)
         % dname = uigetdir([],'Select folder to save experiment data');
+        
+        %Save file in folder.
         [file,dname,~] = uiputfile('TypeExperimentNameHere.mat','Select folder to save experiment data');
         cd(dname)
         save (file, 'rats','labelconditions','labelconditions2','label1','channels')
-
+        
+        
+        
         % --------------------------------------------------------------------
         function Load_experiment_Callback(hObject, eventdata, handles)
         % hObject    handle to Load_experiment (see GCBO)
@@ -185,20 +195,11 @@ function File_Callback(hObject, eventdata, handles)
         assignin('base','labelconditions2',labelconditions2)
         assignin('base','label1',label1)
         assignin('base','channels',channels)
-         [mh]=messbox('Experiment was loaded','Success')
-
+        messbox('Experiment was loaded','Success')
         % f = msgbox('Experiment was loaded','Success');
 
-
-        % % load(f_name)
-        % 'HOLA'
-        % assignin('base','rats',rats)
-        % assignin('base','labelconditions',labelconditions)
-        % assignin('base','labelconditions2',labelconditions2)
-        % assignin('base','label1',label1)
-        % assignin('base','channels',channels)
-
-                
+ %CONSIDERING TO ERASE:
+ 
         % --------------------------------------------------------------------
         function Load_Ephys_data_Callback(hObject, eventdata, handles)
         % hObject    handle to Load_Ephys_data (see GCBO)
@@ -211,14 +212,16 @@ function File_Callback(hObject, eventdata, handles)
         % hObject    handle to Load_Matlab_data (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-
+        'Loading data'
 
         % --------------------------------------------------------------------
         function save_figure_Callback(hObject, eventdata, handles)
         % hObject    handle to save_figure (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-
+%         str = input('Type a name','s')
+        answer = inputdlg('Name of file')
+        printing(answer{1})
 
         % --------------------------------------------------------------------
         function exit_gui_Callback(hObject, eventdata, handles)

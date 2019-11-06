@@ -23,12 +23,14 @@ myColorMap =myColorMap([2 4 5 7],:);
 myColorMap(2,:)=[0, 204/255, 0];
 myColorMap(3,:)=[0.9290, 0.6940, 0.1250];
 
+%Loop conditions
 for iii=1:length(labelconditions) %Up to 4 conditions. OR is 2.
 cd(strcat(dname,'/',num2str(rats(RAT))));
 cd( labelconditions2{iii})
 g=getfolder;
 
-if iii==1
+%SELECT TRIALS
+if iii==1 %Ask only once
 answer = questdlg('Should we use all trials?', ...
 	'Trial selection', ...
 	'Use all','Select trials','Select trials');
@@ -47,7 +49,7 @@ switch answer
         %an=char(an);
 %        g=g(contains(g,{'PT'}));
 end
-xo
+%xo
 end
 
 if ~isempty(an)
