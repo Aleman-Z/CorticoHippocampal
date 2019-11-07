@@ -1,24 +1,21 @@
 %gui_downsample
 %Downsamples ephys data.
 function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
-%close all
-%clc
-%fs=20000; %Sampling frequency of acquisition.  
 
+%SAMPLING FREQUENCY AND DOWNSAMPLED FREQUENCY.
 prompt = {'Enter acquisition frequency (Hz):','Enter downsampling frequency (Hz):'};
 dlgtitle = 'Input';
 dims = [1 35];
-definput = {'20000','1000'};
+definput = {'30000','1000'};
 answer = inputdlg(prompt,dlgtitle,dims,definput)
-
 fs=str2num(answer{1});
 fs_new=str2num(answer{2});
 
+%SELECT TRIALS
    answer = questdlg('Should we use all trials?', ...
             'Trial selection', ...
             'Use all','Select trials','Select trials');
-
-% Handle response
+        
 switch answer
     case 'Use all'
         disp(['Using all.'])
@@ -30,9 +27,8 @@ switch answer
         %definput = {'20','hsv'};
         an = inputdlg(prompt,dlgtitle,dims);
         %an=char(an);
-%        g=g(contains(g,{'PT'}));
+        %g=g(contains(g,{'PT'}));
 end
-
 stage=an;
 
 %Splits Multiple trials
@@ -55,20 +51,58 @@ end
 
 iter_no_saving=0; 
 
-%Select rat number
+%SELECT RAT(S).
 opts.Resize = 'on';
 opts.WindowStyle = 'modal';
 opts.Interpreter = 'tex';
 prompt=strcat('\bf Select a rat#. Options:','{ }',num2str(rats));
 answer = inputdlg(prompt,'Input',[2 30],{''},opts);
-Rat=str2num(answer{1});
+Rat=str2double(answer{1});
+% Rat=str2num(answer{1});
 
 %xo
 %for RAT=1:length(rats) %4
 % Rat=rats(RAT); 
-dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
 
+%GET EPHYS AND NEW FOLDER.
+dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
 dname2=uigetdir([],strcat('Select folder where downsampled data should be saved'));
+%%
+%SELECT CONDITION.
+
+%Center figure.
+f=figure();
+movegui(gcf,'center');
+
+%Checkboxes
+Boxcheck = cell(1,4);
+for h1=1:length(labelconditions)
+boxcheck = uicontrol('Style','checkbox','String',labelconditions{h1},'Position',[10 f.Position(4)-30*h1 200 20]);
+boxcheck.FontSize=11;
+boxcheck.Value=1;
+Boxcheck{h1}=boxcheck;   
+end
+
+set(f, 'NumberTitle', 'off', ...
+    'Name', 'Select conditions');
+
+%Push button
+c = uicontrol;
+c.String = 'Continue';
+c.FontSize=10;
+c.Position=[f.Position(1)/3.5 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
+
+%Callback
+c.Callback='uiresume(gcbf)';
+uiwait(gcf); 
+boxch=cellfun(@(x) get(x,'Value'),Boxcheck);
+clear Boxcheck
+labelconditions=labelconditions(find(boxch~=0));
+labelconditions2=labelconditions2(find(boxch~=0));
+
+close(f);
+%%
+%GO TO FOLDER AND READ ALL CONDITION FILES.
 iii=1;
 % for iii=4:length(labelconditions) 
  while iii<=length(labelconditions)  
@@ -149,6 +183,8 @@ str2=cell(size(A,1),1);
      %str2{n,1}=strcat(stage{1},num2str(n));
    end
 %%
+%LABEL TRIALS.
+
 f = figure(2);
 set(f, 'NumberTitle', 'off', ...
     'Name',strcat('Rat',num2str(Rat),'_',labelconditions{iii}));
@@ -254,7 +290,7 @@ for num=1:length(str1)
 %         sos=ax1.^2+ax2.^2+ax3.^2;    
 %         clear ax1 ax2 ax3 
 
-        Wn=[500/(fs/2) ]; % Cutoff=500 Hz
+        Wn=[(fs_new/2)/(fs/2) ]; % Cutoff=500 Hz 
         [b,a] = butter(3,Wn); %Filter coefficients for LPF
 % 
 %         sos=filtfilt(b,a,sos);
@@ -275,14 +311,22 @@ for num=1:length(str1)
     end
 
     %Hippocampus
-    [V17, ~, ~] = load_open_ephys_data_faster(cf1{1});    
-    V17=filtfilt(b,a,V17);
-    V17=decimator(V17,20);
+    [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});    
+    HPC=filtfilt(b,a,HPC);
+    HPC=decimator(HPC,fs/fs_new);
+
+
+%     [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});    
+%     HPC=filtfilt(b,a,HPC);
+%     HPC=decimator(HPC,20);
 
     %PFC
-    [V9, ~, ~] = load_open_ephys_data_faster(cf2{1});
-    V9=filtfilt(b,a,V9);
-    V9=decimator(V9,20);
+%     [PFC, ~, ~] = load_open_ephys_data_faster(cf2{1});
+%     PFC=filtfilt(b,a,PFC);
+%     PFC=decimator(PFC,20);
+    [PFC, ~, ~] = load_open_ephys_data_faster(cf2{1});
+    PFC=filtfilt(b,a,PFC);
+    PFC=decimator(PFC,fs/fs_new);
 
     %strcat('100_CH',num2str(vr(1)),'.continuous')
 
@@ -319,13 +363,13 @@ end
 
 cd(str2{num})
 if iter_no_saving~=1
- save('V9.mat','V9')
- save('V17.mat','V17')
+ save('PFC.mat','PFC')
+ save('HPC.mat','HPC')
 %  save('sos.mat','sos')
  ftext = fopen( str1{num}, 'w' );  
  fclose(ftext);
 end
-clear V9 V17 %sos
+clear PFC HPC %sos
 
 %xo
 cd(strcat(dname,'/',BB))
