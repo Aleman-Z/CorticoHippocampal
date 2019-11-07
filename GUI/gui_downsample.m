@@ -289,9 +289,9 @@ for num=1:length(str1)
 
 %         sos=ax1.^2+ax2.^2+ax3.^2;    
 %         clear ax1 ax2 ax3 
-
-        Wn=[(fs_new/2)/(fs/2) ]; % Cutoff=500 Hz 
-        [b,a] = butter(3,Wn); %Filter coefficients for LPF
+ 
+        Wn=[fs_new/fs ]; % Cutoff=fs_new/2 Hz. 
+        [b,a] = butter(3,Wn); %Filter coefficients for LPF.
 % 
 %         sos=filtfilt(b,a,sos);
 %         sos=decimator(sos,20);
