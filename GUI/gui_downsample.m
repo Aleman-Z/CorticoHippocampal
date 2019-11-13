@@ -32,8 +32,8 @@ end
 stage=an;
 
 %Splits Multiple trials
-if ~isempty(stage(strfind(an{1},',')))
-    stage=stage(strfind(an{1},','));
+if ~isempty(stage(~isempty(strfind(an{1},','))))
+    stage=stage(~isempty(strfind(an{1},',')));
     stage=stage{1};
     stage=strsplit(stage,',');
 end
