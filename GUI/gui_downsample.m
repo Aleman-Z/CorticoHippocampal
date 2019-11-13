@@ -32,11 +32,17 @@ end
 stage=an;
 
 %Splits Multiple trials
-if ~isempty(stage(contains(an,',')))
-    stage=stage(contains(an,','));
+if ~isempty(stage(strfind(an{1},',')))
+    stage=stage(strfind(an{1},','));
     stage=stage{1};
     stage=strsplit(stage,',');
 end
+% if ~isempty(stage(contains(an,',')))
+%     stage=stage(contains(an,','));
+%     stage=stage{1};
+%     stage=strsplit(stage,',');
+% end
+
 
 %Adds trials containing an initial capital letter.
 idx = isstrprop(stage,'upper') ;
