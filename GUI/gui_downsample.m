@@ -345,13 +345,13 @@ for num=1:length(str1)
 % cd(strcat('F:\Lisa_files\',num2str(Rat)))
 cd(dname2)
 % if ~exist(num2str(Rat))
-if ~isfolder(num2str(Rat))
+if ~isdir(num2str(Rat))
     mkdir(num2str(Rat))
 end
 cd(num2str(Rat))
 
 % if ~exist(labelconditions2{iii}, 'dir')
-if ~isfolder(labelconditions2{iii})    
+if ~isdir(labelconditions2{iii})    
    mkdir(labelconditions2{iii})
 end
 cd(labelconditions2{iii})
