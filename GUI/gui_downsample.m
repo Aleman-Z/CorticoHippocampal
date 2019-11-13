@@ -180,7 +180,8 @@ str2=cell(size(A,1),1);
                 
             end
            
-            if contains(A{n},stage{j})
+           %if contains(A{n},stage{j})
+            if ~isempty(strfind(A{n},stage{j}))                
               cont=cont+1;  
               str2{n,1}=strcat(stage{j},num2str(cont));   
 
