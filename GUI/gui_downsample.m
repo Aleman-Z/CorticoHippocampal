@@ -307,10 +307,13 @@ for num=1:length(str1)
 
     cfold=dir;
     cfold={cfold.name};
-    cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));
+%     cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));    
+    cfold=cfold(cellfun(@(x) ~isempty(strfind(x,'CH')),cfold));
     
-    cf1=cfold(cellfun(@(x) contains(x,num2str(vr(1))),cfold));
-    cf2=cfold(cellfun(@(x) contains(x,num2str(vr(2))),cfold));
+%     cf1=cfold(cellfun(@(x) contains(x,num2str(vr(1))),cfold));
+%     cf2=cfold(cellfun(@(x) contains(x,num2str(vr(2))),cfold));
+    cf1=cfold(cellfun(@(x) ~isempty(strfind(x,num2str(vr(1)))),cfold));
+    cf2=cfold(cellfun(@(x) ~isempty(strfind(x,num2str(vr(2)))),cfold));
     
     if size(cf1,1)~=1 || size(cf2,1)~=1 
         error('Ambiguous channel')
