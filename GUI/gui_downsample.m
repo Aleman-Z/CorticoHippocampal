@@ -3,7 +3,7 @@
 function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
 
 %SAMPLING FREQUENCY AND DOWNSAMPLED FREQUENCY.
-prompt = {'Enter acquisition frequency (Hz):','Enter downsampling frequency (Hz):'};
+prompt = {'Enter acquisition frequency (Hz):','Enter new downsampled frequency (Hz):'};
 dlgtitle = 'Input';
 dims = [1 35];
 definput = {'30000','1000'};
@@ -313,7 +313,7 @@ for num=1:length(str1)
     %Hippocampus
     [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});    
     HPC=filtfilt(b,a,HPC);
-    HPC=decimator(HPC,fs/fs_new);
+    HPC=downsample(HPC,fs/fs_new);
 
 
 %     [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});    
@@ -326,7 +326,7 @@ for num=1:length(str1)
 %     PFC=decimator(PFC,20);
     [PFC, ~, ~] = load_open_ephys_data_faster(cf2{1});
     PFC=filtfilt(b,a,PFC);
-    PFC=decimator(PFC,fs/fs_new);
+    PFC=downsample(PFC,fs/fs_new);
 
     %strcat('100_CH',num2str(vr(1)),'.continuous')
 

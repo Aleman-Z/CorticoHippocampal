@@ -105,7 +105,7 @@ cellfun(@load,A);
 % end
 
 
-L= length(states)/60%min
+L= length(states)/60;%min
 
  g1=sum(states==1)/60; %Wake
  g3=sum(states==3)/60; %NREM
