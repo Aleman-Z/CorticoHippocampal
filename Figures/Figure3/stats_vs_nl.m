@@ -356,7 +356,7 @@ P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat(datapath,num2str(Rat)))
+    cd(strcat(datapath,'/',num2str(Rat)))
 end
 
 %cd(strcat('D:\internship\',num2str(Rat)))
