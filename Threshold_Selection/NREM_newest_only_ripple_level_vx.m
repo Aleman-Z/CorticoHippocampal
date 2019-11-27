@@ -1,4 +1,4 @@
-function [ripple2,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score)
+function [ripple2,timeasleep,D_thresholds,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score)
 %{
 LOAD DATA, easy and quick. 
 
@@ -58,14 +58,14 @@ end
 
 %Bipolar
 % S17=V17-V6;
-S17=load('S17.mat');
-S17=S17.S17;
+% S17=load('S17.mat');
+% S17=S17.S17;
 
 %Bandpassed versions
 % Mono17=filtfilt(b1,a1,V17); 
 Mono17=cellfun(@(equis) filtfilt(b1,a1,equis), V17 ,'UniformOutput',false);
 % Bip17=filtfilt(b1,a1,S17);
-Bip17=cellfun(@(equis) filtfilt(b1,a1,equis), S17 ,'UniformOutput',false);
+% Bip17=cellfun(@(equis) filtfilt(b1,a1,equis), S17 ,'UniformOutput',false);
 
 %NREM extraction
 % [V17,~]=reduce_data(V17,transitions,1000,nrem);
@@ -93,12 +93,12 @@ V12=V12.';
 %V12=flipud(filter(Hcas2,flipud(filter(Hcas2,V12))));
 end
 % S12=V12-V6;
-S12=load('S12.mat');
-S12=S12.S12;
+% S12=load('S12.mat');
+% S12=S12.S12;
 % Mono12=filtfilt(b1,a1,V12);
 Mono12=cellfun(@(equis) filtfilt(b1,a1,equis), V12 ,'UniformOutput',false);
 % Bip12=filtfilt(b1,a1,S12);
-Bip12=cellfun(@(equis) filtfilt(b1,a1,equis), S12 ,'UniformOutput',false);
+% Bip12=cellfun(@(equis) filtfilt(b1,a1,equis), S12 ,'UniformOutput',false);
 
 % [V12,~]=reduce_data(V12,transitions,1000,nrem);
 % [S12,~]=reduce_data(S12,transitions,1000,3);
@@ -123,12 +123,12 @@ V9=V9.';
 
 end
 %S9=V9-V6;
-S9=load('S9.mat');
-S9=S9.S9;
+% S9=load('S9.mat');
+% S9=S9.S9;
 % Mono9=filtfilt(b1,a1,V9);
 % Bip9=filtfilt(b1,a1,S9);
 Mono9=cellfun(@(equis) filtfilt(b1,a1,equis), V9 ,'UniformOutput',false);
-Bip9=cellfun(@(equis) filtfilt(b1,a1,equis), S9 ,'UniformOutput',false);
+% Bip9=cellfun(@(equis) filtfilt(b1,a1,equis), S9 ,'UniformOutput',false);
 
 
 
@@ -140,58 +140,63 @@ timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 'Bandpass performed'
 
 
-rep=5; %Number of thresholds+1
+% rep=5; %Number of thresholds+1
 
 %%
-[NC]=epocher(Mono17,lepoch);
+%Area used for ripple detection.
+if strcmp(w,'PFC')
+    Mono=Mono9;
+end
+if strcmp(w,'HPC')
+    Mono=Mono17;
+end
+if strcmp(w,'PAR')
+    Mono=Mono12;
+end
+
+[NC]=epocher(Mono,lepoch);
 % ncmax=max(NC)*(1/0.195);
 % chtm=median(ncmax);
 
 %ncmax=quantile(NC,0.999)*(1/0.195);
 ncmax=max(NC)*(1/0.195);
-chtm=median(ncmax);
+% chtm=median(ncmax);
 
 %Might need to comment this:
-chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
+chtm=median(cellfun(@max,Mono))*(1/0.195); %Minimum maximum value among epochs.
 
 %Median is used to account for any artifact/outlier. 
-DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
-%DEMAIS=linspace((chtm/16),(chtm),30);
-rep=length(DEMAIS);
+D_thresholds=linspace(floor(chtm/16),floor(chtm),30);
+%D_thresholds=linspace((chtm/16),(chtm),30);
+rep=length(D_thresholds);
 
 
-signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
+signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
 ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
-
 
 
 %Find ripples
 % for k=1:rep-1
 for k=1:rep-2
 % k=level;
-[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
-swr172(:,:,k)=[S2x E2x M2x];
-s172(:,k)=cellfun('length',S2x);
-k
+[S2x,~,~] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', D_thresholds(k+1), (D_thresholds(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+% swr172(:,:,k)=[S2x E2x M2x];
+swr(:,k)=cellfun('length',S2x);
+k/rep-2*100
 end
 
-RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second. 
+RipFreq2=sum(swr)/(timeasleep*(60)); %RIpples per second. 
 
 %To display number of events use:
-ripple2=sum(s172); %When using same threshold per epoch.
+ripple2=sum(swr); %When using same threshold per epoch.
 %ripple when using different threshold per epoch. 
  
 %Adjustment to prevent decrease 
-DEMAIS=DEMAIS(2:end-1);
-% size(DEMAIS)
-% size(ripple2)
-%%
-% [p]=polyfit(DEMAIS,ripple2,3);
-% y1=polyval(p,DEMAIS);
+D_thresholds=D_thresholds(2:end-1);
 
-[p,S,mu]=polyfit(DEMAIS,ripple2,9);
-y1=polyval(p,DEMAIS,[],mu);
-% [p,S,mu]=polyfit(DEMAIS(2:end),ripple2(2:end),10);
-% y1=polyval(p,DEMAIS(2:end),[],mu);
+[p,S,mu]=polyfit(D_thresholds,ripple2,9);
+y1=polyval(p,D_thresholds,[],mu);
+% [p,S,mu]=polyfit(D_thresholds(2:end),ripple2(2:end),10);
+% y1=polyval(p,D_thresholds(2:end),[],mu);
 
 end

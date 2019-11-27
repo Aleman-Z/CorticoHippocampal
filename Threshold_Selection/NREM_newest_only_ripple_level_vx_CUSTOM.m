@@ -143,7 +143,18 @@ timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
 rep=5; %Number of thresholds+1
 
 %%
-[NC]=epocher(Mono17,lepoch);
+%Area used for ripple detection.
+if strcmp(w,'PFC')
+    Mono=Mono9;
+end
+if strcmp(w,'HPC')
+    Mono=Mono17;
+end
+if strcmp(w,'PAR')
+    Mono=Mono12;
+end
+
+[NC]=epocher(Mono,lepoch);
 % ncmax=max(NC)*(1/0.195);
 % chtm=median(ncmax);
 
@@ -152,7 +163,7 @@ ncmax=max(NC)*(1/0.195);
 chtm=median(ncmax);
 
 %Might need to comment this:
-chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
+chtm=median(cellfun(@max,Mono))*(1/0.195); %Minimum maximum value among epochs.
 chtm=320;
 %Median is used to account for any artifact/outlier. 
 DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
@@ -160,7 +171,7 @@ DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
 rep=length(DEMAIS);
 
 
-signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
+signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
 ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
 
 

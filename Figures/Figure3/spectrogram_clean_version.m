@@ -127,7 +127,7 @@ for spectra_winval=1:spec_lim
 
 %Ripple detection methods. Currently method 4 is being used. Descriptions
 %on Dropbox .ppt.
-
+xo
 switch meth
     case 1
       [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);

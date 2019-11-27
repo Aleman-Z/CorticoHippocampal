@@ -1,7 +1,10 @@
+clear variables
+%Data location
+datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
 acer=1;
 rat24base=2;
 rats=[26 27 21 24];
-
+w='PFC';
 %%
 
 %Select rat number
@@ -214,12 +217,13 @@ if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
-%     addpath D:\internship\fieldtrip-master
-%     InitFieldtrip()
-
-    % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    cd(strcat('D:\internship\',num2str(Rat)))
+%     cd(strcat('D:\internship\',num2str(Rat)))
+% %     addpath D:\internship\fieldtrip-master
+% %     InitFieldtrip()
+% 
+%     % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+%     cd(strcat('D:\internship\',num2str(Rat)))
+        cd(strcat(datapath,'/',num2str(Rat)))
     clc
 end
 
@@ -271,53 +275,55 @@ for iii=1:length(nFF)
     
 %  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
 
-xo
+%  xo
 
 %for level=1:length(ripple)-1;    
  %for level=1:1
-w=1;     
+% w=1;     
 %for w=1:1
 
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+%     cd(strcat('D:\internship\',num2str(Rat)))
+      cd(strcat(datapath,'/',num2str(Rat)))
 end
 
 cd(nFF{iii})
 lepoch=2;
 
-%xo
+
 level=1;
+xo
 %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
+% [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
-if strcmp(labelconditions{iii},'PlusMaze')     
-% [ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score);
-[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx_CUSTOM(level,nrem,notch,w,lepoch,Score);
-else
-[ripple,timeasleep,DEMAIS,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,1);    
-end
-%  save('thresholdfile.mat','ripple','timeasleep','DEMAIS','y1');                                                                                                                                                                                                                                                                                                                                               
+% if strcmp(labelconditions{iii},'PlusMaze')     
+% % [ripple,timeasleep,D_thresholds,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,Score);
+% [ripple,timeasleep,D_thresholds,y1]=NREM_newest_only_ripple_level_vx_CUSTOM(level,nrem,notch,w,lepoch,Score);
+% else
+[ripple,timeasleep,D_thresholds,y1]=NREM_newest_only_ripple_level_vx(level,nrem,notch,w,lepoch,1);    
+% end
+%  save('thresholdfile.mat','ripple','timeasleep','D_thresholds','y1');                                                                                                                                                                                                                                                                                                                                               
 %% IGNORE SMALL THRESHOLD VALUES
 
 if Rat==26 && iii==2 
 
-DEMAIS=DEMAIS(3:end);
+D_thresholds=D_thresholds(3:end);
 ripple=ripple(3:end);
 y1=y1(3:end);
 
-[p,S,mu]=polyfit(DEMAIS,ripple,5);
-y1=polyval(p,DEMAIS,[],mu);
+[p,S,mu]=polyfit(D_thresholds,ripple,5);
+y1=polyval(p,D_thresholds,[],mu);
 % plot(y1)
 
 else
     if Rat==27 && iii==2
-        DEMAIS=DEMAIS(2:end);
+        D_thresholds=D_thresholds(2:end);
         ripple=ripple(2:end);
         y1=y1(2:end);
     else
-        DEMAIS=DEMAIS(1:end);
+        D_thresholds=D_thresholds(1:end);
         ripple=ripple(1:end);
         y1=y1(1:end);
     end
@@ -325,19 +331,19 @@ else
 end
 
 if Rat== 24 && iii==6
-[p,S,mu]=polyfit(DEMAIS,ripple,7);
-y1=polyval(p,DEMAIS,[],mu);    
+[p,S,mu]=polyfit(D_thresholds,ripple,7);
+y1=polyval(p,D_thresholds,[],mu);    
 end
 %%
 %xo
 %%
-plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
+plot(D_thresholds,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
 xlabel('Threshold value (uV)')
 ylabel('Ripples per second')
 %grid minor
 
 hold on
-plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
+plot(D_thresholds,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
 title('Rate of ripples per Threshold value')
 
 %%
@@ -393,7 +399,7 @@ end
 % string=strcat('Ripples_per_condition_best','.eps');
 % print(string,'-depsc')
 % else
-string=strcat('Ripples_per_condition_',Base{base});
+string=strcat('Ripples_per_condition_',w,'_',Base{base});
 printing(string);
 %end
 
