@@ -182,7 +182,7 @@ for k=1:rep-2
 [S2x,~,~] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', D_thresholds(k+1), (D_thresholds(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
 % swr172(:,:,k)=[S2x E2x M2x];
 swr(:,k)=cellfun('length',S2x);
-k/rep-2*100
+k
 end
 
 RipFreq2=sum(swr)/(timeasleep*(60)); %RIpples per second. 

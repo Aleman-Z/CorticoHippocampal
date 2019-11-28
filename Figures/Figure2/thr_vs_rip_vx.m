@@ -205,9 +205,9 @@ labelconditions=[
 
 end
 
-if base==2
-    nFF{1}=NFF{1};
-end
+% if base==2
+%     nFF{1}=NFF{1};
+% end
 %% Go to main directory
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
@@ -294,7 +294,7 @@ lepoch=2;
 
 
 level=1;
-xo
+% xo
 %Get averaged time signal.
 % [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);
 % if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
@@ -307,41 +307,44 @@ xo
 %  save('thresholdfile.mat','ripple','timeasleep','D_thresholds','y1');                                                                                                                                                                                                                                                                                                                                               
 %% IGNORE SMALL THRESHOLD VALUES
 
-if Rat==26 && iii==2 
-
-D_thresholds=D_thresholds(3:end);
-ripple=ripple(3:end);
-y1=y1(3:end);
-
-[p,S,mu]=polyfit(D_thresholds,ripple,5);
-y1=polyval(p,D_thresholds,[],mu);
-% plot(y1)
-
-else
-    if Rat==27 && iii==2
-        D_thresholds=D_thresholds(2:end);
-        ripple=ripple(2:end);
-        y1=y1(2:end);
-    else
-        D_thresholds=D_thresholds(1:end);
-        ripple=ripple(1:end);
-        y1=y1(1:end);
-    end
-
-end
-
-if Rat== 24 && iii==6
-[p,S,mu]=polyfit(D_thresholds,ripple,7);
-y1=polyval(p,D_thresholds,[],mu);    
-end
+% % % % % % % % % % % % % if Rat==26 && iii==2 
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % D_thresholds=D_thresholds(3:end);
+% % % % % % % % % % % % % ripple=ripple(3:end);
+% % % % % % % % % % % % % y1=y1(3:end);
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % [p,S,mu]=polyfit(D_thresholds,ripple,5);
+% % % % % % % % % % % % % y1=polyval(p,D_thresholds,[],mu);
+% % % % % % % % % % % % % % plot(y1)
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % else
+% % % % % % % % % % % % %     if Rat==27 && iii==2
+% % % % % % % % % % % % %         D_thresholds=D_thresholds(2:end);
+% % % % % % % % % % % % %         ripple=ripple(2:end);
+% % % % % % % % % % % % %         y1=y1(2:end);
+% % % % % % % % % % % % %     else
+% % % % % % % % % % % % %         D_thresholds=D_thresholds(1:end);
+% % % % % % % % % % % % %         ripple=ripple(1:end);
+% % % % % % % % % % % % %         y1=y1(1:end);
+% % % % % % % % % % % % %     end
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % end
+% % % % % % % % % % % % % 
+% % % % % % % % % % % % % if Rat== 24 && iii==6
+% % % % % % % % % % % % % [p,S,mu]=polyfit(D_thresholds,ripple,7);
+% % % % % % % % % % % % % y1=polyval(p,D_thresholds,[],mu);    
+% % % % % % % % % % % % % end
 %%
-%xo
+xo
 %%
 plot(D_thresholds,ripple/(timeasleep*60),'*','Color',myColorMap(iii,:))
 xlabel('Threshold value (uV)')
 ylabel('Ripples per second')
 %grid minor
-
+%%
+[p,S,mu]=polyfit(D_thresholds,ripple,12);
+y1=polyval(p,D_thresholds,[],mu);
+%%
 hold on
 plot(D_thresholds,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(iii,:))
 title('Rate of ripples per Threshold value')
