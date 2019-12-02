@@ -30,7 +30,7 @@
 </p>
 
 * **table_values.m:**
-*Generates table with average value per condition, per brain area.* :heavy_check_mark:
+*Generates table with average power value per condition, per brain area. Look also at table_values25ms.m * :heavy_check_mark:
 <!---
 <p align="center">
 <img src="table.png" width="600">
