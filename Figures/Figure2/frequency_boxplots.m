@@ -255,7 +255,7 @@ end
 % xo
 %% Check if experiment has been run before.
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+    cd(strcat('/home/adrian/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
@@ -307,18 +307,18 @@ end
 
 %% Go to main directory
 if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-%     addpath /home/raleman/Documents/internship/fieldtrip-master/
-%     InitFieldtrip()
+    cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
+%     addpath /home/adrian/Documents/internship/fieldtrip-master/
+    InitFieldtrip()
 
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+%     cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
     clc
 else
 %     cd(strcat('D:\internship\',num2str(Rat)))
 %     addpath D:\internship\fieldtrip-master
 %     InitFieldtrip()
 
-    % cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    % cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
     cd(strcat(datapath,'\',num2str(Rat)))
     
     clc
@@ -381,7 +381,7 @@ for iii=1:length(nFF) %Should start with 2!
 %for vert=2:length(nFF)
     %xo
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+    cd(strcat('/home/adrian/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
@@ -476,7 +476,7 @@ end
 
  
 if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
 else
     cd(strcat(datapath,'\',num2str(Rat)))
 end
@@ -514,7 +514,7 @@ switch meth
         %%
         case 4   
             if acer==0
-                cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+                cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
             else
                 cd(strcat(datapath,'\',num2str(Rat)))
             end
@@ -525,7 +525,7 @@ switch meth
         ror=2000/timeasleep;
 
             if acer==0
-                cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+                cd(strcat('/home/adrian/Dropbox/Figures/Figure2/',num2str(Rat)))
             else
                   %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
                   cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
@@ -562,7 +562,7 @@ switch meth
 
         %xo
         if acer==0
-            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+            cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
         else
             cd(strcat(datapath,'\',num2str(Rat)))
         end
@@ -578,7 +578,7 @@ switch meth
         
         chtm=30;
         if acer==0
-            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+            cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
         else
             cd(strcat(datapath,'/',num2str(Rat)))
         end
@@ -739,7 +739,7 @@ legend off
 
 %%
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+    cd(strcat('/home/adrian/Dropbox/Figures/Figure3/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
