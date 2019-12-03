@@ -1,6 +1,11 @@
+clc
+clear variables
+
 acer=1;
 rat24base=2;
 pw_meth='no_welsh';
+datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
+
 %%
 %Select rat number
 opts.Resize = 'on';
@@ -202,7 +207,17 @@ label2{6}='Bipolar';
 label2{7}='Monopolar';
 
 %%
-w=1 %Hippocampus
+%Method of Ripple selection. Method 4 gives best results.
+prompt = {'Select brain area (HPC:1, PAR:2, PFC:3)'};
+dlgtitle = 'Area';
+definput = {'1'};
+opts.Interpreter = 'tex';
+answer = inputdlg(prompt,dlgtitle,[1 40],definput,opts);
+w=str2num(answer{1});
+
+% w=1 %Hippocampus
+
+
 % 
 % if Rat==21
 % myColorMap = jet(5);
@@ -253,15 +268,15 @@ for block_time=0:0
 if acer==0
     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 else
-    cd(strcat('D:\internship\',num2str(Rat)))
+    cd(strcat(datapath,'/',num2str(Rat)))
 end
 
     cd(nFF{iii})  
-% xo
+%  xo
 if strcmp(labelconditions{iii},'Baseline') || strcmp(labelconditions{iii},'PlusMaze')
- [sig2]=nrem_newest_power(nrem,notch,Score);
+ [sig2]=nrem_newest_power_vx(nrem,notch,Score);
 else
-  [sig2]=nrem_newest_power(nrem,notch,1);  
+  [sig2]=nrem_newest_power_vx(nrem,notch,1);  
 end
 %%
 f_signal=sig2{2*w-1};
@@ -404,7 +419,7 @@ end
 % cd((labelconditions{iii}))
 % fig=gcf;
 % fig.InvertHardcopy='off';
-%xo
+% xo
 if Rat~=24
 string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1});
 printing(string);

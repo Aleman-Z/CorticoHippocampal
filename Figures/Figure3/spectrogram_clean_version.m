@@ -8,10 +8,21 @@ rats=[26 27 24 21];
 
 %Calls GUI to select analysis and parameters. Description of GUI on github.
 gui_parameters
-
+% xo
 %Method of Ripple selection. Method 4 gives best results.
-meth=4;
+prompt = {'Select SWR detection Method'};
+dlgtitle = 'Detection';
+definput = {'4'};
+opts.Interpreter = 'tex';
+answer = inputdlg(prompt,dlgtitle,[1 40],definput,opts);
+meth=str2num(answer{1});
+
+% meth=4;
 s=struct;
+%In case of Method 5, which cortical area?
+if meth==5
+    w='PAR';
+end
 
 %Data location
 datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
@@ -105,7 +116,7 @@ for spectra_winval=1:spec_lim
 % block_time=0; %Ideally erase
 
     %CONDITION LOOP. (Main loop).    
-    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        %xo
     
     if iii>length(nFF)
@@ -127,7 +138,7 @@ for spectra_winval=1:spec_lim
 
 %Ripple detection methods. Currently method 4 is being used. Descriptions
 %on Dropbox .ppt.
-xo
+
 switch meth
     case 1
       [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
@@ -140,7 +151,7 @@ switch meth
         CHTM=[chtm chtm];
         
     case 4
-        
+        %Find threshold on Baseline which gives 2000 ripples during the whole NREM.
         if acer==0
             cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         else
@@ -197,62 +208,117 @@ switch meth
         end
 
         cd(nFF{iii})
-        
-        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch);      
+        w='HPC';
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
         CHTM=[chtm chtm]; %Threshold
         
         %Fill table with ripple information.
         riptable(iii,1)=ripple; %Number of ripples.
         riptable(iii,2)=timeasleep;
         riptable(iii,3)=RipFreq2;
+        
+   case 5
+%              xo
+             
+%             if acer==0
+%                 cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+%             else
+%                   %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%                   cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%             end
+% 
+% 
+%             if Rat==26 || Rat==24 
+%             Base=[{'Baseline1'} {'Baseline2'}];
+%             end
+%             if Rat==26 && rat26session3==1
+%             Base=[{'Baseline3'} {'Baseline2'}];
+%             end
+% 
+%             if Rat==27 
+%             Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+%             end
+% 
+%             if Rat==27 && rat27session3==1
+%             Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+%             end
+%             %openfig('Ripples_per_condition_best.fig')
+% 
+%             h=openfig(strcat('Ripples_per_condition_',w,'_',Base{base},'.fig'))
+% 
+%             %h = gcf; %current figure handle
+%             axesObjs = get(h, 'Children');  %axes handles
+%             dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+% 
+%             ydata=dataObjs{2}(8).YData;
+%             xdata=dataObjs{2}(8).XData;
+%             % figure()
+%             % plot(xdata,ydata)
+%             chtm = interp1(ydata,xdata,ror);
+%             close(h)        
+chtm=30;
+        if acer==0
+            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        else
+            cd(strcat(datapath,'/',num2str(Rat)))
+        end
 
+        cd(nFF{iii})
+        
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+        CHTM=[chtm chtm]; %Threshold
+        
+        %Fill table with ripple information.
+        riptable(iii,1)=ripple; %Number of ripples.
+        riptable(iii,2)=timeasleep;
+        riptable(iii,3)=RipFreq2;
+%          continue
 end
-
-    %% Select time block (Not used now)
+% xo
 
 if rip_hist    
-%% Create ripple occurrence histogram.
-allscreen()
-rip_times=cara_times{1}(:,3);
-rip_times=[rip_times{:}];
-aver=histcounts(rip_times,[0:10: max(labels)+1]);
-maver=max(aver);
-maver=30;
-% stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
-%plot(linspace(0,max(labels)/60/60,length(aver)),aver,'Color','b')
+        %% Create ripple occurrence histogram.
+        allscreen()
+        rip_times=cara_times{1}(:,3);
+        rip_times=[rip_times{:}];
+        aver=histcounts(rip_times,[0:10: max(labels)+1]);
+        maver=max(aver);
+        maver=30;
+        % stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
+        %plot(linspace(0,max(labels)/60/60,length(aver)),aver,'Color','b')
 
-%%
-hold on
-vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
+        %%
+        hold on
+        vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
 
-%Plot wake
-% stripes((vec_wake),0.2,labels/60/60,'w',maver)
-xlabel('Time (Hours)','FontSize',12)
-ylabel('Amount of ripples','FontSize',12)
-title('Histogram of ripples','FontSize',12)
-%%
-%figure()
-hold on
-stripes(vec_trans,0.2,labels/60/60,[0.5 0.5 0.5],maver)
-stripes(vec_rem,0.2,labels/60/60,'r',maver)
-stripes(vec_nrem,0.9,labels/60/60,'k',maver)
+        %Plot wake
+        % stripes((vec_wake),0.2,labels/60/60,'w',maver)
+        xlabel('Time (Hours)','FontSize',12)
+        ylabel('Amount of ripples','FontSize',12)
+        title('Histogram of ripples','FontSize',12)
+        %%
+        %figure()
+        hold on
+        stripes(vec_trans,0.2,labels/60/60,[0.5 0.5 0.5],maver)
+        stripes(vec_rem,0.2,labels/60/60,'r',maver)
+        stripes(vec_nrem,0.9,labels/60/60,'k',maver)
 
-stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
+        stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
 
-xlim([0 4])
-ylim([0 30])
-yticks([0:2:30])
-%%
-cd('C:\Users\addri\Dropbox\preparando')
-% printing(strcat('Histogram','_Rat_',num2str(Rat),'_',labelconditions{iii}))
+        xlim([0 4])
+        ylim([0 30])
+        yticks([0:2:30])
+        %%
+        cd('C:\Users\addri\Dropbox\preparando')
+        % printing(strcat('Histogram','_Rat_',num2str(Rat),'_',labelconditions{iii}))
 
-close all
-%stripes(vec_nrem,0.2,labels/60/60,'b',maver)
-%break
-continue
-%%
+        close all
+        %stripes(vec_nrem,0.2,labels/60/60,'b',maver)
+        %break
+        continue
+        %%
 end
-    
+%   xo  
 %% Calculate median duration of ripples    
     consig=cara{1};
     bon=consig(:,1:2);
@@ -266,8 +332,9 @@ end
     [p,q,~,sos]=getwin2(cara{1},veamos{1},sig1,sig2,ro); 
     %p: Wideband signal windows.
     %q: Bandpassed signal (100-300Hz) windows.
+%     xo
     clear sig1 sig2
-    
+ 
     %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 
     if Rat~=24 || RAT24_test==1
     [p,q,sos]=ripple_selection(p,q,sos,Rat);
@@ -325,10 +392,16 @@ end
                 case 3
                     chtm=load('vq_loop2.mat');
                     chtm=chtm.vq;
-                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch,w);
                     CHTM2=[chtm chtm];              
                 case 4
-                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch,w);
+                    CHTM2=[chtm chtm];
+                    riptable(1,1)=ripple_nl;
+                    riptable(1,2)=timeasleep2;
+                    riptable(1,3)=RipFreq3;
+                case 5
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch,w);
                     CHTM2=[chtm chtm];
                     riptable(1,1)=ripple_nl;
                     riptable(1,2)=timeasleep2;
@@ -346,7 +419,7 @@ end
     C=cell2mat(C.');
     c=median(C)*1000; %Miliseconds
     cc(1)=c;
-% xo
+%   xo
     %%
     if rippletable==0
     
@@ -363,6 +436,8 @@ end
                                         end
                                         
                                     if win_stats==0
+                                                  block_time=1;
+                                                  sanity=0;
                                                             [zlim1,mdam1]=spectra_window(Rat,nFF,level,ro,1,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,RAT24_test);
                                                             [zlim2,mdam2]=spectra_window(Rat,nFF,level,ro,2,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,RAT24_test);
                                                             [zlim3,mdam3]=spectra_window(Rat,nFF,level,ro,3,labelconditions,label1,label2,iii,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath,spectra_winval,Zlim,win_comp,equal_num,RAT24_test);
@@ -413,11 +488,11 @@ end
 
                                       end
                        end
-            else
+            else   %Do spectrogram analysis
 
         %xo
             %%
-                        for w=2:3 %Loop for brain regions.
+                        for w=1:3 %Loop for brain regions.
 
                         %%
 
@@ -429,7 +504,7 @@ end
                         block_time=0;
                         sanity=0;
                         
-                        xo % Too long
+%                          xo % Too long
                         [h]=stats_vs_nl(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,create_timecell(ro,length(p)),sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,acer,block_time,NFF,mergebaseline,FiveHun,meth,rat26session3,rat27session3,notch,sanity,quinientos,outlie,rat24base,datapath);
 
                         clear block_time sanity
@@ -445,7 +520,7 @@ end
                               %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
                               cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
                         end
-
+xo
                         % if Rat==24
                         %     cd(nFF{1})
                         % end
@@ -485,7 +560,7 @@ end
             %xo
             end
     end
-xo
+% xo
     if iii==length(nFF)
        break 
     end
@@ -518,7 +593,7 @@ xo
         end
     end
 end
-xo
+ xo
 
     if win_ten==1
     %Add Ylabels    
@@ -528,23 +603,23 @@ xo
     cd('C:\Users\addri\Dropbox\Window')
     cd(num2str(Rat))
 
-    if equal_num==0
-        cd('all_rip')
-    end
-    %xo
-    if win_stats==0
-            if win_comp==1
-                printing('1sec')
-            else
-                printing('100ms')
-            end
-    else
-            if win_comp==1
-                printing('Stats_1sec')
-            else
-                printing('Stats_100ms')
-            end
-    end
+        if equal_num==0
+            cd('all_rip')
+        end
+        %xo
+        if win_stats==0
+                if win_comp==1
+                    printing('1sec')
+                else
+                    printing('100ms')
+                end
+        else
+                if win_comp==1
+                    printing('Stats_1sec')
+                else
+                    printing('Stats_100ms')
+                end
+        end
     close all
             if win_comp==0 && win_stats==0
                 Mdam=[Mdam1; Mdam2; Mdam3];
@@ -552,25 +627,25 @@ xo
             end        
     end
 
-if meth==4
+    if meth==4 || meth==5 
 
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
+        if Rat==26
+        Base=[{'Baseline1'} {'Baseline2'}];
+        end
+        if Rat==26 && rat26session3==1
+        Base=[{'Baseline3'} {'Baseline2'}];
+        end
 
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-    
-    if Rat==27 && rat27session3==1
-    Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
+        if Rat==27 
+        Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+        end
 
-    [s.(Base{base})]=riptable;
-end
+        if Rat==27 && rat27session3==1
+        Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+        end
+
+        [s.(Base{base})]=riptable;
+    end
 xo
 %end
 %xo
@@ -625,7 +700,7 @@ xo
 % % % % % % end
 
 
-
+xo
 base=2;
     
 if rippletable==1

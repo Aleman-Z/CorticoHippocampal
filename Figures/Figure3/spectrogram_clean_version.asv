@@ -12,6 +12,10 @@ gui_parameters
 %Method of Ripple selection. Method 4 gives best results.
 meth=4;
 s=struct;
+%In case of Method 5, which cortical area?
+if meth==5
+    w='HPC';
+end
 
 %Data location
 datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
@@ -105,7 +109,7 @@ for spectra_winval=1:spec_lim
 % block_time=0; %Ideally erase
 
     %CONDITION LOOP. (Main loop).    
-    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        %xo
     
     if iii>length(nFF)
@@ -140,7 +144,7 @@ switch meth
         CHTM=[chtm chtm];
         
     case 4
-        
+        %Find threshold on Baseline which gives 2000 ripples during the whole NREM.
         if acer==0
             cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
         else
@@ -197,8 +201,64 @@ switch meth
         end
 
         cd(nFF{iii})
+        w='HPC';
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+        CHTM=[chtm chtm]; %Threshold
         
-        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch);      
+        %Fill table with ripple information.
+        riptable(iii,1)=ripple; %Number of ripples.
+        riptable(iii,2)=timeasleep;
+        riptable(iii,3)=RipFreq2;
+        
+   case 5
+%              xo
+             
+%             if acer==0
+%                 cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+%             else
+%                   %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%                   cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
+%             end
+% 
+% 
+%             if Rat==26 || Rat==24 
+%             Base=[{'Baseline1'} {'Baseline2'}];
+%             end
+%             if Rat==26 && rat26session3==1
+%             Base=[{'Baseline3'} {'Baseline2'}];
+%             end
+% 
+%             if Rat==27 
+%             Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+%             end
+% 
+%             if Rat==27 && rat27session3==1
+%             Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+%             end
+%             %openfig('Ripples_per_condition_best.fig')
+% 
+%             h=openfig(strcat('Ripples_per_condition_',w,'_',Base{base},'.fig'))
+% 
+%             %h = gcf; %current figure handle
+%             axesObjs = get(h, 'Children');  %axes handles
+%             dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+% 
+%             ydata=dataObjs{2}(8).YData;
+%             xdata=dataObjs{2}(8).XData;
+%             % figure()
+%             % plot(xdata,ydata)
+%             chtm = interp1(ydata,xdata,ror);
+%             close(h)        
+chtm=30;
+        if acer==0
+            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        else
+            cd(strcat(datapath,'/',num2str(Rat)))
+        end
+
+        cd(nFF{iii})
+        
+        [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
         CHTM=[chtm chtm]; %Threshold
         
         %Fill table with ripple information.
@@ -207,50 +267,50 @@ switch meth
         riptable(iii,3)=RipFreq2;
 
 end
-
+xo
     %% Select time block (Not used now)
 
 if rip_hist    
-%% Create ripple occurrence histogram.
-allscreen()
-rip_times=cara_times{1}(:,3);
-rip_times=[rip_times{:}];
-aver=histcounts(rip_times,[0:10: max(labels)+1]);
-maver=max(aver);
-maver=30;
-% stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
-%plot(linspace(0,max(labels)/60/60,length(aver)),aver,'Color','b')
+        %% Create ripple occurrence histogram.
+        allscreen()
+        rip_times=cara_times{1}(:,3);
+        rip_times=[rip_times{:}];
+        aver=histcounts(rip_times,[0:10: max(labels)+1]);
+        maver=max(aver);
+        maver=30;
+        % stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
+        %plot(linspace(0,max(labels)/60/60,length(aver)),aver,'Color','b')
 
-%%
-hold on
-vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
+        %%
+        hold on
+        vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
 
-%Plot wake
-% stripes((vec_wake),0.2,labels/60/60,'w',maver)
-xlabel('Time (Hours)','FontSize',12)
-ylabel('Amount of ripples','FontSize',12)
-title('Histogram of ripples','FontSize',12)
-%%
-%figure()
-hold on
-stripes(vec_trans,0.2,labels/60/60,[0.5 0.5 0.5],maver)
-stripes(vec_rem,0.2,labels/60/60,'r',maver)
-stripes(vec_nrem,0.9,labels/60/60,'k',maver)
+        %Plot wake
+        % stripes((vec_wake),0.2,labels/60/60,'w',maver)
+        xlabel('Time (Hours)','FontSize',12)
+        ylabel('Amount of ripples','FontSize',12)
+        title('Histogram of ripples','FontSize',12)
+        %%
+        %figure()
+        hold on
+        stripes(vec_trans,0.2,labels/60/60,[0.5 0.5 0.5],maver)
+        stripes(vec_rem,0.2,labels/60/60,'r',maver)
+        stripes(vec_nrem,0.9,labels/60/60,'k',maver)
 
-stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
+        stem(linspace(0,max(labels)/60/60,length(aver)),aver,'filled','Color',[0.3010 0.7450 0.9330])
 
-xlim([0 4])
-ylim([0 30])
-yticks([0:2:30])
-%%
-cd('C:\Users\addri\Dropbox\preparando')
-% printing(strcat('Histogram','_Rat_',num2str(Rat),'_',labelconditions{iii}))
+        xlim([0 4])
+        ylim([0 30])
+        yticks([0:2:30])
+        %%
+        cd('C:\Users\addri\Dropbox\preparando')
+        % printing(strcat('Histogram','_Rat_',num2str(Rat),'_',labelconditions{iii}))
 
-close all
-%stripes(vec_nrem,0.2,labels/60/60,'b',maver)
-%break
-continue
-%%
+        close all
+        %stripes(vec_nrem,0.2,labels/60/60,'b',maver)
+        %break
+        continue
+        %%
 end
     
 %% Calculate median duration of ripples    
@@ -453,26 +513,26 @@ end
 
 
                             if outlie==1
-                                string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-                                figure_function(gcf,[],string,[]);
-                                string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-                                print(string,'-depsc')
-                                string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-                                saveas(gcf,string)
+                                    string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+                                    figure_function(gcf,[],string,[]);
+                                    string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+                                    print(string,'-depsc')
+                                    string=strcat('Spec_out_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+                                    saveas(gcf,string)
 
                             else
-                            % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-                            % figure_function(gcf,[],string,[]);
-                            % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-                            % print(string,'-depsc')
-                            % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+                                    % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+                                    % figure_function(gcf,[],string,[]);
+                                    % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+                                    % print(string,'-depsc')
+                                    % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-                            string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
-                            figure_function(gcf,[],string,[]);
-                            string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
-                            print(string,'-depsc')
-                            string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
-                            saveas(gcf,string)
+                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+                                    figure_function(gcf,[],string,[]);
+                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+                                    print(string,'-depsc')
+                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+                                    saveas(gcf,string)
 
                             end
 
@@ -506,13 +566,13 @@ xo
                 if equal_num==0
                      cd('all_rip')
                 end
-if win_stats==0
-                if win_comp==1
-                        save(strcat('Zlim_1sec.mat'),'Zlim')
-                else
-                        save(strcat('Zlim_100ms.mat'),'Zlim')
-                end
-end
+                        if win_stats==0
+                                        if win_comp==1
+                                                save(strcat('Zlim_1sec.mat'),'Zlim')
+                                        else
+                                                save(strcat('Zlim_100ms.mat'),'Zlim')
+                                        end
+                        end
 %xo
             close all
         end
@@ -520,37 +580,37 @@ end
 end
 xo
 
-if win_ten==1
-%Add Ylabels    
-tg=mtit('HPC','fontsize',14,'xoff',-.6,'yoff',-.16);
-tg=mtit('PAR','fontsize',14,'xoff',-.6,'yoff',-.525);
-tg=mtit('PFC','fontsize',14,'xoff',-.6,'yoff',-.895);
-cd('C:\Users\addri\Dropbox\Window')
-cd(num2str(Rat))
+    if win_ten==1
+    %Add Ylabels    
+    tg=mtit('HPC','fontsize',14,'xoff',-.6,'yoff',-.16);
+    tg=mtit('PAR','fontsize',14,'xoff',-.6,'yoff',-.525);
+    tg=mtit('PFC','fontsize',14,'xoff',-.6,'yoff',-.895);
+    cd('C:\Users\addri\Dropbox\Window')
+    cd(num2str(Rat))
 
-if equal_num==0
-    cd('all_rip')
-end
-%xo
-if win_stats==0
-        if win_comp==1
-            printing('1sec')
-        else
-            printing('100ms')
-        end
-else
-        if win_comp==1
-            printing('Stats_1sec')
-        else
-            printing('Stats_100ms')
-        end
-end
-close all
-        if win_comp==0 && win_stats==0
-            Mdam=[Mdam1; Mdam2; Mdam3];
-            save('Mdam.mat','Mdam')
-        end        
-end
+    if equal_num==0
+        cd('all_rip')
+    end
+    %xo
+    if win_stats==0
+            if win_comp==1
+                printing('1sec')
+            else
+                printing('100ms')
+            end
+    else
+            if win_comp==1
+                printing('Stats_1sec')
+            else
+                printing('Stats_100ms')
+            end
+    end
+    close all
+            if win_comp==0 && win_stats==0
+                Mdam=[Mdam1; Mdam2; Mdam3];
+                save('Mdam.mat','Mdam')
+            end        
+    end
 
 if meth==4
 
@@ -642,14 +702,12 @@ if rippletable==1
             list={list.name};
             FolderRip=[{'all_ripples'} {'500'} {'1000'}];
             Method=[{'Method2' 'Method3' 'Method4'}];
-            if Rat==26
-            folder=strcat('Baseline1','_',FolderRip{FiveHun+1},'_',Method{meth-1});
-            else
-            folder=strcat('Baseline2','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-            end
+                if Rat==26
+                folder=strcat('Baseline1','_',FolderRip{FiveHun+1},'_',Method{meth-1});
+                else
+                folder=strcat('Baseline2','_',FolderRip{FiveHun+1},'_',Method{meth-1});    
+                end
             movefile (list{1}, folder)
 end
 base=1;
 
-%end
-%end

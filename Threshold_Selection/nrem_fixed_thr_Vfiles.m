@@ -1,4 +1,4 @@
-function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(vq,notch)
+function [sig1,sig2,ripple2,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(vq,notch,w)
 %{
 LOAD DATA, easy and quick. 
 
@@ -230,12 +230,21 @@ A = dir('*states*.mat');
             xo
         end
 
-
+%Area used for ripple detection.
+if strcmp(w,'PFC')
+    Mono=Mono9;
+end
+if strcmp(w,'HPC')
+    Mono=Mono17;
+end
+if strcmp(w,'PAR')
+    Mono=Mono12;
+end
 
 
 %Scale magnitude,create time vector
 % signal=cellfun(@(equis) times((1/0.195), equis)  ,Bip17,'UniformOutput',false);
-signal2=cellfun(@(x) times((1/0.195), x)  ,Mono17,'UniformOutput',false);
+signal2=cellfun(@(x) times((1/0.195), x)  ,Mono,'UniformOutput',false);
 % ti=cellfun(@(x) linspace(0, length(x)-1,length(x))*(1/fn) ,signal2,'UniformOutput',false);
 
 for kk=1:size(signal2,1)

@@ -76,7 +76,7 @@ else
 end
 TT=table(Region,NoLearning,PlusMaze,Novelty,Foraging)
 
-
+xo
 
 % %%
 % % NoLearning=cell2mat(NoLearning);
