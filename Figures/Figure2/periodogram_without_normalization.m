@@ -361,13 +361,14 @@ PXX{iii}=pxx;
 px=mean(pxx,2);
 PX{iii}=px;
 %  error('stop')
+% xo
  if normalizeperiod==1
 %plot(f,10*log10(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 semilogy(f,(px)/sum(px),'Color',myColorMap(iii,:),'LineWidth',1.5)
 hold on
 semilogy(f, [(px.' - 1*std(pxx.')/sqrt(length(pxx.')))/sum(px); (px.'+1*std(pxx.')/sqrt(length(pxx.')))/sum(px)], 'Color',myColorMap(iii,:),'LineWidth',1.5,'LineStyle','-');
  else
-s=semilogy(f,(px),'Color',myColorMap(iii,:),'LineWidth',2);
+s=semilogy(f,(px.*f),'Color',myColorMap(iii,:),'LineWidth',2);
 s.Color(4) = 0.8;
 hold on
 % semilogy(f, [(px.' - 1*std(pxx.')/sqrt(length(pxx.')))/sum(px); (px.'+1*std(pxx.')/sqrt(length(pxx.')))/sum(px)], 'Color',myColorMap(iii,:),'LineWidth',1.5,'LineStyle','-');
@@ -381,7 +382,7 @@ xlim([0 300])
 grid minor
 xlabel('Frequency (Hz)')
 %ylabel('10 Log(x)')
-ylabel('Power')
+ylabel('Power x Frequency')
 
 title(strcat('Power in NREM',{' '} ,label1{2*w-1} ,{' '},'signals'))
 
@@ -421,14 +422,14 @@ end
 % fig.InvertHardcopy='off';
 % xo
 if Rat~=24
-string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1});
+string=strcat('300Hz_',Block{block_time+1},'_',label1{2*w-1},'_x_Freq');
 printing(string);
 
 else
     if strcmp(pw_meth,'welsh')
-        string=strcat('300Hz_Welsh_',nFF{1},'_',label1{2*w-1});
+        string=strcat('300Hz_Welsh_',nFF{1},'_',label1{2*w-1},'_x_Freq');
     else
-        string=strcat('300Hz_Per_',nFF{1},'_',label1{2*w-1});
+        string=strcat('300Hz_Per_',nFF{1},'_',label1{2*w-1},'_x_Freq');
     end
 printing(string);
     
@@ -446,13 +447,13 @@ end
 
 xlim([0 30])
 if Rat~=24
-string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1});
+string=strcat('30Hz_',Block{block_time+1},'_',label1{2*w-1},'_x_Freq');
 printing(string);
 else
     if strcmp(pw_meth,'welsh')
-        string=strcat('30Hz_Welsh_',nFF{1},'_',label1{2*w-1});
+        string=strcat('30Hz_Welsh_',nFF{1},'_',label1{2*w-1},'_x_Freq');
     else
-        string=strcat('30Hz_Per_',nFF{1},'_',label1{2*w-1});
+        string=strcat('30Hz_Per_',nFF{1},'_',label1{2*w-1},'_x_Freq');
     end
 printing(string);
 end
