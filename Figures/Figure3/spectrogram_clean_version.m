@@ -74,8 +74,8 @@ for spectra_winval=1:spec_lim
     
     [nFF,NFF,labelconditions,label1,label2]=rat_foldernames(Rat,rat26session3,rat27session3,rat24base);
      
-    label1=label1(1:2:end);
-    label2=label2(1:2:end);
+%     label1=label1(1:2:end);
+%     label2=label2(1:2:end);
   
     % Use other baseline, caution when using mergebaseline
     if Rat~=24
