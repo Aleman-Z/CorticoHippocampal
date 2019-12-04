@@ -118,7 +118,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     for block_time=0:0 %Should start with 0
         
     %CONDITION LOOP. (Main loop).    
-    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        
     if acer==0
         cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
@@ -305,7 +305,7 @@ close all
 continue
 %%
 end
-xo     
+% xo     
    
  
 %% Calculate median duration of ripples    
@@ -373,13 +373,13 @@ xo
     %For Older version: Uncomment this.
     % P1=avg_samples(q,create_timecell(ro,length(p)));
     % P2=avg_samples(p,create_timecell(ro,length(p)));
-xo
+% xo
 
     %Non learning condition.
     if acer==0
         cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     else
-        cd(strcat('D:\internship\',num2str(Rat)))
+        cd(strcat(datapath,'/',num2str(Rat)))
     end
     cd(nFF{1}) %Baseline
     
@@ -397,7 +397,7 @@ xo
                     [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
                     CHTM2=[chtm chtm];              
                 case 4
-                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+                    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch,'HPC');
                     CHTM2=[chtm chtm];
                     riptable(1,1)=ripple_nl;
                     riptable(1,2)=timeasleep2;
@@ -424,7 +424,7 @@ xo
     C=cell2mat(C.');
     c=median(C)*1000; %Miliseconds
     cc(1)=c;
-xo
+% xo
     %%
     if rippletable==0
     

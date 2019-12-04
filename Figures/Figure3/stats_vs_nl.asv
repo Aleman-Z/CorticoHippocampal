@@ -150,24 +150,22 @@ end
 % % % % % % % % % % % % % % % % % % % % % % % % [p_nl,q_nl]=sort_rip(p_nl,q_nl);
 
 %if Rat~=24 && rat24base~=2
-if meth==4
-    if Rat~=24
-    %Select n strongest
-    switch Rat
-        case 24
-            n=550;
-        case 26
-            n=180;
-        case 27
-            n=326;
-        otherwise
-            error('Error found')
-    end
+if Rat~=24
+%Select n strongest
+switch Rat
+    case 24
+        n=550;
+    case 26
+        n=180;
+    case 27
+        n=326;
+    otherwise
+        error('Error found')
+end
 
-    p_nl=p_nl(1:n);
-    q_nl=q_nl(1:n);
-    % % % % % % % % % % % % % % % %Need to add sos_nl 
-    end
+p_nl=p_nl(1:n);
+q_nl=q_nl(1:n);
+% % % % % % % % % % % % % % % %Need to add sos_nl 
 end
 %end
 % switch Rat
@@ -195,90 +193,90 @@ end
 
 if mergebaseline==1
 %% 
-    'MERGING BASELINES'
-    L1=length(p_nl);
+'MERGING BASELINES'
+L1=length(p_nl);
 
-    NU{1}=p_nl;
-    QNU{1}=q_nl;
+NU{1}=p_nl;
+QNU{1}=q_nl;
 %% Other Baseline
-    if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-    else
-        cd(strcat('D:\internship\',num2str(Rat)))
-    end
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
 
-    cd(NFF{1}) %Baseline
+cd(NFF{1}) %Baseline
 
-    % [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
-    if meth==1
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
-    end
+% [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+if meth==1
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=newest_only_ripple_level_ERASETHIS(level);
+end
 
-    if meth==2
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;
-    end
+if meth==2
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,CHTM2,RipFreq3,timeasleep2]=median_std;
+end
 
-    if meth==3
-    chtm=load('vq_loop2.mat');
-    chtm=chtm.vq;
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-    CHTM2=[chtm chtm];
-    end
+if meth==3
+chtm=load('vq_loop2.mat');
+chtm=chtm.vq;
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+CHTM2=[chtm chtm];
+end
 
 
-    if meth==4
+if meth==4
 
-        [timeasleep]=find_thr_base;
-        ror=2000/timeasleep;
-
-        if acer==0
-            cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
-        else
-              %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
-              cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
-        end
-
-    if Rat==26
-    Base=[{'Baseline1'} {'Baseline2'}];
-    end
-    if Rat==26 && rat26session3==1
-    Base=[{'Baseline3'} {'Baseline2'}];
-    end
-
-    if Rat==27 
-    Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    end
-
-    if Rat==27 && rat27session3==1
-       Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
-    end
-
-    base=2; %VERY IMPORTANT!
-    %openfig('Ripples_per_condition_best.fig')
-    h=openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
-
-    %h = gcf; %current figure handle
-    axesObjs = get(h, 'Children');  %axes handles
-    dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
-
-    ydata=dataObjs{2}(8).YData;
-    xdata=dataObjs{2}(8).XData;
-    % figure()
-    % plot(xdata,ydata)
-    chtm = interp1(ydata,xdata,ror);
-    close(h)
+[timeasleep]=find_thr_base;
+ror=2000/timeasleep;
 
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
     else
-        cd(strcat('D:\internship\',num2str(Rat)))
+          %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
+          cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
     end
-    cd(NFF{1})
 
-    %xo
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
-    CHTM2=[chtm chtm];
-    end
+if Rat==26
+Base=[{'Baseline1'} {'Baseline2'}];
+end
+if Rat==26 && rat26session3==1
+Base=[{'Baseline3'} {'Baseline2'}];
+end
+
+if Rat==27 
+Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
+end
+
+if Rat==27 && rat27session3==1
+   Base=[{'Baseline2'} {'Baseline3'}];% We run Baseline 2 first, cause it is the one we prefer.    
+end
+
+base=2; %VERY IMPORTANT!
+%openfig('Ripples_per_condition_best.fig')
+h=openfig(strcat('Ripples_per_condition_',Base{base},'.fig'))
+
+%h = gcf; %current figure handle
+axesObjs = get(h, 'Children');  %axes handles
+dataObjs = get(axesObjs, 'Children'); %handles to low-level graphics objects in axes
+
+ydata=dataObjs{2}(8).YData;
+xdata=dataObjs{2}(8).XData;
+% figure()
+% plot(xdata,ydata)
+chtm = interp1(ydata,xdata,ror);
+close(h)
+
+if acer==0
+    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+else
+    cd(strcat('D:\internship\',num2str(Rat)))
+end
+cd(NFF{1})
+
+%xo
+[sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~]=nrem_fixed_thr_Vfiles(chtm,notch);
+CHTM2=[chtm chtm];
+end
 
 if meth==5
 chtm=30;
@@ -290,7 +288,7 @@ chtm=30;
 
         cd(nFF{1})
         
-    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,~,~, ~ ,~,~,~,~,~,~]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+    [sig1_nl,sig2_nl,ripple_nl,cara_nl,veamos_nl,RipFreq3,timeasleep2,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
     CHTM2=[chtm chtm]; %Threshold
     
 end
