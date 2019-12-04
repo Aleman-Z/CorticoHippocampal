@@ -91,11 +91,11 @@ for spectra_winval=1:spec_lim
 %xo
     %% Go to main directory, add to path, initiate Fieldtrip.
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-        addpath /home/raleman/Documents/internship/fieldtrip-master/
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
+%         addpath /home/raleman/Documents/internship/fieldtrip-master/
         InitFieldtrip()
 
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
         clc
     else
         cd(strcat(datapath,'/',num2str(Rat)))
@@ -125,7 +125,7 @@ for spectra_winval=1:spec_lim
 
     
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
     else
         cd(strcat(datapath,'/',num2str(Rat)))
     end
@@ -258,7 +258,7 @@ switch meth
 %             close(h)        
 chtm=30;
         if acer==0
-            cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+            cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
         else
             cd(strcat(datapath,'/',num2str(Rat)))
         end
@@ -374,7 +374,7 @@ end
     
     %Non learning condition.
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
     else
         %cd(strcat('D:\internship\',num2str(Rat)))
         cd(strcat(datapath,'/',num2str(Rat)))
@@ -492,7 +492,7 @@ end
 
         %xo
             %%
-                        for w=1:3 %Loop for brain regions.
+                        for w=2:3 %Loop for brain regions.
 
                         %%
 
@@ -515,7 +515,7 @@ end
                         %xo
                         %error('stop')
                         if acer==0
-                            cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+                            cd(strcat('/home/adrian/Dropbox/Figures/Figure3/',num2str(Rat)))
                         else
                               %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
                               cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
@@ -542,11 +542,11 @@ xo
                                     % print(string,'-depsc')
                                     % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.pdf');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.pdf');
                                     figure_function(gcf,[],string,[]);
-                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.eps');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.eps');
                                     print(string,'-depsc')
-                                    string=strcat('Spec_removed_artifact_Newbase',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.fig');
                                     saveas(gcf,string)
 
                             end
@@ -568,6 +568,7 @@ xo
     clear sig1_nl sig2_nl p q
     sig1_nl=[];
     sig2_nl=[];
+    xo
     end
 
     %%

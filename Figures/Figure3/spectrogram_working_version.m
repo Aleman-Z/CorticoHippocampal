@@ -88,11 +88,11 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
 %xo
     %% Go to main directory, add to path, initiate Fieldtrip.
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
-        addpath /home/raleman/Documents/internship/fieldtrip-master/
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
+%         addpath /home/raleman/Documents/internship/fieldtrip-master/
         InitFieldtrip()
 
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
         clc
     else
         cd(strcat(datapath,'/',num2str(Rat)))
@@ -121,7 +121,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
     for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        
     if acer==0
-        cd(strcat('/home/raleman/Dropbox/Figures/Figure3/',num2str(Rat)))
+        cd(strcat('/home/adrian/Dropbox/Figures/Figure3/',num2str(Rat)))
     else
           %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
           cd(strcat('C:\Users\addri\Dropbox\Figures\Figure3\',num2str(Rat)))   
@@ -146,7 +146,7 @@ while base<=2-mergebaseline %Should be 1 for MERGEDBASELINES otherwise 2.
 
     
     if acer==0
-        cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+        cd(strcat('home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
     else
         cd(strcat(datapath,'/',num2str(Rat)))
     end

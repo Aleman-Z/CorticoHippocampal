@@ -371,7 +371,7 @@ P2_nl=avg_samples(p_nl,create_timecell(ro,length(p_nl)));
 
 %cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
 if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
 else
     cd(strcat(datapath,'/',num2str(Rat)))
 end

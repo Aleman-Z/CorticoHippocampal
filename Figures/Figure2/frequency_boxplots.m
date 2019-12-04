@@ -476,7 +476,7 @@ end
 
  
 if acer==0
-    cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
+    cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
 else
     cd(strcat(datapath,'\',num2str(Rat)))
 end
@@ -514,7 +514,7 @@ switch meth
         %%
         case 4   
             if acer==0
-                cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
+                cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
             else
                 cd(strcat(datapath,'\',num2str(Rat)))
             end
@@ -562,7 +562,7 @@ switch meth
 
         %xo
         if acer==0
-            cd(strcat('/home/adrian/Documents/internship/',num2str(Rat)))
+            cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
         else
             cd(strcat(datapath,'\',num2str(Rat)))
         end
