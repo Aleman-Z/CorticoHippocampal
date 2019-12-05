@@ -1,4 +1,4 @@
-function [p,q,sos]=ripple_selection(p,q,sos,Rat)
+function [p,q,sos]=ripple_selection(p,q,sos,Rat,meth)
 % % % % % % if quinientos==0
 % % % % % % %xd
 % % % % % % if outlie==1 
@@ -21,7 +21,7 @@ function [p,q,sos]=ripple_selection(p,q,sos,Rat)
 % % % % % % end
 
     %No outliers
-    ache=max_outlier(p,Rat);
+    ache=max_outlier(p,Rat,meth);
     p=p(ache);
     q=q(ache);
 

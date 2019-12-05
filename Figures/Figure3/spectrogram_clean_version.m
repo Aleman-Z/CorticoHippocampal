@@ -337,26 +337,44 @@ end
  
     %Ripple selection: Removes outliers and sorts ripples from strongest to weakest. 
     if Rat~=24 || RAT24_test==1
-    [p,q,sos]=ripple_selection(p,q,sos,Rat);
+    [p,q,sos]=ripple_selection(p,q,sos,Rat,meth);
     end
      
 
     %Equalize number of ripples. 
     %(Same number of ripples found on Plusmaze after ripple selection). 
     if equal_num==1 %&& Rat~=24
-       switch Rat
-        case 24
-            %n=550;
-            %n=308; %New value
-            n=133;
+      if meth==4 
+           switch Rat
+            case 24
+                %n=550;
+                %n=308; %New value
+                n=133;
 
-        case 26
-            n=180;
-        case 27
-            n=326;
-        otherwise
-            error('Error found')
-       end
+            case 26
+                n=180;
+            case 27
+                n=326;
+            otherwise
+                error('Error found')
+           end
+      end
+      
+      if meth==5 
+           switch Rat
+            case 24
+                %n=550;
+                %n=308; %New value
+                n=133;
+
+            case 26
+                n=180;
+            case 27
+                n=326;
+            otherwise
+                error('Error found')
+           end
+      end
 
         p=p(1:n);
         q=q(1:n);

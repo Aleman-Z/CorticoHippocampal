@@ -1,10 +1,10 @@
 clear variables
 %Data location
 datapath='C:\Users\addri\Documents\internship\downsampled_NREM_data';
-acer=1;
+acer=0;
 rat24base=2;
 rats=[26 27 21 24];
-w='PFC';
+w='PAR';
 %%
 
 %Select rat number
@@ -210,11 +210,11 @@ end
 % end
 %% Go to main directory
 if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
 %     addpath /home/raleman/Documents/internship/fieldtrip-master/
 %     InitFieldtrip()
 
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+%     cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
     clc
 else
 %     cd(strcat('D:\internship\',num2str(Rat)))
@@ -270,7 +270,7 @@ myColorMap=StandardColors;
 % end
 
 
-for iii=1:length(nFF)
+for iii=2:length(nFF)
 
     
 %  clearvars -except nFF iii labelconditions inter granger Rat ro label1 label2 coher selectripples acer mergebaseline nr_27 nr_26 co_26 co_27 nrem notch myColorMap
@@ -283,7 +283,7 @@ for iii=1:length(nFF)
 %for w=1:1
 
 if acer==0
-    cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+    cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
 else
 %     cd(strcat('D:\internship\',num2str(Rat)))
       cd(strcat(datapath,'/',num2str(Rat)))
@@ -357,7 +357,7 @@ title('Rate of ripples per Threshold value')
 
 
 end
-
+xo
 
 set(gca, 'XDir','reverse')
 %h=legend('Baseline 1','Baseline 1 (fit)','Baseline 2','Baseline 2 (fit)','Baseline 3','Baseline 3 (fit)',labelconditions{1},strcat(labelconditions{1},'{ }','(fit)'),labelconditions{2},strcat(labelconditions{2},'{ }','(fit)'),labelconditions{3},strcat(labelconditions{3},'{ }','(fit)'),labelconditions{4},strcat(labelconditions{4},'{ }','(fit)'),labelconditions{5},strcat(labelconditions{5},'{ }','(fit)'))

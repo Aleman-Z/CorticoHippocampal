@@ -1,8 +1,8 @@
-function [chidos]=max_outlier(p,Rat)
+function [chidos]=max_outlier(p,Rat,meth)
 P=cell2mat(p);
 P=P(1,:); %Focused on HPC.
 P=P.';
-if Rat~=24
+if Rat~=24 || meth~=4
     R=reshape(P,[length(p) size(p{1},2)]);
     R=max(R.');
 else
