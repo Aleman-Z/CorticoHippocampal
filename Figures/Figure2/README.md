@@ -72,3 +72,7 @@ When ripdur=1: \
 
 * **equal_axis.m:**
 *Equalizes axes among boxplots for different rats.*
+
+* **plot_traces.m:**
+*Shows traces of raw HPC and PFC as well as the location where ripples were located.*
+<img src="plot_traces.png" width="400">
