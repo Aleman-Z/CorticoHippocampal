@@ -196,30 +196,5 @@ function [nFF,NFF,labelconditions,label1,label2]=rat_foldernames(Rat,rat26sessio
     label2{6}='Bipolar';
     label2{7}='Monopolar';    
     
-%%
-    % 
-    % %Ignore this for a moment
-    % FolderRip=[{'all_ripples'} {'500'} {'1000'}];
-    % if Rat==26
-    % Base=[{'Baseline1'} {'Baseline2'}];
-    % end
-    % 
-    % if Rat==26 && rat26session3==1
-    % Base=[{'Baseline3'} {'Baseline2'}];
-    % end
-    % 
-    % if Rat==27 
-    % Base=[{'Baseline2'} {'Baseline1'}];% We run Baseline 2 first, cause it is the one we prefer.
-    % end
-    % 
-    % if meth==1
-    % Folder=strcat(Base{base},'_',FolderRip{FiveHun+1});
-    % else
-    % Method=[{'Method2' 'Method3' 'Method4'}];
-    % Folder=strcat(Base{base},'_',FolderRip{FiveHun+1},'_',Method{meth-1});    
-    % end
-    % 
-    % if exist(Folder)==7 && base==1
-    % base=base+1;
-    % end
+
 end

@@ -116,7 +116,7 @@ for spectra_winval=1:spec_lim
 % block_time=0; %Ideally erase
 
     %CONDITION LOOP. (Main loop).    
-    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        %xo
     
     if iii>length(nFF)
@@ -256,12 +256,13 @@ switch meth
 %             % plot(xdata,ydata)
 %             chtm = interp1(ydata,xdata,ror);
 %             close(h) 
-if Rat~=24
-% chtm=30;
-chtm=25;
-else
-chtm=35;    
-end
+% if Rat~=24
+chtm=30;
+% chtm=25;
+% else
+% chtm=35;    
+% end
+% chtm=10;
 
         if acer==0
             cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
@@ -280,8 +281,8 @@ end
         riptable(iii,3)=RipFreq2;
 %          continue
 end
-xo
-plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions);
+% xo
+% plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions,chtm);
 
 
 if rip_hist    
@@ -326,7 +327,7 @@ if rip_hist
         continue
         %%
 end
-   xo  
+%    xo  
 %% Calculate median duration of ripples    
     consig=cara{1};
     bon=consig(:,1:2);
@@ -373,12 +374,12 @@ end
             case 24
                 %n=550;
                 %n=308; %New value
-                n=133;
+                n=426;
 
             case 26
-                n=180;
+                n=476;
             case 27
-                n=326;
+                n=850;
             otherwise
                 error('Error found')
            end

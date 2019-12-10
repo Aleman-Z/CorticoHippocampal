@@ -5,7 +5,7 @@
 % cara %58x3; sample where they occur
 % cara_times  %58x3; times where they occur
 %%
-function plot_traces(sig2,veamos,cara,ti,amp_vec,iii,labelconditions)
+function plot_traces(sig2,veamos,cara,ti,amp_vec,iii,labelconditions,chtm)
 
 % amp_vec=[5 5];
     %HPC
@@ -30,7 +30,7 @@ function plot_traces(sig2,veamos,cara,ti,amp_vec,iii,labelconditions)
 
     %xlabel('Time (Minutes)')
     xlabel('Time (Seconds)')
-    title(['Largest NREM bout: ' labelconditions{iii} ])
+    title(['Largest NREM bout: ' labelconditions{iii} '.  Thr:' num2str(chtm) ' uV'])
     %%
     times_rip=cara{1}(n,:);
     times_rip=times_rip(1,3);

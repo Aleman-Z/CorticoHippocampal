@@ -169,6 +169,28 @@ if meth==4
     % % % % % % % % % % % % % % % %Need to add sos_nl 
     end
 end
+
+if meth==5
+    if Rat~=24
+    %Select n strongest
+    switch Rat
+        case 24
+            n=426;
+        case 26
+            n=476;
+        case 27
+            n=850;
+        otherwise
+            error('Error found')
+    end
+
+    p_nl=p_nl(1:n);
+    q_nl=q_nl(1:n);
+    % % % % % % % % % % % % % % % %Need to add sos_nl 
+    end
+end
+
+
 %end
 % switch Rat
 %     case 24
