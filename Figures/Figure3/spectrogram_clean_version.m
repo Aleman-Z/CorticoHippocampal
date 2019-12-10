@@ -116,7 +116,7 @@ for spectra_winval=1:spec_lim
 % block_time=0; %Ideally erase
 
     %CONDITION LOOP. (Main loop).    
-    for iii=1:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
+    for iii=2:length(nFF) %Should start with 2 for spectrogram. 1 for power window.
        %xo
     
     if iii>length(nFF)
@@ -569,11 +569,11 @@ end
                                     % print(string,'-depsc')
                                     % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.pdf');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.pdf');
                                     figure_function(gcf,[],string,[]);
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.eps');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.eps');
                                     print(string,'-depsc')
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_Meth_',num2str(meth),'.fig');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.fig');
                                     saveas(gcf,string)
 
                             end
