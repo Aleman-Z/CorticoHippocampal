@@ -255,8 +255,14 @@ switch meth
 %             % figure()
 %             % plot(xdata,ydata)
 %             chtm = interp1(ydata,xdata,ror);
-%             close(h)        
-chtm=30;
+%             close(h) 
+if Rat~=24
+% chtm=30;
+chtm=25;
+else
+chtm=35;    
+end
+
         if acer==0
             cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
         else
@@ -274,7 +280,9 @@ chtm=30;
         riptable(iii,3)=RipFreq2;
 %          continue
 end
-% xo
+xo
+plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions);
+
 
 if rip_hist    
         %% Create ripple occurrence histogram.
@@ -318,7 +326,7 @@ if rip_hist
         continue
         %%
 end
-%   xo  
+   xo  
 %% Calculate median duration of ripples    
     consig=cara{1};
     bon=consig(:,1:2);
