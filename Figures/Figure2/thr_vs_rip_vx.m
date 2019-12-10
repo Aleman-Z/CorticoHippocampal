@@ -378,7 +378,7 @@ set(h,'Location','Northwest')
 ylim([-0.5 3])
 xo
 if acer==0
-    cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+    cd(strcat('/home/adrian/Dropbox/Figures/Figure2/',num2str(Rat)))
 else
       %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
       cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
@@ -389,7 +389,7 @@ if Score==2
     cd('new_scoring')
 end
 
-if Rat==26
+if Rat==26 || Rat==24
 Base=[{'Baseline1'} {'Baseline2'}];
 end
 if Rat==27 
