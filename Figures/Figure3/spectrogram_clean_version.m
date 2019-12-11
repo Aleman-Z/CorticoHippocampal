@@ -285,9 +285,10 @@ for spectra_winval=1:spec_lim
 % %          continue
 % end
 
-%  xo
-% plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions,chtm);
-
+if view_traces==1
+  plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions,chtm);
+  xo
+end
 
 if rip_hist    
         %% Create ripple occurrence histogram.
