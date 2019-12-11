@@ -285,7 +285,7 @@ for spectra_winval=1:spec_lim
 % %          continue
 % end
 
- xo
+%  xo
 % plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions,chtm);
 
 
@@ -523,7 +523,7 @@ end
 
         %xo
             %%
-                        for w=1:1 %Loop for brain regions.
+                        for w=1:3 %Loop for brain regions.
 
                         %%
 
@@ -573,11 +573,11 @@ end
                                     % print(string,'-depsc')
                                     % string=strcat('Spec_outliers_cluster_',labelconditions{iii},'_',label1{2*w-1},'_',Block{block_time+1},'_',DUR{dura},'.fig');
 
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.pdf');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber3_Meth_',num2str(meth),'.pdf');
                                     figure_function(gcf,[],string,[]);
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.eps');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber3_Meth_',num2str(meth),'.eps');
                                     print(string,'-depsc')
-                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber_Meth_',num2str(meth),'.fig');
+                                    string=strcat('Spec_',labelconditions{iii},'_',label1{2*w-1},'_samenumber3_Meth_',num2str(meth),'.fig');
                                     saveas(gcf,string)
 
                             end

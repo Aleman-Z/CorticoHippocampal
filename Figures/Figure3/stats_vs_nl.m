@@ -54,6 +54,16 @@ if meth==4
     end
 end
 
+if meth==5
+    if Rat==24
+        if iii==2
+                    for cn=1:length(p)
+                        q{cn}(w,:)= q{cn}(w,:)./0.195;
+                    end
+        end
+    end
+end
+
 P1=avg_samples(q,create_timecell(ro,length(p)));
 P2=avg_samples(p,create_timecell(ro,length(p)));
 
