@@ -13,43 +13,45 @@ function [h]=stats_vs_nl(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1
 randrip=varargin;
 randrip=cell2mat(randrip);
 
-if Rat==24
-%Remove artifact from Rat 24. 
-% run('rat24_december.m')
-    if w==2
-    p=p(1,end-60:end);
-    q=q(1,end-60:end);
-
-    else
-        if iii~=3
-            p=p(1,end-50:end);
-            q=q(1,end-50:end);
+if meth==4
+    if Rat==24
+    %Remove artifact from Rat 24. 
+    % run('rat24_december.m')
+        if w==2
+        p=p(1,end-60:end);
+        q=q(1,end-60:end);
 
         else
-            p=p(1,end-100:end-50);
-            q=q(1,end-100:end-50);
+            if iii~=3
+                p=p(1,end-50:end);
+                q=q(1,end-50:end);
 
-        end   
-    end
+            else
+                p=p(1,end-100:end-50);
+                q=q(1,end-100:end-50);
 
-    %PLUSMAZE PFC CORRECTION
-        if iii==2
-            for cn=1:length(p)
-    %             p{cn}(3,:)= p{cn}(3,:).*0.195;
-                q{cn}(w,:)= q{cn}(w,:).*0.195;
-            end
-            if w==3
+            end   
+        end
+
+        %PLUSMAZE PFC CORRECTION
+            if iii==2
                 for cn=1:length(p)
+        %             p{cn}(3,:)= p{cn}(3,:).*0.195;
                     q{cn}(w,:)= q{cn}(w,:).*0.195;
                 end
-    %         else
-    %             for cn=1:length(p)
-    %                 p{cn}(w,:)= p{cn}(w,:).*(1/0.195);
-    %             end
+                if w==3
+                    for cn=1:length(p)
+                        q{cn}(w,:)= q{cn}(w,:).*0.195;
+                    end
+        %         else
+        %             for cn=1:length(p)
+        %                 p{cn}(w,:)= p{cn}(w,:).*(1/0.195);
+        %             end
+                end
             end
-        end
-    % p=p(1,end-120:end-60);
-    % q=q(1,end-120:end-60);
+        % p=p(1,end-120:end-60);
+        % q=q(1,end-120:end-60);
+    end
 end
 
 P1=avg_samples(q,create_timecell(ro,length(p)));
@@ -104,7 +106,7 @@ P2=avg_samples(p,create_timecell(ro,length(p)));
 % % % % % ran_nl=ran;
 
 %Ripple selection
-if Rat~=24
+if Rat~=24 || meth~=4
 [p_nl,q_nl,sos_nl]=ripple_selection(p_nl,q_nl,sos_nl,Rat,meth);
 end
 % [length(p_nl) length(p_nl2)]
@@ -117,7 +119,7 @@ end
 % p_nl=p_nl(1,end-120:end-60);
 % q_nl=q_nl(1,end-120:end-60);    
 % end
-if Rat==24
+if Rat==24 && meth==4
 p_nl=p_nl(1,end-120:end-60);
 q_nl=q_nl(1,end-120:end-60);    
 end
@@ -171,7 +173,7 @@ if meth==4
 end
 
 if meth==5
-    if Rat~=24
+%     if Rat~=24
     %Select n strongest
     switch Rat
         case 24
@@ -187,7 +189,7 @@ if meth==5
     p_nl=p_nl(1:n);
     q_nl=q_nl(1:n);
     % % % % % % % % % % % % % % % %Need to add sos_nl 
-    end
+%     end
 end
 
 
