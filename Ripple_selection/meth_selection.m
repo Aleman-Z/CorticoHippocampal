@@ -1,5 +1,5 @@
 %Methods of ripples selection
-function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w)
+function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base,rat27session3)
     switch meth
         case 1
           [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);

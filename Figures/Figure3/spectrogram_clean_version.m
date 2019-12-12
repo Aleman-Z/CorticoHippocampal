@@ -9,19 +9,31 @@ rats=[26 27 24 21];
 %Calls GUI to select analysis and parameters. Description of GUI on github.
 gui_parameters
 % xo
-%Method of Ripple selection. Method 4 gives best results.
-prompt = {'Select SWR detection Method'};
-dlgtitle = 'Detection';
-definput = {'4'};
-opts.Interpreter = 'tex';
-answer = inputdlg(prompt,dlgtitle,[1 40],definput,opts);
-meth=str2num(answer{1});
+ 
+if view_traces==0
+    %Method of Ripple selection. Method 4 gives best results.
+    prompt = {'Select SWR detection Method'};
+    dlgtitle = 'Detection';
+    definput = {'4'};
+    opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput,opts);
+    meth=str2num(answer{1});
+else
+    meth=5;   %Visualize traces with parietal ripples. 
+end
 
 % meth=4;
 s=struct;
-%In case of Method 5, which cortical area?
-if meth==5
-    w='PAR';
+
+%Area corresponding to method.
+switch meth
+    case 5
+            w='PAR';
+    case 4
+            w='HPC';
+    otherwise
+            w='NaN'
+            error('Not available')
 end
 
 %Data location
@@ -140,7 +152,7 @@ for spectra_winval=1:spec_lim
 %on Dropbox .ppt.
 %xo
 
-[sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w);
+[sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base);
 
 % switch meth
 %     case 1
@@ -284,10 +296,24 @@ for spectra_winval=1:spec_lim
 %         riptable(iii,3)=RipFreq2;
 % %          continue
 % end
-
+% xo
 if view_traces==1
-  plot_traces(sig2,veamos,cara,ti,[5 5],iii,labelconditions,chtm);
-  xo
+    include_hpc=1;
+%    include_hpc=0;
+    
+    if include_hpc==1   
+        [~,~,~,cara_hpc,veamos_hpc,~,~,~,~, ~ ,~,~,~,~,~,~,~,chtm_hpc,~]=meth_selection(4,level,notch,Rat,datapath,nFF,acer,iii,'HPC',rat26session3,base,rat27session3);
+    else
+        cara_hpc=[];
+        veamos_hpc=[];
+        chtm_hpc=[];
+    end
+    
+    amp_vec=[5 5];
+xo
+    plot_traces(sig2,veamos,cara,ti,amp_vec,iii,labelconditions,chtm,include_hpc,cara_hpc,veamos_hpc,chtm_hpc);
+    cd('C:\Users\addri\Documents\Donders\Projects\SWR_d\Cortical_ripples')
+    xo
 end
 
 if rip_hist    
@@ -440,9 +466,10 @@ end
                     riptable(1,3)=RipFreq3;
 
             end
-
+    else
+       error('Check which parameters lead to this') 
     end
-
+% xo
 %% Calculate median duration of ripples (No learning)
     consig=cara_nl{1};
 
