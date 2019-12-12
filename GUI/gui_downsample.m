@@ -31,11 +31,13 @@ switch answer
 end
 stage=an;
 
-%Splits Multiple trials
-if ~isempty(stage(~isempty(strfind(an{1},','))))
-    stage=stage(~isempty(strfind(an{1},',')));
-    stage=stage{1};
-    stage=strsplit(stage,',');
+if ~isempty(stage)
+    %Splits Multiple trials
+    if ~isempty(stage(~isempty(strfind(an{1},','))))
+        stage=stage(~isempty(strfind(an{1},',')));
+        stage=stage{1};
+        stage=strsplit(stage,',');
+    end
 end
 % if ~isempty(stage(contains(an,',')))
 %     stage=stage(contains(an,','));
@@ -46,15 +48,16 @@ end
 
 %Adds trials containing an initial capital letter.
 idx = isstrprop(stage,'upper') ;
-for indexup=1:length(idx)
-     varind=idx{indexup};
-     if varind(1)~=1
-         vj=stage{indexup};
-         vj(1)=upper(vj(1));
-         stage= [stage vj];
-     end
+if ~isempty(idx)
+    for indexup=1:length(idx)
+         varind=idx{indexup};
+         if varind(1)~=1
+             vj=stage{indexup};
+             vj(1)=upper(vj(1));
+             stage= [stage vj];
+         end
+    end
 end
-
 iter_no_saving=0; 
 
 %SELECT RAT(S).
@@ -132,11 +135,15 @@ cd(BB)
 %%
 A=getfolder;
 %Look for trial
-var=zeros(size(A));
-for j=1:length(stage)
-aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
-aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
-var=or(cell2mat(aver),var);
+if ~isempty(stage)
+    var=zeros(size(A));
+    for j=1:length(stage)
+    aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
+    aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
+    var=or(cell2mat(aver),var);
+    end
+else
+    var=ones(size(A));    
 end
 
 %In case of extra folder
@@ -152,7 +159,10 @@ if var==0
         end 
 end
 
-A=A(var);
+if ~isempty(stage)
+    A=A(var);
+end
+
 A=A.';
 %%
 % for n=1:size(A,1)
@@ -168,9 +178,10 @@ A=A.';
 %     B(n,:)=cellfun(@str2num,ch);
 % end
 
-%%
+%% Label suggestion (Not used when All-trials option was selected)
 str2=cell(size(A,1),1);
 
+if ~isempty(stage)
     
    for j=1:length(stage)
        cont=0;
@@ -189,7 +200,10 @@ str2=cell(size(A,1),1);
        end
      %str2{n,1}=strcat(stage{1},num2str(n));
    end
-%%
+else
+ str2=A;   
+end   
+   %%
 %LABEL TRIALS.
 
 f = figure(2);
