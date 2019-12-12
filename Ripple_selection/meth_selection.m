@@ -14,7 +14,7 @@ function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_tran
         case 4
             %Find threshold on Baseline which gives 2000 ripples during the whole NREM.
             if acer==0
-                cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+                cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
             else
                 cd(strcat(datapath,'/',num2str(Rat)))
             end
@@ -26,7 +26,7 @@ function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_tran
 
             %Find thresholds vs ripple freq plot.
             if acer==0
-                cd(strcat('/home/raleman/Dropbox/Figures/Figure2/',num2str(Rat)))
+                cd(strcat('/home/adrian/Dropbox/Figures/Figure2/',num2str(Rat)))
             else
                   %cd(strcat('C:\Users\Welt Meister\Dropbox\Figures\Figure2\',num2str(Rat)))   
                   cd(strcat('C:\Users\addri\Dropbox\Figures\Figure2\',num2str(Rat)))   
@@ -63,7 +63,7 @@ function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_tran
 
             %xo
             if acer==0
-                cd(strcat('/home/raleman/Documents/internship/',num2str(Rat)))
+                cd(strcat('/home/adrian/Documents/downsampled_NREM_data/',num2str(Rat)))
             else
                 cd(strcat(datapath,'/',num2str(Rat)))
             end
