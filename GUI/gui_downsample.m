@@ -6,7 +6,7 @@ function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
 prompt = {'Enter acquisition frequency (Hz):','Enter new downsampled frequency (Hz):'};
 dlgtitle = 'Input';
 dims = [1 35];
-definput = {'30000','1000'};
+definput = {'20000','1000'};
 answer = inputdlg(prompt,dlgtitle,dims,definput)
 fs=str2num(answer{1});
 fs_new=str2num(answer{2});
