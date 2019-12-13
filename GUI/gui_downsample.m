@@ -134,6 +134,12 @@ cd(dname)
 cd(BB)
 %%
 A=getfolder;
+if isempty(A)
+    cd ..
+%     xo
+    A=getfolder;
+end
+
 %Look for trial
 if ~isempty(stage)
     var=zeros(size(A));
@@ -148,6 +154,7 @@ end
 
 %In case of extra folder
 if var==0
+    xo
  cd(A{1})
         A=getfolder;
         %Look for trial
@@ -329,7 +336,7 @@ for num=1:length(str1)
     cf1=cfold(cellfun(@(x) ~isempty(strfind(x,num2str(vr(1)))),cfold));
     cf2=cfold(cellfun(@(x) ~isempty(strfind(x,num2str(vr(2)))),cfold));
     
-    if size(cf1,1)~=1 || size(cf2,1)~=1 
+    if size(cf1,1)~=1 || size(cf2,1)~=1 || size(cf1,2)~=1 || size(cf2,2)~=1
         error('Ambiguous channel')
         xo
     end
@@ -359,13 +366,13 @@ for num=1:length(str1)
 % cd(strcat('F:\Lisa_files\',num2str(Rat)))
 cd(dname2)
 % if ~exist(num2str(Rat))
-if ~isdir(num2str(Rat))
+if ~isfolder(num2str(Rat))
     mkdir(num2str(Rat))
 end
 cd(num2str(Rat))
 
 % if ~exist(labelconditions2{iii}, 'dir')
-if ~isdir(labelconditions2{iii})    
+if ~isfolder(labelconditions2{iii})    
    mkdir(labelconditions2{iii})
 end
 cd(labelconditions2{iii})
