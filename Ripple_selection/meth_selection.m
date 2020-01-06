@@ -1,5 +1,5 @@
 %Methods of ripples selection
-function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base,rat27session3)
+function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base,rat27session3)
     switch meth
         case 1
           [sig1,sig2,ripple,cara,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level_ERASETHIS(level);
@@ -70,7 +70,7 @@ function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_tran
 
             cd(nFF{iii})
             w='HPC';
-            [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+            [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
             CHTM=[chtm chtm]; %Threshold
 
             %Fill table with ripple information.
@@ -96,7 +96,7 @@ function [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_tran
 
             cd(nFF{iii})
 
-            [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+            [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
             CHTM=[chtm chtm]; %Threshold
 
             %Fill table with ripple information.

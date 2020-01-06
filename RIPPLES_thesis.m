@@ -1,4 +1,4 @@
-function [CHTM,RipFreq2]=RIPPLES(level,nrem,notch,~,lepoch)
+function [CHTM,RipFreq2]=RIPPLES_thesis(level,nrem,notch,~,lepoch)
 %{
 LOAD DATA, easy and quick. 
 

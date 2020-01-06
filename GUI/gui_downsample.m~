@@ -474,10 +474,7 @@ end
     %strcat('100_CH',num2str(vr(1)),'.continuous')
 
     if size(label1,1)==3
-
-    [PAR, ~, ~] = load_open_ephys_data_faster(cf3{1});
-    PAR=filtfilt(b,a,PAR);
-    PAR=downsample(PAR,fs/fs_new); 
+ 
         
     end     
     
@@ -511,15 +508,12 @@ cd(labelconditions2{iii})
 if ~exist(str2{num}, 'dir')
    mkdir(str2{num})
 end
-% xo
+xo
 cd(str2{num})
 if iter_no_saving~=1
- save(['HPC_' cf1{1} '.mat'],'HPC')
  save(['PFC_' cf2{1} '.mat'],'PFC')
+ save(['HPC_' cf1{1} '.mat'],'HPC')
 
-if size(label1,1)==3
- save(['PAR_' cf3{1} '.mat'],'PAR')
-end 
 %  save('HPC.mat','HPC')
 %  save('sos.mat','sos')
  ftext = fopen( str1{num}, 'w' );  
@@ -527,9 +521,6 @@ end
 end
 clear PFC HPC %sos
 
-if size(label1,1)==3
-    clear PAR %sos
-end
 %xo
 cd(strcat(dname,'/',BB))
 
@@ -564,11 +555,9 @@ cd(strcat(dname,'/',BB))
     
     %Create transition matrix
 %    xo
-if size(label1,1)==3        
-    cd ..  % Only for Plusmaze data
-end
-
-progress_bar(num,length(str1),F)
+        
+cd ..  % Only for Plusmaze data      
+progress_bar(num,length(str1),F)    
 end
 iii=iii+1;
 %xo
