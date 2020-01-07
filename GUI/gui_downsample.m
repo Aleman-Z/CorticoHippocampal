@@ -79,37 +79,39 @@ dname2=uigetdir([],strcat('Select folder where downsampled data should be saved'
 %%
 %SELECT CONDITION.
 
-%Center figure.
-f=figure();
-movegui(gcf,'center');
+if size(label1,1)~=3 % Not for Plusmaze
+    %Center figure.
+    f=figure();
+    movegui(gcf,'center');
 
-%Checkboxes
-Boxcheck = cell(1,4);
-for h1=1:length(labelconditions)
-boxcheck = uicontrol(f,'Style','checkbox','String',labelconditions{h1},'Position',[10 f.Position(4)-30*h1 200 20]);
-boxcheck.FontSize=11;
-boxcheck.Value=1;
-Boxcheck{h1}=boxcheck;   
+    %Checkboxes
+    Boxcheck = cell(1,4);
+    for h1=1:length(labelconditions)
+    boxcheck = uicontrol(f,'Style','checkbox','String',labelconditions{h1},'Position',[10 f.Position(4)-30*h1 200 20]);
+    boxcheck.FontSize=11;
+    boxcheck.Value=1;
+    Boxcheck{h1}=boxcheck;   
+    end
+
+    set(f, 'NumberTitle', 'off', ...
+        'Name', 'Select conditions');
+
+    %Push button
+    c = uicontrol;
+    c.String = 'Continue';
+    c.FontSize=10;
+    c.Position=[f.Position(1)/3.5 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
+
+    %Callback
+    c.Callback='uiresume(gcbf)';
+    uiwait(gcf); 
+    boxch=cellfun(@(x) get(x,'Value'),Boxcheck);
+    clear Boxcheck
+    labelconditions=labelconditions(find(boxch~=0));
+    labelconditions2=labelconditions2(find(boxch~=0));
+
+    close(f);
 end
-
-set(f, 'NumberTitle', 'off', ...
-    'Name', 'Select conditions');
-
-%Push button
-c = uicontrol;
-c.String = 'Continue';
-c.FontSize=10;
-c.Position=[f.Position(1)/3.5 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
-
-%Callback
-c.Callback='uiresume(gcbf)';
-uiwait(gcf); 
-boxch=cellfun(@(x) get(x,'Value'),Boxcheck);
-clear Boxcheck
-labelconditions=labelconditions(find(boxch~=0));
-labelconditions2=labelconditions2(find(boxch~=0));
-
-close(f);
 %%
 %GO TO FOLDER AND READ ALL CONDITION FILES.
 iii=1;
@@ -130,44 +132,50 @@ cd(dname)
 % end
 
 %xo
-[BB,labelconditions,labelconditions2]=select_folder(Rat,iii,labelconditions,labelconditions2);
-cd(BB)
-%%
-A=getfolder;
-if isempty(A)
-    cd ..
-%     xo
-    A=getfolder;
+if size(label1,1)~=3
+    [BB,labelconditions,labelconditions2]=select_folder(Rat,iii,labelconditions,labelconditions2);
+    cd(BB)
+    A=getfolder;    
+else
+    A=getfolder;    
 end
+
+%%
+%A=getfolder;
+%if isempty(A)
+%    cd ..
+%     xo
+%     A=getfolder;
+%end
 
 %Look for trial
 if ~isempty(stage)
-    var=zeros(size(A));
+    Var=zeros(size(A));
     for j=1:length(stage)
     aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
     aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
-    var=or(cell2mat(aver),var);
+    Var=or(cell2mat(aver),Var);
     end
 else
-    var=ones(size(A));    
+    Var=ones(size(A));    
 end
 
 %In case of extra folder
-if var==0 %Error: var is a vector
+if Var==0 %Error: Var is a vector
     xo
  cd(A{1})
         A=getfolder;
         %Look for trial
-        var=zeros(size(A));
+        Var=zeros(size(A));
         for j=1:length(stage)
         aver=cellfun(@(x) strfind(x,stage{j}),A,'UniformOutput',false);
         aver=cellfun(@(x) length(x),aver,'UniformOutput',false);
-        var=or(cell2mat(aver),var);
+        Var=or(cell2mat(aver),Var);
         end 
 end
 
 if ~isempty(stage)
-    A=A(var);
+    A=A(Var);
 end
 
 A=A.';
@@ -333,11 +341,15 @@ for num=1:length(str1)
     
 %     cf1=cfold(cellfun(@(x) contains(x,num2str(vr(1))),cfold));
 %     cf2=cfold(cellfun(@(x) contains(x,num2str(vr(2))),cfold));
-    cf1=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1))])),cfold));
-    cf2=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2))])),cfold));
+%     cf1=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1))])),cfold));
+    cf1=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '_'])),cfold))];
 
+%     cf2=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2))])),cfold));
+    cf2=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '_'])),cfold))];
+    
 if size(label1,1)==3
-        cf3=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3))])),cfold));
+%        cf3=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3))])),cfold));
+        cf3=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3)) '_'])),cfold))];
 end
     
 % if size(cf1,1)~=1 || size(cf2,1)~=1 || size(cf1,2)~=1 || size(cf2,2)~=1
@@ -356,7 +368,7 @@ movegui(gcf,'center');
             end
 
             set(f, 'NumberTitle', 'off', ...
-                'Name', 'Select channel');
+                'Name', ['Select channel:    ' str1{num}]);
 
             %Push button
             c = uicontrol;
@@ -392,7 +404,7 @@ movegui(gcf,'center');
             end
 
             set(f, 'NumberTitle', 'off', ...
-                'Name', 'Select channel');
+                'Name', ['Select channel:    ' str1{num}]);
 
             %Push button
             c = uicontrol;
@@ -429,8 +441,8 @@ if size(label1,1)==3
                 Boxcheck{h1}=boxcheck;   
                 end
 
-                set(f, 'NumberTitle', 'off', ...
-                    'Name', 'Select channel');
+            set(f, 'NumberTitle', 'off', ...
+                'Name', ['Select channel:    ' str1{num}]);
 
                 %Push button
                 c = uicontrol;
@@ -455,7 +467,14 @@ end
 
 
 %Hippocampus
-    [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});    
+    if contains(cf1{1},'.mat') % In case of merged .mat file
+        load(cf1{1})
+        HPC=merged;
+        clear merged
+    else
+        [HPC, ~, ~] = load_open_ephys_data_faster(cf1{1});            
+    end
+
     HPC=filtfilt(b,a,HPC);
     HPC=downsample(HPC,fs/fs_new);
 
@@ -483,19 +502,20 @@ end
     
  end
 
-% cd(strcat('F:\Lisa_files\',num2str(Rat)))
 cd(dname2)
-% if ~exist(num2str(Rat))
+%Rat folder
 if ~isfolder(num2str(Rat))
     mkdir(num2str(Rat))
 end
 cd(num2str(Rat))
 
-% if ~exist(labelconditions2{iii}, 'dir')
-if ~isfolder(labelconditions2{iii})    
-   mkdir(labelconditions2{iii})
+if size(label1,1)~=3 %Instead of Plusmaze 
+    % if ~exist(labelconditions2{iii}, 'dir')
+    if ~isfolder(labelconditions2{iii})    
+       mkdir(labelconditions2{iii})
+    end
+    cd(labelconditions2{iii})
 end
-cd(labelconditions2{iii})
 %xo
 
 % cd(stage(1))
@@ -531,7 +551,12 @@ if size(label1,1)==3
     clear PAR %sos
 end
 %xo
-cd(strcat(dname,'/',BB))
+if size(label1,1)==3 %Plusmaze
+cd(strcat(dname))    
+else
+cd(strcat(dname,'/',BB))    
+end
+
 
 %  if Rat<9
 %      cd(strcat('F:\ephys\rat',num2str(Rat),'\',BB))
@@ -564,13 +589,19 @@ cd(strcat(dname,'/',BB))
     
     %Create transition matrix
 %    xo
-if size(label1,1)==3        
-    cd ..  % Only for Plusmaze data
-end
+% if size(label1,1)==3        
+%     cd ..  % Only for Plusmaze data
+% end
 
 progress_bar(num,length(str1),F)
 end
-iii=iii+1;
+
+if size(label1,1)==3  %Plusmaze
+    break %Out of while loop and terminate.
+else
+    iii=iii+1;    
+end
+
 %xo
 end
 
