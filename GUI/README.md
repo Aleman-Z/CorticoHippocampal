@@ -41,7 +41,7 @@ gui_spectral
 
 # Pipeline of methods:
 
-1. Define a new experiment.
+1. Define a new experiment and/or load it.
 2. Downsample data and store.
 3. Add sleep scoring files and check they match the data length.
 4. Data description.
