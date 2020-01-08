@@ -385,7 +385,8 @@ pause(.1)
         rats = evalin('base','rats');
 
         %gui_periodogram(channels,rats,label1,labelconditions,labelconditions2)
-        gui_periodogram;
+%        gui_periodogram;
+        gui_periodogram_2020;
 
         % --------------------------------------------------------------------
         function Spectrogram_Callback(hObject, eventdata, handles)
