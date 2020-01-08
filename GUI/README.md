@@ -44,10 +44,13 @@ gui_spectral
 1. Define a new experiment.
 2. Downsample data and store.
 3. Add sleep scoring files and check they match the data length.
-4. Perform analysis.
+4. Data description.
    * Sleep stages.
    * Periodograms.
    * Ripple thresholds.
+5. Traces visualization & threshold selection.
+6. Event-related spectrograms.
+7. Granger causality.
  
 # How Ephys data is organized (From general to specific):
 
