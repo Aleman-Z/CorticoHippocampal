@@ -39,7 +39,7 @@ close(f);
 %%
 
 % fbar=waitbar(0,'Please wait...');
-for RAT=3:length(rats)
+for RAT=1:length(rats)
     %length(rats) %4
 Rat=rats(RAT); 
 cd(strcat(dname,'/',num2str(rats(RAT))));
@@ -485,7 +485,7 @@ printing(string);
 
 
 
-xo
+% xo
 % if sidebyside==0
 % xo    
 % printing(string);
@@ -510,7 +510,7 @@ xo
 % close all
 % end
 % progress_bar(RAT,length(rats),fbar)
-clear figColorMap gg label conditions
+clear figColorMap gg labelconditions labelconditions2 labelconditions3
 close all
 end
 
