@@ -17,8 +17,8 @@ gui_spectral
 
  * Preprocessing
    * Downsample data. :heavy_check_mark:
-   * Extract labelled stages.
-   * Filter data.
+   * Add sleep scoring files.  :heavy_check_mark:
+   * Check sleep scoring.
 
  * SWR detection
    * Threshold plots. :heavy_check_mark:
@@ -43,18 +43,24 @@ gui_spectral
 
 1. Define a new experiment.
 2. Downsample data and store.
-3. Perform analysis.
+3. Add sleep scoring files and check they match the data length.
+4. Perform analysis.
    * Sleep stages.
    * Periodograms.
    * Ripple thresholds.
  
 # How Ephys data is organized (From general to specific):
 
+OS data:
 1. Rat ID.
 2. Condition.
 3. Trial.
 4. Channels.
 
+Plusmaze data:
+1. Rat ID.
+2. Trial.
+3. Channels.
 
 
 # Videos 
