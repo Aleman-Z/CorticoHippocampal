@@ -18,7 +18,7 @@ gui_spectral
  * Preprocessing
    * Downsample data. :heavy_check_mark:
    * Add sleep scoring files.  :heavy_check_mark:
-   * Check sleep scoring.
+   * Check sleep scoring.  :heavy_check_mark:
 
  * SWR detection
    * Threshold plots. :heavy_check_mark:
