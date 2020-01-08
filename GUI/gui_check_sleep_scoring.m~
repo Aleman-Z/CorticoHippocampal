@@ -1,0 +1,32 @@
+function gui_check_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats)
+
+%SELECT RAT(S).
+opts.Resize = 'on';
+opts.WindowStyle = 'modal';
+opts.Interpreter = 'tex';
+prompt=strcat('\bf Select a rat#. Options:','{ }',num2str(rats));
+answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+Rat=str2double(answer{1});
+% Rat=str2num(answer{1}); 
+
+%GET FOLDER.
+dname2=uigetdir([],strcat('Select folder where downsampled data was saved'));
+
+%Get folders
+cd([dname2 '/' num2str(Rat)])
+A=getfolder;
+
+    for i=1:length(A)
+        cd(A{i})
+        
+        cfold=dir;
+        cfold={cfold.name};
+        cfold=cfold(cellfun(@(x) ~isempty(strfind(x,'states')),cfold));
+
+        for ii=1:length(cfold)
+           load(cfold{ii})
+        end
+        
+    end
+
+end

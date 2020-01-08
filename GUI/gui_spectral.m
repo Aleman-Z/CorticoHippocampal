@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 08-Jan-2020 11:40:04
+% Last Modified by GUIDE v2.5 08-Jan-2020 13:56:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -287,8 +287,9 @@ pause(.1)
         labelconditions = evalin('base','labelconditions');
         labelconditions2 = evalin('base','labelconditions2');
         rats = evalin('base','rats');
+        fs=1000; %Frequency after downsampling
         
-        gui_check_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats);
+        gui_check_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats,fs);
 
 
 
@@ -440,6 +441,3 @@ function figure1_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
-
