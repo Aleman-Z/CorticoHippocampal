@@ -1,0 +1,3 @@
+function gui_check_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats)
+
+end

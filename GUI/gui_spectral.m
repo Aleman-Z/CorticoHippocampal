@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 16-Aug-2019 12:38:20
+% Last Modified by GUIDE v2.5 08-Jan-2020 11:40:04
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -257,18 +257,39 @@ pause(.1)
         
         gui_downsample(channels,label1,labelconditions,labelconditions2,rats);
 
+%         % --------------------------------------------------------------------
+%         function Extract_stages_Callback(hObject, eventdata, handles)
+%         % hObject    handle to Sleep_scoring (see GCBO)
+%         % eventdata  reserved - to be defined in a future version of MATLAB
+%         % handles    structure with handles and user data (see GUIDATA)
+
         % --------------------------------------------------------------------
-        function Extract_stages_Callback(hObject, eventdata, handles)
-        % hObject    handle to Extract_stages (see GCBO)
+        function Sleep_scoring_Callback(hObject, eventdata, handles)
+        % hObject    handle to Sleep_scoring (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-
-
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
+        
+        gui_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats);
+        
+        
         % --------------------------------------------------------------------
-        function Filter_data_Callback(hObject, eventdata, handles)
-        % hObject    handle to Filter_data (see GCBO)
+        function Check_sleep_scoring_Callback(hObject, eventdata, handles)
+        % hObject    handle to Check_sleep_scoring (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
+        
+        gui_check_sleep_scoring(channels,label1,labelconditions,labelconditions2,rats);
+
 
 
 % --------------------------------------------------------------------
@@ -419,3 +440,6 @@ function figure1_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
