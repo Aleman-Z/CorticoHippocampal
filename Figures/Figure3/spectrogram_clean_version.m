@@ -152,7 +152,7 @@ for spectra_winval=1:spec_lim
 %on Dropbox .ppt.
 %xo
 
-[sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base);
+[sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times,riptable,chtm,CHTM]=meth_selection(meth,level,notch,Rat,datapath,nFF,acer,iii,w,rat26session3,base);
 
 % switch meth
 %     case 1
@@ -224,7 +224,7 @@ for spectra_winval=1:spec_lim
 % 
 %         cd(nFF{iii})
 %         w='HPC';
-%         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+%         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
 %         CHTM=[chtm chtm]; %Threshold
 %         
 %         %Fill table with ripple information.
@@ -287,7 +287,7 @@ for spectra_winval=1:spec_lim
 % 
 %         cd(nFF{iii})
 %         
-%         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,cara_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
+%         [sig1,sig2,ripple,cara,veamos,RipFreq2,timeasleep,ti,vec_nrem, vec_trans ,vec_rem,vec_wake,labels,transitions,transitions2,ripples_times]=nrem_fixed_thr_Vfiles(chtm,notch,w);      
 %         CHTM=[chtm chtm]; %Threshold
 %         
 %         %Fill table with ripple information.
@@ -319,7 +319,7 @@ xo
 if rip_hist    
         %% Create ripple occurrence histogram.
         allscreen()
-        rip_times=cara_times{1}(:,3);
+        rip_times=ripples_times{1}(:,3);
         rip_times=[rip_times{:}];
         aver=histcounts(rip_times,[0:10: max(labels)+1]);
         maver=max(aver);
