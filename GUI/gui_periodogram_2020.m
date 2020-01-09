@@ -349,7 +349,7 @@ if aver_trial~=1
     if sidebyside==1 
 %         if k==1
             if iii==1
-                   allscreen()
+%                    allscreen()
                     if strcmp(answer_filter,'Yes')
                         close
                     end
@@ -476,6 +476,7 @@ labelconditions3=cellfun(@(x) (strrep(x,'_','-')),labelconditions,'UniformOutput
     legend(L, labelconditions3) 
 % end
 % xo
+ ylim([1 2000])
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 string=strcat('300Hz_Rat_',num2str(Rat),'_NREM_','HPC');
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');

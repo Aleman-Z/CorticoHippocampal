@@ -315,7 +315,7 @@ xo
     cd('C:\Users\addri\Documents\Donders\Projects\SWR_d\Cortical_ripples')
     xo
 end
-
+xo
 if rip_hist    
         %% Create ripple occurrence histogram.
         allscreen()
