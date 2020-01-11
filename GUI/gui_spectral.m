@@ -199,21 +199,6 @@ function File_Callback(hObject, eventdata, handles)
         % f = msgbox('Experiment was loaded','Success');
 
  %CONSIDERING TO ERASE:
- 
-        % --------------------------------------------------------------------
-        function Load_Ephys_data_Callback(hObject, eventdata, handles)
-        % hObject    handle to Load_Ephys_data (see GCBO)
-        % eventdata  reserved - to be defined in a future version of MATLAB
-        % handles    structure with handles and user data (see GUIDATA)
-        'Loading data'
-
-        % --------------------------------------------------------------------
-        function Load_Matlab_data_Callback(hObject, eventdata, handles)
-        % hObject    handle to Load_Matlab_data (see GCBO)
-        % eventdata  reserved - to be defined in a future version of MATLAB
-        % handles    structure with handles and user data (see GUIDATA)
-        'Loading data'
-
         % --------------------------------------------------------------------
         function save_figure_Callback(hObject, eventdata, handles)
         % hObject    handle to save_figure (see GCBO)
@@ -223,6 +208,8 @@ function File_Callback(hObject, eventdata, handles)
         answer = inputdlg('Name of file')
         printing(answer{1})
 
+        
+        
         % --------------------------------------------------------------------
         function exit_gui_Callback(hObject, eventdata, handles)
         % hObject    handle to exit_gui (see GCBO)
@@ -349,7 +336,7 @@ pause(.1)
         rats = evalin('base','rats');
         
 %         gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats);
-        gui_sleep_amount;
+        gui_sleep_amount_2020;
         
         % --------------------------------------------------------------------
         function Ripples_amount_Callback(hObject, eventdata, handles)
