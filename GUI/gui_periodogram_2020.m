@@ -248,9 +248,7 @@ while (1)
     e_t=1;
     e_samples=e_t*(1000); %fs=1kHz
 
-    ch=length(HPC);
-    cont=1;
-    trackcont=[]; %Keeps track of continuous NREM blocks.
+    ch=length(HPC);   
 
 
     % for kk=1:ch
@@ -261,14 +259,12 @@ while (1)
     NC=[];
     for kk=1:nc    
       NC(:,kk)= HPC(1+e_samples*(kk-1):e_samples*kk);
-    %  cont=cont+1;
     end
 
     nrem_epochs=(states==3);
     NC=NC(:,nrem_epochs);
 
 
-    %  trackcont=[trackcont cont-1];       
     % end
 
 

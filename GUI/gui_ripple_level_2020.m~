@@ -48,6 +48,39 @@ end
 %     return    
 % end
 
+    %Convert signal to 1 sec epochs.
+    e_t=1;
+    e_samples=e_t*(1000); %fs=1kHz
+    ch=length(HPC);
+    nc=floor(ch/e_samples); %Number of epochs
+    NC=[];
+    for kk=1:nc    
+      NC(:,kk)= HPC(1+e_samples*(kk-1):e_samples*kk);
+    end
+    
+    vec_bin=states;
+    vec_bin(vec_bin~=3)=0;
+    vec_bin(vec_bin==3)=1;
+    %Cluster one values:
+    v2=ConsecutiveOnes(vec_bin);
+    
+    %Find shorter vector.
+    if length(v2)<nc
+        min_con=length(v2);
+    else
+        min_con=nc;
+    end
+    
+    for fc
+    end
+    
+    
+    
+    
+    nrem_epochs=(states==3);
+    NC=NC(:,nrem_epochs);
+
+
 [v17,~]=reduce_data(V17,transitions,1000,3);
 
 %
