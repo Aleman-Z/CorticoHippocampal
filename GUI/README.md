@@ -23,16 +23,16 @@ gui_spectral
    * Hypnogram. :heavy_check_mark:
    * Ripples amount. 
    
+ * Spectral analysis
+   * Periodogram. :heavy_check_mark:
+   * Spectrogram. 
+   * Granger causality.   
+   
  * SWR detection
    * Threshold plots. :heavy_check_mark:
    * Run detection. 
    * Ripple Selection.
-
- * Spectral analysis
-   * Periodogram. :heavy_check_mark:
-   * Spectrogram. 
-   * Granger causality.
-
+   
  * Help
    * Github. :heavy_check_mark:
    * MemoryDynamics. :heavy_check_mark:
