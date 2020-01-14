@@ -10,8 +10,6 @@ gui_spectral
  * File
    * New experiment. :heavy_check_mark:
    * Load experiment. :heavy_check_mark:
-   * Load Ephys data.
-   * Load Matlab data.
    * Save Figure.
    * Exit GUI. :heavy_check_mark:
 
