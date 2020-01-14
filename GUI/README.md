@@ -18,15 +18,15 @@ gui_spectral
    * Add sleep scoring files.  :heavy_check_mark:
    * Check sleep scoring.  :heavy_check_mark:
 
+ * Data description
+   * Sleep amount. :heavy_check_mark:
+   * Hypnogram. :heavy_check_mark:
+   * Ripples amount. 
+   
  * SWR detection
    * Threshold plots. :heavy_check_mark:
    * Run detection. 
    * Ripple Selection.
-
- * Data description
-   * Sleep amount. :heavy_check_mark:
-   * Ripples amount. 
-   * Hypnogram.
 
  * Spectral analysis
    * Periodogram. :heavy_check_mark:
