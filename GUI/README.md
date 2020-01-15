@@ -29,7 +29,7 @@ gui_spectral
    
  * SWR detection
    * Threshold plots. :heavy_check_mark:
-   * Run detection. 
+   * Run detection. :heavy_check_mark:
    * Ripple Selection.
    
  * Help
