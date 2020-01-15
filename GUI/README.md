@@ -48,6 +48,10 @@ gui_spectral
 5. Traces visualization & threshold selection.
 6. Event-related spectrograms.
 7. Granger causality.
+
+<p align="center">
+<img src="GUI_pipeline.png" width="600">
+</p> 
  
 # How Ephys data is organized (From general to specific):
 
