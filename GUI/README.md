@@ -10,7 +10,6 @@ gui_spectral
  * File
    * New experiment. :heavy_check_mark:
    * Load experiment. :heavy_check_mark:
-   * Save Figure.
    * Exit GUI. :heavy_check_mark:
 
  * Preprocessing
