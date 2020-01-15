@@ -50,7 +50,7 @@ gui_spectral
 7. Granger causality.
 
 <p align="center">
-<img src="GUI_pipeline2.png" width="600">
+<img src="GUI_pipeline3.png" width="600">
 </p> 
  
 # How Ephys data is organized (From general to specific):
