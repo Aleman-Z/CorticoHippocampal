@@ -197,18 +197,6 @@ function File_Callback(hObject, eventdata, handles)
         assignin('base','channels',channels)
         messbox('Experiment was loaded','Success')
         % f = msgbox('Experiment was loaded','Success');
-
- %CONSIDERING TO ERASE:
-        % --------------------------------------------------------------------
-        function save_figure_Callback(hObject, eventdata, handles)
-        % hObject    handle to save_figure (see GCBO)
-        % eventdata  reserved - to be defined in a future version of MATLAB
-        % handles    structure with handles and user data (see GUIDATA)
-%         str = input('Type a name','s')
-        answer = inputdlg('Name of file')
-        printing(answer{1})
-
-        
         
         % --------------------------------------------------------------------
         function exit_gui_Callback(hObject, eventdata, handles)
@@ -307,7 +295,15 @@ pause(.1)
         % hObject    handle to Run_SWR (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-
+        channels = evalin('base','channels');
+        label1 = evalin('base','label1');
+        labelconditions = evalin('base','labelconditions');
+        labelconditions2 = evalin('base','labelconditions2');
+        rats = evalin('base','rats');
+        gui_thr_selection
+        
+        
+        
         % --------------------------------------------------------------------
         function Ripple_Selection_Callback(hObject, eventdata, handles)
         % hObject    handle to Ripple_Selection (see GCBO)

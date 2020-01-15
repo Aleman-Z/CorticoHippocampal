@@ -83,7 +83,7 @@ for iii=1:length(labelconditions)
         if size(label1,1)~=3  % IF not Plusmaze  
              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
         else
-              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level_2020(level,nrem,notch,w,lepoch);
+              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level_2020_pfc(level,nrem,notch,w,lepoch); %Cortical ripples
         end
     
     if isempty(y1)
@@ -119,10 +119,15 @@ for iii=1:length(labelconditions)
     h=add_legend(ye,myColorMap)
     set(h,'Location','Northwest')
 %     xo
+%     if size(label1,1)~=3  % IF not Plusmaze 
+%       string=strcat('Ripple_thresholds_Rat',num2str(Rat),'_',labelconditions{iii}); 
+%     else
+%       string=strcat('Ripple_thresholds_Rat',num2str(Rat));         
+%     end
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('Ripple_thresholds_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('Ripple_thresholds_PFC_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('Ripple_thresholds_Rat',num2str(Rat));         
+      string=strcat('Ripple_thresholds_PFC_Rat',num2str(Rat));         
     end
 
     printing(string)
