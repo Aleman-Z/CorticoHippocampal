@@ -82,27 +82,61 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
 % ti_pfc=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_pfc,'UniformOutput',false);
 
 
+%% Find largest epoch.
+max_length=cellfun(@length,v_hpc);
+nrem_epoch=find(max_length==max(max_length)==1);
+%% Pop up window
+f=figure();
+movegui(gcf,'center');
+f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3];
+movegui(gcf,'center');
 
+%Checkboxes
+manual_select = uicontrol('Style','checkbox','String','Manual selection of threshold','Position',[10 f.Position(4)-30 250 20],'Value',1);
+manual_select.FontSize=11;
+% aver_trial = uicontrol('Style','checkbox','String','Average trials','Position',[10 f.Position(4)-60 200 20]);
+% aver_trial.FontSize=11;
 
+set(f, 'NumberTitle', 'off', ...
+    'Name', 'Select an option');
+
+%Push button
+c = uicontrol;
+c.String = 'Continue';
+c.FontSize=10;
+c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
+
+%Callback
+c.Callback='uiresume(gcbf)';
+uiwait(gcf); 
+% scoring=scoring.Value;
+manual_select=manual_select.Value;
+% aver_trial=aver_trial.Value;
+close(f);
 
 %%
-prompt = {'Select a threshold value for HPC'};
-dlgtitle = 'Threshold HPC';
-definput = {'100'};
-% opts.Interpreter = 'tex';
-answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-D1=str2num(answer{1}) 
-%100 for Rat 26
+if manual_select==0
+    D1=4.*std(signal2_hpc{nrem_epoch}) 
+    D2=4.*std(signal2_pfc{nrem_epoch})
+else
+%%
+    prompt = {'Select a threshold value for HPC'};
+    dlgtitle = 'Threshold HPC';
+    definput = {'100'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D1=str2num(answer{1}) 
+    %100 for Rat 26
 
 
-prompt = {'Select a threshold value for PFC'};
-dlgtitle = 'Threshold PFC';
-definput = {'30'};
-% opts.Interpreter = 'tex';
-answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-D2=str2num(answer{1}) 
+    prompt = {'Select a threshold value for PFC'};
+    dlgtitle = 'Threshold PFC';
+    definput = {'30'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D2=str2num(answer{1}) 
 %35 for Rat 26
-
+end
 %% SWR in HPC
 %D1=100;%THRESHOLD
 k=1;
@@ -144,7 +178,7 @@ b.FontSize=12;
 n=find(max_length==max(max_length));
 stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*200,'Color','blue')
 stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*200,'Color','red')%Seconds
-
+title('Raw traces')
 %% Bandpassed signals.
 %num_1=0;
 figure()
