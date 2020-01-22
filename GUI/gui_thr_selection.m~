@@ -92,7 +92,7 @@ f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3];
 movegui(gcf,'center');
 
 %Checkboxes
-manual_select = uicontrol('Style','checkbox','String','Manual selection','Position',[10 f.Position(4)-30 200 20]);
+manual_select = uicontrol('Style','checkbox','String','Manual selection of threshold','Position',[10 f.Position(4)-30 250 20],'Value',1);
 manual_select.FontSize=11;
 % aver_trial = uicontrol('Style','checkbox','String','Average trials','Position',[10 f.Position(4)-60 200 20]);
 % aver_trial.FontSize=11;
@@ -110,44 +110,42 @@ c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
 c.Callback='uiresume(gcbf)';
 uiwait(gcf); 
 % scoring=scoring.Value;
-sidebyside=sidebyside.Value;
+manual_select=manual_select.Value;
 % aver_trial=aver_trial.Value;
 close(f);
 
-
-
-
 %%
-D1=4.*std(signal2_hpc{nrem_epoch}) 
-D2=4.*std(signal2_pfc{nrem_epoch})
-
+if manual_select==0
+    D1=4.*std(signal2_hpc{nrem_epoch}) 
+    D2=4.*std(signal2_pfc{nrem_epoch})
+else
 %%
-% prompt = {'Select a threshold value for HPC'};
-% dlgtitle = 'Threshold HPC';
-% definput = {'100'};
-% % opts.Interpreter = 'tex';
-% answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-% D1=str2num(answer{1}) 
-% %100 for Rat 26
-% 
-% 
-% prompt = {'Select a threshold value for PFC'};
-% dlgtitle = 'Threshold PFC';
-% definput = {'30'};
-% % opts.Interpreter = 'tex';
-% answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-% D2=str2num(answer{1}) 
-% %35 for Rat 26
+    prompt = {'Select a threshold value for HPC'};
+    dlgtitle = 'Threshold HPC';
+    definput = {'100'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D1=str2num(answer{1}) 
+    %100 for Rat 26
 
+
+    prompt = {'Select a threshold value for PFC'};
+    dlgtitle = 'Threshold PFC';
+    definput = {'30'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D2=str2num(answer{1}) 
+%35 for Rat 26
+end
 %% SWR in HPC
 %D1=100;%THRESHOLD
 k=1;
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
 %% Cortical ripples
 %D2=35;%THRESHOLD
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
@@ -180,7 +178,7 @@ b.FontSize=12;
 n=find(max_length==max(max_length));
 stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*200,'Color','blue')
 stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*200,'Color','red')%Seconds
-
+title('Raw traces')
 %% Bandpassed signals.
 %num_1=0;
 figure()

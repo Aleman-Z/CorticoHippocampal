@@ -140,12 +140,12 @@ end
 %% SWR in HPC
 %D1=100;%THRESHOLD
 k=1;
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
 %% Cortical ripples
 %D2=35;%THRESHOLD
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
