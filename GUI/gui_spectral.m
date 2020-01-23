@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 08-Jan-2020 13:56:27
+% Last Modified by GUIDE v2.5 23-Jan-2020 15:26:03
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -313,8 +313,8 @@ pause(.1)
         
 
 % --------------------------------------------------------------------
-function Data_description_Callback(hObject, eventdata, handles)
-% hObject    handle to Data_description (see GCBO)
+function Sleep_description_Callback(hObject, eventdata, handles)
+% hObject    handle to Sleep_description (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 beepnoise
@@ -334,12 +334,6 @@ pause(.1)
 %         gui_sleep_amount(channels,label1,labelconditions,labelconditions2,rats);
         gui_sleep_amount_2020;
         
-        % --------------------------------------------------------------------
-        function Ripples_amount_Callback(hObject, eventdata, handles)
-        % hObject    handle to Ripples_amount (see GCBO)
-        % eventdata  reserved - to be defined in a future version of MATLAB
-        % handles    structure with handles and user data (see GUIDATA)
-
         % --------------------------------------------------------------------
         function Hypnogram_Callback(hObject, eventdata, handles)
         % hObject    handle to Hypnogram (see GCBO)
