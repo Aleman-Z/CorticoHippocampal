@@ -8,6 +8,7 @@ cd(dname)
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
+% Wn1=[50/(fn/2) 80/(fn/2)]; 
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
 
 %LPF 300 Hz:
@@ -140,12 +141,12 @@ end
 %% SWR in HPC
 %D1=100;%THRESHOLD
 k=1;
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
 %% Cortical ripples
 %D2=35;%THRESHOLD
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
@@ -179,6 +180,111 @@ n=find(max_length==max(max_length));
 stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*200,'Color','blue')
 stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*200,'Color','red')%Seconds
 title('Raw traces')
+%%
+answer1 = questdlg('Compute spectrograms?', ...
+	'Select one', ...
+	'Yes','No','No');
+% Handle response
+switch answer1
+    case 'Yes'
+        dessert = 1;
+    case 'No'
+        dessert = 0;
+    otherwise
+        xo
+end
+
+
+if dessert==1
+%%  Spectrogram HPC
+
+    % figure()
+    figure('Name','HPC spectrogram','NumberTitle','off')
+    aver=hpc;
+    t_aver=1:length(aver);
+    t_aver=t_aver-1;
+    t_aver=t_aver/1000;
+    t_aver={t_aver};
+
+    w=1;
+    %toy=[1:60:length(t_aver{1})/1000]; %secs
+    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+
+    %toy=[-1:.01:1];
+    % q={[aver  ].'};
+    q={[aver aver aver ].'};
+
+    freq4=barplot2_ft(q,t_aver,[100:2:300],w,toy);
+    [freq4]=spectral_correction(freq4);
+
+    cfg              = [];
+    %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+    cfg.channel      = freq4.label{w};
+    cfg.colormap=colormap(jet(256));
+
+    a1=subplot(2,1,1)
+    ft_singleplotTFR(cfg, freq4);
+    xlim([0 max(t_aver{1})])
+    g=title('High Frequencies HPC');
+    g.FontSize=12;
+    xlabel('Time (s)')
+    %ylabel('uV')
+    ylabel('Frequency (Hz)')
+    % xlim([0.3 0.8])
+
+    a2=subplot(2,1,2)
+    plot(t_aver{1},aver)
+    xlim([0 max(t_aver{1})])
+    colorbar()
+
+    linkaxes([a1 a2],'x')
+
+    %%  Spectrogram PFC
+
+    % figure()
+    figure('Name','PFC spectrogram','NumberTitle','off')
+    aver=pfc;
+    t_aver=1:length(aver);
+    t_aver=t_aver-1;
+    t_aver=t_aver/1000;
+    t_aver={t_aver};
+
+    w=1;
+    %toy=[1:60:length(t_aver{1})/1000]; %secs
+    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+
+    %toy=[-1:.01:1];
+    % q={[aver  ].'};
+    q={[aver aver aver ].'};
+
+    freq4=barplot2_ft(q,t_aver,[100:2:300],w,toy);
+    [freq4]=spectral_correction(freq4);
+
+    cfg              = [];
+    %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+    cfg.channel      = freq4.label{w};
+    cfg.colormap=colormap(jet(256));
+
+    a1=subplot(2,1,1)
+    ft_singleplotTFR(cfg, freq4);
+    xlim([0 max(t_aver{1})])
+    g=title('High Frequencies PFC');
+    g.FontSize=12;
+    xlabel('Time (s)')
+    %ylabel('uV')
+    ylabel('Frequency (Hz)')
+    % xlim([0.3 0.8])
+
+    a2=subplot(2,1,2)
+    plot(t_aver{1},aver)
+    xlim([0 max(t_aver{1})])
+    colorbar()
+
+    linkaxes([a1 a2],'x')
+%%
+end
+
+
 %% Bandpassed signals.
 %num_1=0;
 figure()
@@ -214,6 +320,101 @@ b=gca;
 b.FontSize=10;
 % set(gca,'XTickLabel',b,'FontName','Times','fontsize',10)
 %set(gca,'XTickLabel',b,'FontName','Times','fontsize',10)
+
+% %%  Spectrogram HPC
+% 
+% figure()
+% aver=hpc;
+% t_aver=1:length(aver);
+% t_aver=t_aver-1;
+% t_aver=t_aver/1000;
+% t_aver={t_aver};
+% 
+% w=1;
+% %toy=[1:60:length(t_aver{1})/1000]; %secs
+% toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+% 
+% %toy=[-1:.01:1];
+% % q={[aver  ].'};
+% q={[aver aver aver ].'};
+% 
+% freq4=barplot2_ft(q,t_aver,[100:1:300],w,toy);
+% [freq4]=spectral_correction(freq4);
+% 
+% cfg              = [];
+% %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+% cfg.channel      = freq4.label{w};
+% cfg.colormap=colormap(jet(256));
+% 
+% a1=subplot(2,1,1)
+% ft_singleplotTFR(cfg, freq4);
+% xlim([0 max(t_aver{1})])
+% g=title('High Frequencies');
+% g.FontSize=12;
+% xlabel('Time (s)')
+% %ylabel('uV')
+% ylabel('Frequency (Hz)')
+% % xlim([0.3 0.8])
+% 
+% a2=subplot(2,1,2)
+% plot(t_aver{1},aver)
+% xlim([0 max(t_aver{1})])
+% colorbar()
+% 
+% linkaxes([a1 a2],'x')
+% 
+% %%  Spectrogram PFC
+% 
+% figure()
+% aver=pfc;
+% t_aver=1:length(aver);
+% t_aver=t_aver-1;
+% t_aver=t_aver/1000;
+% t_aver={t_aver};
+% 
+% w=1;
+% %toy=[1:60:length(t_aver{1})/1000]; %secs
+% toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+% 
+% %toy=[-1:.01:1];
+% % q={[aver  ].'};
+% q={[aver aver aver ].'};
+% 
+% freq4=barplot2_ft(q,t_aver,[100:1:300],w,toy);
+% [freq4]=spectral_correction(freq4);
+% 
+% cfg              = [];
+% %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
+% cfg.channel      = freq4.label{w};
+% cfg.colormap=colormap(jet(256));
+% 
+% a1=subplot(2,1,1)
+% ft_singleplotTFR(cfg, freq4);
+% xlim([0 max(t_aver{1})])
+% g=title('High Frequencies');
+% g.FontSize=12;
+% xlabel('Time (s)')
+% %ylabel('uV')
+% ylabel('Frequency (Hz)')
+% % xlim([0.3 0.8])
+% 
+% a2=subplot(2,1,2)
+% plot(t_aver{1},aver)
+% xlim([0 max(t_aver{1})])
+% colorbar()
+% 
+% linkaxes([a1 a2],'x')
+
+
+
+
+
+
+
+
+
+
+
 
 
 %%

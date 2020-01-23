@@ -17,7 +17,8 @@ ft_data1.time = (timecell(1,1:end));
 ft_data1
 
 %ft_data1.label = {'Hippo'; 'Parietal'; 'PFC';'REF'};
-ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
+%ft_data1.label = {'Hippo'; 'Parietal'; 'PFC'};
+ft_data1.label = {'HPC'; 'PAR'; 'PFC'};
 
 
 % Compute Multitaper
