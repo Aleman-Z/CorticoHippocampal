@@ -1,5 +1,6 @@
-function [freq]=barplot2_ft(q,timecell,freqrange,label,toy)
+function [freq]=barplot2_ft(q,timecell,freqrange,label,toy,pad_option)
 %[100:1:300]
+%pad_option='nextpow2';
 
 ft_data1 = [];
 ft_data1.fsample = 1000;
@@ -29,7 +30,10 @@ cfg.method = 'mtmconvol';
 
 cfg.taper = 'dpss';
 %cfg.taper = 'hanning';
-cfg.pad='nextpow2';
+%cfg.pad='nextpow2';
+%cfg.pad=100;
+
+
 %cfg.foi = [100:50:300];
 cfg.foi = freqrange;
 
