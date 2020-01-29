@@ -111,12 +111,14 @@ end
 %     imagesc(FREQ4);colorbar();colormap(jet(1000))
 
     %REMOVE NaN and replace with median power
-    med_pow=median(median(FREQ4(~isnan(FREQ4))));
+    med_pow=(median(FREQ4(~isnan(FREQ4))));
+    std_pow=(std(FREQ4(~isnan(FREQ4))));
     FREQ4(isnan(FREQ4))=med_pow;
 
     %Thresholding s    
-    N=6;
-    nFREQ=FREQ4>N*med_pow;
+    N=4;
+    %nFREQ=FREQ4>N*med_pow;
+    nFREQ=FREQ4> std_pow*N;
     %Visualization
     dnFREQ=double(nFREQ);
     dnFREQ(nFREQ==0)=NaN;
@@ -144,7 +146,7 @@ if nrem_epoch==Nrem_epoch
     F=ft_singleplotTFR(cfg, new_freq4)
     xlabel('Time (s)')
     ylabel('Frequency (Hz)')
-    g=title(['Thresholded values' '  N=' num2str(N) ]);
+    g=title(['Thresholded values' ' STD x ' num2str(N) ]);
     g.FontSize=12;
     linkaxes([aa1 aa2 ],'xy')
     printing(['microarousals_' num2str(N)])
@@ -185,7 +187,7 @@ end
     area(([1:length(Microarousal)]*(1/1000))-(1/1000),max(aver)*Microarousal); alpha(.5)
     xlabel('Time (Sec)')
     title('Microarousal detection')
-    printing(['microarousals_trace_' num2str(N)])
+    printing(['microarousals_trace_std_x_' num2str(N)])
     close all
     end
 
@@ -194,13 +196,13 @@ end
 
 %%
 xo
-%Ripple detection
 
-V_hpc=cellfun(@(equis) filtfilt(b2,a2,equis), v_new_hpc ,'UniformOutput',false);
+%Ripple detection
+V_hpc=cellfun(@(equis) filtfilt(b2,a2,equis), V_HPC ,'UniformOutput',false);
 Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
 signal2_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
 
-V_pfc=cellfun(@(equis) filtfilt(b2,a2,equis), v_new_pfc ,'UniformOutput',false);
+V_pfc=cellfun(@(equis) filtfilt(b2,a2,equis), V_PFC ,'UniformOutput',false);
 Mono_pfc=cellfun(@(equis) filtfilt(b1,a1,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal2_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
 fn=1000;
@@ -278,10 +280,7 @@ k=1;
 
 %%
 % Find max and plot
-max_length=cellfun(@length,v_new_hpc);
-
-
-
+max_length=cellfun(@length,V_HPC);
 hpc=V_hpc{max_length==max(max_length)};
 pfc=V_pfc{max_length==max(max_length)};
 
