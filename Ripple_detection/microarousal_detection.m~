@@ -216,14 +216,14 @@ end
 
     aa3=subplot(3,1,3)
     plot(([1:length(aver)]*(1/1000))-(1/1000),aver)
-    ntime=freq4.time(1)-0.25:0.25:freq4.time(end);
+    ntime=freq4.time(1):0.25:freq4.time(end);
     
  Microarousal=repelem(microarousal,2);
-%  Microarousal=Microarousal(1:end-1);   
-     hold on
+ Microarousal=Microarousal(1:end-1);   
+%     hold on
 %     area(([1:length(Microarousal)]*(1/1000))-(1/1000),max(aver)*Microarousal); alpha(.5)
-    area(freq4.time,microarousal*max(aver)); alpha(0.5)
-%     area(ntime,Microarousal*max(aver)); alpha(0.5)
+%     area(freq4.time,microarousal*max(aver)); alpha(0.5)
+    area(ntime,microarousal*max(aver)); alpha(0.5)
 
    
     xlabel('Time (Sec)')
