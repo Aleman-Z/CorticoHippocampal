@@ -116,7 +116,7 @@ if nrem_epoch==Nrem_epoch && answer_print==1
     cfg.channel      = freq4.label{w};
     cfg.colormap=colormap(jet(256));
 
-    aa1=subplot(3,1,1)
+    aa1=subplot(4,1,1)
     ft_singleplotTFR(cfg, freq4);
     xlim([0 max(t_aver{1})])
     g=title('High Frequencies PFC');
@@ -165,7 +165,7 @@ if nrem_epoch==Nrem_epoch && answer_print==1
     cfg.channel      = freq4.label{w};
     cfg.zlim=[0 1]; 
     cfg.colormap=colormap(jet(256));
-    aa2=subplot(3,1,2)
+    aa2=subplot(4,1,2)
     
 
     F=ft_singleplotTFR(cfg, new_freq4)
@@ -186,8 +186,11 @@ end
     
     nFREQ_ind=sum(nFREQ);
     nFREQ_ind=nFREQ_ind>0; 
-    microarousal=nFREQ_ind; 
-    nFREQ_ind=not(nFREQ_ind);%1 is NOT a microarousal.
+    microarousal=nFREQ_ind;
+%     xo
+    [Micro]=microarousal_edges(microarousal); %Includes edges of spectrogram.
+%     nFREQ_ind=not(nFREQ_ind);%1 is NOT a microarousal.
+    nFREQ_ind=not(Micro);%1 is NOT a microarousal.
 
 
     N_ind=ConsecutiveOnes(nFREQ_ind);
@@ -197,7 +200,7 @@ end
     %Chunk vector into 500ms windows.
     [NC_pfc]=chunk(aver,0.5);
     [NC_hpc]=chunk(aver2,0.5); 
-
+%xo
 
     for epoch_count=1:length(v_index2)
         if v_index2(epoch_count)<= size(NC_pfc,2)
@@ -210,28 +213,47 @@ end
     %%
 %    xo
     if nrem_epoch==Nrem_epoch && answer_print==1
-        xo
-    Microarousal = repelem(microarousal,500);
+%         xo
+%     Microarousal = repelem(microarousal,500);
 %     Microarousal=[zeros(1,500) Microarousal];
 
-    aa3=subplot(3,1,3)
+    aa3=subplot(4,1,3)
     plot(([1:length(aver)]*(1/1000))-(1/1000),aver)
-    ntime=freq4.time(1)-0.25:0.25:freq4.time(end);
+%     ntime=freq4.time(1)-0.25:0.25:freq4.time(end);
     
- Microarousal=repelem(microarousal,2);
+%  Microarousal=repelem(microarousal,2);
 %  Microarousal=Microarousal(1:end-1);   
      hold on
 %     area(([1:length(Microarousal)]*(1/1000))-(1/1000),max(aver)*Microarousal); alpha(.5)
-    area(freq4.time,microarousal*max(aver)); alpha(0.5)
+    area(freq4.time,microarousal*max(aver)); alpha(0.4)
 %     area(ntime,Microarousal*max(aver)); alpha(0.5)
 
    
     xlabel('Time (Sec)')
-    title('Microarousal detection')
+    title('Microarousal detection PFC')
     aa3.XLim=[0 max(freq4.time)];
     colorbar()
-    linkaxes([aa1 aa2 aa3],'x')
-    xo
+%    xo
+aa4=subplot(4,1,4)
+    plot(([1:length(aver2)]*(1/1000))-(1/1000),aver2)
+%     ntime=freq4.time(1)-0.25:0.25:freq4.time(end);
+    
+%  Microarousal=repelem(microarousal,2);
+%  Microarousal=Microarousal(1:end-1);   
+     hold on
+%     area(([1:length(Microarousal)]*(1/1000))-(1/1000),max(aver)*Microarousal); alpha(.5)
+    area(freq4.time,microarousal*max(aver2)); alpha(0.4)
+%     area(ntime,Microarousal*max(aver)); alpha(0.5)
+
+   
+    xlabel('Time (Sec)')
+    title('Microarousal detection HPC')
+    aa4.XLim=[0 max(freq4.time)];
+    colorbar()
+    
+    
+    
+    linkaxes([aa1 aa2 aa3 aa4],'x')
     printing(['microarousals_complete_' num2str(N)])
 
 %     printing(['microarousals_trace_std_x_' num2str(N)])
@@ -246,7 +268,7 @@ end
 
 %%
 xo
-
+%%
 %Ripple detection
 V_hpc=cellfun(@(equis) filtfilt(b2,a2,equis), V_HPC ,'UniformOutput',false);
 Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
@@ -261,10 +283,10 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
 % ti_pfc=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_pfc,'UniformOutput',false);
 
 
-%% Find largest epoch.
+% Find largest epoch.
 max_length=cellfun(@length,v_new_hpc);
 nrem_epoch=find(max_length==max(max_length)==1);
-%% Pop up window
+% Pop up window
 f=figure();
 movegui(gcf,'center');
 f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3];
@@ -293,12 +315,12 @@ manual_select=manual_select.Value;
 % aver_trial=aver_trial.Value;
 close(f);
 
-%%
+%
 if manual_select==0
     D1=4.*std(signal2_hpc{nrem_epoch}) 
     D2=4.*std(signal2_pfc{nrem_epoch})
 else
-%%
+%
     prompt = {'Select a threshold value for HPC'};
     dlgtitle = 'Threshold HPC';
     definput = {'100'};
@@ -316,13 +338,13 @@ else
     D2=str2num(answer{1}) 
 %35 for Rat 26
 end
-%% SWR in HPC
+% SWR in HPC
 %D1=100;%THRESHOLD
 k=1;
     [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
-%% Cortical ripples
+% Cortical ripples
 %D2=35;%THRESHOLD
     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
@@ -331,8 +353,9 @@ k=1;
 %%
 % Find max and plot
 max_length=cellfun(@length,V_HPC);
-hpc=V_hpc{max_length==max(max_length)};
-pfc=V_pfc{max_length==max(max_length)};
+Max_L=(((not(cellfun(@isempty,swr_pfc(:,3)))))).*max_length; %Only show those which have cortical 'ripples'.
+hpc=V_hpc{Max_L==max(Max_L)};
+pfc=V_pfc{Max_L==max(Max_L)};
 
 % plot((1:length(hpc))./1000./60,5.*zscore(hpc)+100,'Color','blue')
 % hold on
@@ -351,10 +374,11 @@ b=gca;
 b.FontSize=12;
 
 
-n=find(max_length==max(max_length));
+n=find(Max_L==max(Max_L));
 stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*200,'Color','blue')
+
 stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*200,'Color','red')%Seconds
-title('Raw traces')
+title('Raw traces after microarousal removal')
 %%
 answer1 = questdlg('Compute spectrograms?', ...
 	'Select one', ...
@@ -383,7 +407,7 @@ if dessert==1
 
     w=1;
     %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+    toy=[1:0.10:length(t_aver{1})/1000]; %secs %480
 
     %toy=[-1:.01:1];
     % q={[aver  ].'};
@@ -400,7 +424,7 @@ if dessert==1
     a1=subplot(2,1,1)
     ft_singleplotTFR(cfg, freq4);
     xlim([0 max(t_aver{1})])
-    g=title('High Frequencies HPC');
+    g=title('High Frequencies HPC after microarousal removal');
     g.FontSize=12;
     xlabel('Time (s)')
     %ylabel('uV')
@@ -426,7 +450,7 @@ if dessert==1
 
     w=1;
     %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+    toy=[1:0.25:length(t_aver{1})/1000]; %secs %480
 
     %toy=[-1:.01:1];
     % q={[aver  ].'};
@@ -443,7 +467,7 @@ if dessert==1
     a1=subplot(2,1,1)
     ft_singleplotTFR(cfg, freq4);
     xlim([0 max(t_aver{1})])
-    g=title('High Frequencies PFC');
+    g=title('High Frequencies PFC after microarousal removal');
     g.FontSize=12;
     xlabel('Time (s)')
     %ylabel('uV')
@@ -463,8 +487,8 @@ end
 %% Bandpassed signals.
 %num_1=0;
 figure()
-hpc=signal2_hpc{max_length==max(max_length)};
-pfc=signal2_pfc{max_length==max(max_length)};
+hpc=signal2_hpc{Max_L==max(Max_L)};
+pfc=signal2_pfc{Max_L==max(Max_L)};
 ax1 = subplot(2,1,2)
 plot((1:length(hpc))./1000./60,(hpc),'Color','blue')
 title('HPC (100-300 Hz)')  
