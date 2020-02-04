@@ -88,9 +88,6 @@ figColorMap=(jet(n));
 %xo
 answer_filter='No';
 ans_filt='50,100,150,200,250,300';
-% Ask for brain area.
-xx = inputdlg({'Brain area'},...
-              'Type your selection', [1 30]); 
 
 while (1)
 
@@ -238,15 +235,16 @@ while (1)
     % V9=V9.*(0.195);
     cfold=dir;
     cfold={cfold.name};
-%xo
-
+xo
+% Ask for brain area.
+xx = inputdlg({'Brain area'},...
+              'Type your selection', [1 12]); 
           
-cfold=cfold(cellfun(@(x) ~isempty(strfind(x,xx{1})),cfold));
+    cfold=cfold(cellfun(@(x) ~isempty(strfind(x,'HPC')),cfold));
 
 
     HPC=load(cfold{1});
-%     HPC=HPC.HPC; 
-    HPC=getfield(HPC,xx{1});
+    HPC=HPC.HPC;
     HPC=HPC.*(0.195);
 
 
@@ -456,7 +454,7 @@ end
 % if sidebyside==1 && aver_trial~=1
 % title(strcat(labelconditions{iii},{' '} ,'HPC' ,{' '},'power'))    
 % else
-title(strcat('Power in NREM',{' '} ,xx{1} ,{' '},'signals'));    
+title(strcat('Power in NREM',{' '} ,'HPC' ,{' '},'signals'));    
 % end
 %xo
 
@@ -482,9 +480,9 @@ labelconditions3=cellfun(@(x) (strrep(x,'_','-')),labelconditions,'UniformOutput
     legend(L, labelconditions3) 
 % end
 % xo
- ylim([0 2000])
+ ylim([1 2000])
 %string=strcat('300Hz_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
-string=strcat('300Hz_Rat_',num2str(Rat),'_NREM_',xx{1});
+string=strcat('300Hz_Rat_',num2str(Rat),'_NREM_','HPC');
 % string=strcat('Whole_Rat_',num2str(Rat),'_',labelconditions{iii},'_','HPC','.pdf');
 
 cd([dname '/' num2str(Rat)])
