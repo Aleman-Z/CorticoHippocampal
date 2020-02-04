@@ -73,17 +73,22 @@ for iii=1:length(labelconditions)
   %% Colormap
        % n=length(g);
         myColorMap=jet(length(g));    
+        
+        % Ask for brain area.
+xx = inputdlg({'Brain area'},...
+              'Type your selection', [1 30]); 
 %%
 % f=waitbar(0,'Please wait...');
     for k=1:length(g)
-    cd(g{k})    
-    w=1;
+    cd(g{k})
+%    xo
+%     w=1;
     lepoch=2;
       %xo
         if size(label1,1)~=3  % IF not Plusmaze  
              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
         else
-              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level_2020_pfc(level,nrem,notch,w,lepoch); %Cortical ripples
+              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level_2020_par(xx); %(level,nrem,notch,w,lepoch); %Cortical ripples
         end
     
     if isempty(y1)
@@ -125,9 +130,9 @@ for iii=1:length(labelconditions)
 %       string=strcat('Ripple_thresholds_Rat',num2str(Rat));         
 %     end
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('Ripple_thresholds_PFC_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('Ripple_thresholds_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('Ripple_thresholds_PFC_Rat',num2str(Rat));         
+      string=strcat('Ripple_thresholds_',xx{1},'_Rat',num2str(Rat));         
     end
 
     printing(string)
