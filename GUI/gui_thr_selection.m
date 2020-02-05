@@ -145,7 +145,7 @@ else
 %35 for Rat 26
 end
 %% SWR in HPC
-D1=100;%THRESHOLD
+D1=70;%THRESHOLD
 k=1;
     [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
