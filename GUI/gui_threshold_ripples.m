@@ -81,7 +81,7 @@ xx = inputdlg({'Brain area'},...
 % f=waitbar(0,'Please wait...');
     for k=1:length(g)
     cd(g{k})
-%    xo
+    %xo
 %     w=1;
     lepoch=2;
       %xo
@@ -101,15 +101,15 @@ xx = inputdlg({'Brain area'},...
     plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(k,:))
     %plot(DEMAIS,ripple/(timeasleep*60),'*')
     xlabel('Threshold value (uV)')
-    ylabel('Ripples per second')
+    ylabel('HFOs per second')
 
     hold on
     plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(k,:))
     %plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2)
         if size(label1,1)~=3  % IF not Plusmaze 
-            title(strcat('Rate of ripples per Threshold value for',{' '},labelconditions{iii}))
+            title(strcat('Rate of HFOs per Threshold value for',{' '},labelconditions{iii}))
         else
-            title(strcat('Rate of ripples per Threshold value'))            
+            title(strcat('Rate of HFOs per Threshold value'))            
         end
     %Legends
     
@@ -130,9 +130,9 @@ xx = inputdlg({'Brain area'},...
 %       string=strcat('Ripple_thresholds_Rat',num2str(Rat));         
 %     end
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('Ripple_thresholds_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('HFOs_thresholds_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('Ripple_thresholds_',xx{1},'_Rat',num2str(Rat));         
+      string=strcat('HFOs_thresholds_',xx{1},'_Rat',num2str(Rat));         
     end
 
     printing(string)

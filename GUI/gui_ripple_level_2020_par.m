@@ -148,7 +148,12 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
     % for k=1:rep-1
     for k=1:rep-2
     % k=level;
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+        if strcmp(xx{1},'PAR')==1 || strcmp(xx{1},'PFC')==1
+                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);           
+        else
+                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+        end
+    
     swr(:,:,k)=[Sx Ex Mx];
     s(:,k)=cellfun('length',Sx);
     k

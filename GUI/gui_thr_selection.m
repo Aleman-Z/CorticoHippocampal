@@ -22,10 +22,16 @@ HPC=load(HPC);
 HPC=HPC.HPC;
 HPC=HPC.*(0.195);
 
-PFC=dir('*PFC*.mat');
+xx = inputdlg({'Cortical area'},...
+              'Type your selection', [1 50]); 
+
+
+%PFC=dir('*PFC*.mat');
+PFC=dir(strcat('*',xx{1},'*.mat'));
 PFC=PFC.name;
 PFC=load(PFC);
-PFC=PFC.PFC;
+% PFC=PFC.PFC;
+PFC=getfield(PFC,xx{1});
 PFC=PFC.*(0.195);
 
 
@@ -139,14 +145,14 @@ else
 %35 for Rat 26
 end
 %% SWR in HPC
-%D1=100;%THRESHOLD
+D1=100;%THRESHOLD
 k=1;
     [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
 %% Cortical ripples
 %D2=35;%THRESHOLD
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
@@ -169,7 +175,7 @@ plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','red')
 xlabel('Time (Seconds)')
 
 yticks([100 150])
-yticklabels({'HPC','PFC'})
+yticklabels({'HPC',xx{1}})
 % a = get(gca,'YTickLabel');
 % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
 b=gca;
@@ -208,7 +214,7 @@ if dessert==1
 
     w=1;
     %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+    toy=[1:0.05:length(t_aver{1})/1000]; %secs %480
 
     %toy=[-1:.01:1];
     % q={[aver  ].'};
@@ -251,7 +257,7 @@ if dessert==1
 
     w=1;
     %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
+    toy=[1:0.025:length(t_aver{1})/1000]; %secs %480
 
     %toy=[-1:.01:1];
     % q={[aver  ].'};
