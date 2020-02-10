@@ -165,7 +165,7 @@ function File_Callback(hObject, eventdata, handles)
         labelconditions2(ismember(labelconditions,'CON'))={'CN'}
 
         z= zeros(length(label1),length(rats));
-        [channels]=gui_table_channels(z,rats,label1);
+        [channels]=gui_table_channels(z,rats,label1,'channels');
 
         assignin('base','rats',rats)
         assignin('base','labelconditions',labelconditions)

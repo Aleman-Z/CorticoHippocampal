@@ -1,4 +1,4 @@
-function [channels]=gui_table_channels(z,rats,label1)
+function [channels]=gui_table_channels(z,rats,label1,str_table)
 f = figure(1);
 % f=uifigure;
 dat = z;
@@ -9,7 +9,7 @@ cnames=strcat('Rat',cnames);
 rnames=label1;
 
 c = uicontrol('Style','text','Position',[1 380 300 20]);
-c.String = {'Fill the table with the correct channels'};
+c.String = {['Fill the table with the correct ' str_table]};
 c.FontSize=10;
 c.FontAngle='italic';
 %%
