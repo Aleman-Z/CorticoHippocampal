@@ -136,8 +136,8 @@ else
     %100 for Rat 26
 
 
-    prompt = {['Select a threshold value for',' ',xx{1}]};
-    dlgtitle = ['Threshold',' ',xx{1}]; %'Threshold PFC';
+    prompt = {strcat('Select a threshold value for ',{' '},xx{1})};
+    dlgtitle = strcat(strcat())'Threshold PFC';
     definput = {'30'};
     % opts.Interpreter = 'tex';
     answer = inputdlg(prompt,dlgtitle,[1 40],definput);
@@ -245,10 +245,10 @@ if dessert==1
 
     linkaxes([a1 a2],'x')
 
-    %%  Spectrogram Cortical region
+    %%  Spectrogram PFC
 
     % figure()
-    figure('Name',[xx{1} ' spectrogram'],'NumberTitle','off')
+    figure('Name','PFC spectrogram','NumberTitle','off')
     aver=pfc;
     t_aver=1:length(aver);
     t_aver=t_aver-1;
@@ -274,7 +274,7 @@ if dessert==1
     a1=subplot(2,1,1)
     ft_singleplotTFR(cfg, freq4);
     xlim([0 max(t_aver{1})])
-    g=title(['High Frequencies ' xx{1}]);
+    g=title('High Frequencies PFC');
     g.FontSize=12;
     xlabel('Time (s)')
     %ylabel('uV')
@@ -312,7 +312,7 @@ b.FontSize=10;
 
 ax2 = subplot(2,1,1)
 plot((1:length(pfc))./1000./60,(pfc),'Color','red')
-title([xx{1} ' (100-300 Hz)'])
+title('PFC (100-300 Hz)')
 D=ones(1,length(pfc)).*D2;
 hold on
 plot((1:length(pfc))./1000./60,D,'Color','black')
