@@ -190,6 +190,12 @@ f=waitbar(0,'Please wait...');
     C = cellfun(@minus,Ex_pfc,Sx_pfc,'UniformOutput',false);
     CC=([C{:}]);
     hfos_pfc_duration(k)=median(CC);
+    
+    
+    %Coocurent hfos
+    cohfos=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_pfc,'UniformOutput',false);
+    cohfos_count(k)=sum(cellfun('length',cohfos));
+    cohfos_rate(k)=sum(cellfun('length',cohfos))/sum(states==3);
     progress_bar(k,length(g),f)
     cd ..    
     end
@@ -302,6 +308,43 @@ title('PAR')
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_pfc;hfos_pfc_rate;hfos_pfc_duration])];
     TT.Properties.VariableNames=['Metric';g];    
     writetable(TT,'PAR.xls','Sheet',1,'Range','A2:L6')    
+
+%COHFOS
+%count
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,cohfos_count)
+ylabel('Number of coHFOs')
+title('Both areas')
+
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('coHFOs_counts_','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('coHFOs_counts_','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
+%rate
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,cohfos_rate)
+ylabel('coHFOs per second')
+title('Both areas')
+
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('coHFOs_rate_','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('coHFOs_rate_','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
+
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'}] num2cell([cohfos_count;cohfos_rate;])];
+    TT.Properties.VariableNames=['Metric';g];    
+    writetable(TT,'coHFOs.xls','Sheet',1,'Range','A2:L6')    
     
     
     if size(label1,1)==3 %If Plusmaze
