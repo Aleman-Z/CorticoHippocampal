@@ -175,17 +175,25 @@ f=waitbar(0,'Please wait...');
     swr_hpc=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc=cellfun('length',Sx_hpc);
     hfos_hpc(k)=sum(s_hpc);
+    hfos_hpc_rate(k)=sum(s_hpc)/sum(states==3);
+    C = cellfun(@minus,Ex_hpc,Sx_hpc,'UniformOutput',false);
+    CC=([C{:}]);
+    hfos_hpc_duration(k)=median(CC);
+    %xo
 %% Cortical HFOs
 %D2=35;%THRESHOLD
     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc=cellfun('length',Sx_pfc);%% Cortical ripples   
     hfos_pfc(k)=sum(s_pfc);
-    
+    hfos_pfc_rate(k)=sum(s_pfc)/sum(states==3);
+    C = cellfun(@minus,Ex_pfc,Sx_pfc,'UniformOutput',false);
+    CC=([C{:}]);
+    hfos_pfc_duration(k)=median(CC);
     progress_bar(k,length(g),f)
     cd ..    
     end
-
+%xo
 %HPC
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,hfos_hpc)
@@ -201,8 +209,50 @@ title('HPC')
 
     printing(string)
     close all
+%     TT=table;
+%     TT.Variables=hfos_hpc;
+%     TT.Properties.VariableNames=g;
+%     writetable(TT,'HPC_count.xls','Sheet',1,'Range','B2:L6')
+    
+%rate
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,hfos_hpc_rate)
+ylabel('HFOs per second')
+title('HPC')
 
-%PFC    
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_rate_','HPC','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('HFOs_rate_','HPC','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
+
+%duration
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,hfos_hpc_duration)
+ylabel('ms')
+title('HPC')
+
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_duration_','HPC','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('HFOs_duration_','HPC','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
+    
+    TT=table;
+    %TT.Variables=[hfos_hpc;hfos_hpc_rate;hfos_hpc_duration];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+    TT.Properties.VariableNames=['Metric';g];    
+    writetable(TT,'HPC.xls','Sheet',1,'Range','A2:L6')
+    
+%PAR
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,hfos_pfc)
 ylabel('Number of HFOs')
@@ -217,8 +267,41 @@ title('PAR')
 
     printing(string)
     close all
+%rate
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,hfos_pfc_rate)
+ylabel('HFOs per second')
+title('PAR')
+
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_rate_','PAR','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('HFOs_rate_','PAR','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
+%duration
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,hfos_pfc_duration)
+ylabel('ms')
+title('PAR')
+
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_duration_','PAR','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+      string=strcat('HFOs_duration_','PAR','_Rat',num2str(Rat));         
+    end
+
+    printing(string)
+    close all
     
-    
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_pfc;hfos_pfc_rate;hfos_pfc_duration])];
+    TT.Properties.VariableNames=['Metric';g];    
+    writetable(TT,'PAR.xls','Sheet',1,'Range','A2:L6')    
     
     
     if size(label1,1)==3 %If Plusmaze
