@@ -84,7 +84,7 @@ xx = inputdlg({'Brain area'},...
     %xo
 %     w=1;
     lepoch=2;
-      %xo
+      xo
         if size(label1,1)~=3  % IF not Plusmaze  
              [ripple,timeasleep,DM,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
         else
@@ -112,7 +112,10 @@ xx = inputdlg({'Brain area'},...
             title(strcat('Rate of HFOs per Threshold value'))            
         end
     %Legends
-%     interp1(DM,y1/(timeasleep*60),30) %plot(x_pos,y_pos,'r*')
+y_pos_rate(iii)=interp1(DM,y1/(timeasleep*60),30);
+plot(30,y_pos_rate,'r*')
+y_pos_count(iii)=interp1(DM,y1,30);
+
     
     cd ..
 %     progress_bar(k,length(g),f)
