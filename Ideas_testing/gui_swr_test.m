@@ -18,6 +18,10 @@ Rat=str2num(answer{1});
 cd(num2str(Rat))
 tr=getfield(T,strcat('Rat',num2str(Rat)));%Thresholds 
 %%
+        % Ask for brain area.
+xx = inputdlg({'Brain area'},...
+              'Type your selection', [1 30]); 
+%%
 gg=getfolder;
 gg=gg.';
 if size(label1,1)~=3  % IF not Plusmaze
@@ -100,7 +104,7 @@ fn=1000; % New sampling frequency.
 Wn1=[320/(fn/2)]; % Cutoff=320 Hz
 [b2,a2] = butter(3,Wn1); %Filter coefficients
 
-xx{1}='PAR';
+%xx{1}='PAR';
 %PFC=dir('*PAR*.mat');
 PFC=dir(strcat('*',xx{1},'*.mat'));
 PFC=PFC.name;
@@ -196,7 +200,13 @@ signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
 % ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
 ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2,'UniformOutput',false);
 %xo
-[Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);           
+if strcmp(xx{1},'HPC')
+[Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, tr(1), (tr(1))*(1/2), [] ), signal2,ti,'UniformOutput',false);               
+else
+[Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);               
+end
+
+% [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);           
 s=cellfun('length',Sx);        
 RipFreq2=sum(s)/(timeasleep*(60)); %RIpples per second.         
 ripple2=sum(s);
@@ -220,13 +230,13 @@ ripple2=sum(s);
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,hfos_pfc)
 ylabel('Number of HFOs')
-title('PAR')
+title(xx{1})
 
 
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('TEST_HFOs_counts_','PAR','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('TEST_HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('TEST_HFOs_counts_','PAR','_Rat',num2str(Rat));         
+      string=strcat('TEST_HFOs_counts_',xx{1},'_Rat',num2str(Rat));         
     end
 
     printing(string)
@@ -235,13 +245,13 @@ title('PAR')
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,hfos_pfc_rate)
 ylabel('HFOs per second')
-title('PAR')
+title(xx{1})
 
 
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('TEST_HFOs_rate_','PAR','_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('TEST_HFOs_rate_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('TEST_HFOs_rate_','PAR','_Rat',num2str(Rat));         
+      string=strcat('TEST_HFOs_rate_',xx{1},'_Rat',num2str(Rat));         
     end
 
     printing(string)
@@ -250,7 +260,7 @@ title('PAR')
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'}] num2cell([hfos_pfc;hfos_pfc_rate])];
 %     TT.Properties.VariableNames=['Metric';g];    
-    writetable(TT,'TEST_PAR.xls','Sheet',1,'Range','A2:L6')    
+    writetable(TT,strcat('TEST_',xx{1},'.xls'),'Sheet',1,'Range','A2:L6')    
 
     
     if size(label1,1)==3 %If Plusmaze
