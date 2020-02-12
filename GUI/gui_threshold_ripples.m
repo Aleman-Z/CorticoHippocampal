@@ -86,9 +86,9 @@ xx = inputdlg({'Brain area'},...
     lepoch=2;
       %xo
         if size(label1,1)~=3  % IF not Plusmaze  
-             [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
+             [ripple,timeasleep,DM,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
         else
-              [ripple,timeasleep,DEMAIS,y1]=gui_ripple_level_2020_par(xx); %(level,nrem,notch,w,lepoch); %Cortical ripples
+              [ripple,timeasleep,DM,y1]=gui_ripple_level_2020_par(xx); %(level,nrem,notch,w,lepoch); %Cortical ripples
         end
     
     if isempty(y1)
@@ -98,21 +98,21 @@ xx = inputdlg({'Brain area'},...
         continue 
     end
     %%
-    plot(DEMAIS,ripple/(timeasleep*60),'*','Color',myColorMap(k,:))
-    %plot(DEMAIS,ripple/(timeasleep*60),'*')
+    plot(DM,ripple/(timeasleep*60),'*','Color',myColorMap(k,:))
+    %plot(DM,ripple/(timeasleep*60),'*')
     xlabel('Threshold value (uV)')
     ylabel('HFOs per second')
 
     hold on
-    plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(k,:))
-    %plot(DEMAIS,y1/(timeasleep*60),'LineWidth',2)
+    plot(DM,y1/(timeasleep*60),'LineWidth',2,'Color',myColorMap(k,:))
+    %plot(DM,y1/(timeasleep*60),'LineWidth',2)
         if size(label1,1)~=3  % IF not Plusmaze 
             title(strcat('Rate of HFOs per Threshold value for',{' '},labelconditions{iii}))
         else
             title(strcat('Rate of HFOs per Threshold value'))            
         end
     %Legends
-    
+%     interp1(DM,y1/(timeasleep*60),30) %plot(x_pos,y_pos,'r*')
     
     cd ..
 %     progress_bar(k,length(g),f)

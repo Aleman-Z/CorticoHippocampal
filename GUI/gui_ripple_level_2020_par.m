@@ -1,4 +1,4 @@
-function [ripple2,timeasleep,DEMAIS,y1]=gui_ripple_level_2020_par(xx)
+function [ripple2,timeasleep,DM,y1]=gui_ripple_level_2020_par(xx)
 %(level,nrem,notch,w,lepoch)
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
@@ -33,10 +33,10 @@ else
 %     errordlg( strcat('No Scoring found:',cd),'Error')
     ripple2=[];
     timeasleep=[];
-    DEMAIS=[];
+    DM=[];
     y1=[];
     return
-    %,timeasleep,DEMAIS,y1
+    %,timeasleep,DM,y1
     
 end
 
@@ -46,7 +46,7 @@ end
 % %     errordlg( strcat('No NREM detected:',cd),'Error')
 %     ripple2=[];
 %     timeasleep=[];
-%     DEMAIS=[];
+%     DM=[];
 %     y1=[];
 %     return    
 % end
@@ -134,9 +134,9 @@ timeasleep=sum(cellfun('length',V))*(1/1000)/60; % In minutes
 chtm=median(cellfun(@max,Mono))*(1/0.195); %Minimum maximum value among epochs.
 
 %Median is used to account for any artifact/outlier. 
-DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
-%DEMAIS=linspace((chtm/16),(chtm),30);
-rep=length(DEMAIS);
+DM=linspace(floor(chtm/16),floor(chtm),30);
+%DM=linspace((chtm/16),(chtm),30);
+rep=length(DM);
 
 
 signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
@@ -149,9 +149,9 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
     for k=1:rep-2
     % k=level;
         if strcmp(xx{1},'PAR')==1 || strcmp(xx{1},'PFC')==1
-                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);           
+                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, DM(k), (DM(k))*(1/2), [] ), signal2,ti,'UniformOutput',false);           
         else
-                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, DEMAIS(k+1), (DEMAIS(k+1))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
+                [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, DM(k), (DM(k))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
         end
     
     swr(:,:,k)=[Sx Ex Mx];
@@ -171,11 +171,11 @@ ripple2=sum(s); %When using same threshold per epoch.
 end
 
 %Adjustment to prevent decrease 
-DEMAIS=DEMAIS(2:end-1);
+%DM=DM(2:end-1);
+DM=DM(1:end-2);
 
-
-[p,S,mu]=polyfit(DEMAIS,ripple2,14);%10
-y1=polyval(p,DEMAIS,[],mu);
+[p,S,mu]=polyfit(DM,ripple2,14);%10
+y1=polyval(p,DM,[],mu);
 
 
 end
