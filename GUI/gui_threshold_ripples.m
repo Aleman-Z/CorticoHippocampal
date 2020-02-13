@@ -112,9 +112,9 @@ xx = inputdlg({'Brain area'},...
             title(strcat('Rate of HFOs per Threshold value'))            
         end
     %Legends
-y_pos_rate(iii)=interp1(DM,y1/(timeasleep*60),30);
-plot(30,y_pos_rate,'r*')
-y_pos_count(iii)=interp1(DM,y1,30);
+y_pos_rate(k)=interp1(DM,y1/(timeasleep*60),30);
+%plot(30,y_pos_rate,'r*')
+y_pos_count(k)=interp1(DM,y1,30);
 
     
     cd ..
@@ -137,7 +137,7 @@ y_pos_count(iii)=interp1(DM,y1,30);
     else
       string=strcat('HFOs_thresholds_',xx{1},'_Rat',num2str(Rat));         
     end
-
+xo
     printing(string)
     close all
     
