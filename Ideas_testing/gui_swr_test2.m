@@ -244,8 +244,10 @@ title('HPC')
     close all
 %    xo
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'}] num2cell([hfos_hpc;hfos_hpc_rate])];
-%     TT.Properties.VariableNames=['Metric';g];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+%    TT.Properties.VariableNames=['Metric';g];
+    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
