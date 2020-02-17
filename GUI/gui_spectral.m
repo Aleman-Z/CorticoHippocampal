@@ -314,7 +314,7 @@ pause(.1)
         labelconditions = evalin('base','labelconditions');
         labelconditions2 = evalin('base','labelconditions2');
         rats = evalin('base','rats');
-        gui_swr_test
+        gui_swr_test2
         
         
                 

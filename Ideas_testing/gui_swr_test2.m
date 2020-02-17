@@ -151,7 +151,7 @@ cohfos_rate(k)=sum(cellfun('length',cohfos))/(timeasleep*(60));
 progress_bar(k,length(g),f)
     cd ..    
     end
-xo
+%xo
 
 %Cortex
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
