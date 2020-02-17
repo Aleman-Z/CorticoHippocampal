@@ -226,7 +226,6 @@ ripple2=sum(s);
     end
 %xo
 
-%PAR
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,hfos_pfc)
 ylabel('Number of HFOs')
@@ -234,9 +233,13 @@ title(xx{1})
 
 
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('TEST_HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('TEST_HFOs_counts_',xx{1},'_Rat',num2str(Rat));         
+        if strcmp(xx{1},'HPC')
+                  string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+        else
+                  string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+        end
     end
 
     printing(string)
@@ -249,19 +252,27 @@ title(xx{1})
 
 
     if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('TEST_HFOs_rate_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+      string=strcat('HFOs_rate_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
     else
-      string=strcat('TEST_HFOs_rate_',xx{1},'_Rat',num2str(Rat));         
+        if strcmp(xx{1},'HPC')
+                  string=strcat('HFOs_rate_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+        else
+                  string=strcat('HFOs_rate_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+        end
+        
     end
 
     printing(string)
     close all
-    
+%    xo
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'}] num2cell([hfos_pfc;hfos_pfc_rate])];
-%     TT.Properties.VariableNames=['Metric';g];    
-    writetable(TT,strcat('TEST_',xx{1},'.xls'),'Sheet',1,'Range','A2:L6')    
-
+%     TT.Properties.VariableNames=['Metric';g];
+    if strcmp(xx{1},'HPC')
+            writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
+    else
+            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L6')    
+    end
     
     if size(label1,1)==3 %If Plusmaze
 %        xo
