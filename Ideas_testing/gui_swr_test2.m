@@ -118,7 +118,7 @@ else
       error('No Scoring found')    
 end
 %xo
-[ripple,RipFreq,rip_duration]=gui_findripples(CORTEX,states,xx,tr);
+[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep]=gui_findripples(CORTEX,states,xx,tr);
 %xo        
         
 %% Cortical HFOs
@@ -137,10 +137,16 @@ HPC=load(HPC);
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
 
-[ripple,RipFreq,rip_duration]=gui_findripples(HPC,states,{'HPC'},tr);
+[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep]=gui_findripples(HPC,states,{'HPC'},tr);
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
+
+
+%Coocurent hfos
+cohfos=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex,'UniformOutput',false);
+cohfos_count(k)=sum(cellfun('length',cohfos));
+cohfos_rate(k)=sum(cellfun('length',cohfos))/(timeasleep*(60));
 
 progress_bar(k,length(g),f)
     cd ..    
@@ -247,7 +253,49 @@ title('HPC')
 %     end
 
 
+%COHFOS
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,cohfos_count)
+ylabel('Number of coHFOs')
+title('Both areas')
 
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('coHFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('coHFOs_counts_','Rat',num2str(Rat),'_',num2str(tr(1)),'_',num2str(tr(2)));         
+%         end
+    end
+
+    printing(string)
+    close all
+    
+    
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,cohfos_rate)
+ylabel('coHFOs per second')
+title('Both areas')    
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('coHFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('coHFOs_rate_','Rat',num2str(Rat),'_',num2str(tr(1)),'_',num2str(tr(2)));         
+%         end
+    end
+
+    printing(string)
+    close all
+
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'}] num2cell([cohfos_count;cohfos_rate;])];
+    TT.Properties.VariableNames=['Metric';g];    
+    writetable(TT,strcat('coHFOs_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L6')    
+    
 
 
     if size(label1,1)==3 %If Plusmaze
