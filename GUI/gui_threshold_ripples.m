@@ -84,7 +84,7 @@ xx = inputdlg({'Brain area'},...
     %xo
 %     w=1;
     lepoch=2;
-      xo
+%      xo
         if size(label1,1)~=3  % IF not Plusmaze  
              [ripple,timeasleep,DM,y1]=gui_ripple_level(level,nrem,notch,w,lepoch);
         else
