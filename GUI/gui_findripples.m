@@ -40,7 +40,7 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig]=gui_findripples(CORTE
     [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
     end
     for l=1:length(Sx)
-        sig{l}=getsignal(Sx,Ex,ti,V,l);
+        sig{l}=getsignal(Sx,Ex,ti,Mono,l);
     end
     sig=sig.';
     % [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);

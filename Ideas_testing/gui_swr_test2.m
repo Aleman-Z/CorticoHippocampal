@@ -117,10 +117,28 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-xo
+%xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig]=gui_findripples(CORTEX,states,xx,tr);
-%xo        
-        
+si=sig(~cellfun('isempty',sig));
+si=[si{:}];
+
+%Instantaneous frequency.
+x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
+x=cell2mat(x);
+x=median(x);
+fi_cortex(k)=x;
+%Average frequency
+y=cellfun(@(equis) (meanfreq(equis,1000)) ,si,'UniformOutput',false);
+y=cell2mat(y);
+y=median(y);
+fa_cortex(k)=y;
+
+%Amplitude
+z=cellfun(@(equis) max(abs(hilbert(equis))) ,si,'UniformOutput',false);
+z=cell2mat(z);
+z=median(z);
+amp_cortex(k)=z;
+
 %% Cortical HFOs
     hfos_cortex(k)=ripple;
     hfos_cortex_rate(k)=RipFreq;
@@ -137,7 +155,29 @@ HPC=load(HPC);
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
 
-[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep]=gui_findripples(HPC,states,{'HPC'},tr);
+[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig]=gui_findripples(HPC,states,{'HPC'},tr);
+
+si=sig(~cellfun('isempty',sig));
+si=[si{:}];
+
+%Instantaneous frequency.
+x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
+x=cell2mat(x);
+x=median(x);
+fi_hpc(k)=x;
+%Average frequency
+y=cellfun(@(equis) (meanfreq(equis,1000)) ,si,'UniformOutput',false);
+y=cell2mat(y);
+y=median(y);
+fa_hpc(k)=y;
+
+%Amplitude
+z=cellfun(@(equis) max(abs(hilbert(equis))) ,si,'UniformOutput',false);
+z=cell2mat(z);
+z=median(z);
+amp_hpc(k)=z;
+
+%% HFC HFOs
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
@@ -191,9 +231,71 @@ title(xx{1})
 
     printing(string)
     close all
+    
+%Average Frequency
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,fa_cortex)
+ylabel('Average frequency')
+title(xx{1})
+ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_average_frequency_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+%         end
+    end
+
+    printing(string)
+    close all
+    
+%Instantaneous Frequency
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,fi_cortex)
+ylabel('Average instantaneous frequency')
+title(xx{1})
+ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_instantaneous_frequency_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+%         end
+    end
+
+    printing(string)
+    close all
+    
+%Amplitude    
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,amp_cortex)
+ylabel('Amplitude (uV)')
+title(xx{1})
+%ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_amplitude_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+%         end
+    end
+
+    printing(string)
+    close all
+    
+    
 %     xo
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex;hfos_cortex_rate;hfos_cortex_duration])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_cortex;hfos_cortex_rate;hfos_cortex_duration;fa_cortex;fi_cortex; amp_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
@@ -201,7 +303,7 @@ title(xx{1})
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L6')    
+            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 
 %HPC
@@ -243,15 +345,78 @@ title('HPC')
     printing(string)
     close all
 %    xo
+
+
+%Average Frequency
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,fa_hpc)
+ylabel('Average frequency')
+title('HPC')
+ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_average_frequency_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         end
+    end
+
+    printing(string)
+    close all
+    
+%Instantaneous Frequency
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,fi_hpc)
+ylabel('Average instantaneous frequency')
+title('HPC')
+ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_instantaneous_frequency_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         end
+    end
+
+    printing(string)
+    close all
+
+%Amplitude    
+c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+bar(c,amp_hpc)
+ylabel('Amplitude (uV)')
+title('HPC')
+%ylim([100 300])
+
+    if size(label1,1)~=3  % IF not Plusmaze 
+      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+    else
+%         if strcmp(xx{1},'HPC')
+%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         else
+                  string=strcat('HFOs_amplitude_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+%         end
+    end
+
+    printing(string)
+    close all
+
+
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration;fa_hpc;fi_hpc;amp_hpc])];        
 %    TT.Properties.VariableNames=['Metric';g];
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 
 
