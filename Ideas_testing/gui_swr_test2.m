@@ -117,8 +117,8 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-%xo
-[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep]=gui_findripples(CORTEX,states,xx,tr);
+xo
+[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig]=gui_findripples(CORTEX,states,xx,tr);
 %xo        
         
 %% Cortical HFOs
