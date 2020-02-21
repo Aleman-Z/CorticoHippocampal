@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig]=gui_findripples(CORTEX,states,xx,tr)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx]=gui_findripples(CORTEX,states,xx,tr)
     %Band pass filter design:
     fn=1000; % New sampling frequency.
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz

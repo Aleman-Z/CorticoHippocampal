@@ -122,11 +122,11 @@ end
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 
-[x,y,z,w,h]=hfo_specs(si,timeasleep);
+[x,y,z]=hfo_specs(si,timeasleep);
 fi_cortex(k)=x;
 fa_cortex(k)=y;
 amp_cortex(k)=z;
-%xo
+
 %% Cortical HFOs
     hfos_cortex(k)=ripple;
     hfos_cortex_rate(k)=RipFreq;
@@ -148,10 +148,11 @@ HPC=HPC.*(0.195);
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
 
-[x,y,z,w,h]=hfo_specs(si,timeasleep);
+[x,y,z,w,h]=hfo_specs(si);
 fi_hpc(k)=x;
 fa_hpc(k)=y;
 amp_hpc(k)=z;
+xo
 % %Instantaneous frequency.
 % x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
 % x=cell2mat(x);
@@ -205,7 +206,7 @@ Sig_hpc=sig_hpc(~cellfun('isempty',cohfos1));
 Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOutput',false);
 Sig_hpc=[Sig_hpc{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_hpc,timeasleep);
+[x,y,z,w,h]=hfo_specs(Sig_hpc);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
@@ -217,7 +218,7 @@ v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,
 Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
 Sig_hpc_single=[Sig_hpc_single{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_hpc_single,timeasleep);
+[x,y,z,w,h]=hfo_specs(Sig_hpc_single);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
@@ -384,9 +385,9 @@ title(xx{1})
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 
-%Cortex cohfos
+%Cortex single
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_cortex;hfos_cortex_rate;Cohf_cortex_dura;fa_cohfo_cortex;fi_cohfo_cortex; amp_cohfo_cortex])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_cortex;hfos_cortex_rate;hfos_cortex_duration;fa_cortex;fi_cortex; amp_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
@@ -395,6 +396,7 @@ title(xx{1})
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
+
 
 
 
