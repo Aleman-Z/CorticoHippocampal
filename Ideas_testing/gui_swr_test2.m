@@ -122,7 +122,7 @@ end
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 
-[x,y,z,w,h]=hfo_specs(si,timeasleep);
+[x,y,z,~,~,~]=hfo_specs(si,timeasleep);
 fi_cortex(k)=x;
 fa_cortex(k)=y;
 amp_cortex(k)=z;
@@ -205,10 +205,13 @@ Sig_hpc=sig_hpc(~cellfun('isempty',cohfos1));
 Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOutput',false);
 Sig_hpc=[Sig_hpc{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_hpc,timeasleep);
+[x,y,z,w,h,q]=hfo_specs(Sig_hpc,timeasleep);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
+count_cohfo_hpc(k)=w;
+rate_cohfo_hpc(k)=h;
+dura_cohfo_hpc(k)=q;
 
 %Single HFOs HPC
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
@@ -217,11 +220,13 @@ v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,
 Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
 Sig_hpc_single=[Sig_hpc_single{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_hpc_single,timeasleep);
+[x,y,z,w,h,q]=hfo_specs(Sig_hpc_single,timeasleep);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
-
+count_single_hpc(k)=w;
+rate_single_hpc(k)=h;
+dura_single_hpc(k)=q;
 
 
 %%%%
@@ -247,10 +252,13 @@ Sig_cortex=sig_cortex(~cellfun('isempty',cohfos2));
 Sig_cortex=cellfun(@(equis1,equis2) equis1(equis2),Sig_cortex,coh_samp_cortex,'UniformOutput',false);
 Sig_cortex=[Sig_cortex{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_cortex,timeasleep);
+[x,y,z,w,h,q]=hfo_specs(Sig_cortex,timeasleep);
 fi_cohfo_cortex(k)=x;
 fa_cohfo_cortex(k)=y;
 amp_cohfo_cortex(k)=z;
+count_cohfo_cortex(k)=w;
+rate_cohfo_cortex(k)=h;
+dura_cohfo_cortex(k)=q;
 
 
 %Single HFOs Cortex
@@ -260,16 +268,18 @@ v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex,cohfo
 Sig_cortex_single=cellfun(@(equis1,equis2) equis1(equis2),sig_cortex,v2,'UniformOutput',false);
 Sig_cortex_single=[Sig_cortex_single{:}];
 
-[x,y,z,w,h]=hfo_specs(Sig_cortex_single,timeasleep);
+[x,y,z,w,h,q]=hfo_specs(Sig_cortex_single,timeasleep);
 fi_single_cortex(k)=x;
 fa_single_cortex(k)=y;
 amp_single_cortex(k)=z;
-
+count_single_cortex(k)=w;
+rate_single_cortex(k)=h;
+dura_single_cortex(k)=q;
 
 progress_bar(k,length(g),f)
     cd ..    
     end
-xo
+%xo
 
 %Cortex
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
@@ -383,10 +393,10 @@ title(xx{1})
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
-
+%%
 %Cortex cohfos
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_cortex;hfos_cortex_rate;Cohf_cortex_dura;fa_cohfo_cortex;fi_cohfo_cortex; amp_cohfo_cortex])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_cortex;rate_cohfo_cortex;dura_cohfo_cortex;fa_cohfo_cortex;fi_cohfo_cortex; amp_cohfo_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
@@ -394,9 +404,21 @@ title(xx{1})
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
 
+%Cortex singles
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_cortex;rate_single_cortex;dura_single_cortex;fa_single_cortex;fi_single_cortex; amp_single_cortex])];
+%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+    
+    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    
+%     if strcmp(xx{1},'HPC')
+%             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
+%     else
+            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
+  %%          
 
 %HPC
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
@@ -510,8 +532,34 @@ title('HPC')
 %     else
             writetable(TT,strcat('HPC','_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
+%%
+%hpc cohfos
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_hpc;rate_cohfo_hpc;dura_cohfo_hpc;fa_cohfo_hpc;fi_cohfo_hpc; amp_cohfo_hpc])];
+%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+    
+    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    
+%     if strcmp(xx{1},'HPC')
+%             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
+%     else
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
+
+%hpc singles
+    TT=table;
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_hpc;rate_single_hpc;dura_single_hpc;fa_single_hpc;fi_single_hpc; amp_single_hpc])];
+%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+    
+    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    
+%     if strcmp(xx{1},'HPC')
+%             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
+%     else
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
 
+
+%%
 %COHFOS
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
 bar(c,cohfos_count)

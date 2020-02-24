@@ -1,4 +1,4 @@
-function [x,y,z,w,h]=hfo_specs(si,timeasleep)
+function [x,y,z,w,h,q]=hfo_specs(si,timeasleep)
 
 %Instantaneous frequency.
 x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
@@ -20,5 +20,9 @@ z=median(z);
 %Count
 w=length(si);
 
+%Rate
 h=w/(timeasleep*(60));
+
+%Duration
+q=median(cellfun('length',si)/1000);
 end
