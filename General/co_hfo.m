@@ -3,9 +3,9 @@
 % N=Mx_pfc{3};
 % Do per cell
 %%
-function [co_vec1,co_vec2]=co_hfo(a,N)
-    co_vec1=[];
-    co_vec2=[];
+function [co_vec1,co_vec2]=co_hfo(a,N)%HPC,Cortex
+    co_vec1=[];%HPC
+    co_vec2=[];%Cortex
     for index_hfo=1:length(N);
      n=N(index_hfo);   
 
@@ -16,8 +16,8 @@ function [co_vec1,co_vec2]=co_hfo(a,N)
     df=abs(minVal-n);
 
     if df<=0.050
-        co_vec1=[co_vec1 n];
-        co_vec2=[co_vec2 minVal];
+        co_vec1=[co_vec1 minVal];
+        co_vec2=[co_vec2 n];
     end
 
     end
