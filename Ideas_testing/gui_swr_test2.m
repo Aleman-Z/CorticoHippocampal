@@ -543,7 +543,7 @@ title('HPC')
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_',num2str(tr(2)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
 
 %hpc singles
     TT=table;
@@ -555,7 +555,7 @@ title('HPC')
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_',num2str(tr(2)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
 
 

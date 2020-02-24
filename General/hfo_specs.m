@@ -1,5 +1,7 @@
 function [x,y,z,w,h,q]=hfo_specs(si,timeasleep)
 
+if ~isempty(si)
+
 %Instantaneous frequency.
 x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
 x=cell2mat(x);
@@ -25,4 +27,17 @@ h=w/(timeasleep*(60));
 
 %Duration
 q=median(cellfun('length',si)/1000);
+
+
+else
+    
+x=NaN;
+y=NaN;
+z=NaN;
+w=NaN;
+h=NaN;
+q=NaN;   
+
+end
+
 end
