@@ -117,15 +117,16 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-%xo
+% xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex]=gui_findripples(CORTEX,states,xx,tr);
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
-
-[x,y,z,~,~,~]=hfo_specs(si,timeasleep);
+%xo
+[x,y,z,~,~,~,l]=hfo_specs(si,timeasleep);
 fi_cortex(k)=x;
 fa_cortex(k)=y;
 amp_cortex(k)=z;
+auc_cortex(k)=l;
 %xo
 %% Cortical HFOs
     hfos_cortex(k)=ripple;
@@ -148,10 +149,11 @@ HPC=HPC.*(0.195);
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
 
-[x,y,z,w,h]=hfo_specs(si,timeasleep);
+[x,y,z,~,~,~,l]=hfo_specs(si,timeasleep);
 fi_hpc(k)=x;
 fa_hpc(k)=y;
 amp_hpc(k)=z;
+auc_hpc(k)=l;
 % %Instantaneous frequency.
 % x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
 % x=cell2mat(x);
@@ -204,15 +206,15 @@ Cohf_hpc_dura(k)=cohf_hpc_dura;
 Sig_hpc=sig_hpc(~cellfun('isempty',cohfos1));
 Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOutput',false);
 Sig_hpc=[Sig_hpc{:}];
-
-[x,y,z,w,h,q]=hfo_specs(Sig_hpc,timeasleep);
+%xo
+[x,y,z,w,h,q,l]=hfo_specs(Sig_hpc,timeasleep);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
 count_cohfo_hpc(k)=w;
 rate_cohfo_hpc(k)=h;
 dura_cohfo_hpc(k)=q;
-
+auc_cohfo_hpc(k)=l;
 %Single HFOs HPC
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
@@ -220,13 +222,14 @@ v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,
 Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
 Sig_hpc_single=[Sig_hpc_single{:}];
 
-[x,y,z,w,h,q]=hfo_specs(Sig_hpc_single,timeasleep);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_hpc_single,timeasleep);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
 count_single_hpc(k)=w;
 rate_single_hpc(k)=h;
 dura_single_hpc(k)=q;
+auc_single_hpc(k)=l;
 
 
 %%%%
@@ -252,14 +255,14 @@ Sig_cortex=sig_cortex(~cellfun('isempty',cohfos2));
 Sig_cortex=cellfun(@(equis1,equis2) equis1(equis2),Sig_cortex,coh_samp_cortex,'UniformOutput',false);
 Sig_cortex=[Sig_cortex{:}];
 
-[x,y,z,w,h,q]=hfo_specs(Sig_cortex,timeasleep);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_cortex,timeasleep);
 fi_cohfo_cortex(k)=x;
 fa_cohfo_cortex(k)=y;
 amp_cohfo_cortex(k)=z;
 count_cohfo_cortex(k)=w;
 rate_cohfo_cortex(k)=h;
 dura_cohfo_cortex(k)=q;
-
+auc_cohfo_cortex(k)=l;
 
 %Single HFOs Cortex
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
@@ -268,18 +271,28 @@ v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex,cohfo
 Sig_cortex_single=cellfun(@(equis1,equis2) equis1(equis2),sig_cortex,v2,'UniformOutput',false);
 Sig_cortex_single=[Sig_cortex_single{:}];
 
-[x,y,z,w,h,q]=hfo_specs(Sig_cortex_single,timeasleep);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_cortex_single,timeasleep);
 fi_single_cortex(k)=x;
 fa_single_cortex(k)=y;
 amp_single_cortex(k)=z;
 count_single_cortex(k)=w;
 rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
+auc_single_cortex(k)=l;
 
 progress_bar(k,length(g),f)
     cd ..    
     end
 %xo
+
+%AUC
+TT=table;
+TT.Variables=    [[{'All_cortex'};{'All_HPC'};{'Cohfo_cortex'};{'Cohfo_hpc'};{'Single_cortex'};{'Single_HPC'}] num2cell([auc_cortex;auc_hpc;auc_cohfo_cortex;auc_cohfo_hpc;auc_single_cortex;auc_single_hpc])];
+TT.Properties.VariableNames=['HFO Type';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+writetable(TT,strcat('AUC_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
+%xo
+
+
 
 %Cortex
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 

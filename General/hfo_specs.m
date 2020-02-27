@@ -1,4 +1,4 @@
-function [x,y,z,w,h,q]=hfo_specs(si,timeasleep)
+function [x,y,z,w,h,q,l]=hfo_specs(si,timeasleep)
 
 if ~isempty(si)
 
@@ -18,6 +18,8 @@ z=cellfun(@(equis) max(abs(hilbert(equis))) ,si,'UniformOutput',false);
 z=cell2mat(z);
 z=median(z);
 %amp_cortex(k)=z;
+l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./1000,abs(equis)),si,'UniformOutput',false));
+l=median(l);
 
 %Count
 w=length(si);
@@ -36,7 +38,8 @@ y=NaN;
 z=NaN;
 w=NaN;
 h=NaN;
-q=NaN;   
+q=NaN;
+l=NaN;
 
 end
 

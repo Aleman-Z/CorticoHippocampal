@@ -117,15 +117,16 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-%xo
+% xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex]=gui_findripples(CORTEX,states,xx,tr);
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 
-[x,y,z,~,~,~]=hfo_specs(si,timeasleep);
+[x,y,z,~,~,~,l]=hfo_specs(si,timeasleep);
 fi_cortex(k)=x;
 fa_cortex(k)=y;
 amp_cortex(k)=z;
+auc_cortex(k)=l;
 %xo
 %% Cortical HFOs
     hfos_cortex(k)=ripple;
@@ -148,10 +149,11 @@ HPC=HPC.*(0.195);
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
 
-[x,y,z,w,h]=hfo_specs(si,timeasleep);
+[x,y,z,~,~,~,l]=hfo_specs(si,timeasleep);
 fi_hpc(k)=x;
 fa_hpc(k)=y;
 amp_hpc(k)=z;
+auc_hpc(k)=l;
 % %Instantaneous frequency.
 % x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
 % x=cell2mat(x);
@@ -205,14 +207,14 @@ Sig_hpc=sig_hpc(~cellfun('isempty',cohfos1));
 Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOutput',false);
 Sig_hpc=[Sig_hpc{:}];
 
-[x,y,z,w,h,q]=hfo_specs(Sig_hpc,timeasleep);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_hpc,timeasleep);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
 count_cohfo_hpc(k)=w;
 rate_cohfo_hpc(k)=h;
 dura_cohfo_hpc(k)=q;
-
+auc_cohfo_hpc()
 %Single HFOs HPC
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
@@ -279,7 +281,7 @@ dura_single_cortex(k)=q;
 progress_bar(k,length(g),f)
     cd ..    
     end
-xo
+%xo
 
 %Cortex
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
@@ -393,7 +395,7 @@ title(xx{1})
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
-%
+%%
 %Cortex cohfos
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_cortex;rate_cohfo_cortex;dura_cohfo_cortex;fa_cohfo_cortex;fi_cohfo_cortex; amp_cohfo_cortex])];
@@ -418,7 +420,7 @@ title(xx{1})
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
-            
+  %%          
 
 %HPC
 c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
@@ -543,7 +545,7 @@ title('HPC')
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_',num2str(tr(2)),'_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
 
 %hpc singles
     TT=table;
@@ -555,7 +557,7 @@ title('HPC')
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_',num2str(tr(2)),'_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
 
 
