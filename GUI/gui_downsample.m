@@ -11,24 +11,27 @@ answer = inputdlg(prompt,dlgtitle,dims,definput)
 fs=str2num(answer{1});
 fs_new=str2num(answer{2});
 
-%SELECT TRIALS
-   answer = questdlg('Should we use all trials?', ...
-            'Trial selection', ...
-            'Use all','Select trials','Select trials');
-        
-switch answer
-    case 'Use all'
-        disp(['Using all trials.'])
-        an=[];
-    case 'Select trials'
-        prompt = {['Enter trials name common word without index:' sprintf('\n') '(Use commas for multiple names)']};
-        dlgtitle = 'Input';
-        dims = [1 35];
-        %definput = {'20','hsv'};
-        an = inputdlg(prompt,dlgtitle,dims);
-        %an=char(an);
-        %g=g(contains(g,{'PT'}));
-end
+% %% SELECT TRIALS
+%    answer = questdlg('Should we use all trials?', ...
+%             'Trial selection', ...
+%             'Use all','Select trials','Select trials');
+%         
+% switch answer
+%     case 'Use all'
+%         disp(['Using all trials.'])
+%         an=[];
+%     case 'Select trials'
+%         prompt = {['Enter trials name common word without index:' sprintf('\n') '(Use commas for multiple names)']};
+%         dlgtitle = 'Input';
+%         dims = [1 35];
+%         %definput = {'20','hsv'};
+%         an = inputdlg(prompt,dlgtitle,dims);
+%         %an=char(an);
+%         %g=g(contains(g,{'PT'}));
+% end
+%%
+an=[];
+%%
 stage=an;
 
 if ~isempty(stage)
@@ -105,15 +108,18 @@ if size(label1,1)~=3 % Not for Plusmaze
     close(f);
 end
 %%
+%xo
 %GO TO FOLDER AND READ ALL CONDITION FILES.
 iii=1;
 % for iii=4:length(labelconditions) 
  while iii<=length(labelconditions)  
 
-cd(dname)
+cd(dname)% Go to Ephys folder for specified rat.
 
-if size(label1,1)~=3
+if size(label1,1)~=3 %Not Plusmaze
     [BB,labelconditions,labelconditions2]=select_folder(Rat,iii,labelconditions,labelconditions2);
+    % In case of a repeated condition, update labelcondition and add
+    % repeated condition to the end.
     cd(BB)
     A=getfolder;    
 else
@@ -147,7 +153,7 @@ if Var==0 %Error: Var is a vector
         Var=or(cell2mat(aver),Var);
         end 
 end
-
+% xo
 if ~isempty(stage)
     A=A(Var);
 end
@@ -180,6 +186,7 @@ else
  str2=A;   
 end   
    %%
+%xo   
 %LABEL TRIALS.
 
 f = figure(2);
@@ -189,8 +196,9 @@ set(f, 'NumberTitle', 'off', ...
 c = uicontrol('Style','text','Position',[1 380 450 30]);
 % c = uicontrol('Style','text','Position',[1 380 450 20]);
 % c.String = {'Edit the Label column with the correct trial index according to the dates.'};
-c.String =sprintf('%s\n%s','Edit the Label column with the correct trial index according to the dates.','Leave blank if trial is corrupted.');
+% c.String =sprintf('%s\n%s','Edit the Label column with the correct trial index according to the dates.','Leave blank if trial is corrupted.');
 %{'Edit the Label column with the correct trial index according to the dates' 'Leave blank if trial is corrupted.'};
+c.String =sprintf('%s\n%s','Select trials.','Leave blank label if trial is corrupted.');
 c.FontSize=10;
 c.FontAngle='italic';
 
@@ -198,7 +206,7 @@ uit = uitable(f);
 % d = {A,str2};
 uit.Data = [A str2];
 uit.ColumnName={'File name'; 'Label'};
-uit.ColumnWidth= {200,50};;
+uit.ColumnWidth= {200,80};
 % uit.Position = [20 20 258 78];
 
 
@@ -217,7 +225,7 @@ str1=str1(not(cellfun('isempty',str2)));
 A=A(not(cellfun('isempty',str2)));
 str2=str2(not(cellfun('isempty',str2)));
 %%
-
+%xo
 F=waitbar(0,'Please wait...');
 for num=1:length(str1)
        
@@ -240,13 +248,18 @@ for num=1:length(str1)
     cfold={cfold.name};
 %     cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));    
     cfold=cfold(cellfun(@(x) ~isempty(strfind(x,'CH')),cfold));
-    
-    cf1=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '_'])),cfold))];
+    if strcmp(label1{1},'HPC')
+            cf1=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '_'])),cfold))];
+            cf2=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '_'])),cfold))];
+
+    else
+            cf1=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '_'])),cfold))];
+            cf2=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '_'])),cfold))];
+    end
 
 %     cf2=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2))])),cfold));
-    cf2=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '_'])),cfold))];
     
-if size(label1,1)==3
+if size(label1,1)==3 %Plusmaze
 %        cf3=cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3))])),cfold));
         cf3=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(3)) '_'])),cfold))];
 end
@@ -324,7 +337,7 @@ movegui(gcf,'center');
 %         xo
 end
 
-if size(label1,1)==3
+if size(label1,1)==3 %Plusmaze
 
     if size(cf3,1)~=1 ||  size(cf3,2)~=1 
 
@@ -400,7 +413,7 @@ if ~isfolder(num2str(Rat))
 end
 cd(num2str(Rat))
 
-if size(label1,1)~=3 %Instead of Plusmaze 
+if size(label1,1)~=3 %Not Plusmaze 
     % if ~exist(labelconditions2{iii}, 'dir')
     if ~isfolder(labelconditions2{iii})    
        mkdir(labelconditions2{iii})

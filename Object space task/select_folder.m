@@ -59,7 +59,8 @@ A=getfolder;
 %                BB=BB{1};
 %            end
 
-            
+        else
+            labelconditions{iii}=BB{1};
         end
         
     %     for j=1:length(BB)
