@@ -22,7 +22,7 @@ function varargout = gui_spectral(varargin)
 
 % Edit the above text to modify the response to help gui_spectral
 
-% Last Modified by GUIDE v2.5 10-Feb-2020 16:02:20
+% Last Modified by GUIDE v2.5 05-Mar-2020 10:47:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -58,10 +58,11 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% MEMORY DYNAMICS LOGO
+% Genzel lab LOGO
 % uiwait(handles.figure1);
 axes(handles.axes2)
-imshow('memdyn.png')
+%imshow('memdyn.png')
+imshow('butt_sitting_irene.jpg')
 
 axes(handles.axes1)
 %imshow('trace.PNG')
@@ -431,5 +432,3 @@ function figure1_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
