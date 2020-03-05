@@ -1,6 +1,6 @@
 %gui_downsample
 %Downsamples ephys data.
-function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
+%function gui_downsample(channels,label1,labelconditions,labelconditions2,rats)
 
 %SAMPLING FREQUENCY AND DOWNSAMPLED FREQUENCY.
 prompt = {'Enter acquisition frequency (Hz):','Enter new downsampled frequency (Hz):'};
@@ -248,6 +248,11 @@ for num=1:length(str1)
     cfold={cfold.name};
 %     cfold=cfold(cellfun(@(x) contains(x,'CH'),cfold));    
     cfold=cfold(cellfun(@(x) ~isempty(strfind(x,'CH')),cfold));
+    if isempty(cfold)
+        dname3=uigetdir([],strcat('Select folder where ephys data is stored'));
+        cd(dname3)
+    end
+    
     if strcmp(label1{1},'HPC')
             cf1=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(1)) '_'])),cfold))];
             cf2=[cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '.'])),cfold)) cfold(cellfun(@(x) ~isempty(strfind(x,['CH' num2str(vr(2)) '_'])),cfold))];
@@ -336,7 +341,7 @@ movegui(gcf,'center');
 %         error('Ambiguous channel')
 %         xo
 end
-
+%xo
 if size(label1,1)==3 %Plusmaze
 
     if size(cf3,1)~=1 ||  size(cf3,2)~=1 
@@ -461,4 +466,4 @@ end
 %xo
 end
 
-end
+%end
