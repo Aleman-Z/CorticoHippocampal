@@ -22,7 +22,7 @@ HPC=load(HPC);
 HPC=HPC.HPC;
 HPC=HPC.*(0.195);
 
-xx = inputdlg({'Cortical area (PAR or PFC)'},...
+xx = inputdlg({'Cortical area'},...
               'Type your selection', [1 50]); 
 
 
@@ -169,8 +169,6 @@ pfc=V_pfc{max_length==max(max_length)};
 % hold on
 % plot((1:length(pfc))./1000./60,5.*zscore(pfc)+150,'Color','red')
 % xlabel('Time (Minutes)')
-%xo
-%%
 plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','blue')
 hold on
 plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','red')
