@@ -156,13 +156,17 @@ k=1;
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
 %%
-% Find max and plot
-max_length=cellfun(@length,v_hpc);
+% Find longuest epoch and plot
+% max_length=cellfun(@length,v_hpc);
+% N=max_length==max(max_length);
+max_length=cellfun(@length,swr_pfc(:,1));
+N=max_length==max(max_length);
 
-
-
-hpc=V_hpc{max_length==max(max_length)};
-pfc=V_pfc{max_length==max(max_length)};
+hpc=V_hpc{N};
+pfc=V_pfc{N};
+hpc2=signal2_hpc{N};
+pfc2=signal2_pfc{N};
+n=find(N);
 
 % plot((1:length(hpc))./1000./60,5.*zscore(hpc)+100,'Color','blue')
 % hold on
@@ -179,13 +183,13 @@ answer = inputdlg(prompt,dlgtitle,dims,definput);
  win_len=str2num(answer{1});
  BR=answer{2};
  %%
+close all
 plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
 hold on
 plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
 xlabel('Time (Seconds)')
 
-hpc2=signal2_hpc{max_length==max(max_length)};
-pfc2=signal2_pfc{max_length==max(max_length)};
+
 plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
 plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
 
@@ -196,7 +200,7 @@ yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
 % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
 b=gca;
 b.FontSize=12;
-n=find(max_length==max(max_length));
+% n=find(max_length==max(max_length));
 
 %  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
 
@@ -204,6 +208,11 @@ if strcmp(BR,'PAR')
     sn=swr_pfc{n,3};
 else
     sn=swr_hpc{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
 end
 
 prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
@@ -214,7 +223,7 @@ answer2 = inputdlg(prompt,dlgtitle,dims,definput);
 answer2=str2num(answer2{1});
  
 
- n=find(max_length==max(max_length));
+% n=find(max_length==max(max_length));
 %  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
 
 stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*250,'Color','blue') %(HPC)
@@ -237,7 +246,7 @@ yticklabels({'HPC',xx{1}})
 printing(['Raw_coocur_' num2str(answer2)])
 
 
-%printing(['Raw_single_PAR_' num2str(answer2)])
+% printing(['Raw_single_HPC_' num2str(answer2)])
 %%
 close all
 plot((1:length(hpc2))./1000,5.*zscore(hpc2)+100,'Color','black')
@@ -253,8 +262,8 @@ yticklabels({'HPC',xx{1}})
 
 %%
 % printing('Filtered_coccur_10')
-%printing(['Filtered_single_PAR_' num2str(answer2)])
- printing(['Filtered_coocur_' num2str(answer2)])
+% printing(['Filtered_single_HPC_' num2str(answer2)])
+printing(['Filtered_coocur_' num2str(answer2)])
 
 %%
 xo
