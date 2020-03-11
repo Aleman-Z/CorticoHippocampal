@@ -11,7 +11,7 @@ Rat=str2double(answer{1});
 % Rat=str2num(answer{1}); 
 
 %GET EPHYS AND NEW FOLDER.
-dname=uigetdir([],strcat('Select folder with Ephys data for Rat',num2str(Rat)));
+dname=uigetdir([],strcat('Select folder with Sleep scoring data for Rat',num2str(Rat)));
 dname2=uigetdir([],strcat('Select folder where downsampled data was saved'));
 
 %Get folders
