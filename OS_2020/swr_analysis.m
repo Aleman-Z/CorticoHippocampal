@@ -24,9 +24,29 @@ switch indx1
         
 end
 
+
+
 xx = inputdlg({'Cortical area (PAR or PFC)'},...
               'Type your selection', [1 50]); 
 
+% D1=70;
+% D2=40;
+  prompt = {'Select a threshold value for HPC'};
+    dlgtitle = 'Threshold HPC';
+    definput = {'70'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D1=str2num(answer{1}) 
+    %100 for Rat 26
+
+
+    prompt = {['Select a threshold value for',' ',xx{1}]};
+    dlgtitle = ['Threshold',' ',xx{1}]; %'Threshold PFC';
+    definput = {'40'};
+    % opts.Interpreter = 'tex';
+    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
+    D2=str2num(answer{1}) 
+          
 % list = {'HPC','PFC','PAR'};
 % [indx2] = listdlg('SelectionMode','single','ListString',list);
 % 
@@ -38,6 +58,8 @@ xx = inputdlg({'Cortical area (PAR or PFC)'},...
 %     case 3
 %         barea='PAR'
 % end
+nr_swr_HPC=[];
+nr_swr_Cortex=[];
 
 rat_folder=getfolder;
 for k=1:length(rat_folder)
@@ -166,6 +188,46 @@ Cortex=Cortex.*(0.195);
                             Cortex=Cortex(1:45*60*1000).'; %Take only 45 min.
                         end
                         
+                        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2);  
+%% Threshold selection
+[swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc]=swr_check_thr(HPC,Cortex,states,ss,D1,D2);
+max_length=cellfun(@length,V_hpc);
+N=max_length==max(max_length);
+% max_length=cellfun(@length,swr_pfc(:,1));
+% N=max_length==max(max_length);
+
+hpc=V_hpc{N};
+pfc=V_pfc{N};
+hpc2=signal2_hpc{N};
+pfc2=signal2_pfc{N};
+n=find(N);
+
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
+
+
+stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+
+%%
+
+% 
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+xo
+% 
+% 
+% yticks([100 150 220 290])
+% yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% % a = get(gca,'YTickLabel');
+% % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+% b=gca;
+% b.FontSize=12;
+% n=find(max_length==max(max_length));
+%%
+%                        xo 
                         
                     else % PostTrial 5 case 
                         
@@ -207,137 +269,137 @@ Cortex=Cortex.*(0.195);
                         Cortex_3=Cortex(1+2700*2*1000:2700*3*1000);
                         Cortex_4=Cortex(1+2700*3*1000:2700*4*1000);
                         
-                        
+                        [nr_swr_HPC(6,:), nr_swr_Cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2);  
+                        [nr_swr_HPC(7,:), nr_swr_Cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2);  
+                        [nr_swr_HPC(8,:), nr_swr_Cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2);  
+                        [nr_swr_HPC(9,:), nr_swr_Cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2);  
+
     
                     end
-%     xo
-%Binning sleep scoring data
-                    bin_size=5*60; %5minutes
-                    nbins=size(states,2)/bin_size;
 
-                    slpscr_binned = {};
-                    for n=1:nbins
-                       slpscr_binned= [slpscr_binned states(:,1+(n-1)*bin_size:bin_size*(n))];
-                    end
-
-%Binning sleep scoring data                    
-                    bin_size2=5*60*1000; %5minutes
-                    nbins=size(HPC,2)/bin_size2;
-                    
-                    HPC_binned = {};
-                    for n=1:nbins
-                       HPC_binned = [HPC_binned HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
-                    end
-                    
-                    Cortex_binned = {};
-                    for n=1:nbins
-                       Cortex_binned = [Cortex_binned Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
-                    end
-
- xo
-%Band pass filter design:
-fn=1000; % New sampling frequency. 
-Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
-% Wn1=[50/(fn/2) 80/(fn/2)]; 
-[b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
-
-%LPF 300 Hz:
-fn=1000; % New sampling frequency. 
-Wn1=[320/(fn/2)]; % Cutoff=320 Hz
-[b2,a2] = butter(3,Wn1); %Filter coefficients
+% xo
 %%
-Dwndat_binned=cellfun(@(equis) filtfilt(b2,a2,equis), dwndat_binned ,'UniformOutput',false);
-Dwndat_binned=cellfun(@(equis) filtfilt(b1,a1,equis), Dwndat_binned ,'UniformOutput',false); %100-300 Hz
-Dwndat_binned=cellfun(@(equis) times((1/0.195), equis)  ,Dwndat_binned,'UniformOutput',false); %Remove convertion factor for ripple detection
-%%
-% All states
-fn=1000;
-ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,Dwndat_binned,'UniformOutput',false);
-D1=100;
-[Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),Dwndat_binned,ti,'UniformOutput',false);    
-%xo
 
-N=1;
-allscreen()
-%ax1=subplot(1,2,1)
-plot(ti{N},Dwndat_binned{N})
-hold on
-stem(Mx_hpc{N},ones(size(Mx_hpc{N}))*1000)
-%%
-xo
-dwndat2=filtfilt(b2,a2,dwndat);
-dwndat2=filtfilt(b1,a1,dwndat2);
-dwndat2=dwndat2.*(1/0.195);
 
-Ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,{dwndat2},'UniformOutput',false);
-D1=200;
-[S_hpc,E_hpc,M_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),{dwndat2.'},Ti,'UniformOutput',false);    
+
+%%
+% Dwndat_binned=cellfun(@(equis) filtfilt(b2,a2,equis), dwndat_binned ,'UniformOutput',false);
+% Dwndat_binned=cellfun(@(equis) filtfilt(b1,a1,equis), Dwndat_binned ,'UniformOutput',false); %100-300 Hz
+% Dwndat_binned=cellfun(@(equis) times((1/0.195), equis)  ,Dwndat_binned,'UniformOutput',false); %Remove convertion factor for ripple detection
+% %%
+% % All states
+% fn=1000;
+% ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,Dwndat_binned,'UniformOutput',false);
+% D1=100;
+% [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),Dwndat_binned,ti,'UniformOutput',false);    
+% %xo
+% 
+% N=1;
+% allscreen()
+% %ax1=subplot(1,2,1)
+% plot(ti{N},Dwndat_binned{N})
+% hold on
+% stem(Mx_hpc{N},ones(size(Mx_hpc{N}))*1000)
+%%
+% xo
+% dwndat2=filtfilt(b2,a2,dwndat);
+% dwndat2=filtfilt(b1,a1,dwndat2);
+% dwndat2=dwndat2.*(1/0.195);
+% 
+% Ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,{dwndat2},'UniformOutput',false);
+% D1=200;
+% [S_hpc,E_hpc,M_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),{dwndat2.'},Ti,'UniformOutput',false);    
 
 %%
 
-                    for m = 1:length(dwndat_binned)
-
-                        stateloc = find(slpscr_binned{m}==ss);
-                        stateloc2={};
-                        data=slpscr_binned{m}==ss;
-
-                        if sum(data)>0;
-
-
-
-                            nonZeroElements = data ~= 0;
-                            % Define the closest regions can be.  If they are farther away than this,
-                            % then they will be considered as separate regions.
-                            if strcmp(barea,'HPC')
-                            minSeparation = 1;
-                            else
-                            minSeparation = 2;                    
-                            end
-
-                            nonZeroElements = ~bwareaopen(~nonZeroElements, minSeparation);
-                            [labeledRegions, numRegions] = bwlabel(nonZeroElements);
-
-                            MC=[];
-                            for p = 1:numRegions
-                                stateloc2{p}=dwndat_binned{m}(min(find(labeledRegions==p))*1000-999:max(find(labeledRegions==p))*1000);
-                                [NC,~]=epocher( {stateloc2{p}},1);
-                                MC=[MC ;NC.'];
-
-                            end
-                              [pxx,f]=pmtm(MC.',4,[],1000);
-                              meanp = mean(pxx,2);
-                              [minDistance1, indexOfMin1] = min(abs(f-5));
-                              [minDistance2, indexOfMin2] = min(abs(f-8));
-                              ratiotheta = [ratiotheta sum(meanp(indexOfMin1:indexOfMin2))/ sum(meanp)];
-                              meanp_pt = [meanp_pt meanp];
-                              save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i},'_',barea),'meanp_pt')
-
-                              
-                        else
-                                ratiotheta=[ratiotheta NaN];
-                                meanp_pt = [meanp_pt NaN];
-                                save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i}),'meanp_pt')
-
-                        end
-                        
-                    end
+%                     for m = 1:length(dwndat_binned)
+% 
+%                         stateloc = find(slpscr_binned{m}==ss);
+%                         stateloc2={};
+%                         data=slpscr_binned{m}==ss;
+% 
+%                         if sum(data)>0;
+% 
+% 
+% 
+%                             nonZeroElements = data ~= 0;
+%                             % Define the closest regions can be.  If they are farther away than this,
+%                             % then they will be considered as separate regions.
+%                             if strcmp(barea,'HPC')
+%                             minSeparation = 1;
+%                             else
+%                             minSeparation = 2;                    
+%                             end
+% 
+%                             nonZeroElements = ~bwareaopen(~nonZeroElements, minSeparation);
+%                             [labeledRegions, numRegions] = bwlabel(nonZeroElements);
+% 
+%                             MC=[];
+%                             for p = 1:numRegions
+%                                 stateloc2{p}=dwndat_binned{m}(min(find(labeledRegions==p))*1000-999:max(find(labeledRegions==p))*1000);
+%                                 [NC,~]=epocher( {stateloc2{p}},1);
+%                                 MC=[MC ;NC.'];
+% 
+%                             end
+%                               [pxx,f]=pmtm(MC.',4,[],1000);
+%                               meanp = mean(pxx,2);
+%                               [minDistance1, indexOfMin1] = min(abs(f-5));
+%                               [minDistance2, indexOfMin2] = min(abs(f-8));
+%                               ratiotheta = [ratiotheta sum(meanp(indexOfMin1:indexOfMin2))/ sum(meanp)];
+%                               meanp_pt = [meanp_pt meanp];
+%                               save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i},'_',barea),'meanp_pt')
+% 
+%                               
+%                         else
+%                                 ratiotheta=[ratiotheta NaN];
+%                                 meanp_pt = [meanp_pt NaN];
+%                                 save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i}),'meanp_pt')
+% 
+%                         end
+%                         
+%                     end
                     cd ..
                 else
-                    cd ..
+                    cd .. %Means there is no sleep scoring file.
                 end
                 
 
-            meanp_sd = [meanp_sd {meanp_pt}];
-            save(strcat('Meanpower_SD_',stage,'_',g{j},'_',barea), 'meanp_sd')
-            ratiothetasd = [ratiothetasd {ratiotheta}];
-            save(strcat('ratiotheta_SD_',stage,'_',g{j},'_',barea),'ratiothetasd')
-            
+%             meanp_sd = [meanp_sd {meanp_pt}];
+%             save(strcat('Meanpower_SD_',stage,'_',g{j},'_',barea), 'meanp_sd')
+%             ratiothetasd = [ratiothetasd {ratiotheta}];
+%             save(strcat('ratiotheta_SD_',stage,'_',g{j},'_',barea),'ratiothetasd')
+% if i==5
+%     xo
+% end            
             end
                 cd ..
+
         end
+%         allscreen()
+%         subplot(1,2,1)
+        imagesc(nr_swr_HPC); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title('HPC HFOs')
+        printing(['HPC_' g{j} '_' stage])
+        close all
+        
+%         subplot(1,2,2)
+        imagesc(nr_swr_Cortex); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title([xx{1} ' HFOs'])
+        printing(['Cortex_' g{j} '_' stage])
+        close all       
+
         
           
     end
+%     xo
 
     cd ..
 end
