@@ -4,3 +4,6 @@ A couple of scripts used for the detection and characterization of cortical and 
 * **gui_swr_test2.m:**  
 *Detects single and coocurring HFOs and computes their properties.* 
 
+* **hfo_specs.m:**  
+*Computes the main properties of the input HFOs.* 
+
