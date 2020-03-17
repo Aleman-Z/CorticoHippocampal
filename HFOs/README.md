@@ -1,6 +1,6 @@
-## **Non-Parametric:**
-A non-parametric method using a Multitaper frequency analysis can also be used to estimate the spectral matrix and compute the spectral causality of the signals.
+## **HFOs: High Frequency Oscillations:**
+A couple of scripts used for the detection and characterization of cortical and hippocampal HFOs.
 
-* **createauto_np.m:**  
-*Computes _non-parametric_ spectral granger causality.* 
+* **gui_swr_test2.m:**  
+*Detects single and coocurring HFOs and computes their properties.* 
 
