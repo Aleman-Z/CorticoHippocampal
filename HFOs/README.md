@@ -7,3 +7,7 @@ A couple of scripts used for the detection and characterization of cortical and 
 * **hfo_specs.m:**  
 *Computes the main properties of the input HFOs.* 
 
+* **gui_view_hfos.m:**  
+*Visualizes examples of HFOs.* 
+
+
