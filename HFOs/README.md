@@ -1,4 +1,4 @@
-## **HFOs: High Frequency Oscillations :milky_way: :**
+## **HFOs: High Frequency Oscillations :milky_way:**
 A couple of scripts used for the detection and characterization of cortical and hippocampal HFOs.
 
 * **gui_swr_test2.m:**  
