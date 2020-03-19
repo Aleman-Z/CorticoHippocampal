@@ -2,6 +2,11 @@ clear variables
 % cd('C:\Users\students\Documents\OS_ephys_da\Data_downsampled')
 cd('/home/adrian/Documents/new_OS_downsampled_2020')
 
+%First tune threshold, then run detection for that threshold.
+list = {'Try threshold','Run detection'};
+[ind_mode] = listdlg('SelectionMode','single','ListString',list);
+
+%Select sleep stage or use all.
 list = {'Wake','NREM','Transitional','REM','All'};
 [indx1] = listdlg('SelectionMode','single','ListString',list);
 
@@ -27,7 +32,7 @@ end
 
 
 xx = inputdlg({'Cortical area (PAR or PFC)'},...
-              'Type your selection', [1 50]); 
+              'Type your selection', [1 50],{'PFC'}); 
 
 % D1=70;
 % D2=40;
@@ -189,46 +194,42 @@ Cortex=Cortex.*(0.195);
                         end
                         
                         [nr_swr_HPC(i,:), nr_swr_Cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2);  
-%% Threshold selection
-[swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc]=swr_check_thr(HPC,Cortex,states,ss,D1,D2);
-max_length=cellfun(@length,V_hpc);
-N=max_length==max(max_length);
-% max_length=cellfun(@length,swr_pfc(:,1));
-% N=max_length==max(max_length);
+%xo                        
+    if ind_mode==1
+        %% Threshold selection
+        [swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc]=swr_check_thr(HPC,Cortex,states,ss,D1,D2);
+        max_length=cellfun(@length,V_hpc);
+        N=max_length==max(max_length);
+        % max_length=cellfun(@length,swr_pfc(:,1));
+        % N=max_length==max(max_length);
 
-hpc=V_hpc{N};
-pfc=V_pfc{N};
-hpc2=signal2_hpc{N};
-pfc2=signal2_pfc{N};
-n=find(N);
+        hpc=V_hpc{N};
+        pfc=V_pfc{N};
+        hpc2=signal2_hpc{N};
+        pfc2=signal2_pfc{N};
+        n=find(N);
 
-plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
-hold on
-plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
-xlabel('Time (Seconds)')
+        plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+        hold on
+        plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+        xlabel('Time (Seconds)')
 
 
-stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*250,'Color','blue') %(HPC)
-stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+        stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*350,'Color','blue') %(HPC)
+        stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*350,'Color','red')%Seconds (Cortex)
 
-%%
-
-% 
-plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
-plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
-xo
-% 
-% 
-% yticks([100 150 220 290])
-% yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
-% % a = get(gca,'YTickLabel');
-% % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
-% b=gca;
-% b.FontSize=12;
-% n=find(max_length==max(max_length));
-%%
-%                        xo 
-                        
+        % 
+        plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+        plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+        % 
+        % 
+        yticks([100 150 220 290])
+        yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+        a = get(gca,'YTickLabel');
+        set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+    'Stop the code here'
+        xo
+    end
                     else % PostTrial 5 case 
                         
                         %Sleep scoring data
