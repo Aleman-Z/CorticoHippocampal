@@ -28,6 +28,10 @@ Wn1=[320/(fn/2)]; % Cutoff=320 Hz
     vec_bin=states;
     vec_bin(vec_bin~=ss)=0;
     vec_bin(vec_bin==ss)=1;
+    
+    if sum(vec_bin)==0  %%All states
+        vec_bin=vec_bin+1;
+    end
     %Cluster one values:
     v2=ConsecutiveOnes(vec_bin);
     

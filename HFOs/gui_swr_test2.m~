@@ -92,7 +92,7 @@ for iii=1:length(labelconditions)
 
 %%
 f=waitbar(0,'Please wait...');
-    for k=1:length(g)
+    for k=8:length(g)
         cd(g{k})
 %(level,nrem,notch,w,lepoch)
 %xo
@@ -133,7 +133,6 @@ si=[si{:}];
 [x,y,z,~,~,~,l,p]=hfo_specs(si,timeasleep,1);
 cd ..
 printing(['Histograms_Cortex_' g{k}]);
-close all
 cd(g{k})
 
 fi_cortex(k)=x;
@@ -170,12 +169,7 @@ si=[si{:}];
 % close all
 % cd(g{k})
 
-[x,y,z,~,~,~,l,p]=hfo_specs(si,timeasleep,0);
-% cd ..
-% printing(['Histograms_HPC_' g{k}]);
-% close all
-% cd(g{k})
-
+[x,y,z,~,~,~,l,p]=hfo_specs(si,timeasleep);
 fi_hpc(k)=x;
 fa_hpc(k)=y;
 amp_hpc(k)=z;
@@ -239,16 +233,16 @@ Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOut
 Sig_hpc=[Sig_hpc{:}];
 %xo
 
-% plot_hfo(Sig_hpc,{cohf_mx_hpc_val},{cohf_sx_hpc_val},label1{1})
-% title(['coHFO HPC envelope  ' strrep(g{k},'_','-')])
-% cd ..
-% printing(['coHFO HPC envelope ' strrep(g{k},'_','-')])
-% close all
-% cd(g{k})
+plot_hfo(Sig_hpc,{cohf_mx_hpc_val},{cohf_sx_hpc_val},label1{1})
+title(['coHFO HPC envelope  ' strrep(g{k},'_','-')])
+cd ..
+printing(['coHFO HPC envelope ' strrep(g{k},'_','-')])
+close all
+cd(g{k})
 
 
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc,timeasleep,0);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_hpc,timeasleep);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
@@ -256,7 +250,7 @@ count_cohfo_hpc(k)=w;
 rate_cohfo_hpc(k)=h;
 dura_cohfo_hpc(k)=q;
 auc_cohfo_hpc(k)=l;
-p2p_cohfo_hpc(k)=p;
+p2p_hpc(k)=p;
 %Single HFOs HPC
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
@@ -271,14 +265,14 @@ single_sx_hpc_val=[single_sx_hpc_val{:}];
 % xo
 
 
-% plot_hfo(Sig_hpc_single,{single_mx_hpc_val},{single_sx_hpc_val},label1{1})
-% title(['Single HPC envelope ' strrep(g{k},'_','-')])
-% cd ..
-% printing(['Single HPC envelope ' strrep(g{k},'_','-')])
-% close all
-% cd(g{k})
+plot_hfo(Sig_hpc_single,{single_mx_hpc_val},{single_sx_hpc_val},label1{1})
+title(['Single HPC envelope ' strrep(g{k},'_','-')])
+cd ..
+printing(['Single HPC envelope ' strrep(g{k},'_','-')])
+close all
+cd(g{k})
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_hpc_single,timeasleep);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
@@ -286,7 +280,6 @@ count_single_hpc(k)=w;
 rate_single_hpc(k)=h;
 dura_single_hpc(k)=q;
 auc_single_hpc(k)=l;
-p2p_single_hpc(k)=p;
 
 
 %%%%
@@ -316,15 +309,15 @@ Sig_cortex=cellfun(@(equis1,equis2) equis1(equis2),Sig_cortex,coh_samp_cortex,'U
 Sig_cortex=[Sig_cortex{:}];
 % xo
 
-% plot_hfo(Sig_cortex,{cohf_mx_cortex_val},{cohf_sx_cortex_val},label1{2})
-% title(['coHFO cortex envelope ' strrep(g{k},'_','-')])
-% cd ..
-% printing(['coHFO cortex envelope ' strrep(g{k},'_','-')])
-% close all
-% cd(g{k})
+plot_hfo(Sig_cortex,{cohf_mx_cortex_val},{cohf_sx_cortex_val},label1{2})
+title(['coHFO cortex envelope ' strrep(g{k},'_','-')])
+cd ..
+printing(['coHFO cortex envelope ' strrep(g{k},'_','-')])
+close all
+cd(g{k})
 
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex,timeasleep,0);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_cortex,timeasleep);
 fi_cohfo_cortex(k)=x;
 fa_cohfo_cortex(k)=y;
 amp_cohfo_cortex(k)=z;
@@ -332,7 +325,7 @@ count_cohfo_cortex(k)=w;
 rate_cohfo_cortex(k)=h;
 dura_cohfo_cortex(k)=q;
 auc_cohfo_cortex(k)=l;
-p2p_cohfo_cortex(k)=p;
+
 %Single HFOs Cortex
 %[v2]=single_hfo_get_sample(Mx_hpc{1},cohfos1{1});
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex,cohfos2,'UniformOutput',false);
@@ -346,14 +339,14 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
 
 
 
-% plot_hfo(Sig_cortex_single,{single_mx_cortex_val},{single_sx_cortex_val},label1{2})
-% title(['Single cortex envelope ' strrep(g{k},'_','-')])
-% cd ..
-% printing(['Single cortex envelope ' strrep(g{k},'_','-')])
-% close all
-% cd(g{k})
+plot_hfo(Sig_cortex_single,{single_mx_cortex_val},{single_sx_cortex_val},label1{2})
+title(['Single cortex envelope ' strrep(g{k},'_','-')])
+cd ..
+printing(['Single cortex envelope ' strrep(g{k},'_','-')])
+close all
+cd(g{k})
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0);
+[x,y,z,w,h,q,l]=hfo_specs(Sig_cortex_single,timeasleep);
 fi_single_cortex(k)=x;
 fa_single_cortex(k)=y;
 amp_single_cortex(k)=z;
@@ -361,25 +354,19 @@ count_single_cortex(k)=w;
 rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
 auc_single_cortex(k)=l;
-p2p_single_cortex(k)=p;
 % xo
 progress_bar(k,length(g),f)
     cd ..    
     end
-% xo
+xo
 
 %AUC
 TT=table;
 TT.Variables=    [[{'All_cortex'};{'All_HPC'};{'Cohfo_cortex'};{'Cohfo_hpc'};{'Single_cortex'};{'Single_HPC'}] num2cell([auc_cortex;auc_hpc;auc_cohfo_cortex;auc_cohfo_hpc;auc_single_cortex;auc_single_hpc])];
 TT.Properties.VariableNames=['HFO Type';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
 writetable(TT,strcat('AUC_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
-
-%Peak-to-Peak distance
-TT=table;
-TT.Variables=    [[{'All_cortex'};{'All_HPC'};{'Cohfo_cortex'};{'Cohfo_hpc'};{'Single_cortex'};{'Single_HPC'}] num2cell([p2p_cortex;p2p_hpc;p2p_cohfo_cortex;p2p_cohfo_hpc;p2p_single_cortex;p2p_single_hpc])];
-TT.Properties.VariableNames=['HFO Type';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-writetable(TT,strcat('P2P_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %xo
+
 
 
 %Cortex
