@@ -129,7 +129,7 @@ else
 %%
     prompt = {'Select a threshold value for HPC'};
     dlgtitle = 'Threshold HPC';
-    definput = {'100'};
+    definput = {'70'};
     % opts.Interpreter = 'tex';
     answer = inputdlg(prompt,dlgtitle,[1 40],definput);
     D1=str2num(answer{1}) 
@@ -138,7 +138,7 @@ else
 
     prompt = {['Select a threshold value for',' ',xx{1}]};
     dlgtitle = ['Threshold',' ',xx{1}]; %'Threshold PFC';
-    definput = {'30'};
+    definput = {'40'};
     % opts.Interpreter = 'tex';
     answer = inputdlg(prompt,dlgtitle,[1 40],definput);
     D2=str2num(answer{1}) 
@@ -164,6 +164,8 @@ max_length=cellfun(@length,v_hpc);
 
 hpc=V_hpc{max_length==max(max_length)};
 pfc=V_pfc{max_length==max(max_length)};
+hpc2=signal2_hpc{max_length==max(max_length)};
+pfc2=signal2_pfc{max_length==max(max_length)};
 
 % plot((1:length(hpc))./1000./60,5.*zscore(hpc)+100,'Color','blue')
 % hold on
@@ -176,18 +178,19 @@ hold on
 plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','red')
 xlabel('Time (Seconds)')
 
-yticks([100 150])
-yticklabels({'HPC',xx{1}})
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (100-300Hz)',[xx{1} '(100-300Hz)']})
 % a = get(gca,'YTickLabel');
 % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
 b=gca;
 b.FontSize=12;
-
+ plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','blue')
+        plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','red')
 
 n=find(max_length==max(max_length));
-stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*200,'Color','blue')
-stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*200,'Color','red')%Seconds
-title('Raw traces')
+stem([swr_hpc{n,3}],ones(length([swr_hpc{n}]),1).*350,'Color','blue')
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*350,'Color','red')%Seconds
+title('Traces')
 %%
 answer1 = questdlg('Compute spectrograms?', ...
 	'Select one', ...
