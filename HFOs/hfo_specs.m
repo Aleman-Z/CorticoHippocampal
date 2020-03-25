@@ -32,7 +32,7 @@ function [x,y,z,w,h,q,l,p]=hfo_specs(si,timeasleep,print_hist)
         z=cell2mat(z);
         if print_hist==1
             subplot(3,2,3)
-            histogram(z,[0:2:30],'Normalization','probability'); title('Amplitude');xlabel('Amplitude \muV');ylabel('Probability')
+            histogram(z,[0:1:30],'Normalization','probability'); title('Amplitude');xlabel('Amplitude \muV');ylabel('Probability')
             xlim([0 30])
             ylim([0 0.5])
             yticks([0:0.1:0.5])            
