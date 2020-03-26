@@ -32,7 +32,7 @@ function [x,y,z,w,h,q,l,p]=hfo_specs(si,timeasleep,print_hist)
         z=cell2mat(z);
         if print_hist==1
             subplot(3,2,3)
-            histogram(z,[0:1:30],'Normalization','probability'); title('Amplitude');xlabel('Amplitude \muV');ylabel('Probability')
+            histogram(z,[0:1:30],'Normalization','probability'); title('Amplitude');xlabel('\muV');ylabel('Probability')
             xlim([0 30])
             ylim([0 0.5])
             yticks([0:0.1:0.5])            
@@ -61,10 +61,11 @@ function [x,y,z,w,h,q,l,p]=hfo_specs(si,timeasleep,print_hist)
         q=(cellfun('length',si)/1000);
         if print_hist==1
             subplot(3,2,5)
-            histogram(q,[0:0.005:0.1],'Normalization','probability'); title('Duration');xlabel('Duration (s)');ylabel('Probability')
-            xlim([0 0.1])
+            histogram(q*1000,[0:0.005:0.1].*1000,'Normalization','probability'); title('Duration');xlabel('MIliseconds');ylabel('Probability')
+            xlim([0 0.1]*1000)
             ylim([0 0.5])
-            yticks([0:0.1:0.5])            
+            yticks([0:0.1:0.5])
+            xticks([0 0.025 0.05 0.075 0.1]*1000)
         end
         q=median(q);
         
@@ -72,7 +73,7 @@ function [x,y,z,w,h,q,l,p]=hfo_specs(si,timeasleep,print_hist)
         p=cellfun(@peak2peak,si);
         if print_hist==1
             subplot(3,2,6)
-            histogram(p,[0:2:45],'Normalization','probability'); title('Peak-to-peak Amplitude');xlabel('P2P distance');ylabel('Probability');
+            histogram(p,[0:2:45],'Normalization','probability'); title('Peak-to-peak amplitude');xlabel('\muV');ylabel('Probability');
             xlim([0 45])
             ylim([0 0.5]) 
             yticks([0:0.1:0.5])            
