@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx]=gui_findripples(CORTEX,states,xx,tr)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets, RipFreq_douplets,rip_duration_douplets]=gui_findripples(CORTEX,states,xx,tr)
     %Band pass filter design:
     fn=1000; % New sampling frequency.
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
@@ -39,17 +39,53 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx]=gui_findripples
     else
     [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
     end
+    
+    %Douplets and triplets detection
+    for l=1:length(Mx)
+         hfo_sequence=ConsecutiveOnes(diff(Mx{l})<=0.300);
+         %Douplets
+         douplets=(hfo_sequence==1);
+         Mx_douplets_1{l}=Mx{l}(find(douplets));
+         Mx_douplets_2{l}=Mx{l}(find(douplets)+1);
+         Sx_douplets_1{l}=Sx{l}(find(douplets));
+         Sx_douplets_2{l}=Sx{l}(find(douplets)+1);
+         Ex_douplets_1{l}=Ex{l}(find(douplets));
+         Ex_douplets_2{l}=Ex{l}(find(douplets)+1);
+         
+         %Triplets
+         triplets=(hfo_sequence==2);
+         Mx_triplets_1{l}=Mx{l}(find(triplets));
+         Mx_triplets_2{l}=Mx{l}(find(triplets)+1);
+         Mx_triplets_3{l}=Mx{l}(find(triplets)+2);
+         Sx_triplets_1{l}=Sx{l}(find(triplets));
+         Sx_triplets_2{l}=Sx{l}(find(triplets)+1);
+         Sx_triplets_3{l}=Sx{l}(find(triplets)+2);
+         Ex_triplets_1{l}=Ex{l}(find(triplets));
+         Ex_triplets_2{l}=Ex{l}(find(triplets)+1);
+         Ex_triplets_3{l}=Ex{l}(find(triplets)+2);
+         
+    end    
+    
     for l=1:length(Sx)
          sig{l}=getsignal(Sx,Ex,ti,Mono,l);
 %        sig{l}=getsignal(Sx,Ex,ti,V,l);
-
+         sig_douplets_1{l}=getsignal(Sx_douplets_1,Ex_douplets_1,ti,Mono,l);
+         sig_triplets_1{l}=getsignal(Sx_triplets_1,Ex_triplets_1,ti,Mono,l);
     end
     sig=sig.';
+    sig_douplets_1=sig_douplets_1.';
+    sig_triplets_1=sig_triplets_1.';
+    
     % [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
-    s=cellfun('length',Sx);
-    RipFreq2=sum(s)/(timeasleep*(60)); %RIpples per second.
-    ripple2=sum(s);
-    C = cellfun(@minus,Ex,Sx,'UniformOutput',false);
-    CC=([C{:}]);
-    rip_duration=median(CC);
+%All HFOs
+%     s=cellfun('length',Sx);
+%     RipFreq2=sum(s)/(timeasleep*(60)); %RIpples per second.
+%     ripple2=sum(s);
+%     C = cellfun(@minus,Ex,Sx,'UniformOutput',false);
+%     CC=([C{:}]);
+%     rip_duration=median(CC);
+    [ripple2, RipFreq2,rip_duration]=hfo_count_freq_duration(Sx,Ex,timeasleep);
+%Douplets
+    [ripple_douplets, RipFreq_douplets,rip_duration_douplets]=hfo_count_freq_duration(Sx_douplets_1,Ex_douplets_1,timeasleep);
+
 end

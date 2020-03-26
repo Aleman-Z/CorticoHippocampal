@@ -118,7 +118,7 @@ else
       error('No Scoring found')    
 end
 % xo
-[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex]=gui_findripples(CORTEX,states,xx,tr);
+[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,ripple_douplets, RipFreq_douplets,rip_duration_douplets]=gui_findripples(CORTEX,states,xx,tr);
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 %xo
@@ -147,6 +147,13 @@ p2p_cortex(k)=p;
     hfos_cortex_rate(k)=RipFreq;
     hfos_cortex_duration(k)=rip_duration;
     clear ripple RipFreq
+    
+%Douplets
+    hfos_cortex_douplets(k)=ripple_douplets;
+    hfos_cortex_rate_douplets(k)=RipFreq_douplets;
+    hfos_cortex_duration_douplets(k)=rip_duration_douplets;
+    clear ripple_douplets RipFreq_douplets
+
 %     C = cellfun(@minus,Ex_pfc,Sx_pfc,'UniformOutput',false);
 %     CC=([C{:}]);
 %     hfos_pfc_duration(k)=median(CC);
@@ -158,7 +165,7 @@ HPC=load(HPC);
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
 
-[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc]=gui_findripples(HPC,states,{'HPC'},tr);
+[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,ripple_douplets, RipFreq_douplets,rip_duration_douplets]=gui_findripples(HPC,states,{'HPC'},tr);
 
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
@@ -203,6 +210,10 @@ hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
 
+%Douplets
+hfos_hpc_douplets(k)=ripple_douplets;
+hfos_hpc_rate_douplets(k)=RipFreq_douplets;
+hfos_hpc_duration_douplets(k)=rip_duration_douplets;
 %% Coocurent hfos
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex,'UniformOutput',false);
 %cohfos1: HPC.
