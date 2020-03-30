@@ -146,10 +146,127 @@ else
 end
 %% SWR in HPC
 % D1=70;%THRESHOLD
+% xo
 k=1;
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);
+    %Douplets and triplets detection
+    for l=1:length(Mx_hpc)
+         hfo_sequence=ConsecutiveOnes(diff(Mx_hpc{l})<=0.300);
+         %Douplets
+         douplets=(hfo_sequence==1);
+         Mx_hpc_douplets_1{l}=Mx_hpc{l}(find(douplets));
+         Mx_hpc_douplets_2{l}=Mx_hpc{l}(find(douplets)+1);
+         Sx_hpc_douplets_1{l}=Sx_hpc{l}(find(douplets));
+         Sx_hpc_douplets_2{l}=Sx_hpc{l}(find(douplets)+1);
+         Ex_hpc_douplets_1{l}=Ex_hpc{l}(find(douplets));
+         Ex_hpc_douplets_2{l}=Ex_hpc{l}(find(douplets)+1);
+         
+         %Triplets
+         triplets=(hfo_sequence==2);
+         Mx_hpc_triplets_1{l}=Mx_hpc{l}(find(triplets));
+         Mx_hpc_triplets_2{l}=Mx_hpc{l}(find(triplets)+1);
+         Mx_hpc_triplets_3{l}=Mx_hpc{l}(find(triplets)+2);
+         Sx_hpc_triplets_1{l}=Sx_hpc{l}(find(triplets));
+         Sx_hpc_triplets_2{l}=Sx_hpc{l}(find(triplets)+1);
+         Sx_hpc_triplets_3{l}=Sx_hpc{l}(find(triplets)+2);
+         Ex_hpc_triplets_1{l}=Ex_hpc{l}(find(triplets));
+         Ex_hpc_triplets_2{l}=Ex_hpc{l}(find(triplets)+1);
+         Ex_hpc_triplets_3{l}=Ex_hpc{l}(find(triplets)+2);
+         
+           %Quadruplets
+         quadruplets=(hfo_sequence==3);
+         Mx_hpc_quadruplets_1{l}=Mx_hpc{l}(find(quadruplets));
+         Mx_hpc_quadruplets_2{l}=Mx_hpc{l}(find(quadruplets)+1);
+         Mx_hpc_quadruplets_3{l}=Mx_hpc{l}(find(quadruplets)+2);
+         Mx_hpc_quadruplets_4{l}=Mx_hpc{l}(find(quadruplets)+3);
+         
+         Sx_hpc_quadruplets_1{l}=Sx_hpc{l}(find(quadruplets));
+         Sx_hpc_quadruplets_2{l}=Sx_hpc{l}(find(quadruplets)+1);
+         Sx_hpc_quadruplets_3{l}=Sx_hpc{l}(find(quadruplets)+2);
+         Sx_hpc_quadruplets_4{l}=Sx_hpc{l}(find(quadruplets)+3);
+         
+         Ex_hpc_quadruplets_1{l}=Ex_hpc{l}(find(quadruplets));
+         Ex_hpc_quadruplets_2{l}=Ex_hpc{l}(find(quadruplets)+1);
+         Ex_hpc_quadruplets_3{l}=Ex_hpc{l}(find(quadruplets)+2);
+         Ex_hpc_quadruplets_4{l}=Ex_hpc{l}(find(quadruplets)+3);
+         
+         %Pentuplets
+         pentuplets=(hfo_sequence==4);
+         Mx_hpc_pentuplets_1{l}=Mx_hpc{l}(find(pentuplets));
+         Mx_hpc_pentuplets_2{l}=Mx_hpc{l}(find(pentuplets)+1);
+         Mx_hpc_pentuplets_3{l}=Mx_hpc{l}(find(pentuplets)+2);
+         Mx_hpc_pentuplets_4{l}=Mx_hpc{l}(find(pentuplets)+3);
+         Mx_hpc_pentuplets_5{l}=Mx_hpc{l}(find(pentuplets)+4);
+         
+         
+         Sx_hpc_pentuplets_1{l}=Sx_hpc{l}(find(pentuplets));
+         Sx_hpc_pentuplets_2{l}=Sx_hpc{l}(find(pentuplets)+1);
+         Sx_hpc_pentuplets_3{l}=Sx_hpc{l}(find(pentuplets)+2);
+         Sx_hpc_pentuplets_4{l}=Sx_hpc{l}(find(pentuplets)+3);
+         Sx_hpc_pentuplets_5{l}=Sx_hpc{l}(find(pentuplets)+4);
+
+         
+         Ex_hpc_pentuplets_1{l}=Ex_hpc{l}(find(pentuplets));
+         Ex_hpc_pentuplets_2{l}=Ex_hpc{l}(find(pentuplets)+1);
+         Ex_hpc_pentuplets_3{l}=Ex_hpc{l}(find(pentuplets)+2);
+         Ex_hpc_pentuplets_4{l}=Ex_hpc{l}(find(pentuplets)+3);         
+         Ex_hpc_pentuplets_5{l}=Ex_hpc{l}(find(pentuplets)+4);
+         
+         
+         %Sextuplets
+         sextuplets=(hfo_sequence==5);
+         Mx_hpc_sextuplets_1{l}=Mx_hpc{l}(find(sextuplets));
+         Mx_hpc_sextuplets_2{l}=Mx_hpc{l}(find(sextuplets)+1);
+         Mx_hpc_sextuplets_3{l}=Mx_hpc{l}(find(sextuplets)+2);
+         Mx_hpc_sextuplets_4{l}=Mx_hpc{l}(find(sextuplets)+3);
+         Mx_hpc_sextuplets_5{l}=Mx_hpc{l}(find(sextuplets)+4);
+         Mx_hpc_sextuplets_6{l}=Mx_hpc{l}(find(sextuplets)+5);
+                  
+         Sx_sextuplets_1{l}=Sx_hpc{l}(find(sextuplets));
+         Sx_sextuplets_2{l}=Sx_hpc{l}(find(sextuplets)+1);
+         Sx_sextuplets_3{l}=Sx_hpc{l}(find(sextuplets)+2);
+         Sx_sextuplets_4{l}=Sx{l}(find(sextuplets)+3);
+         Sx_sextuplets_5{l}=Sx{l}(find(sextuplets)+4);
+         Sx_sextuplets_6{l}=Sx{l}(find(sextuplets)+5);
+         
+         Ex_sextuplets_1{l}=Ex{l}(find(sextuplets));
+         Ex_sextuplets_2{l}=Ex{l}(find(sextuplets)+1);
+         Ex_sextuplets_3{l}=Ex{l}(find(sextuplets)+2);
+         Ex_sextuplets_4{l}=Ex{l}(find(sextuplets)+3);         
+         Ex_sextuplets_5{l}=Ex{l}(find(sextuplets)+4);
+         Ex_sextuplets_6{l}=Ex{l}(find(sextuplets)+5);  
+    end    
+%     Sx_hpc=Sx_hpc_douplets_1; 
+%     Ex_hpc= Ex_hpc_douplets_1;
+%     Mx_hpc=Mx_hpc_douplets_1;
+    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
+    
+    %Douplets
+    swr_hpc_douplets_1(:,:,k)=[Sx_hpc_douplets_1.' Ex_hpc_douplets_1.' Mx_hpc_douplets_1.'];
+    swr_hpc_douplets_2(:,:,k)=[Sx_hpc_douplets_2.' Ex_hpc_douplets_2.' Mx_hpc_douplets_2.'];
+
+    %Triplets
+    swr_hpc_triplets_1(:,:,k)=[Sx_hpc_triplets_1.' Ex_hpc_triplets_1.' Mx_hpc_triplets_1.'];
+    swr_hpc_triplets_2(:,:,k)=[Sx_hpc_triplets_2.' Ex_hpc_triplets_2.' Mx_hpc_triplets_2.'];
+    swr_hpc_triplets_3(:,:,k)=[Sx_hpc_triplets_3.' Ex_hpc_triplets_3.' Mx_hpc_triplets_3.'];
+    
+    
+    %Quadruplets
+    swr_hpc_quadruplets_1(:,:,k)=[Sx_hpc_quadruplets_1.' Ex_hpc_quadruplets_1.' Mx_hpc_quadruplets_1.'];
+    swr_hpc_quadruplets_2(:,:,k)=[Sx_hpc_quadruplets_2.' Ex_hpc_quadruplets_2.' Mx_hpc_quadruplets_2.'];
+    swr_hpc_quadruplets_3(:,:,k)=[Sx_hpc_quadruplets_3.' Ex_hpc_quadruplets_3.' Mx_hpc_quadruplets_3.'];
+    swr_hpc_quadruplets_4(:,:,k)=[Sx_hpc_quadruplets_4.' Ex_hpc_quadruplets_4.' Mx_hpc_quadruplets_4.'];
+
+    
+    %Pentuplets
+    swr_hpc_pentuplets_1(:,:,k)=[Sx_hpc_pentuplets_1.' Ex_hpc_pentuplets_1.' Mx_hpc_pentuplets_1.'];
+    swr_hpc_pentuplets_2(:,:,k)=[Sx_hpc_pentuplets_2.' Ex_hpc_pentuplets_2.' Mx_hpc_pentuplets_2.'];
+    swr_hpc_pentuplets_3(:,:,k)=[Sx_hpc_pentuplets_3.' Ex_hpc_pentuplets_3.' Mx_hpc_pentuplets_3.'];
+    swr_hpc_pentuplets_4(:,:,k)=[Sx_hpc_pentuplets_4.' Ex_hpc_pentuplets_4.' Mx_hpc_pentuplets_4.'];
+    swr_hpc_pentuplets_5(:,:,k)=[Sx_hpc_pentuplets_5.' Ex_hpc_pentuplets_5.' Mx_hpc_pentuplets_5.'];
+    
 %% Cortical ripples
 %D2=35;%THRESHOLD
     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
@@ -160,8 +277,19 @@ k=1;
 % Find longuest epoch and plot
 % max_length=cellfun(@length,v_hpc);
 % N=max_length==max(max_length);
+
+%Largest amount of PAR HFOS
 max_length=cellfun(@length,swr_pfc(:,1));
 N=max_length==max(max_length);
+
+%Largest amount of HPC QUAD
+max_length=cellfun(@length,swr_hpc_quadruplets_1(:,1));
+N=max_length==max(max_length);
+
+%Largest amount of HPC QUAD
+max_length=cellfun(@length,swr_hpc_pentuplets_1(:,1));
+N=max_length==max(max_length);
+
 
 hpc=V_hpc{N};
 pfc=V_pfc{N};
@@ -307,7 +435,226 @@ printing(['Filtered_coocur_' num2str(answer2)])
 
 %%
 xo
+%% Douplets
+win_len=300;
+close all
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
 
+
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+
+
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% a = get(gca,'YTickLabel');
+% set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+b=gca;
+b.FontSize=12;
+% n=find(max_length==max(max_length));
+
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+if strcmp(BR,'PAR')
+    sn=swr_pfc{n,3};
+else
+    sn=swr_hpc_douplets_1{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
+end
+
+prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
+dlgtitle = 'Input';
+dims = [1 35];
+definput = {'1'};
+answer2 = inputdlg(prompt,dlgtitle,dims,definput);
+answer2=str2num(answer2{1});
+ 
+
+% n=find(max_length==max(max_length));
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+stem([swr_hpc_douplets_1{n,3}],ones(length([swr_hpc_douplets_1{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_douplets_2{n,3}],ones(length([swr_hpc_douplets_2{n}]),1).*250,'Color','green') %(HPC)
+
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+% title('Raw traces')
+
+xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
+%%
+%% Triplets
+win_len=600;
+close all
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
+
+
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+
+
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% a = get(gca,'YTickLabel');
+% set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+b=gca;
+b.FontSize=12;
+% n=find(max_length==max(max_length));
+
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+if strcmp(BR,'PAR')
+    sn=swr_pfc{n,3};
+else
+    sn=swr_hpc_triplets_1{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
+end
+
+prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
+dlgtitle = 'Input';
+dims = [1 35];
+definput = {'1'};
+answer2 = inputdlg(prompt,dlgtitle,dims,definput);
+answer2=str2num(answer2{1});
+ 
+
+% n=find(max_length==max(max_length));
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+stem([swr_hpc_triplets_1{n,3}],ones(length([swr_hpc_triplets_1{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_triplets_2{n,3}],ones(length([swr_hpc_triplets_2{n}]),1).*250,'Color','green') %(HPC)
+stem([swr_hpc_triplets_3{n,3}],ones(length([swr_hpc_triplets_3{n}]),1).*250,'Color','cyan') %(HPC)
+
+
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+% title('Raw traces')
+
+xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
+
+%% quadruplets
+win_len=3*300;
+close all
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
+
+
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+
+
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% a = get(gca,'YTickLabel');
+% set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+b=gca;
+b.FontSize=12;
+% n=find(max_length==max(max_length));
+
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+if strcmp(BR,'PAR')
+    sn=swr_pfc{n,3};
+else
+    sn=swr_hpc_quadruplets_1{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
+end
+
+prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
+dlgtitle = 'Input';
+dims = [1 35];
+definput = {'1'};
+answer2 = inputdlg(prompt,dlgtitle,dims,definput);
+answer2=str2num(answer2{1});
+ 
+
+% n=find(max_length==max(max_length));
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+stem([swr_hpc_quadruplets_1{n,3}],ones(length([swr_hpc_quadruplets_1{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_quadruplets_2{n,3}],ones(length([swr_hpc_quadruplets_2{n}]),1).*250,'Color','green') %(HPC)
+stem([swr_hpc_quadruplets_3{n,3}],ones(length([swr_hpc_quadruplets_3{n}]),1).*250,'Color','cyan') %(HPC)
+stem([swr_hpc_quadruplets_4{n,3}],ones(length([swr_hpc_quadruplets_4{n}]),1).*250,'Color','magenta') %(HPC)
+
+
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+% title('Raw traces')
+
+xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
+%%
+%% pentuplets
+win_len=4*300;
+close all
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
+
+
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+
+
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% a = get(gca,'YTickLabel');
+% set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+b=gca;
+b.FontSize=12;
+% n=find(max_length==max(max_length));
+
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+if strcmp(BR,'PAR')
+    sn=swr_pfc{n,3};
+else
+    sn=swr_hpc_pentuplets_1{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
+end
+
+prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
+dlgtitle = 'Input';
+dims = [1 35];
+definput = {'1'};
+answer2 = inputdlg(prompt,dlgtitle,dims,definput);
+answer2=str2num(answer2{1});
+ 
+
+% n=find(max_length==max(max_length));
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+stem([swr_hpc_pentuplets_1{n,3}],ones(length([swr_hpc_pentuplets_1{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_pentuplets_2{n,3}],ones(length([swr_hpc_pentuplets_2{n}]),1).*250,'Color','green') %(HPC)
+stem([swr_hpc_pentuplets_3{n,3}],ones(length([swr_hpc_pentuplets_3{n}]),1).*250,'Color','cyan') %(HPC)
+stem([swr_hpc_pentuplets_4{n,3}],ones(length([swr_hpc_pentuplets_4{n}]),1).*250,'Color','magenta') %(HPC)
+stem([swr_hpc_pentuplets_5{n,3}],ones(length([swr_hpc_pentuplets_5{n}]),1).*250,'Color',[1 165/255 0]) %(HPC)
+
+
+stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*250,'Color','red')%Seconds (Cortex)
+% title('Raw traces')
+
+xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
 %%
 answer1 = questdlg('Compute spectrograms?', ...
 	'Select one', ...
