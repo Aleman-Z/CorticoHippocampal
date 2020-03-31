@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets, RipFreq_douplets,rip_duration_douplets,sig_douplets_1,sig_triplets_1,ripple_triplets, RipFreq_triplets,rip_duration_triplets,ripple_quadruplets, RipFreq_quadruplets,rip_duration_quadruplets,ripple_pentuplets, RipFreq_pentuplets,rip_duration_pentuplets,ripple_sextuplets, RipFreq_sextuplets,rip_duration_sextuplets]=gui_findripples(CORTEX,states,xx,tr)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets, RipFreq_douplets,rip_duration_douplets,sig_douplets_1,sig_triplets_1,ripple_triplets, RipFreq_triplets,rip_duration_triplets,ripple_quadruplets, RipFreq_quadruplets,rip_duration_quadruplets,ripple_pentuplets, RipFreq_pentuplets,rip_duration_pentuplets,ripple_sextuplets, RipFreq_sextuplets,rip_duration_sextuplets,ripple_septuplets, RipFreq_septuplets,rip_duration_septuplets,ripple_octuplets, RipFreq_octuplets,rip_duration_octuplets,ripple_nonuplets, RipFreq_nonuplets,rip_duration_nonuplets]=gui_findripples(CORTEX,states,xx,tr)
     %Band pass filter design:
     fn=1000; % New sampling frequency.
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
@@ -126,6 +126,21 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets,
 %          Ex_sextuplets_4{l}=Ex{l}(find(sextuplets)+3);         
 %          Ex_sextuplets_5{l}=Ex{l}(find(sextuplets)+4);
 %          Ex_sextuplets_6{l}=Ex{l}(find(sextuplets)+5);  
+
+         %Septuplets
+         septuplets=(hfo_sequence==6);
+         Sx_septuplets_1{l}=Sx{l}(find(septuplets));
+         Ex_septuplets_1{l}=Ex{l}(find(septuplets));
+         
+         %Octuplets
+         octuplets=(hfo_sequence==7);
+         Sx_octuplets_1{l}=Sx{l}(find(octuplets));
+         Ex_octuplets_1{l}=Ex{l}(find(octuplets));
+
+         %Nonuplets
+         nonuplets=(hfo_sequence==8);
+         Sx_nonuplets_1{l}=Sx{l}(find(nonuplets));
+         Ex_nonuplets_1{l}=Ex{l}(find(nonuplets));
          
     end    
     
@@ -137,7 +152,10 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets,
          sig_quadruplets_1{l}=getsignal(Sx_quadruplets_1,Ex_quadruplets_1,ti,Mono,l);
          sig_pentuplets_1{l}=getsignal(Sx_pentuplets_1,Ex_pentuplets_1,ti,Mono,l);
          sig_sextuplets_1{l}=getsignal(Sx_sextuplets_1,Ex_sextuplets_1,ti,Mono,l);         
-         
+         sig_septuplets_1{l}=getsignal(Sx_septuplets_1,Ex_septuplets_1,ti,Mono,l);
+         sig_octuplets_1{l}=getsignal(Sx_octuplets_1,Ex_octuplets_1,ti,Mono,l); 
+         sig_nonuplets_1{l}=getsignal(Sx_nonuplets_1,Ex_nonuplets_1,ti,Mono,l);    
+
     end
     sig=sig.';
     sig_douplets_1=sig_douplets_1.';
@@ -145,7 +163,10 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets,
     sig_quadruplets_1=sig_quadruplets_1.';    
     sig_pentuplets_1=sig_pentuplets_1.';    
     sig_sextuplets_1=sig_sextuplets_1.';    
-    
+    sig_septuplets_1=sig_septuplets_1.';    
+    sig_octuplets_1=sig_octuplets_1.';    
+    sig_nonuplets_1=sig_nonuplets_1.';    
+
     % [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
 %All HFOs
 %     s=cellfun('length',Sx);
@@ -165,5 +186,11 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_douplets,
     [ripple_pentuplets, RipFreq_pentuplets,rip_duration_pentuplets]=hfo_count_freq_duration(Sx_pentuplets_1,Ex_pentuplets_1,timeasleep);
 %Sextuplets
     [ripple_sextuplets, RipFreq_sextuplets,rip_duration_sextuplets]=hfo_count_freq_duration(Sx_sextuplets_1,Ex_sextuplets_1,timeasleep);
+%Septuplets
+    [ripple_septuplets, RipFreq_septuplets,rip_duration_septuplets]=hfo_count_freq_duration(Sx_septuplets_1,Ex_septuplets_1,timeasleep);
+%octuplets
+    [ripple_octuplets, RipFreq_octuplets,rip_duration_octuplets]=hfo_count_freq_duration(Sx_octuplets_1,Ex_octuplets_1,timeasleep);
+%nonuplets
+    [ripple_nonuplets, RipFreq_nonuplets,rip_duration_nonuplets]=hfo_count_freq_duration(Sx_nonuplets_1,Ex_nonuplets_1,timeasleep);
 
 end
