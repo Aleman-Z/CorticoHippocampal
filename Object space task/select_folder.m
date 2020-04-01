@@ -18,12 +18,12 @@ A=getfolder;
 %Find all folders containing name of condition. 
     no=0; %Number of folders. 
     for j=1:length(A)
-    B=A{j};
-    k = strfind(B,labelconditions{iii});
-    if k>=1
-        no=no+1;
-        BB{no}=B;
-    end
+        B=A{j};
+        k = strfind(B,labelconditions{iii});
+        if k>=1
+            no=no+1;
+            BB{no}=B;
+        end
     end
 
     
