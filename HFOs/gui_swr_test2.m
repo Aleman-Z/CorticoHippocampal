@@ -43,6 +43,8 @@ selectripples=1;
 notch=0; %Might need to be 1.
 nrem=3;
 level=1;
+
+multiplets=[{'singlets'} {'doublets'} {'triplets'} {'quatruplets'} {'pentuplets'} {'sextuplets'} {'septuplets'} {'octuplets'} {'nonuplets'}];
 %%
 for iii=1:length(labelconditions) 
 
@@ -118,7 +120,10 @@ else
       error('No Scoring found')    
 end
 % xo
-[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,ripple_douplets, RipFreq_douplets,rip_duration_douplets,~,~,ripple_triplets, RipFreq_triplets,rip_duration_triplets,ripple_quadruplets, RipFreq_quadruplets,rip_duration_quadruplets]=gui_findripples(CORTEX,states,xx,tr);
+[ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
+  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex...
+  ]=gui_findripples(CORTEX,states,xx,tr,multiplets);
+
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 %xo
@@ -147,18 +152,25 @@ p2p_cortex(k)=p;
     hfos_cortex_rate(k)=RipFreq;
     hfos_cortex_duration(k)=rip_duration;
     clear ripple RipFreq
+
+%Multiplets    
+for ll=1:3
+   eval(['hfos_cortex_' multiplets{ll} '(k)=ripple_multiplets_cortex.' multiplets{ll} ';']) 
+   eval(['hfos_cortex_rate_' multiplets{ll} '(k)=RipFreq_multiplets_cortex.' multiplets{ll} ';']) 
+   eval(['hfos_cortex_duration_' multiplets{ll} '(k)=rip_duration_multiplets_cortex.' multiplets{ll} ';'])    
+end
     
-%Douplets
-    hfos_cortex_douplets(k)=ripple_douplets;
-    hfos_cortex_rate_douplets(k)=RipFreq_douplets;
-    hfos_cortex_duration_douplets(k)=rip_duration_douplets;
-    clear ripple_douplets RipFreq_douplets
-    
-%Triplets
-    hfos_cortex_triplets(k)=ripple_triplets;
-    hfos_cortex_rate_triplets(k)=RipFreq_triplets;
-    hfos_cortex_duration_triplets(k)=rip_duration_triplets;
-    clear ripple_triplets RipFreq_triplets
+% %Douplets
+%     hfos_cortex_douplets(k)=ripple_douplets;
+%     hfos_cortex_rate_douplets(k)=RipFreq_douplets;
+%     hfos_cortex_duration_douplets(k)=rip_duration_douplets;
+%     clear ripple_douplets RipFreq_douplets
+%     
+% %Triplets
+%     hfos_cortex_triplets(k)=ripple_triplets;
+%     hfos_cortex_rate_triplets(k)=RipFreq_triplets;
+%     hfos_cortex_duration_triplets(k)=rip_duration_triplets;
+%     clear ripple_triplets RipFreq_triplets
     
 %     C = cellfun(@minus,Ex_pfc,Sx_pfc,'UniformOutput',false);
 %     CC=([C{:}]);
@@ -170,8 +182,11 @@ HPC=load(HPC);
 %HPC=HPC.HPC;
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
+%xo
+[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
+  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc...    
+  ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets);
 
-[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,ripple_douplets, RipFreq_douplets,rip_duration_douplets,~,~,ripple_triplets, RipFreq_triplets,rip_duration_triplets,ripple_quadruplets, RipFreq_quadruplets,rip_duration_quadruplets,ripple_pentuplets, RipFreq_pentuplets,rip_duration_pentuplets,ripple_sextuplets, RipFreq_sextuplets,rip_duration_sextuplets,ripple_septuplets, RipFreq_septuplets,rip_duration_septuplets,ripple_octuplets, RipFreq_octuplets,rip_duration_octuplets,ripple_nonuplets, RipFreq_nonuplets,rip_duration_nonuplets]=gui_findripples(HPC,states,{'HPC'},tr);
 
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
@@ -216,45 +231,52 @@ hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
 
-%Douplets
-hfos_hpc_douplets(k)=ripple_douplets;
-hfos_hpc_rate_douplets(k)=RipFreq_douplets;
-hfos_hpc_duration_douplets(k)=rip_duration_douplets;
+%Multiplets    
+for ll=1:length(multiplets)
+   eval(['hfos_hpc_' multiplets{ll} '(k)=ripple_multiplets_hpc.' multiplets{ll} ';']) 
+   eval(['hfos_hpc_rate_' multiplets{ll} '(k)=RipFreq_multiplets_hpc.' multiplets{ll} ';']) 
+   eval(['hfos_hpc_duration_' multiplets{ll} '(k)=rip_duration_multiplets_hpc.' multiplets{ll} ';'])    
+end
 
-%Triplets
-hfos_hpc_triplets(k)=ripple_triplets;
-hfos_hpc_rate_triplets(k)=RipFreq_triplets;
-hfos_hpc_duration_triplets(k)=rip_duration_triplets;
-
-%Quadruplets
-hfos_hpc_quadruplets(k)=ripple_quadruplets;
-hfos_hpc_rate_quadruplets(k)=RipFreq_quadruplets;
-hfos_hpc_duration_quadruplets(k)=rip_duration_quadruplets;
-
-%Pentuplets
-hfos_hpc_pentuplets(k)=ripple_pentuplets;
-hfos_hpc_rate_pentuplets(k)=RipFreq_pentuplets;
-hfos_hpc_duration_pentuplets(k)=rip_duration_pentuplets;
-
-%Sextuplets
-hfos_hpc_sextuplets(k)=ripple_sextuplets;
-hfos_hpc_rate_sextuplets(k)=RipFreq_sextuplets;
-hfos_hpc_duration_sextuplets(k)=rip_duration_sextuplets;
-
-%Septuplets
-hfos_hpc_septuplets(k)=ripple_septuplets;
-hfos_hpc_rate_septuplets(k)=RipFreq_septuplets;
-hfos_hpc_duration_septuplets(k)=rip_duration_septuplets;
-
-%Octuplets
-hfos_hpc_octuplets(k)=ripple_octuplets;
-hfos_hpc_rate_octuplets(k)=RipFreq_octuplets;
-hfos_hpc_duration_octuplets(k)=rip_duration_octuplets;
-
-%nonuplets
-hfos_hpc_nonuplets(k)=ripple_nonuplets;
-hfos_hpc_rate_nonuplets(k)=RipFreq_nonuplets;
-hfos_hpc_duration_nonuplets(k)=rip_duration_nonuplets;
+% %Douplets
+% hfos_hpc_douplets(k)=ripple_douplets;
+% hfos_hpc_rate_douplets(k)=RipFreq_douplets;
+% hfos_hpc_duration_douplets(k)=rip_duration_douplets;
+% 
+% %Triplets
+% hfos_hpc_triplets(k)=ripple_triplets;
+% hfos_hpc_rate_triplets(k)=RipFreq_triplets;
+% hfos_hpc_duration_triplets(k)=rip_duration_triplets;
+% 
+% %Quadruplets
+% hfos_hpc_quadruplets(k)=ripple_quadruplets;
+% hfos_hpc_rate_quadruplets(k)=RipFreq_quadruplets;
+% hfos_hpc_duration_quadruplets(k)=rip_duration_quadruplets;
+% 
+% %Pentuplets
+% hfos_hpc_pentuplets(k)=ripple_pentuplets;
+% hfos_hpc_rate_pentuplets(k)=RipFreq_pentuplets;
+% hfos_hpc_duration_pentuplets(k)=rip_duration_pentuplets;
+% 
+% %Sextuplets
+% hfos_hpc_sextuplets(k)=ripple_sextuplets;
+% hfos_hpc_rate_sextuplets(k)=RipFreq_sextuplets;
+% hfos_hpc_duration_sextuplets(k)=rip_duration_sextuplets;
+% 
+% %Septuplets
+% hfos_hpc_septuplets(k)=ripple_septuplets;
+% hfos_hpc_rate_septuplets(k)=RipFreq_septuplets;
+% hfos_hpc_duration_septuplets(k)=rip_duration_septuplets;
+% 
+% %Octuplets
+% hfos_hpc_octuplets(k)=ripple_octuplets;
+% hfos_hpc_rate_octuplets(k)=RipFreq_octuplets;
+% hfos_hpc_duration_octuplets(k)=rip_duration_octuplets;
+% 
+% %nonuplets
+% hfos_hpc_nonuplets(k)=ripple_nonuplets;
+% hfos_hpc_rate_nonuplets(k)=RipFreq_nonuplets;
+% hfos_hpc_duration_nonuplets(k)=rip_duration_nonuplets;
 %% Coocurent hfos
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex,'UniformOutput',false);
 %cohfos1: HPC.
@@ -418,7 +440,7 @@ p2p_single_cortex(k)=p;
 progress_bar(k,length(g),f)
     cd ..    
     end
- xo
+ %xo
 
 %AUC
 TT=table;
@@ -546,61 +568,85 @@ title(xx{1})
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
-%% Douplets
-hfos_cortex_duration_douplets(isnan(hfos_cortex_duration_douplets))=0;
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_douplets;hfos_cortex_rate_douplets;hfos_cortex_duration_douplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % %% Douplets
+% % hfos_cortex_duration_douplets(isnan(hfos_cortex_duration_douplets))=0;
+% %     TT=table;
+% %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_douplets;hfos_cortex_rate_douplets;hfos_cortex_duration_douplets])];
+% % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% %     
+% %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% %             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_douplets','.xls'),'Sheet',1,'Range','A2:L10')  
+% %             
+% %             
+% % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % bar(c,hfos_cortex_douplets)
+% % ylabel('Number of douplets')
+% % title(xx{1})
+% % 
+% %     if size(label1,1)~=3  % IF not Plusmaze 
+% %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% %     else
+% % %         if strcmp(xx{1},'HPC')
+% % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % %         else
+% %                   string=strcat('HFOs_douplet_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+% % %         end
+% %     end
+% % 
+% %     printing(string)
+% %     close all            
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_douplets','.xls'),'Sheet',1,'Range','A2:L10')  
-            
-            
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_cortex_douplets)
-ylabel('Number of douplets')
-title(xx{1})
+% % % %% Triplets
+% % % hfos_cortex_duration_triplets(isnan(hfos_cortex_duration_triplets))=0;
+% % %     TT=table;
+% % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_triplets;hfos_cortex_rate_triplets;hfos_cortex_duration_triplets])];
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % %     
+% % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % %             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_triplets','.xls'),'Sheet',1,'Range','A2:L10')  
+% % %             
+% % %             
+% % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % bar(c,hfos_cortex_triplets)
+% % % ylabel('Number of triplets')
+% % % title(xx{1})
+% % % 
+% % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % %     else
+% % % %         if strcmp(xx{1},'HPC')
+% % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % %         else
+% % %                   string=strcat('HFOs_triplets_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
+% % % %         end
+% % %     end
+% % % 
+% % %     printing(string)
+% % %     close all
+%%
+%Multiplets
+t1=repmat({'x'},[1 length(g)+2]);
 
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+for ll=1:3
+    TT=table;
+%     strcat('TT.Variables=    [[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','};',']')
+    eval(strcat('TT.Variables=    [','[','{' ,'''',multiplets{ll},'''','};','{' ,'''','x','''','};','{' ,'''','x','''','}',']'," ",'[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','}',']',...
+    ' num2cell([hfos_cortex_',multiplets{ll},';hfos_cortex_rate_',multiplets{ll},';hfos_cortex_duration_',multiplets{ll},'])];'))
+    TT.Properties.VariableNames=['Event';'Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+
+    tab.(multiplets{ll})=TT;
+%   eval(strcat('writetable(TT,strcat(''','HPC','''',',','''','_','''',',','num2str(tr(1)),''_',multiplets{ll},'''',',','''','.xls','''','),',...
+%       '''','Sheet','''',',1,','''','Range','''',',','''','A2:L10','''',')'))
+    if ll==1
+        Tab=tab.(multiplets{ll});
     else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_douplet_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
-%         end
+        Tab=[Tab;t1;tab.(multiplets{ll})];
     end
 
-    printing(string)
-    close all            
-    
-%% Triplets
-hfos_cortex_duration_triplets(isnan(hfos_cortex_duration_triplets))=0;
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_triplets;hfos_cortex_rate_triplets;hfos_cortex_duration_triplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_triplets','.xls'),'Sheet',1,'Range','A2:L10')  
-            
-            
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_cortex_triplets)
-ylabel('Number of triplets')
-title(xx{1})
+end
 
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_triplets_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
-%         end
-    end
+writetable(Tab,strcat(xx{1},'_',num2str(tr(2)),'_multiplets','.xls'),'Sheet',1,'Range','A1:Z50')
 
-    printing(string)
-    close all           
 %%
 %Cortex cohfos
     TT=table;
@@ -741,223 +787,267 @@ title('HPC')
             writetable(TT,strcat('HPC','_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 %%
-%Douplets
-% hfos_hpc_duration_douplets(isnan(hfos_hpc_duration_douplets))=0;
-%Douplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_douplets;hfos_hpc_rate_douplets;hfos_hpc_duration_douplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_douplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_douplets)
-ylabel('Number of douplets')
-title('HPC')
+%Multiplets
+t1=repmat({'x'},[1 length(g)+2]);
 
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+for ll=1:length(multiplets)
+    TT=table;
+%     strcat('TT.Variables=    [[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','};',']')
+    eval(strcat('TT.Variables=    [','[','{' ,'''',multiplets{ll},'''','};','{' ,'''','x','''','};','{' ,'''','x','''','}',']'," ",'[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','}',']',...
+    ' num2cell([hfos_hpc_',multiplets{ll},';hfos_hpc_rate_',multiplets{ll},';hfos_hpc_duration_',multiplets{ll},'])];'))
+    TT.Properties.VariableNames=['Event';'Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+
+    tab.(multiplets{ll})=TT;
+%   eval(strcat('writetable(TT,strcat(''','HPC','''',',','''','_','''',',','num2str(tr(1)),''_',multiplets{ll},'''',',','''','.xls','''','),',...
+%       '''','Sheet','''',',1,','''','Range','''',',','''','A2:L10','''',')'))
+    if ll==1
+        Tab=tab.(multiplets{ll});
     else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_douplet_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
+        Tab=[Tab;t1;tab.(multiplets{ll})];
     end
 
-    printing(string)
-    close all                
-%%
-%Triplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_triplets;hfos_hpc_rate_triplets;hfos_hpc_duration_triplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_triplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_triplets)
-ylabel('Number of triplets')
-title('HPC')
+end
 
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_triplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
+writetable(Tab,strcat('HPC','_',num2str(tr(1)),'_multiplets','.xls'),'Sheet',1,'Range','A1:Z50')
 
-    printing(string)
-    close all
-%%
-%Quadruplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_quadruplets;hfos_hpc_rate_quadruplets;hfos_hpc_duration_quadruplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_quadruplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_quadruplets)
-ylabel('Number of quadruplets')
-title('HPC')
+% for ll=1:length(multiplets)
+%     TT=table;
+% %     strcat('TT.Variables=    [[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','};',']')
+%     eval(strcat('TT.Variables=    [[','{' ,'''','Count','''','};','{' ,'''','Rate','''','};','{' ,'''','Duration','''','}',']',...
+%     ' num2cell([hfos_hpc_',multiplets{ll},';hfos_hpc_rate_',multiplets{ll},';hfos_hpc_duration_',multiplets{ll},'])];'))
+%     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% 
+%     tab.(multiplets{ll})=TT;
+% %   eval(strcat('writetable(TT,strcat(''','HPC','''',',','''','_','''',',','num2str(tr(1)),''_',multiplets{ll},'''',',','''','.xls','''','),',...
+% %       '''','Sheet','''',',1,','''','Range','''',',','''','A2:L10','''',')'))
+%     if ll==1
+%         Tab=tab.(multiplets{ll});
+%     else
+%         Tab=[Tab;t1;tab.(multiplets{ll})];
+%     end
+% 
+% end
 
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_quadruplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
 
-    printing(string)
-    close all
-%%
-%Pentuplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_pentuplets;hfos_hpc_rate_pentuplets;hfos_hpc_duration_pentuplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_pentuplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_pentuplets)
-ylabel('Number of pentuplets')
-title('HPC')
-
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_pentuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
-
-    printing(string)
-    close all
-%%
-%Sextuplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_sextuplets;hfos_hpc_rate_sextuplets;hfos_hpc_duration_sextuplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_sextuplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_sextuplets)
-ylabel('Number of sextuplets')
-title('HPC')
-
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_sextuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
-
-    printing(string)
-    close all 
-%%
-%septuplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_septuplets;hfos_hpc_rate_septuplets;hfos_hpc_duration_septuplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_septuplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_septuplets)
-ylabel('Number of septuplets')
-title('HPC')
-
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_septuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
-
-    printing(string)
-    close all        
-%%
-%octuplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_octuplets;hfos_hpc_rate_octuplets;hfos_hpc_duration_octuplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_octuplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_octuplets)
-ylabel('Number of octuplets')
-title('HPC')
-
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_octuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
-
-    printing(string)
-    close all
-    %%
-%nonuplets
-    TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_nonuplets;hfos_hpc_rate_nonuplets;hfos_hpc_duration_nonuplets])];
-%     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-    
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-            writetable(TT,strcat('HPC','_',num2str(tr(1)),'_nonuplets','.xls'),'Sheet',1,'Range','A2:L10')      
-    
-    
-c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-bar(c,hfos_hpc_nonuplets)
-ylabel('Number of nonuplets')
-title('HPC')
-
-    if size(label1,1)~=3  % IF not Plusmaze 
-      string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-    else
-%         if strcmp(xx{1},'HPC')
-%                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         else
-                  string=strcat('HFOs_nonuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
-%         end
-    end
-
-    printing(string)
-    close all            
+% [tab.singlets;t1;tab.doublets]
+% % % % %%
+% % % % %Douplets
+% % % % % hfos_hpc_duration_douplets(isnan(hfos_hpc_duration_douplets))=0;
+% % % % %Douplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_douplets;hfos_hpc_rate_douplets;hfos_hpc_duration_douplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_douplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_douplets)
+% % % % ylabel('Number of douplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_douplet_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all                
+% % % % %%
+% % % % %Triplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_triplets;hfos_hpc_rate_triplets;hfos_hpc_duration_triplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_triplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_triplets)
+% % % % ylabel('Number of triplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_triplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all
+% % % % %%
+% % % % %Quadruplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_quadruplets;hfos_hpc_rate_quadruplets;hfos_hpc_duration_quadruplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_quadruplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_quadruplets)
+% % % % ylabel('Number of quadruplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_quadruplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all
+% % % % %%
+% % % % %Pentuplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_pentuplets;hfos_hpc_rate_pentuplets;hfos_hpc_duration_pentuplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_pentuplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_pentuplets)
+% % % % ylabel('Number of pentuplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_pentuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all
+% % % % %%
+% % % % %Sextuplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_sextuplets;hfos_hpc_rate_sextuplets;hfos_hpc_duration_sextuplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_sextuplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_sextuplets)
+% % % % ylabel('Number of sextuplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_sextuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all 
+% % % % %%
+% % % % %septuplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_septuplets;hfos_hpc_rate_septuplets;hfos_hpc_duration_septuplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_septuplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_septuplets)
+% % % % ylabel('Number of septuplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_septuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all        
+% % % % %%
+% % % % %octuplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_octuplets;hfos_hpc_rate_octuplets;hfos_hpc_duration_octuplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_octuplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_octuplets)
+% % % % ylabel('Number of octuplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_octuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all
+% % % %     %%
+% % % % %nonuplets
+% % % %     TT=table;
+% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc_nonuplets;hfos_hpc_rate_nonuplets;hfos_hpc_duration_nonuplets])];
+% % % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
+% % % %     
+% % % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+% % % %             writetable(TT,strcat('HPC','_',num2str(tr(1)),'_nonuplets','.xls'),'Sheet',1,'Range','A2:L10')      
+% % % %     
+% % % %     
+% % % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
+% % % % bar(c,hfos_hpc_nonuplets)
+% % % % ylabel('Number of nonuplets')
+% % % % title('HPC')
+% % % % 
+% % % %     if size(label1,1)~=3  % IF not Plusmaze 
+% % % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
+% % % %     else
+% % % % %         if strcmp(xx{1},'HPC')
+% % % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         else
+% % % %                   string=strcat('HFOs_nonuplets_counts_','HPC','_Rat',num2str(Rat),'_',num2str(tr(1)));         
+% % % % %         end
+% % % %     end
+% % % % 
+% % % %     printing(string)
+% % % %     close all            
 %%
 %hpc cohfos
     TT=table;

@@ -234,7 +234,40 @@ k=1;
          Ex_hpc_sextuplets_3{l}=Ex_hpc{l}(find(sextuplets)+2);
          Ex_hpc_sextuplets_4{l}=Ex_hpc{l}(find(sextuplets)+3);         
          Ex_hpc_sextuplets_5{l}=Ex_hpc{l}(find(sextuplets)+4);
-         Ex_hpc_sextuplets_6{l}=Ex_hpc{l}(find(sextuplets)+5);  
+         Ex_hpc_sextuplets_6{l}=Ex_hpc{l}(find(sextuplets)+5);
+         
+                  %nonuplets
+         nonuplets=(hfo_sequence==8);
+         Mx_hpc_nonuplets_1{l}=Mx_hpc{l}(find(nonuplets));
+         Mx_hpc_nonuplets_2{l}=Mx_hpc{l}(find(nonuplets)+1);
+         Mx_hpc_nonuplets_3{l}=Mx_hpc{l}(find(nonuplets)+2);
+         Mx_hpc_nonuplets_4{l}=Mx_hpc{l}(find(nonuplets)+3);
+         Mx_hpc_nonuplets_5{l}=Mx_hpc{l}(find(nonuplets)+4);
+         Mx_hpc_nonuplets_6{l}=Mx_hpc{l}(find(nonuplets)+5);
+         Mx_hpc_nonuplets_7{l}=Mx_hpc{l}(find(nonuplets)+6);
+         Mx_hpc_nonuplets_8{l}=Mx_hpc{l}(find(nonuplets)+7);
+         Mx_hpc_nonuplets_9{l}=Mx_hpc{l}(find(nonuplets)+8);
+
+                  
+         Sx_hpc_nonuplets_1{l}=Sx_hpc{l}(find(nonuplets));
+         Sx_hpc_nonuplets_2{l}=Sx_hpc{l}(find(nonuplets)+1);
+         Sx_hpc_nonuplets_3{l}=Sx_hpc{l}(find(nonuplets)+2);
+         Sx_hpc_nonuplets_4{l}=Sx_hpc{l}(find(nonuplets)+3);
+         Sx_hpc_nonuplets_5{l}=Sx_hpc{l}(find(nonuplets)+4);
+         Sx_hpc_nonuplets_6{l}=Sx_hpc{l}(find(nonuplets)+5);
+         Sx_hpc_nonuplets_7{l}=Sx_hpc{l}(find(nonuplets)+6);
+         Sx_hpc_nonuplets_8{l}=Sx_hpc{l}(find(nonuplets)+7);
+         Sx_hpc_nonuplets_9{l}=Sx_hpc{l}(find(nonuplets)+8);
+         
+         Ex_hpc_nonuplets_1{l}=Ex_hpc{l}(find(nonuplets));
+         Ex_hpc_nonuplets_2{l}=Ex_hpc{l}(find(nonuplets)+1);
+         Ex_hpc_nonuplets_3{l}=Ex_hpc{l}(find(nonuplets)+2);
+         Ex_hpc_nonuplets_4{l}=Ex_hpc{l}(find(nonuplets)+3);         
+         Ex_hpc_nonuplets_5{l}=Ex_hpc{l}(find(nonuplets)+4);
+         Ex_hpc_nonuplets_6{l}=Ex_hpc{l}(find(nonuplets)+5);
+         Ex_hpc_nonuplets_7{l}=Ex_hpc{l}(find(nonuplets)+6);         
+         Ex_hpc_nonuplets_8{l}=Ex_hpc{l}(find(nonuplets)+7);
+         Ex_hpc_nonuplets_9{l}=Ex_hpc{l}(find(nonuplets)+8);  
     end    
 %     Sx_hpc=Sx_hpc_douplets_1; 
 %     Ex_hpc= Ex_hpc_douplets_1;
@@ -275,6 +308,16 @@ k=1;
     swr_hpc_sextuplets_5(:,:,k)=[Sx_hpc_sextuplets_5.' Ex_hpc_sextuplets_5.' Mx_hpc_sextuplets_5.'];
     swr_hpc_sextuplets_6(:,:,k)=[Sx_hpc_sextuplets_6.' Ex_hpc_sextuplets_6.' Mx_hpc_sextuplets_6.'];
 
+    %nonuplets
+    swr_hpc_nonuplets_1(:,:,k)=[Sx_hpc_nonuplets_1.' Ex_hpc_nonuplets_1.' Mx_hpc_nonuplets_1.'];
+    swr_hpc_nonuplets_2(:,:,k)=[Sx_hpc_nonuplets_2.' Ex_hpc_nonuplets_2.' Mx_hpc_nonuplets_2.'];
+    swr_hpc_nonuplets_3(:,:,k)=[Sx_hpc_nonuplets_3.' Ex_hpc_nonuplets_3.' Mx_hpc_nonuplets_3.'];
+    swr_hpc_nonuplets_4(:,:,k)=[Sx_hpc_nonuplets_4.' Ex_hpc_nonuplets_4.' Mx_hpc_nonuplets_4.'];
+    swr_hpc_nonuplets_5(:,:,k)=[Sx_hpc_nonuplets_5.' Ex_hpc_nonuplets_5.' Mx_hpc_nonuplets_5.'];
+    swr_hpc_nonuplets_6(:,:,k)=[Sx_hpc_nonuplets_6.' Ex_hpc_nonuplets_6.' Mx_hpc_nonuplets_6.'];
+    swr_hpc_nonuplets_7(:,:,k)=[Sx_hpc_nonuplets_7.' Ex_hpc_nonuplets_7.' Mx_hpc_nonuplets_7.'];
+    swr_hpc_nonuplets_8(:,:,k)=[Sx_hpc_nonuplets_8.' Ex_hpc_nonuplets_8.' Mx_hpc_nonuplets_8.'];
+    swr_hpc_nonuplets_9(:,:,k)=[Sx_hpc_nonuplets_9.' Ex_hpc_nonuplets_9.' Mx_hpc_nonuplets_9.'];    
 %% Cortical ripples
 %D2=35;%THRESHOLD
     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
@@ -302,6 +345,9 @@ N=max_length==max(max_length);
 max_length=cellfun(@length,swr_hpc_sextuplets_1(:,1));
 N=max_length==max(max_length);
 
+%Largest amount of HPC sextuplets
+max_length=cellfun(@length,swr_hpc_nonuplets_1(:,1));
+N=max_length==max(max_length);
 
 hpc=V_hpc{N};
 pfc=V_pfc{N};
@@ -724,6 +770,66 @@ stem([swr_hpc_sextuplets_6{n,3}],ones(length([swr_hpc_sextuplets_6{n}]),1).*250,
 % title('Raw traces')
 
 xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
+%% nonuplets
+win_len=8*300;
+close all
+plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+hold on
+plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+xlabel('Time (Seconds)')
+
+
+plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
+plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+
+
+yticks([100 150 220 290])
+yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+% a = get(gca,'YTickLabel');
+% set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
+b=gca;
+b.FontSize=12;
+% n=find(max_length==max(max_length));
+
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+if strcmp(BR,'PAR')
+    sn=swr_pfc{n,3};
+else
+    sn=swr_hpc_nonuplets_1{n,3};
+end
+
+if isempty(sn)
+    errordlg('No HFOs found','Error');
+    xo
+end
+
+prompt = {['Select HFO ID number. Max value:' num2str(length(sn))]};
+dlgtitle = 'Input';
+dims = [1 35];
+definput = {'1'};
+answer2 = inputdlg(prompt,dlgtitle,dims,definput);
+answer2=str2num(answer2{1});
+ 
+
+% n=find(max_length==max(max_length));
+%  n=find((cellfun('length',swr_pfc(:,1)))==max(cellfun('length',swr_pfc(:,1))))
+
+stem([swr_hpc_nonuplets_1{n,3}],ones(length([swr_hpc_nonuplets_1{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_nonuplets_2{n,3}],ones(length([swr_hpc_nonuplets_2{n}]),1).*250,'Color','green') %(HPC)
+stem([swr_hpc_nonuplets_3{n,3}],ones(length([swr_hpc_nonuplets_3{n}]),1).*250,'Color','cyan') %(HPC)
+stem([swr_hpc_nonuplets_4{n,3}],ones(length([swr_hpc_nonuplets_4{n}]),1).*250,'Color','magenta') %(HPC)
+stem([swr_hpc_nonuplets_5{n,3}],ones(length([swr_hpc_nonuplets_5{n}]),1).*250,'Color',[1 165/255 0]) %(HPC)
+stem([swr_hpc_nonuplets_6{n,3}],ones(length([swr_hpc_nonuplets_6{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_nonuplets_7{n,3}],ones(length([swr_hpc_nonuplets_7{n}]),1).*250,'Color','blue') %(HPC)
+stem([swr_hpc_nonuplets_8{n,3}],ones(length([swr_hpc_nonuplets_8{n}]),1).*250,'Color','green') %(HPC)
+stem([swr_hpc_nonuplets_9{n,3}],ones(length([swr_hpc_nonuplets_9{n}]),1).*250,'Color','cyan') %(HPC)
+
+ stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*300,'Color','red')%Seconds (Cortex)
+% title('Raw traces')
+
+xlim([sn(answer2)-win_len/1000 sn(answer2)+win_len/1000])
+
 %%
 answer1 = questdlg('Compute spectrograms?', ...
 	'Select one', ...

@@ -4,5 +4,10 @@ function [ripple2, RipFreq2,rip_duration]=hfo_count_freq_duration(Sx,Ex,timeasle
     ripple2=sum(s);
     C = cellfun(@minus,Ex,Sx,'UniformOutput',false);
     CC=([C{:}]);
-    rip_duration=median(CC); 
+        if isempty(CC)
+            rip_duration=0;
+        else
+            rip_duration=median(CC);
+        end
+     
 end
