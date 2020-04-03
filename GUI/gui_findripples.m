@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets]=gui_findripples(CORTEX,states,xx,tr,multiplets)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets]=gui_findripples(CORTEX,states,xx,tr,multiplets)
     %Band pass filter design:
     fn=1000; % New sampling frequency.
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
@@ -48,11 +48,32 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
 
          for ll=1:length(multiplets)
              eval([multiplets{ll} '=(hfo_sequence=='  num2str(ll-1) ');'])
+             cont=1;
+             M_multiplets.(multiplets{ll}){l}=[];
+             while cont<=ll
+                 %eval(['Sx_' multiplets{ll} '_' num2str(cont) '{l}=Sx{l}(find(' multiplets{ll} ')+(cont-1));'])
+                 eval(['Mx_' multiplets{ll} '_' num2str(cont) '{l}=Mx{l}(find(' multiplets{ll} ')+(cont-1));'])
+                 %eval(['Ex_' multiplets{ll} '_' num2str(cont) '{l}=Ex{l}(find(' multiplets{ll} ')+(cont-1));'])
+                 Mx_multiplets.(multiplets{ll}).(strcat('m_',num2str(cont))){l}=eval(['Mx_' multiplets{ll} '_' num2str(cont) '{l}']);
+                 M_multiplets.(multiplets{ll}){l}=eval(['sort([M_multiplets.(multiplets{ll}){l} ' ' Mx_' multiplets{ll} '_' num2str(cont) '{l}])']); % Combined consecutive multiplets    
+%                   eval([  'clear' ' ' 'Mx_' multiplets{ll} '_' num2str(cont)])
+                 cont=cont+1;
+             end
+         end
+    end
+    
+        %Multiplets detection
+    for l=1:length(Mx)
+         hfo_sequence=ConsecutiveOnes(diff(Mx{l})<=0.300);
+
+         for ll=1:length(multiplets)
+             eval([multiplets{ll} '=(hfo_sequence=='  num2str(ll-1) ');'])
              eval(['Sx_' multiplets{ll} '_1{l}=Sx{l}(find(' multiplets{ll} '));'])
              eval(['Ex_' multiplets{ll} '_1{l}=Ex{l}(find(' multiplets{ll} '));'])
 
          end
     end
+%     
 %          
 %          %Singlets
 %          singlets=(hfo_sequence==0);
@@ -208,21 +229,5 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
 %        ripple_multiplets.(multiplets{ll})=1;
         eval(['[ripple_multiplets.(' 'multiplets{ll}' '), RipFreq_multiplets.(' 'multiplets{ll}' '),rip_duration_multiplets.(' 'multiplets{ll}' ')]=hfo_count_freq_duration(Sx_' multiplets{ll} '_1,Ex_' multiplets{ll} '_1,timeasleep);']);
     end
-% %Douplets
-%     [ripple_douplets, RipFreq_douplets,rip_duration_douplets]=hfo_count_freq_duration(Sx_douplets_1,Ex_douplets_1,timeasleep);
-% %Triplets
-%     [ripple_triplets, RipFreq_triplets,rip_duration_triplets]=hfo_count_freq_duration(Sx_triplets_1,Ex_triplets_1,timeasleep);
-% %Quadruplets
-%     [ripple_quadruplets, RipFreq_quadruplets,rip_duration_quadruplets]=hfo_count_freq_duration(Sx_quadruplets_1,Ex_quadruplets_1,timeasleep);
-% %Pentuplets
-%     [ripple_pentuplets, RipFreq_pentuplets,rip_duration_pentuplets]=hfo_count_freq_duration(Sx_pentuplets_1,Ex_pentuplets_1,timeasleep);
-% %Sextuplets
-%     [ripple_sextuplets, RipFreq_sextuplets,rip_duration_sextuplets]=hfo_count_freq_duration(Sx_sextuplets_1,Ex_sextuplets_1,timeasleep);
-% %Septuplets
-%     [ripple_septuplets, RipFreq_septuplets,rip_duration_septuplets]=hfo_count_freq_duration(Sx_septuplets_1,Ex_septuplets_1,timeasleep);
-% %octuplets
-%     [ripple_octuplets, RipFreq_octuplets,rip_duration_octuplets]=hfo_count_freq_duration(Sx_octuplets_1,Ex_octuplets_1,timeasleep);
-% %nonuplets
-%     [ripple_nonuplets, RipFreq_nonuplets,rip_duration_nonuplets]=hfo_count_freq_duration(Sx_nonuplets_1,Ex_nonuplets_1,timeasleep);
 
 end
