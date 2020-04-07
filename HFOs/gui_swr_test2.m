@@ -134,8 +134,8 @@ si=[si{:}];
 % close all
 % cd(g{k})
 
-
-[x,y,z,~,~,~,l,p]=hfo_specs(si,timeasleep,1);
+%xo
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,1);
 cd ..
 printing(['Histograms_Cortex_Count_' g{k}]);
 close all
@@ -147,6 +147,7 @@ amp_cortex(k)=z;
 auc_cortex(k)=l;
 p2p_cortex(k)=p;
 %xo
+TH(k)=th;
 %% Cortical HFOs
     hfos_cortex(k)=ripple;
     hfos_cortex_rate(k)=RipFreq;
@@ -215,6 +216,7 @@ p2p_hpc(k)=p;
 % z=median(z);
 % amp_hpc(k)=z;
 
+% Mx_cortex(~cellfun('isempty',Mx_cortex))
 %% HFC HFOs
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
@@ -241,6 +243,47 @@ for ll=1:length(multiplets)
 cohfos_count_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})));
 cohfos_rate_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})))/(timeasleep*(60));
 end
+
+%% Mixed distribution (Average freq) coHFOs
+Mx_cortex_g1=Mx_cortex;
+Mx_cortex_g2=Mx_cortex;
+
+row=si_mixed.i1;
+cont=0;
+for ll=1:length(Mx_cortex)
+% cont=cont+length(Mx_cortex{ll});
+
+    if ~isempty(Mx_cortex{ll})
+
+        for lll=1:length(Mx_cortex{ll})
+            cont=cont+1;
+    %         xo
+
+            if ~ismember(cont,row)
+                Mx_cortex_g1{ll}(lll)=NaN;
+            else
+                Mx_cortex_g2{ll}(lll)=NaN;
+            end
+
+        end
+         Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
+         Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
+
+    end
+
+end
+
+[cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
+[cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
+
+cohfos_count_g1(k)=sum(cellfun('length',cohfos1_g1));
+cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
+
+cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
+cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
+
+%%
+
 
 %HPC COHFOS
 cohf_mx_hpc=Mx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where HPC cohfos were found.
@@ -860,6 +903,20 @@ end
 
 
 writetable(Tab_cohfos,strcat('coHFOs','_multiplets_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%% Demixed Gaussians 
+
+    TT=table;
+%    TT.Variables=    [[{'Slower'};{'x'}] [{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;])];
+    TT.Variables=    [[{'Slower'};{'x'};{'Faster'};{'x'}] [{'Count'};{'Rate'};{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;cohfos_count_g2;cohfos_rate_g2])];
+
+    TT.Properties.VariableNames=['Events';'Metric';g];
+
+
+writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+
+
 
 %%
 
