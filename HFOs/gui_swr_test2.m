@@ -281,6 +281,17 @@ cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
 
 cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
 cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
+%xo
+
+v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
+singles_count_g1(k)=sum(cellfun('length',v2_g1));
+singles_rate_g1(k)=sum(cellfun('length',v2_g1))/(timeasleep*(60));
+
+
+v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2,cohfos2_g2,'UniformOutput',false);
+singles_count_g2(k)=sum(cellfun('length',v2_g2));
+singles_rate_g2(k)=sum(cellfun('length',v2_g2))/(timeasleep*(60));
+
 
 %%
 
@@ -906,6 +917,7 @@ writetable(Tab_cohfos,strcat('coHFOs','_multiplets_',num2str(tr(1)),'_',num2str(
 
 %% Demixed Gaussians 
 
+%coHFOs
     TT=table;
 %    TT.Variables=    [[{'Slower'};{'x'}] [{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;])];
     TT.Variables=    [[{'Slower'};{'x'};{'Faster'};{'x'}] [{'Count'};{'Rate'};{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;cohfos_count_g2;cohfos_rate_g2])];
@@ -915,8 +927,15 @@ writetable(Tab_cohfos,strcat('coHFOs','_multiplets_',num2str(tr(1)),'_',num2str(
 
 writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
+%Singles
+    TT=table;
+%    TT.Variables=    [[{'Slower'};{'x'}] [{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;])];
+    TT.Variables=    [[{'Slower'};{'x'};{'Faster'};{'x'}] [{'Count'};{'Rate'};{'Count'};{'Rate'}] num2cell([singles_count_g1;singles_rate_g1;singles_count_g2;singles_rate_g2])];
+
+    TT.Properties.VariableNames=['Events';'Metric';g];
 
 
+writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
 %%
 

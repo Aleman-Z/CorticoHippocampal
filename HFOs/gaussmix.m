@@ -22,7 +22,8 @@ cluster2 = data(idx == 2,:);
 
 %Find threshold value
 th=min([max(cluster1) max(cluster2)]);
-% th=156.7; %Rat 26
+%  th=156.7; %Rat 26
 % th=158; %Rat 27
-th=153.5;
+% th=153.5; %Rat 24 (40)
+th=153.6; %Rat 24 (35)
 end

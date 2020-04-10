@@ -281,6 +281,30 @@ cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
 
 cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
 cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
+xo
+
+
+v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
+sum(cellfun('length',v2_g1))
+
+
+Sig_cortex_single=cellfun(@(equis1,equis2) equis1(equis2),sig_cortex,v2,'UniformOutput',false);
+Sig_cortex_single=[Sig_cortex_single{:}];
+%xo
+[single_mx_cortex_val,single_sx_cortex_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos2,Mx_cortex,Sx_cortex,'UniformOutput',false);
+single_mx_cortex_val=[single_mx_cortex_val{:}];
+single_sx_cortex_val=[single_sx_cortex_val{:}];
+
+
+
+% plot_hfo(Sig_cortex_single,{single_mx_cortex_val},{single_sx_cortex_val},label1{2})
+% title(['Single cortex envelope ' strrep(g{k},'_','-')])
+% cd ..
+% printing(['Single cortex envelope ' strrep(g{k},'_','-')])
+% close all
+% cd(g{k})
+
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0);
 
 %%
 
@@ -904,19 +928,18 @@ end
 
 writetable(Tab_cohfos,strcat('coHFOs','_multiplets_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
-%% Mixed Gaussians 
+%% Demixed Gaussians 
 
     TT=table;
-    TT.Variables=    [[{'Slower'};{'x'}] [{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;])];
-        TT.Properties.VariableNames=['Event';'Metric';g];
+%    TT.Variables=    [[{'Slower'};{'x'}] [{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;])];
+    TT.Variables=    [[{'Slower'};{'x'};{'Faster'};{'x'}] [{'Count'};{'Rate'};{'Count'};{'Rate'}] num2cell([cohfos_count_g1;cohfos_rate_g1;cohfos_count_g2;cohfos_rate_g2])];
+
+    TT.Properties.VariableNames=['Events';'Metric';g];
 
 
+writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
-cohfos_count_g1
-cohfos_rate_g1
 
-cohfos_count_g2
-cohfos_rate_g2
 
 
 %%
