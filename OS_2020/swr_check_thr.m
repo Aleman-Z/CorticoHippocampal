@@ -1,5 +1,12 @@
-function [swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc]=swr_check_thr(HPC,PFC,states,ss,D1,D2)
+function [swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc,sd_swr]=swr_check_thr(HPC,PFC,states,ss,D1,D2)
  
+%Ignore NaNs
+if sum(isnan(HPC))~=0 || sum(isnan(PFC))~=0
+    HPC=HPC(isfinite(HPC));
+    PFC=PFC(isfinite(PFC));
+    states=states(isfinite(states));
+end
+
 %Band pass filter design:
 fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
@@ -72,5 +79,51 @@ k=1;
     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
+%% SD analysis
+%Two approaches
+%1) Concatenated epochs:
+sd_hpc_co=std(cell2mat(signal2_hpc));
+mean_hpc_co=mean(cell2mat(signal2_hpc));
+sd2_hpc_co=2*sd_hpc_co+mean_hpc_co;
+sd5_hpc_co=5*sd_hpc_co+mean_hpc_co;
+
+sd_pfc_co=std(cell2mat(signal2_pfc));
+mean_pfc_co=mean(cell2mat(signal2_pfc));
+sd2_pfc_co=2*sd_pfc_co+mean_pfc_co;
+sd5_pfc_co=5*sd_pfc_co+mean_pfc_co;
+
+
+%2) Longest NREM epoch
+max_length=cellfun(@length,signal2_hpc);
+N=max_length==max(max_length);
+
+%In case of more than one
+if sum(N)>1
+    N_rep=(find(N==1));
+    N_rep=N_rep(1);
+    N=N_rep;
+end
+
+sd_hpc_long=std(signal2_hpc{N});
+mean_hpc_long=mean(signal2_hpc{N});
+sd2_hpc_long=2*sd_hpc_long+mean_hpc_long;
+sd5_hpc_long=5*sd_hpc_long+mean_hpc_long;
+
+sd_pfc_long=std(signal2_pfc{N});
+mean_pfc_long=mean(signal2_pfc{N});
+sd2_pfc_long=2*sd_pfc_long+mean_pfc_long;
+sd5_pfc_long=5*sd_pfc_long+mean_pfc_long;
+
+
+%Save values in a struct array.
+sd_swr.sd2_hpc_co=sd2_hpc_co;
+sd_swr.sd5_hpc_co=sd5_hpc_co;
+sd_swr.sd2_pfc_co=sd2_pfc_co;
+sd_swr.sd5_pfc_co=sd5_pfc_co;
+sd_swr.sd2_hpc_long=sd2_hpc_long;
+sd_swr.sd5_hpc_long=sd5_hpc_long;
+sd_swr.sd2_pfc_long=sd2_pfc_long;
+sd_swr.sd5_pfc_long=sd5_pfc_long;
+
 
 end

@@ -1,4 +1,4 @@
-function [nr_swr_HPC, nr_swr_Cortex]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2)
+function [nr_swr_HPC, nr_swr_Cortex]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx)
 i=1;
     %Binning sleep scoring data
                         bin_size=5*60; %5minutes
@@ -9,7 +9,7 @@ i=1;
                            slpscr_binned= [slpscr_binned states(:,1+(n-1)*bin_size:bin_size*(n))];
                         end
 
-    %Binning sleep scoring data                    
+    %Binning ephys data                    
                         bin_size2=5*60*1000; %5minutes
                         nbins=size(HPC,2)/bin_size2;
     %Band pass filter design:
@@ -33,8 +33,8 @@ i=1;
                         for n=1:nbins
     %                        HPC_binned = [HPC_binned HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
     %                         epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss);
-                           HPC_binned{n} =  epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2);
-                           Cortex_binned{n} = epoch_ephys_states(Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2);
+                           HPC_binned{n} =  epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2,'HPC');
+                           Cortex_binned{n} = epoch_ephys_states(Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2,xx{1});
     %                        Cortex_binned = [Cortex_binned Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
                              if ~isempty(HPC_binned{n})
                                  nr_swr_HPC(i,n)=sum(cellfun('length',HPC_binned{n}(:,1)));

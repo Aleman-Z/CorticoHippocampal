@@ -71,7 +71,7 @@ nr_swr_HPC=[];
 nr_swr_Cortex=[];
 
 rat_folder=getfolder;
-for k=5:length(rat_folder)
+for k=1:length(rat_folder)
 %for k=7:length(rat_folder)
     cd(rat_folder{k})    
     g=getfolder;
@@ -254,14 +254,12 @@ Cortex=Cortex.*(0.195);
         Sd_Swr.sd2_pfc_long(i)=sd_swr.sd2_pfc_long;
         Sd_Swr.sd5_pfc_long(i)=sd_swr.sd5_pfc_long;
         
-%         if i==5
-%             xo
-%         end
+        
     end
     
     
                     else % PostTrial 5 case 
-%                         xo
+                        
                         %Sleep scoring data
                         if length(states)<45*60*4
                             states=[states nan(1,45*60*4-length(states))]; %Fill with NaNs.
@@ -479,36 +477,31 @@ Cortex=Cortex.*(0.195);
    end
     
    if ind_mode==3
-%        xo
+       xo
        %Sd_Swr
     TT=table;
     TT.Variables=...
         [
-                [{g{j}};{'x'};{'x'};{'x'};{'x'};{'x'};{'x'};{'x'}] ...
-        [{'HPC_2SD_Concatenated'};{'HPC_2SD_Longest'};{'HPC_5SD_Concatenated'};{'HPC_5SD_Longest'};{'PFC_2SD_Concatenated'};{'PFC_2SD_Longest'};{'PFC_5SD_Concatenated'};{'PFC_5SD_Longest'}] ...
-    num2cell([ Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
+        [{'HPC_2SD_Concatenated'};{'HPC_2SD_Longuest'};{'HPC_5SD_Concatenated'};{'HPC_5SD_Longuest'};{'PFC_2SD_Concatenated'};{'PFC_2SD_Longuest'};{'PFC_5SD_Concatenated'};{'PFC_5SD_Longuest'}]
+    [ Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
         ;Sd_Swr.sd2_pfc_co;Sd_Swr.sd2_pfc_long;Sd_Swr.sd5_pfc_co;Sd_Swr.sd5_pfc_long ...
-      ]) ...
-    num2cell([ mean(Sd_Swr.sd2_hpc_co); mean(Sd_Swr.sd2_hpc_long); mean(Sd_Swr.sd5_hpc_co);mean(Sd_Swr.sd5_hpc_long) ...
-        ;mean(Sd_Swr.sd2_pfc_co);mean(Sd_Swr.sd2_pfc_long);mean(Sd_Swr.sd5_pfc_co);mean(Sd_Swr.sd5_pfc_long) ...
-      ])...
+      ]...
       ];
-      
-   
-    TT.Properties.VariableNames={'Condition';'Metric';'PS';'PT1';'PT2';'PT3';'PT4';'PT5_1';'PT5_2';'PT5_3';'PT5_4';'Average Value'};
-    t1=repmat({'x'},[1 12]);
-        if j==1
-            T=[TT];
-        else
-            T=[T;t1;TT];
-        end
+  
+%       TT.Variables=[Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
+%         ;Sd_Swr.sd2_pfc_co;Sd_Swr.sd2_pfc_long;Sd_Swr.sd5_pfc_co;Sd_Swr.sd5_pfc_long
+%       ];
     
+    
+   
+    TT.Properties.VariableNames={'Metric';'PS';'PT1';'PT2';'PT3';'PT4';'PT5_1';'PT5_2';'PT5_3';'PT5_4'};
+
    end
               
           
     end
-    xo
-    writetable(T,strcat('SD_values','.xls'),'Sheet',1,'Range','A1:Z50')
+%     xo
+
     cd ..
 end
 

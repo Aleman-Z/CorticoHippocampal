@@ -1,4 +1,4 @@
-function [swr_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2)
+function [swr_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx)
     %Convert signal to 1 sec epochs.
         e_t=1;
         e_samples=e_t*(1000); %fs=1kHz
@@ -36,8 +36,13 @@ fn=1000;
 
 ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_hpc,'UniformOutput',false);    
 %%
-k=1;
+if strcmp(xx,'HPC')
 [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+else
+%Cortical ripples
+[Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);        
+end
+
 swr_hpc=[Sx_hpc Ex_hpc Mx_hpc];
 %%    
     end 
