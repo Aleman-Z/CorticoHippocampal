@@ -46,7 +46,8 @@ level=1;
 
 multiplets=[{'singlets'} {'doublets'} {'triplets'} {'quatruplets'} {'pentuplets'} {'sextuplets'} {'septuplets'} {'octuplets'} {'nonuplets'}];
 %%
-for iii=1:length(labelconditions) 
+iii=1;
+%for iii=1:length(labelconditions) 
 
     if size(label1,1)~=3  % IF not Plusmaze
 
@@ -84,14 +85,7 @@ for iii=1:length(labelconditions)
     end
   %% Colormap
        % n=length(g);
-        myColorMap=jet(length(g));    
-        
-% xo        
-%         % Ask for brain area.
-% xx = inputdlg({'Brain area'},...
-%               'Type your selection', [1 30]);          
-% D1=tr(find(strcmp(xx{1},label1)==1)); %Threshold for specific brain area.          
-
+myColorMap=jet(length(g));              
 %%
 f=waitbar(0,'Please wait...');
     for k=1:length(g)
@@ -133,7 +127,8 @@ si=[si{:}];
 % printing(['HFO Cortex  ' strrep(g{k},'_','-')])
 % close all
 % cd(g{k})
-
+All_Par.( strrep(g{k},'-','_'))=si;
+All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
 [x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,1);
 cd ..
@@ -451,7 +446,26 @@ p2p_single_cortex(k)=p;
 progress_bar(k,length(g),f)
     cd ..    
     end
- xo
+  xo
+% All_timeasleep
+% All_Par
+% A_cell = struct2cell(All_Par);
+% All_Par_24_35=[A_cell{:}];
+% %%
+% All_40=[All_Par_26 All_Par_27 All_Par_24_40];
+% All_35=[All_Par_26 All_Par_27 All_Par_24_35];
+% %%
+% 
+% si=All_40;
+% hfo_specs(si,1,1)
+% %printing('Histogram_All_Par_40_probability')
+% printing('Histogram_All_Par_40_count')
+% 
+% %%
+% si=All_35;
+% hfo_specs(si,1,1)
+% % printing('Histogram_All_Par_35_probability')
+% printing('Histogram_All_Par_35_count')
 
 %AUC
 TT=table;
@@ -579,61 +593,6 @@ title(xx{1})
 %     else
             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
-% % %% Douplets
-% % hfos_cortex_duration_douplets(isnan(hfos_cortex_duration_douplets))=0;
-% %     TT=table;
-% %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_douplets;hfos_cortex_rate_douplets;hfos_cortex_duration_douplets])];
-% % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-% %     
-% %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-% %             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_douplets','.xls'),'Sheet',1,'Range','A2:L10')  
-% %             
-% %             
-% % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-% % bar(c,hfos_cortex_douplets)
-% % ylabel('Number of douplets')
-% % title(xx{1})
-% % 
-% %     if size(label1,1)~=3  % IF not Plusmaze 
-% %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-% %     else
-% % %         if strcmp(xx{1},'HPC')
-% % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-% % %         else
-% %                   string=strcat('HFOs_douplet_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
-% % %         end
-% %     end
-% % 
-% %     printing(string)
-% %     close all            
-    
-% % % %% Triplets
-% % % hfos_cortex_duration_triplets(isnan(hfos_cortex_duration_triplets))=0;
-% % %     TT=table;
-% % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_cortex_triplets;hfos_cortex_rate_triplets;hfos_cortex_duration_triplets])];
-% % % %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
-% % %     
-% % %     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
-% % %             writetable(TT,strcat(xx{1},'_',num2str(tr(2)),'_triplets','.xls'),'Sheet',1,'Range','A2:L10')  
-% % %             
-% % %             
-% % % c = categorical(cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)); 
-% % % bar(c,hfos_cortex_triplets)
-% % % ylabel('Number of triplets')
-% % % title(xx{1})
-% % % 
-% % %     if size(label1,1)~=3  % IF not Plusmaze 
-% % %       string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',labelconditions{iii}); 
-% % %     else
-% % % %         if strcmp(xx{1},'HPC')
-% % % %                   string=strcat('HFOs_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(1)));         
-% % % %         else
-% % %                   string=strcat('HFOs_triplets_counts_',xx{1},'_Rat',num2str(Rat),'_',num2str(tr(2)));         
-% % % %         end
-% % %     end
-% % % 
-% % %     printing(string)
-% % %     close all
 %%
 %Multiplets
 t1=repmat({'x'},[1 length(g)+2]);
@@ -943,5 +902,6 @@ writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),
 %        xo
         break;
     end
-%xo       
-end
+%xo    
+%end
+xo
