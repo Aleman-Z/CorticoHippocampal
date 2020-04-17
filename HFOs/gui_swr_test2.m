@@ -128,13 +128,13 @@ si=[si{:}];
 % close all
 % cd(g{k})
 All_Par.( strrep(g{k},'-','_'))=si;
-All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
+% All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
-[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,1);
-cd ..
-printing(['Histograms_Cortex_Count_' g{k}]);
-close all
-cd(g{k})
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0);
+% cd ..
+% printing(['Histograms_Cortex_Count_' g{k}]);
+% close all
+% cd(g{k})
 
 fi_cortex(k)=x;
 fa_cortex(k)=y;
@@ -182,12 +182,13 @@ si=[si{:}];
 % printing(['HFO HPC  ' strrep(g{k},'_','-')])
 % close all
 % cd(g{k})
-
-[x,y,z,~,~,~,l,p]=hfo_specs(si,timeasleep,0);
-% cd ..
-% printing(['Histograms_HPC_' g{k}]);
-% close all
-% cd(g{k})
+% xo
+All_HPC.( strrep(g{k},'-','_'))=si;
+[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,1);
+cd ..
+printing(['Histograms_HPC_Probability_' g{k}]);
+close all
+cd(g{k})
 
 fi_hpc(k)=x;
 fa_hpc(k)=y;
@@ -898,10 +899,10 @@ writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),
 
 %%
 
-    if size(label1,1)==3 %If Plusmaze
-%        xo
-        break;
-    end
+%     if size(label1,1)==3 %If Plusmaze
+% %        xo
+%         break;
+%     end
 %xo    
 %end
 xo
