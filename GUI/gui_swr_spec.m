@@ -117,14 +117,19 @@ fn=1000; %Sampling frequency after downsampling.
     clear Boxcheck
 %     labelconditions=labelconditions(find(boxch~=0));
 %     labelconditions2=labelconditions2(find(boxch~=0));
-
+% xo
     close(f);
 g={g{logical(boxch)}};    
 
 if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
-    if  find(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false))==1)~=1
-        g=flip(g);
-    end
+%     if  find(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false))==1)~=1
+%         g=flip(g);
+%     end
+g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
+ find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
+ find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{3}),g,'UniformOutput',false)))...
+ find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
+
 else
     error('Name issue')
 end
@@ -336,21 +341,31 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
  q_cortex=q_cortex(~cellfun('isempty',q_cortex));
 
 
- if k==1 %No Learning
-     P.nl.('hpc')={p_hpc;p_cohfos_hpc;p_single_hpc};
-     P.nl.('pfc')={p_cortex;p_cohfos_cortex;p_single_cortex};
+%  if k==1 %No Learning
+%      P.nl.('hpc')={p_hpc;p_cohfos_hpc;p_single_hpc};
+%      P.nl.('pfc')={p_cortex;p_cohfos_cortex;p_single_cortex};
+%     
+%      Q.nl.('hpc')={q_hpc;q_cohfos_hpc;q_single_hpc};
+%      Q.nl.('pfc')={q_cortex;q_cohfos_cortex;q_single_cortex};
+%      
+%  else
+%      P.plusmaze.('hpc')={p_hpc;p_cohfos_hpc;p_single_hpc};
+%      P.plusmaze.('pfc')={p_cortex;p_cohfos_cortex;p_single_cortex};
+%     
+%      Q.plusmaze.('hpc')={q_hpc;q_cohfos_hpc;q_single_hpc};
+%      Q.plusmaze.('pfc')={q_cortex;q_cohfos_cortex;q_single_cortex};
+%  end
+%      P.(strrep(labelconditions2{k},'-','_')).(label1{1})={p_hpc;p_cohfos_hpc;p_single_hpc};
+%      P.(strrep(labelconditions2{k},'-','_')).(label1{3})={p_cortex;p_cohfos_cortex;p_single_cortex};
+%     
+%      Q.(strrep(labelconditions2{k},'-','_')).(label1{1})={q_hpc;q_cohfos_hpc;q_single_hpc};
+%      Q.(strrep(labelconditions2{k},'-','_')).(label1{3})={q_cortex;q_cohfos_cortex;q_single_cortex};
+     P.(strrep(labelconditions2{k},'-','_')).(label1{1})={p_cohfos_hpc;p_single_hpc;p_hpc};
+     P.(strrep(labelconditions2{k},'-','_')).(label1{3})={p_cohfos_cortex;p_single_cortex;p_cortex};
     
-     Q.nl.('hpc')={q_hpc;q_cohfos_hpc;q_single_hpc};
-     Q.nl.('pfc')={q_cortex;q_cohfos_cortex;q_single_cortex};
+     Q.(strrep(labelconditions2{k},'-','_')).(label1{1})={q_cohfos_hpc;q_single_hpc;q_hpc};
+     Q.(strrep(labelconditions2{k},'-','_')).(label1{3})={q_cohfos_cortex;q_single_cortex;q_cortex};
      
- else
-     P.plusmaze.('hpc')={p_hpc;p_cohfos_hpc;p_single_hpc};
-     P.plusmaze.('pfc')={p_cortex;p_cohfos_cortex;p_single_cortex};
-    
-     Q.plusmaze.('hpc')={q_hpc;q_cohfos_hpc;q_single_hpc};
-     Q.plusmaze.('pfc')={q_cortex;q_cohfos_cortex;q_single_cortex};
- end
- 
  %xo
 progress_bar(k,length(g),f)
     cd ..    
@@ -360,11 +375,41 @@ progress_bar(k,length(g),f)
 %HPC specs
 %HPC cohfos
 
-n=min([length(P.nl.hpc{2}) length(P.plusmaze.hpc{2})]);
+%s: 1 for single, 2 for cohfos
+%w:1 for hpc centered, 3 for par centered.
+s=1;
+w=1;
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_HPC_single_rat' num2str(Rat)])
+close all
+
+s=1;
+w=3;
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_single_rat' num2str(Rat)])
+close all
+
+s=2;
+w=1;
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_HPC_cohfos_rat' num2str(Rat)])
+close all
+
+s=2;
+w=3;
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_cohfos_rat' num2str(Rat)])
+close all
+
+%%
+%n=min([length(P.nl.hpc{2}) length(P.plusmaze.hpc{2})]);
+n=min([length(P.(labelconditions2{1}).(label1{1}){2}) length(P.(labelconditions2{2}).(label1{1}){2})...
+    length(P.(labelconditions2{3}).(label1{1}){2}) length(P.(labelconditions2{4}).(label1{1}){2})]);
+
 
 %Order ripples
-p=P.plusmaze.hpc{2}; 
-q=Q.plusmaze.hpc{2}; 
+p=P.plusmaze.(label1{1}){2}; 
+q=Q.plusmaze.(label1{1}){2}; 
 % R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
 R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
 [~,r]=sort(R,'descend');
@@ -374,8 +419,8 @@ p=p(1:n);
 q=q(1:n);
 
 %Order ripples
-p_nl=P.nl.hpc{2}; 
-q_nl=Q.nl.hpc{2}; 
+p_nl=P.nl.(label1{1}){2}; 
+q_nl=Q.nl.(label1{1}){2}; 
 % R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q_nl));
 R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q_nl));
 [~,r_nl]=sort(R,'descend');
@@ -393,105 +438,243 @@ if length(q)>1000
     p_nl=p_nl(1:1000);
 end
 
+ro=150;
 
-%%
-ro=120;
-
-P1_nl=avg_samples(q_nl,create_timecell(120,length(p)));
-P2_nl=avg_samples(p_nl,create_timecell(120,length(p)));
-
-subplot(3,3,1)
-plot(P2_nl(1,:))
-subplot(3,3,4)
-plot(P1_nl(1,:))
-
-P1=avg_samples(q,create_timecell(120,length(p)));
-P2=avg_samples(p,create_timecell(120,length(p)));
-
-subplot(3,3,2)
-plot(P2(1,:))
-subplot(3,3,5)
-plot(P1(1,:))
-%%
-w=1;
-h(1)=subplot(3,4,1)
-plot(cell2mat(create_timecell(ro,1)),P2_nl(1,:))
-title('Wide Band No Learning')
-win1=[min(P2_nl(w,:)) max(P2_nl(w,:)) min(P2(w,:)) max(P2(w,:))];
-win1=[(min(win1)) round(max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-h(3)=subplot(3,4,3)
-plot(cell2mat(create_timecell(ro,1)),P1_nl(w,:))
-title('High Gamma No Learning')
-
-win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
-win2=[(min(win2)) (max(win2))];
-ylim(win2)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-
-h(2)=subplot(3,4,2)
-plot(cell2mat(create_timecell(ro,1)),P2(w,:))
-title(strcat('Wide Band',{' '},labelconditions2{1}))
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-
-h(4)=subplot(3,4,4)
-plot(cell2mat(create_timecell(ro,1)),P1(w,:))
-title(strcat('High Gamma',{' '},labelconditions2{1}))
-ylim(win2)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-
-%%
 toy=[-.1:.001:.1];
-
 freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
 freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
 
+
+for j=1:3
+
 cfg              = [];
-cfg.channel      = freq3.label{1};
+cfg.channel      = freq3.label{j};
 [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
 [zmin2, zmax2] = ft_getminmax(cfg, freq4);
 zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
 
 cfg              = [];
 cfg.zlim=zlim;
-cfg.channel      = freq4.label{1};
+cfg.channel      = freq4.label{j};
 cfg.colormap=colormap(jet(256));
 
-
-%h(1)=subplot(3,4,4*(1-1)+1)
-subplot(3,3,7)
+subplot(3,3,3*j-2)
 ft_singleplotTFR(cfg, freq3); 
-g=title('No Learning');
+% g=title(['Baseline ' label1{j} ]);
+g=title([label1{j} ' Baseline']);
 g.FontSize=12;
 xlabel('Time (s)')
 ylabel('Frequency (Hz)')
 ylim([100 250])
+
+subplot(3,3,3*j-1)
+ft_singleplotTFR(cfg, freq4); 
+% g=title(strcat(['Plusmaze ' label1{j}]));
+g=title(strcat([label1{j} ' Plusmaze' ]));
+g.FontSize=12;
+xlabel('Time (s)')
+ylabel('Frequency (Hz)')
+ylim([100 250])
+
+
+% Pixel-based stats
+zmap=stats_high(freq3,freq4,j);
+subplot(3,3,3*j);
+
+colormap(jet(256))
+zmap(zmap == 0) = NaN;
+J=imagesc(freq3.time,freq3.freq,zmap)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+set(gca,'xlim',xlim,'ydir','no')
+set(J,'AlphaData',~isnan(zmap))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+g=title(strcat(labelconditions2{1},' vs Baseline'));
+g.FontSize=12;
+
+end
+
+%%
+
+
+
 
 
 %h(2)=subplot(3,4,2)
-subplot(3,3,8)
-ft_singleplotTFR(cfg, freq4); 
-g=title(strcat('Plusmaze'));
-g.FontSize=12;
-xlabel('Time (s)')
-ylabel('Frequency (Hz)')
-ylim([100 250])
-%%
 
+% Pixel-based stats
+zmap=stats_high(freq3,freq4,w);
+subplot(3,3,9);
+
+colormap(jet(256))
+zmap(zmap == 0) = NaN;
+J=imagesc(freq3.time,freq3.freq,zmap)
+xlabel('Time (s)'), ylabel('Frequency (Hz)')
+set(gca,'xlim',xlim,'ydir','no')
+set(J,'AlphaData',~isnan(zmap))
+c=narrow_colorbar()
+ c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+c=narrow_colorbar()
+
+g=title(strcat(labelconditions2{1},' vs No Learning'));
+g.FontSize=12;
+
+ %% Wideband and bandpassed signal.
+%ro=150;
+
+% P1_nl=avg_samples(q_nl,create_timecell(ro,length(p)));
+% P2_nl=avg_samples(p_nl,create_timecell(ro,length(p)));
+% 
+% subplot(6,2,1)
+% plot(P2_nl(1,:))
+% title('Baseline')
+% subplot(6,2,2)
+% plot(P1_nl(1,:))
+% 
+% subplot(6,2,3)
+% plot(P2_nl(2,:))
+% subplot(6,2,4)
+% plot(P1_nl(2,:))
+% 
+% subplot(6,2,5)
+% plot(P2_nl(3,:))
+% subplot(6,2,6)
+% plot(P1_nl(3,:))
+% 
+% 
+% P1=avg_samples(q,create_timecell(ro,length(p)));
+% P2=avg_samples(p,create_timecell(ro,length(p)));
+% 
+% 
+% subplot(6,2,7)
+% plot(P2(1,:))
+% title('Plusmaze')
+% subplot(6,2,8)
+% plot(P1(1,:))
+% 
+% subplot(6,2,9)
+% plot(P2(2,:))
+% subplot(6,2,10)
+% plot(P1(2,:))
+% 
+% subplot(6,2,11)
+% plot(P2_nl(3,:))
+% subplot(6,2,12)
+% plot(P1(3,:))
+% 
+% 
+% 
+% % subplot(2,4,2)
+% % plot(P2(1,:))
+% % subplot(2,4,6)
+% % plot(P1(1,:))
+
+%%
+% w=1;
+% h(1)=subplot(2,4,1)
+% plot(cell2mat(create_timecell(ro,1)),P2_nl(1,:))
+% title('Wide Band No Learning')
+% win1=[min(P2_nl(w,:)) max(P2_nl(w,:)) min(P2(w,:)) max(P2(w,:))];
+% win1=[(min(win1)) round(max(win1))];
+% ylim(win1)
+% xlabel('Time (s)')
+% ylabel('uV')
+% xlim([-.1 .1])
+% 
+% h(3)=subplot(2,4,3)
+% plot(cell2mat(create_timecell(ro,1)),P1_nl(w,:))
+% title('High Gamma No Learning')
+% 
+% win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
+% win2=[(min(win2)) (max(win2))];
+% ylim(win2)
+% xlabel('Time (s)')
+% ylabel('uV')
+% xlim([-.1 .1])
+% 
+% 
+% h(2)=subplot(2,4,2)
+% plot(cell2mat(create_timecell(ro,1)),P2(w,:))
+% title(strcat('Wide Band',{' '},labelconditions2{1}))
+% ylim(win1)
+% xlabel('Time (s)')
+% ylabel('uV')
+% xlim([-.1 .1])
+% 
+% 
+% h(4)=subplot(2,4,4)
+% plot(cell2mat(create_timecell(ro,1)),P1(w,:))
+% title(strcat('High Gamma',{' '},labelconditions2{1}))
+% ylim(win2)
+% xlabel('Time (s)')
+% ylabel('uV')
+% xlim([-.1 .1])
+% 
+% 
+% 
+% toy=[-.1:.001:.1];
+% % toy=[-.12:.001:.12];
+% 
+% 
+% freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
+% freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
+% 
+% cfg              = [];
+% cfg.channel      = freq3.label{1};
+% [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
+% [zmin2, zmax2] = ft_getminmax(cfg, freq4);
+% zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
+% 
+% cfg              = [];
+% cfg.zlim=zlim;
+% cfg.channel      = freq4.label{1};
+% cfg.colormap=colormap(jet(256));
+% 
+% 
+% %h(1)=subplot(3,4,4*(1-1)+1)
+% subplot(3,3,7)
+% ft_singleplotTFR(cfg, freq3); 
+% g=title('No Learning');
+% g.FontSize=12;
+% xlabel('Time (s)')
+% ylabel('Frequency (Hz)')
+% ylim([100 250])
+% 
+% 
+% %h(2)=subplot(3,4,2)
+% subplot(3,3,8)
+% ft_singleplotTFR(cfg, freq4); 
+% g=title(strcat('Plusmaze'));
+% g.FontSize=12;
+% xlabel('Time (s)')
+% ylabel('Frequency (Hz)')
+% ylim([100 250])
+% 
+% % Pixel-based stats
+% zmap=stats_high(freq3,freq4,w);
+% subplot(3,3,9);
+% 
+% colormap(jet(256))
+% zmap(zmap == 0) = NaN;
+% J=imagesc(freq3.time,freq3.freq,zmap)
+% xlabel('Time (s)'), ylabel('Frequency (Hz)')
+% set(gca,'xlim',xlim,'ydir','no')
+% set(J,'AlphaData',~isnan(zmap))
+% c=narrow_colorbar()
+%  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
+% caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
+% c=narrow_colorbar()
+% 
+% g=title(strcat(labelconditions2{1},' vs No Learning'));
+% g.FontSize=12;
+
+
+
+%%
 % 
 % cellfun(@mean,q,'UniformOutput',false);
 % xo
@@ -529,7 +712,7 @@ ylim([100 250])
 % 
 % cellfun(@(equis1,equis2) equis1(equis2),q_cortex,v2,'UniformOutput',false)
 
-max(abs(hilbert(equis1(1,:))))
+% max(abs(hilbert(equis1(1,:))))
 
 for l=1:length(q)
     plot(q{l}(1,:))

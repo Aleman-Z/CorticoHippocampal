@@ -1,15 +1,13 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets]=gui_findripples(CORTEX,states,xx,tr,multiplets)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn)
     %Band pass filter design:
-    fn=1000; % New sampling frequency.
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
     %LPF 300 Hz:
-    fn=1000; % New sampling frequency.
     Wn1=[320/(fn/2)]; % Cutoff=320 Hz
     [b2,a2] = butter(3,Wn1); %Filter coefficients
 %Convert signal to 1 sec epochs.
         e_t=1;
-        e_samples=e_t*(1000); %fs=1kHz
+        e_samples=e_t*(fn); %fs=1kHz
         ch=length(CORTEX);
         nc=floor(ch/e_samples); %Number of epochsw
         NC=[];
@@ -29,7 +27,7 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
     V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false);
     Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false);
     %Total amount of NREM time:
-    timeasleep=sum(cellfun('length',V))*(1/1000)/60; % In minutes
+    timeasleep=sum(cellfun('length',V))*(1/fn)/60; % In minutes
     signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
     % ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
     ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2,'UniformOutput',false);

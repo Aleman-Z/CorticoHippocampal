@@ -22,6 +22,7 @@ tr=getfield(T,strcat('Rat',num2str(Rat)));%Thresholds
 % xx = inputdlg({'Cortical Brain area'},...
 %               'Type your selection', [1 30]); 
 xx={'PAR'};
+fn=1000;
 %%
 gg=getfolder;
 gg=gg.';
@@ -113,10 +114,10 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
- %xo
+ xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
-  ]=gui_findripples(CORTEX,states,xx,tr,multiplets);
+  ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];

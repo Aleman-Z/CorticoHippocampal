@@ -10,9 +10,9 @@ if ~isempty(Sx{k})
    if nargin>5
     %Ripple-centered window.
     tm=find(ti{k}==Mx{k}(j));
-        if  tm+120<=length(ti{k}) && tm-120>=1
-            p{j}=[V{k}(tm-120:tm+120).';V2{k}(tm-120:tm+120).';V3{k}(tm-120:tm+120).'];
-            q{j}=[Mono{k}(tm-120:tm+120).';Mono2{k}(tm-120:tm+120).';Mono3{k}(tm-120:tm+120).'];
+        if  tm+150<=length(ti{k}) && tm-150>=1
+            p{j}=[V{k}(tm-150:tm+150).';V2{k}(tm-150:tm+150).';V3{k}(tm-150:tm+150).'];
+            q{j}=[Mono{k}(tm-150:tm+150).';Mono2{k}(tm-150:tm+150).';Mono3{k}(tm-150:tm+150).'];
             
         else
             p{j}=[];
