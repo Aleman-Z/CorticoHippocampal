@@ -370,7 +370,7 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
 progress_bar(k,length(g),f)
     cd ..    
     end
-  xo
+ 
 %%
 %HPC specs
 %HPC cohfos
@@ -380,27 +380,27 @@ progress_bar(k,length(g),f)
 s=1;
 w=1;
 plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_single_rat' num2str(Rat)])
+printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=1;
 w=3;
 plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_single_rat' num2str(Rat)])
+printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=2;
 w=1;
 plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_cohfos_rat' num2str(Rat)])
+printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=2;
 w=3;
 plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_cohfos_rat' num2str(Rat)])
+printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-
+xo
 %%
 %n=min([length(P.nl.hpc{2}) length(P.plusmaze.hpc{2})]);
 n=min([length(P.(labelconditions2{1}).(label1{1}){2}) length(P.(labelconditions2{2}).(label1{1}){2})...

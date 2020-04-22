@@ -98,6 +98,7 @@ allscreen()
 
     g=title(strcat(labelconditions2{1},' vs Baseline'));
     g.FontSize=12;
+    ylim([100 250])
 
     end
 
