@@ -37,7 +37,20 @@ Wn1=[320/(fn/2)]; % Cutoff=320 Hz
     vec_bin(vec_bin==ss)=1;
     
     if sum(vec_bin)==0  %%All states
+        if ss==6  %Only continue if All states option was selected
         vec_bin=vec_bin+1;
+        else  %When the sleep state was not found.
+swr_hpc=0;
+swr_pfc=0;
+s_hpc=0;
+s_pfc=0;
+V_hpc=0;
+V_pfc=0;
+signal2_hpc=0;
+signal2_pfc=0;
+sd_swr=0;            
+            return
+        end
     end
     %Cluster one values:
     v2=ConsecutiveOnes(vec_bin);

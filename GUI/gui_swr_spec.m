@@ -370,37 +370,122 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
 progress_bar(k,length(g),f)
     cd ..    
     end
- 
+ xo
 %%
-%HPC specs
-%HPC cohfos
-
 %s: 1 for single, 2 for cohfos
 %w:1 for hpc centered, 3 for par centered.
 s=1;
 w=1;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
+values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+TT=table;
+TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+
+s=1;
+w=3;
+values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+TT1=table;
+TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+
+
+s=2;
+w=1;
+values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+TT2=table;
+TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+
+
+s=2;
+w=3;
+values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+TT3=table;
+TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+%%
+t1=repmat({'x'},[1 13]);
+
+tab=[TT;t1;TT1;t1;TT2;t1;TT3];
+%%
+writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
+
+
+%%
+%HPC specs
+%HPC cohfos
+% xo
+%s: 1 for single, 2 for cohfos
+%w:1 for hpc centered, 3 for par centered.
+s=1;
+w=1;
+values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
 printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
+TT=table;
+TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+
+
+s=1;
+w=3;
+values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
+TT1=table;
+TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+
+s=2;
+w=1;
+values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
+TT2=table;
+TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+
+
+s=2;
+w=3;
+values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
+TT3=table;
+TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+
+xo
+t1=repmat({'x'},[1 7]);
+
+tab=[TT;t1;TT1;t1;TT2;t1;TT3];
+writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
+
+%%
+s=1;
+w=1;
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=1;
 w=3;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=2;
 w=1;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
 s=2;
 w=3;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-xo
+
 %%
 %n=min([length(P.nl.hpc{2}) length(P.plusmaze.hpc{2})]);
 n=min([length(P.(labelconditions2{1}).(label1{1}){2}) length(P.(labelconditions2{2}).(label1{1}){2})...
@@ -524,54 +609,181 @@ g=title(strcat(labelconditions2{1},' vs No Learning'));
 g.FontSize=12;
 
  %% Wideband and bandpassed signal.
-%ro=150;
 
-% P1_nl=avg_samples(q_nl,create_timecell(ro,length(p)));
-% P2_nl=avg_samples(p_nl,create_timecell(ro,length(p)));
-% 
-% subplot(6,2,1)
-% plot(P2_nl(1,:))
-% title('Baseline')
-% subplot(6,2,2)
-% plot(P1_nl(1,:))
-% 
-% subplot(6,2,3)
-% plot(P2_nl(2,:))
-% subplot(6,2,4)
-% plot(P1_nl(2,:))
-% 
-% subplot(6,2,5)
-% plot(P2_nl(3,:))
-% subplot(6,2,6)
-% plot(P1_nl(3,:))
-% 
-% 
-% P1=avg_samples(q,create_timecell(ro,length(p)));
-% P2=avg_samples(p,create_timecell(ro,length(p)));
-% 
-% 
-% subplot(6,2,7)
+%s: 1 for single, 2 for cohfos
+%w:1 for hpc centered, 3 for par centered.
+s=2;
+w=1; 
+ 
+n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
+    length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+
+
+%Order ripples
+p=P.plusmaze.(label1{w}){s}; 
+q=Q.plusmaze.(label1{w}){s}; 
+% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
+R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
+[~,r]=sort(R,'descend');
+p=p(r);
+q=q(r);
+p=p(1:n);
+q=q(1:n);
+
+%Order ripples
+p_nl=P.nl.(label1{w}){s}; 
+q_nl=Q.nl.(label1{w}){s}; 
+% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q_nl));
+R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q_nl));
+[~,r_nl]=sort(R,'descend');
+p_nl=p_nl(r_nl);
+q_nl=q_nl(r_nl);
+p_nl=p_nl(1:n);
+q_nl=q_nl(1:n);
+
+
+%Max 1000 ripples.
+if length(q)>1000
+    q=q(1:1000);
+    p=p(1:1000);
+    q_nl=q_nl(1:1000);
+    p_nl=p_nl(1:1000);
+end
+
+if w==3 %PAR-centered ripples.
+     p=cellfun(@(equis1) flip(equis1),p,'UniformOutput',false);
+     q=cellfun(@(equis1) flip(equis1),q,'UniformOutput',false);
+     p_nl=cellfun(@(equis1) flip(equis1),p_nl,'UniformOutput',false);
+     q_nl=cellfun(@(equis1) flip(equis1),q_nl,'UniformOutput',false);
+end 
+ 
+ 
+ro=150;
+allscreen()
+
+P1_nl=avg_samples(q_nl,create_timecell(ro,length(p)));
+P2_nl=avg_samples(p_nl,create_timecell(ro,length(p)));
+
+
+P1=avg_samples(q,create_timecell(ro,length(p)));
+P2=avg_samples(p,create_timecell(ro,length(p)));
+
+subplot(6,2,1)
+plot(cell2mat(create_timecell(ro,1)),P2_nl(1,:))
+title('Baseline HPC')
+win1=[min(P2_nl(1,:)) max(P2_nl(1,:)) min(P2(1,:)) max(P2(1,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+subplot(6,2,3)
+plot(cell2mat(create_timecell(ro,1)),P1_nl(1,:))
+win1=[min(P1_nl(1,:)) max(P1_nl(1,:)) min(P1(1,:)) max(P1(1,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+subplot(6,2,5)
+plot(cell2mat(create_timecell(ro,1)),P2_nl(2,:))
+win1=[min(P2_nl(2,:)) max(P2_nl(2,:)) min(P2(2,:)) max(P2(2,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+title('Baseline PFC')
+subplot(6,2,7)
+plot(cell2mat(create_timecell(ro,1)),P1_nl(2,:))
+win1=[min(P1_nl(2,:)) max(P1_nl(2,:)) min(P1(2,:)) max(P1(2,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+subplot(6,2,9)
+plot(cell2mat(create_timecell(ro,1)),P2_nl(3,:))
+win1=[min(P2_nl(3,:)) max(P2_nl(3,:)) min(P2(3,:)) max(P2(3,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+title('Baseline PAR')
+subplot(6,2,11)
+plot(cell2mat(create_timecell(ro,1)),P1_nl(3,:))
+win1=[min(P1_nl(3,:)) max(P1_nl(3,:)) min(P1(3,:)) max(P1(3,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+
+
+
+subplot(6,2,2)
+plot(cell2mat(create_timecell(ro,1)),P2(1,:))
+title('Plusmaze HPC')
+win1=[min(P2_nl(1,:)) max(P2_nl(1,:)) min(P2(1,:)) max(P2(1,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+subplot(6,2,4)
+plot(cell2mat(create_timecell(ro,1)),P1(1,:))
+win1=[min(P1_nl(1,:)) max(P1_nl(1,:)) min(P1(1,:)) max(P1(1,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+subplot(6,2,6)
+plot(cell2mat(create_timecell(ro,1)),P2(2,:))
+win1=[min(P2_nl(2,:)) max(P2_nl(2,:)) min(P2(2,:)) max(P2(2,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+title('Plusmaze PFC')
+subplot(6,2,8)
+plot(cell2mat(create_timecell(ro,1)),P1(2,:))
+win1=[min(P1_nl(2,:)) max(P1_nl(2,:)) min(P1(2,:)) max(P1(2,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+subplot(6,2,10)
+plot(cell2mat(create_timecell(ro,1)),P2(3,:))
+title('Plusmaze PAR')
+win1=[min(P2_nl(3,:)) max(P2_nl(3,:)) min(P2(3,:)) max(P2(3,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+subplot(6,2,12)
+plot(cell2mat(create_timecell(ro,1)),P1(3,:))
+win1=[min(P1_nl(3,:)) max(P1_nl(3,:)) min(P1(3,:)) max(P1(3,:))];
+win1=[(min(win1)) (max(win1))];
+ylim(win1)
+xlabel('Time (s)')
+ylabel('uV')
+xlim([-.1 .1])
+
+%%
+% subplot(2,4,2)
 % plot(P2(1,:))
-% title('Plusmaze')
-% subplot(6,2,8)
+% subplot(2,4,6)
 % plot(P1(1,:))
-% 
-% subplot(6,2,9)
-% plot(P2(2,:))
-% subplot(6,2,10)
-% plot(P1(2,:))
-% 
-% subplot(6,2,11)
-% plot(P2_nl(3,:))
-% subplot(6,2,12)
-% plot(P1(3,:))
-% 
-% 
-% 
-% % subplot(2,4,2)
-% % plot(P2(1,:))
-% % subplot(2,4,6)
-% % plot(P1(1,:))
 
 %%
 % w=1;

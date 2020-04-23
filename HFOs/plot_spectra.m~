@@ -35,8 +35,11 @@ function plot_spectra(P,Q,labelconditions2,label1,s,w)
         p_nl=p_nl(1:1000);
     end
 
-    if w==3
-         aver=cellfun(@(equis1) flip(equis1),p,'UniformOutput',false)
+    if w==3 %PAR-centered ripples.
+         p=cellfun(@(equis1) flip(equis1),p,'UniformOutput',false);
+         q=cellfun(@(equis1) flip(equis1),q,'UniformOutput',false);
+         p_nl=cellfun(@(equis1) flip(equis1),p_nl,'UniformOutput',false);
+         q_nl=cellfun(@(equis1) flip(equis1),q_nl,'UniformOutput',false);
     end
     
     ro=150;
@@ -95,6 +98,13 @@ allscreen()
 
     g=title(strcat(labelconditions2{1},' vs Baseline'));
     g.FontSize=12;
+    ylim([100 250])
+    
+    [mdam,mdam2,mdam3,mdam4]=small_window(freq3,j);
+    [ndam,ndam2,ndam3,ndam4]=small_window(freq4,j);
+    
+    Mdam(j)=mdam
+    Ndam(j)=
 
     end
 

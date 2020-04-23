@@ -1,4 +1,4 @@
-function plot_spectra(P,Q,labelconditions2,label1,s,w)
+function values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
 
     n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
         length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
@@ -99,8 +99,23 @@ allscreen()
     g=title(strcat(labelconditions2{1},' vs Baseline'));
     g.FontSize=12;
     ylim([100 250])
+    
+    [mdam,mdam2,mdam3,mdam4]=small_window(freq3,j);
+    [ndam,ndam2,ndam3,ndam4]=small_window(freq4,j);
+    
+    Mdam(j)=mdam;
+    Mdam2(j)=mdam2;
+    Mdam3(j)=mdam3;
+    Mdam4(j)=mdam4;
+    
+    Ndam(j)=ndam;
+    Ndam2(j)=ndam2;
+    Ndam3(j)=ndam3;
+    Ndam4(j)=ndam4;
 
     end
 
+    values_spec.baseline=[Mdam;Mdam2;Mdam3;Mdam4];
+    values_spec.plusmaze=[Ndam;Ndam2;Ndam3;Ndam4];
 
 end
