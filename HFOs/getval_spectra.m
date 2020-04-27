@@ -1,4 +1,4 @@
-function values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w)
+function [values_spec,n]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size)
 
     n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
         length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
@@ -53,7 +53,7 @@ for condition=1:length(labelconditions2)
     for j=1:3
     
 %     [mdam,mdam2,mdam3,mdam4]=small_window(freq3,j);
-    [ndam,ndam2,ndam3,ndam4]=small_window(freq4,j);
+    [ndam,ndam2,ndam3,ndam4]=small_window(freq4,j,win_size);
     
 %     Mdam(j)=mdam;
 %     Mdam2(j)=mdam2;

@@ -89,9 +89,9 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
 % ti_pfc=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_pfc,'UniformOutput',false);
 
 
-%% Find largest epoch.
-max_length=cellfun(@length,v_hpc);
-nrem_epoch=find(max_length==max(max_length)==1);
+% %% Find largest epoch.
+% max_length=cellfun(@length,v_hpc);
+% nrem_epoch=find(max_length==max(max_length)==1);
 %% Pop up window
 f=figure();
 movegui(gcf,'center');
@@ -158,9 +158,12 @@ k=1;
 
 %%
 % Find max and plot
-max_length=cellfun(@length,v_hpc);
 
+%LARGEST EPOCH.
+% max_length=cellfun(@length,v_hpc);
 
+%EPOCH WITH MORE CORTICAL RIPPLES.
+max_length=cellfun(@length,swr_pfc(:,1));
 
 hpc=V_hpc{max_length==max(max_length)};
 pfc=V_pfc{max_length==max(max_length)};

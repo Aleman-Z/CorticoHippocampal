@@ -372,559 +372,159 @@ progress_bar(k,length(g),f)
     end
  xo
 %%
-%s: 1 for single, 2 for cohfos
+%Corrected:
+%s: 1 for cohfos, 2 for singles.
 %w:1 for hpc centered, 3 for par centered.
+win_size=50;
+%HPC COHFOS
 s=1;
 w=1;
-values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+[values_spec,n1]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
 TT=table;
-TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
-TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+% TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
+%PAR COHFOS
 s=1;
 w=3;
-values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+[values_spec,n2]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
 TT1=table;
-TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
-TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
-
+%HPC singles
 s=2;
 w=1;
-values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+[values_spec,n3]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
 TT2=table;
-TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
-TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+% TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
-
+%PAR singles
 s=2;
 w=3;
-values_spec=getval_spectra(P,Q,labelconditions2,label1,s,w);
+[values_spec,n4]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
 TT3=table;
-TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
-TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+% TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+
+[n1 n2 n3 n4]
 %%
 t1=repmat({'x'},[1 13]);
 
 tab=[TT;t1;TT1;t1;TT2;t1;TT3];
 %%
-writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
+if win_size== 25
+writetable(tab,strcat('spec_values_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+end
 
+if win_size== 50
+writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+end
+
+%%
+HPC_cohfos
+
+
+
+
+PAR_cohfos
+
+
+
+
+HPC_singles
+
+
+
+
+PAR_singles
 
 %%
 %HPC specs
 %HPC cohfos
 % xo
-%s: 1 for single, 2 for cohfos
+%s: 2 for single, 1 for cohfos
 %w:1 for hpc centered, 3 for par centered.
 s=1;
 w=1;
-values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-TT=table;
-TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
-TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+% TT=table;
+% TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 
 s=1;
 w=3;
-values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-TT1=table;
-TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
-TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+% TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 s=2;
 w=1;
-values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-TT2=table;
-TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
-TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+% TT2=table;
+% TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 
 s=2;
 w=3;
-values_spec=plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w)
+printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
-TT3=table;
-TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
-TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
+% TT3=table;
+% TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 xo
-t1=repmat({'x'},[1 7]);
-
-tab=[TT;t1;TT1;t1;TT2;t1;TT3];
-writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
+% t1=repmat({'x'},[1 7]);
+% 
+% tab=[TT;t1;TT1;t1;TT2;t1;TT3];
+% writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
 
 %%
 s=1;
-w=1;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
-printing(['SpecTraces_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
-close all
-
-s=1;
-w=3;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
-printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
-close all
-
-s=2;
 w=1;
 plot_spec_traces(P,Q,labelconditions2,label1,s,w)
 printing(['SpecTraces_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
-s=2;
+s=1;
 w=3;
 plot_spec_traces(P,Q,labelconditions2,label1,s,w)
 printing(['SpecTraces_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 close all
 
-%%
-%n=min([length(P.nl.hpc{2}) length(P.plusmaze.hpc{2})]);
-n=min([length(P.(labelconditions2{1}).(label1{1}){2}) length(P.(labelconditions2{2}).(label1{1}){2})...
-    length(P.(labelconditions2{3}).(label1{1}){2}) length(P.(labelconditions2{4}).(label1{1}){2})]);
-
-
-%Order ripples
-p=P.plusmaze.(label1{1}){2}; 
-q=Q.plusmaze.(label1{1}){2}; 
-% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
-R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
-[~,r]=sort(R,'descend');
-p=p(r);
-q=q(r);
-p=p(1:n);
-q=q(1:n);
-
-%Order ripples
-p_nl=P.nl.(label1{1}){2}; 
-q_nl=Q.nl.(label1{1}){2}; 
-% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q_nl));
-R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q_nl));
-[~,r_nl]=sort(R,'descend');
-p_nl=p_nl(r_nl);
-q_nl=q_nl(r_nl);
-p_nl=p_nl(1:n);
-q_nl=q_nl(1:n);
-
-
-%Max 1000 ripples.
-if length(q)>1000
-    q=q(1:1000);
-    p=p(1:1000);
-    q_nl=q_nl(1:1000);
-    p_nl=p_nl(1:1000);
-end
-
-ro=150;
-
-toy=[-.1:.001:.1];
-freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
-freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
-
-
-for j=1:3
-
-cfg              = [];
-cfg.channel      = freq3.label{j};
-[ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-[zmin2, zmax2] = ft_getminmax(cfg, freq4);
-zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
-
-cfg              = [];
-cfg.zlim=zlim;
-cfg.channel      = freq4.label{j};
-cfg.colormap=colormap(jet(256));
-
-subplot(3,3,3*j-2)
-ft_singleplotTFR(cfg, freq3); 
-% g=title(['Baseline ' label1{j} ]);
-g=title([label1{j} ' Baseline']);
-g.FontSize=12;
-xlabel('Time (s)')
-ylabel('Frequency (Hz)')
-ylim([100 250])
-
-subplot(3,3,3*j-1)
-ft_singleplotTFR(cfg, freq4); 
-% g=title(strcat(['Plusmaze ' label1{j}]));
-g=title(strcat([label1{j} ' Plusmaze' ]));
-g.FontSize=12;
-xlabel('Time (s)')
-ylabel('Frequency (Hz)')
-ylim([100 250])
-
-
-% Pixel-based stats
-zmap=stats_high(freq3,freq4,j);
-subplot(3,3,3*j);
-
-colormap(jet(256))
-zmap(zmap == 0) = NaN;
-J=imagesc(freq3.time,freq3.freq,zmap)
-xlabel('Time (s)'), ylabel('Frequency (Hz)')
-set(gca,'xlim',xlim,'ydir','no')
-set(J,'AlphaData',~isnan(zmap))
-c=narrow_colorbar()
- c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-c=narrow_colorbar()
-
-g=title(strcat(labelconditions2{1},' vs Baseline'));
-g.FontSize=12;
-
-end
-
-%%
-
-
-
-
-
-%h(2)=subplot(3,4,2)
-
-% Pixel-based stats
-zmap=stats_high(freq3,freq4,w);
-subplot(3,3,9);
-
-colormap(jet(256))
-zmap(zmap == 0) = NaN;
-J=imagesc(freq3.time,freq3.freq,zmap)
-xlabel('Time (s)'), ylabel('Frequency (Hz)')
-set(gca,'xlim',xlim,'ydir','no')
-set(J,'AlphaData',~isnan(zmap))
-c=narrow_colorbar()
- c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-c=narrow_colorbar()
-
-g=title(strcat(labelconditions2{1},' vs No Learning'));
-g.FontSize=12;
-
- %% Wideband and bandpassed signal.
-
-%s: 1 for single, 2 for cohfos
-%w:1 for hpc centered, 3 for par centered.
 s=2;
-w=1; 
- 
-n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
-    length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+w=1;
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
 
-
-%Order ripples
-p=P.plusmaze.(label1{w}){s}; 
-q=Q.plusmaze.(label1{w}){s}; 
-% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
-R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
-[~,r]=sort(R,'descend');
-p=p(r);
-q=q(r);
-p=p(1:n);
-q=q(1:n);
-
-%Order ripples
-p_nl=P.nl.(label1{w}){s}; 
-q_nl=Q.nl.(label1{w}){s}; 
-% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q_nl));
-R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q_nl));
-[~,r_nl]=sort(R,'descend');
-p_nl=p_nl(r_nl);
-q_nl=q_nl(r_nl);
-p_nl=p_nl(1:n);
-q_nl=q_nl(1:n);
-
-
-%Max 1000 ripples.
-if length(q)>1000
-    q=q(1:1000);
-    p=p(1:1000);
-    q_nl=q_nl(1:1000);
-    p_nl=p_nl(1:1000);
-end
-
-if w==3 %PAR-centered ripples.
-     p=cellfun(@(equis1) flip(equis1),p,'UniformOutput',false);
-     q=cellfun(@(equis1) flip(equis1),q,'UniformOutput',false);
-     p_nl=cellfun(@(equis1) flip(equis1),p_nl,'UniformOutput',false);
-     q_nl=cellfun(@(equis1) flip(equis1),q_nl,'UniformOutput',false);
-end 
- 
- 
-ro=150;
-allscreen()
-
-P1_nl=avg_samples(q_nl,create_timecell(ro,length(p)));
-P2_nl=avg_samples(p_nl,create_timecell(ro,length(p)));
-
-
-P1=avg_samples(q,create_timecell(ro,length(p)));
-P2=avg_samples(p,create_timecell(ro,length(p)));
-
-subplot(6,2,1)
-plot(cell2mat(create_timecell(ro,1)),P2_nl(1,:))
-title('Baseline HPC')
-win1=[min(P2_nl(1,:)) max(P2_nl(1,:)) min(P2(1,:)) max(P2(1,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-subplot(6,2,3)
-plot(cell2mat(create_timecell(ro,1)),P1_nl(1,:))
-win1=[min(P1_nl(1,:)) max(P1_nl(1,:)) min(P1(1,:)) max(P1(1,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-subplot(6,2,5)
-plot(cell2mat(create_timecell(ro,1)),P2_nl(2,:))
-win1=[min(P2_nl(2,:)) max(P2_nl(2,:)) min(P2(2,:)) max(P2(2,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-title('Baseline PFC')
-subplot(6,2,7)
-plot(cell2mat(create_timecell(ro,1)),P1_nl(2,:))
-win1=[min(P1_nl(2,:)) max(P1_nl(2,:)) min(P1(2,:)) max(P1(2,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-subplot(6,2,9)
-plot(cell2mat(create_timecell(ro,1)),P2_nl(3,:))
-win1=[min(P2_nl(3,:)) max(P2_nl(3,:)) min(P2(3,:)) max(P2(3,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-title('Baseline PAR')
-subplot(6,2,11)
-plot(cell2mat(create_timecell(ro,1)),P1_nl(3,:))
-win1=[min(P1_nl(3,:)) max(P1_nl(3,:)) min(P1(3,:)) max(P1(3,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-
-
-
-subplot(6,2,2)
-plot(cell2mat(create_timecell(ro,1)),P2(1,:))
-title('Plusmaze HPC')
-win1=[min(P2_nl(1,:)) max(P2_nl(1,:)) min(P2(1,:)) max(P2(1,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-subplot(6,2,4)
-plot(cell2mat(create_timecell(ro,1)),P1(1,:))
-win1=[min(P1_nl(1,:)) max(P1_nl(1,:)) min(P1(1,:)) max(P1(1,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-subplot(6,2,6)
-plot(cell2mat(create_timecell(ro,1)),P2(2,:))
-win1=[min(P2_nl(2,:)) max(P2_nl(2,:)) min(P2(2,:)) max(P2(2,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-title('Plusmaze PFC')
-subplot(6,2,8)
-plot(cell2mat(create_timecell(ro,1)),P1(2,:))
-win1=[min(P1_nl(2,:)) max(P1_nl(2,:)) min(P1(2,:)) max(P1(2,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-
-subplot(6,2,10)
-plot(cell2mat(create_timecell(ro,1)),P2(3,:))
-title('Plusmaze PAR')
-win1=[min(P2_nl(3,:)) max(P2_nl(3,:)) min(P2(3,:)) max(P2(3,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
-subplot(6,2,12)
-plot(cell2mat(create_timecell(ro,1)),P1(3,:))
-win1=[min(P1_nl(3,:)) max(P1_nl(3,:)) min(P1(3,:)) max(P1(3,:))];
-win1=[(min(win1)) (max(win1))];
-ylim(win1)
-xlabel('Time (s)')
-ylabel('uV')
-xlim([-.1 .1])
+s=2;
+w=3;
+plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+close all
 
 %%
-% subplot(2,4,2)
-% plot(P2(1,:))
-% subplot(2,4,6)
-% plot(P1(1,:))
 
-%%
-% w=1;
-% h(1)=subplot(2,4,1)
-% plot(cell2mat(create_timecell(ro,1)),P2_nl(1,:))
-% title('Wide Band No Learning')
-% win1=[min(P2_nl(w,:)) max(P2_nl(w,:)) min(P2(w,:)) max(P2(w,:))];
-% win1=[(min(win1)) round(max(win1))];
-% ylim(win1)
-% xlabel('Time (s)')
-% ylabel('uV')
-% xlim([-.1 .1])
-% 
-% h(3)=subplot(2,4,3)
-% plot(cell2mat(create_timecell(ro,1)),P1_nl(w,:))
-% title('High Gamma No Learning')
-% 
-% win2=[min(P1_nl(w,:)) max(P1_nl(w,:)) min(P1(w,:)) max(P1(w,:))];
-% win2=[(min(win2)) (max(win2))];
-% ylim(win2)
-% xlabel('Time (s)')
-% ylabel('uV')
-% xlim([-.1 .1])
-% 
-% 
-% h(2)=subplot(2,4,2)
-% plot(cell2mat(create_timecell(ro,1)),P2(w,:))
-% title(strcat('Wide Band',{' '},labelconditions2{1}))
-% ylim(win1)
-% xlabel('Time (s)')
-% ylabel('uV')
-% xlim([-.1 .1])
-% 
-% 
-% h(4)=subplot(2,4,4)
-% plot(cell2mat(create_timecell(ro,1)),P1(w,:))
-% title(strcat('High Gamma',{' '},labelconditions2{1}))
-% ylim(win2)
-% xlabel('Time (s)')
-% ylabel('uV')
-% xlim([-.1 .1])
-% 
-% 
-% 
-% toy=[-.1:.001:.1];
-% % toy=[-.12:.001:.12];
-% 
-% 
-% freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
-% freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
-% 
-% cfg              = [];
-% cfg.channel      = freq3.label{1};
-% [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-% [zmin2, zmax2] = ft_getminmax(cfg, freq4);
-% zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
-% 
-% cfg              = [];
-% cfg.zlim=zlim;
-% cfg.channel      = freq4.label{1};
-% cfg.colormap=colormap(jet(256));
-% 
-% 
-% %h(1)=subplot(3,4,4*(1-1)+1)
-% subplot(3,3,7)
-% ft_singleplotTFR(cfg, freq3); 
-% g=title('No Learning');
-% g.FontSize=12;
-% xlabel('Time (s)')
-% ylabel('Frequency (Hz)')
-% ylim([100 250])
-% 
-% 
-% %h(2)=subplot(3,4,2)
-% subplot(3,3,8)
-% ft_singleplotTFR(cfg, freq4); 
-% g=title(strcat('Plusmaze'));
-% g.FontSize=12;
-% xlabel('Time (s)')
-% ylabel('Frequency (Hz)')
-% ylim([100 250])
-% 
-% % Pixel-based stats
-% zmap=stats_high(freq3,freq4,w);
-% subplot(3,3,9);
-% 
-% colormap(jet(256))
-% zmap(zmap == 0) = NaN;
-% J=imagesc(freq3.time,freq3.freq,zmap)
-% xlabel('Time (s)'), ylabel('Frequency (Hz)')
-% set(gca,'xlim',xlim,'ydir','no')
-% set(J,'AlphaData',~isnan(zmap))
-% c=narrow_colorbar()
-%  c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-% caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-% c=narrow_colorbar()
-% 
-% g=title(strcat(labelconditions2{1},' vs No Learning'));
-% g.FontSize=12;
-
-
-
-%%
-% 
-% cellfun(@mean,q,'UniformOutput',false);
-% xo
-% 
-% q2=cell2mat(q);
-% q2=q2(1,:);
-% q2=q2.';
-% 
-% R=reshape(q2,[length(q) size(q{1},2)]);
-%  
-% 
-% q2=cellfun(@(equis1) equis1(:) ,q ,'UniformOutput',false);
-% 
-% q2=cellfun(@(equis1) {equis1} ,q ,'UniformOutput',false);
-% 
-% 
-% q2=cellfun(@(equis1) equis1{1}(1,:) ,q2 ,'UniformOutput',false);
-% 
-% 
-% 
-% aja=cellfun(@(equis1) equis1(:) ,q ,'UniformOutput',false)
-% aja=cellfun(@(equis1) aja(:) ,aja ,'UniformOutput',false)
-% aja=cellfun(@(equis1) aja(1) ,aja ,'UniformOutput',false)
-% 
-% 
-% cellfun(@(equis1,equis2) equis1(equis2),q, num2cell(ones(size(q))))
-% 
-% cellfun(@(equis1,equis2) equis1(equis2) ,q, num2cell(ones(size(q))),'UniformOutput',false)
-% 
-% 
-% cellfun(@(equis1) size(equis1),q ,'UniformOutput',false)
-% 
-% 
-% cellfun('size' ,q)
-% 
-% cellfun(@(equis1,equis2) equis1(equis2),q_cortex,v2,'UniformOutput',false)
-
-% max(abs(hilbert(equis1(1,:))))
 
 for l=1:length(q)
     plot(q{l}(1,:))
