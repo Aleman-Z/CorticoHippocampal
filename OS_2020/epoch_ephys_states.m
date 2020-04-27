@@ -1,7 +1,7 @@
-function [swr_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx)
+function [swr_hpc,Mx_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx,fn)
     %Convert signal to 1 sec epochs.
         e_t=1;
-        e_samples=e_t*(1000); %fs=1kHz
+        e_samples=e_t*(fn); %fs=1kHz
         ch=length(HPC);
         nc=floor(ch/e_samples); %Number of epochs
         NC=[];
@@ -32,7 +32,6 @@ function [swr_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx)
 V_hpc=cellfun(@(equis) filtfilt(b2,a2,equis), v_hpc ,'UniformOutput',false);
 Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
 signal2_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
-fn=1000;
 
 ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_hpc,'UniformOutput',false);    
 %%
@@ -49,6 +48,7 @@ swr_hpc=[Sx_hpc Ex_hpc Mx_hpc];
         else
             %v_hpc=[];
             swr_hpc={};
+            Mx_hpc={};
         end
     
 end

@@ -29,7 +29,7 @@ switch indx1
         
 end
 
-
+fn=1000; %Sampling frequency.
 
 xx = inputdlg({'Cortical area (PAR or PFC)'},...
               'Type your selection', [1 50],{'PFC'}); 
@@ -143,16 +143,16 @@ Cortex=Cortex.*(0.195);
                         end
                         
                         %Ephys data
-                        if length(HPC)<45*60*1000
-                            HPC=[HPC.' (nan(45*60*1000-length(HPC),1).')]; %Fill with NaNs.
+                        if length(HPC)<45*60*fn
+                            HPC=[HPC.' (nan(45*60*fn-length(HPC),1).')]; %Fill with NaNs.
                         else
-                            HPC=HPC(1:45*60*1000).'; %Take only 45 min.
+                            HPC=HPC(1:45*60*fn).'; %Take only 45 min.
                         end
                         
-                        if length(Cortex)<45*60*1000
-                            Cortex=[Cortex.' (nan(45*60*1000-length(Cortex),1).')]; %Fill with NaNs.
+                        if length(Cortex)<45*60*fn
+                            Cortex=[Cortex.' (nan(45*60*fn-length(Cortex),1).')]; %Fill with NaNs.
                         else
-                            Cortex=Cortex(1:45*60*1000).'; %Take only 45 min.
+                            Cortex=Cortex(1:45*60*fn).'; %Take only 45 min.
                         end
                                               
         
@@ -170,9 +170,9 @@ Cortex=Cortex.*(0.195);
         pfc2=signal2_pfc{N};
         n=find(N);
 
-        plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+        plot((1:length(hpc))./fn,5.*zscore(hpc)+100,'Color','black')
         hold on
-        plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+        plot((1:length(pfc))./fn,5.*zscore(pfc)+150,'Color','black')
         xlabel('Time (Seconds)')
 
 
@@ -180,8 +180,8 @@ Cortex=Cortex.*(0.195);
         stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*350,'Color','red')%Seconds (Cortex)
 
         % 
-        plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
-        plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+        plot((1:length(hpc2))./fn,5.*zscore(hpc2)+220,'Color','black')
+        plot((1:length(pfc2))./fn,5.*zscore(pfc2)+290,'Color','black')
         % 
         % 
         yticks([100 150 220 290])
@@ -191,11 +191,11 @@ Cortex=Cortex.*(0.195);
     'Stop the code here'
         xo
     end
-    
+%    xo
     
     if ind_mode==2
         %Count events
-        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx); 
+        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:), nr_cohfos(i,:),nr_single_hpc(i,:),nr_single_cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx,fn); 
     end
 
     
@@ -229,16 +229,16 @@ Cortex=Cortex.*(0.195);
                         
                         
                         %Ephys
-                        if length(HPC)<45*60*1000*4
-                            HPC=[HPC.' (nan(45*60*1000*4-length(HPC),1).')]; %Fill with NaNs.
+                        if length(HPC)<45*60*fn*4
+                            HPC=[HPC.' (nan(45*60*fn*4-length(HPC),1).')]; %Fill with NaNs.
                         else
-                            HPC=HPC(1:45*60*1000*4).'; %Take only 45 min.
+                            HPC=HPC(1:45*60*fn*4).'; %Take only 45 min.
                         end
                         
-                        if length(Cortex)<45*60*1000*4
-                            Cortex=[Cortex.' (nan(45*60*1000*4-length(Cortex),1).')]; %Fill with NaNs.
+                        if length(Cortex)<45*60*fn*4
+                            Cortex=[Cortex.' (nan(45*60*fn*4-length(Cortex),1).')]; %Fill with NaNs.
                         else
-                            Cortex=Cortex(1:45*60*1000*4).'; %Take only 45 min.
+                            Cortex=Cortex(1:45*60*fn*4).'; %Take only 45 min.
                         end
 
                         
@@ -248,21 +248,21 @@ Cortex=Cortex.*(0.195);
                         states3=states(1+2700*2:2700*3);
                         states4=states(1+2700*3:2700*4);
                         
-                        HPC_1=HPC(1:2700*1000);
-                        HPC_2=HPC(2700*1000+1:2700*2*1000);
-                        HPC_3=HPC(1+2700*2*1000:2700*3*1000);
-                        HPC_4=HPC(1+2700*3*1000:2700*4*1000);
+                        HPC_1=HPC(1:2700*fn);
+                        HPC_2=HPC(2700*fn+1:2700*2*fn);
+                        HPC_3=HPC(1+2700*2*fn:2700*3*fn);
+                        HPC_4=HPC(1+2700*3*fn:2700*4*fn);
                         
-                        Cortex_1=Cortex(1:2700*1000);
-                        Cortex_2=Cortex(2700*1000+1:2700*2*1000);
-                        Cortex_3=Cortex(1+2700*2*1000:2700*3*1000);
-                        Cortex_4=Cortex(1+2700*3*1000:2700*4*1000);
+                        Cortex_1=Cortex(1:2700*fn);
+                        Cortex_2=Cortex(2700*fn+1:2700*2*fn);
+                        Cortex_3=Cortex(1+2700*2*fn:2700*3*fn);
+                        Cortex_4=Cortex(1+2700*3*fn:2700*4*fn);
                         
                         if ind_mode==2
-                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx);  
-                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx);  
-                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx);  
-                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx);  
+                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:),nr_cohfos(6,:),nr_single_hpc(6,:),nr_single_cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:),nr_cohfos(7,:),nr_single_hpc(7,:),nr_single_cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:),nr_cohfos(8,:),nr_single_hpc(8,:),nr_single_cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:),nr_cohfos(9,:),nr_single_hpc(9,:),nr_single_cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx,fn);  
                         end
                         
                         if ind_mode==3
@@ -335,7 +335,7 @@ Cortex=Cortex.*(0.195);
         end
         
    if ind_mode==2
-
+xo
 %         allscreen()
 %         subplot(1,2,1)
         imagesc(nr_swr_HPC); colorbar(); colormap('gray')
@@ -356,6 +356,36 @@ Cortex=Cortex.*(0.195);
         title([xx{1} ' HFOs'])
         printing(['Cortex_' g{j} '_' stage])
         close all       
+        
+        imagesc(nr_cohfos); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Coocurring' ' HFOs'])
+        printing(['Coocurring_' g{j} '_' stage])
+        close all
+        
+        %Single HPC
+        imagesc(nr_single_hpc); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Single HPC' ' HFOs'])
+        printing(['Single_HPC_' g{j} '_' stage])
+        close all
+        
+        %Single PFC
+        imagesc(nr_single_cortex); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Single Cortex' ' HFOs'])
+        printing(['Single_Cortex_' g{j} '_' stage])
+        close all
+        
    end
     
    if ind_mode==3

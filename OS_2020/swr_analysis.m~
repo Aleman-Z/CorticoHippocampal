@@ -29,7 +29,7 @@ switch indx1
         
 end
 
-
+fn=1000; %Sampling frequency.
 
 xx = inputdlg({'Cortical area (PAR or PFC)'},...
               'Type your selection', [1 50],{'PFC'}); 
@@ -56,17 +56,7 @@ if ind_mode==1 || ind_mode==2
     D2=str2num(answer{1}) 
 end         
     
-% list = {'HPC','PFC','PAR'};
-% [indx2] = listdlg('SelectionMode','single','ListString',list);
-% 
-% switch indx2
-%     case 1
-%         barea='HPC';
-%     case 2
-%         barea='PFC';
-%     case 3
-%         barea='PAR'
-% end
+
 nr_swr_HPC=[];
 nr_swr_Cortex=[];
 
@@ -140,40 +130,8 @@ Cortex=getfield(Cortex,xx{1});
 Cortex=Cortex.*(0.195);
 
 
-% % % % % %Convert signal to 1 sec epochs.
-% % % % % e_t=1;
-% % % % % e_samples=e_t*(1000); %fs=1kHz
-% % % % % ch=length(HPC);
-% % % % % nc=floor(ch/e_samples); %Number of epochs
-% % % % % NC=[];
-% % % % % NC2=[];
-% % % % % 
-% % % % % for kk=1:nc    
-% % % % %   NC(:,kk)= HPC(1+e_samples*(kk-1):e_samples*kk);
-% % % % %   NC2(:,kk)= Cortex(1+e_samples*(kk-1):e_samples*kk);
-% % % % % end
-% % % % % 
-% % % % % vec_bin=states;
-% % % % % if ss~=6
-% % % % %     vec_bin(vec_bin~=ss)=0;
-% % % % %     vec_bin(vec_bin==ss)=1;
-% % % % % else
-% % % % %     vec_bin(1:end)=1;    
-% % % % % end
-% % % % % %xo
-% % % % % %Cluster one values:
-% % % % % v2=ConsecutiveOnes(vec_bin);
-% % % % % 
-% % % % % v_index=find(v2~=0);
-% % % % % v_values=v2(v2~=0);
-% % % % % 
-% % % % % for epoch_count=1:length(v_index)
-% % % % % v_hpc{epoch_count,1}=reshape(NC(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
-% % % % % v_cortex{epoch_count,1}=reshape(NC2(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
-% % % % % end 
-%xo
-                    
-                   
+
+                                      
 
                     if and(~contains(G{i},'trial5'),~contains(G{i},'Trial5')) %Whenever it is not PostTrial 5 
                         
@@ -185,16 +143,16 @@ Cortex=Cortex.*(0.195);
                         end
                         
                         %Ephys data
-                        if length(HPC)<45*60*1000
-                            HPC=[HPC.' (nan(45*60*1000-length(HPC),1).')]; %Fill with NaNs.
+                        if length(HPC)<45*60*fn
+                            HPC=[HPC.' (nan(45*60*fn-length(HPC),1).')]; %Fill with NaNs.
                         else
-                            HPC=HPC(1:45*60*1000).'; %Take only 45 min.
+                            HPC=HPC(1:45*60*fn).'; %Take only 45 min.
                         end
                         
-                        if length(Cortex)<45*60*1000
-                            Cortex=[Cortex.' (nan(45*60*1000-length(Cortex),1).')]; %Fill with NaNs.
+                        if length(Cortex)<45*60*fn
+                            Cortex=[Cortex.' (nan(45*60*fn-length(Cortex),1).')]; %Fill with NaNs.
                         else
-                            Cortex=Cortex(1:45*60*1000).'; %Take only 45 min.
+                            Cortex=Cortex(1:45*60*fn).'; %Take only 45 min.
                         end
                                               
         
@@ -212,9 +170,9 @@ Cortex=Cortex.*(0.195);
         pfc2=signal2_pfc{N};
         n=find(N);
 
-        plot((1:length(hpc))./1000,5.*zscore(hpc)+100,'Color','black')
+        plot((1:length(hpc))./fn,5.*zscore(hpc)+100,'Color','black')
         hold on
-        plot((1:length(pfc))./1000,5.*zscore(pfc)+150,'Color','black')
+        plot((1:length(pfc))./fn,5.*zscore(pfc)+150,'Color','black')
         xlabel('Time (Seconds)')
 
 
@@ -222,8 +180,8 @@ Cortex=Cortex.*(0.195);
         stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*350,'Color','red')%Seconds (Cortex)
 
         % 
-        plot((1:length(hpc2))./1000,5.*zscore(hpc2)+220,'Color','black')
-        plot((1:length(pfc2))./1000,5.*zscore(pfc2)+290,'Color','black')
+        plot((1:length(hpc2))./fn,5.*zscore(hpc2)+220,'Color','black')
+        plot((1:length(pfc2))./fn,5.*zscore(pfc2)+290,'Color','black')
         % 
         % 
         yticks([100 150 220 290])
@@ -233,17 +191,17 @@ Cortex=Cortex.*(0.195);
     'Stop the code here'
         xo
     end
-    
+%    xo
     
     if ind_mode==2
         %Count events
-        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx); 
+        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:), nr_cohfos(i,:),nr_single_hpc(i,:),nr_single_cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx,fn); 
     end
 
     
     if ind_mode==3
         %Find SD values
-        [~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC,Cortex,states,ss,70,30);    
+        [sd_swr]=find_std(HPC,Cortex,states,ss);
         
         Sd_Swr.sd2_hpc_co(i)=sd_swr.sd2_hpc_co;
         Sd_Swr.sd5_hpc_co(i)=sd_swr.sd5_hpc_co;
@@ -254,12 +212,14 @@ Cortex=Cortex.*(0.195);
         Sd_Swr.sd2_pfc_long(i)=sd_swr.sd2_pfc_long;
         Sd_Swr.sd5_pfc_long(i)=sd_swr.sd5_pfc_long;
         
-        
+%         if i==5
+%             xo
+%         end
     end
     
     
                     else % PostTrial 5 case 
-                        
+%                         xo
                         %Sleep scoring data
                         if length(states)<45*60*4
                             states=[states nan(1,45*60*4-length(states))]; %Fill with NaNs.
@@ -269,16 +229,16 @@ Cortex=Cortex.*(0.195);
                         
                         
                         %Ephys
-                        if length(HPC)<45*60*1000*4
-                            HPC=[HPC.' (nan(45*60*1000*4-length(HPC),1).')]; %Fill with NaNs.
+                        if length(HPC)<45*60*fn*4
+                            HPC=[HPC.' (nan(45*60*fn*4-length(HPC),1).')]; %Fill with NaNs.
                         else
-                            HPC=HPC(1:45*60*1000*4).'; %Take only 45 min.
+                            HPC=HPC(1:45*60*fn*4).'; %Take only 45 min.
                         end
                         
-                        if length(Cortex)<45*60*1000*4
-                            Cortex=[Cortex.' (nan(45*60*1000*4-length(Cortex),1).')]; %Fill with NaNs.
+                        if length(Cortex)<45*60*fn*4
+                            Cortex=[Cortex.' (nan(45*60*fn*4-length(Cortex),1).')]; %Fill with NaNs.
                         else
-                            Cortex=Cortex(1:45*60*1000*4).'; %Take only 45 min.
+                            Cortex=Cortex(1:45*60*fn*4).'; %Take only 45 min.
                         end
 
                         
@@ -288,26 +248,27 @@ Cortex=Cortex.*(0.195);
                         states3=states(1+2700*2:2700*3);
                         states4=states(1+2700*3:2700*4);
                         
-                        HPC_1=HPC(1:2700*1000);
-                        HPC_2=HPC(2700*1000+1:2700*2*1000);
-                        HPC_3=HPC(1+2700*2*1000:2700*3*1000);
-                        HPC_4=HPC(1+2700*3*1000:2700*4*1000);
+                        HPC_1=HPC(1:2700*fn);
+                        HPC_2=HPC(2700*fn+1:2700*2*fn);
+                        HPC_3=HPC(1+2700*2*fn:2700*3*fn);
+                        HPC_4=HPC(1+2700*3*fn:2700*4*fn);
                         
-                        Cortex_1=Cortex(1:2700*1000);
-                        Cortex_2=Cortex(2700*1000+1:2700*2*1000);
-                        Cortex_3=Cortex(1+2700*2*1000:2700*3*1000);
-                        Cortex_4=Cortex(1+2700*3*1000:2700*4*1000);
+                        Cortex_1=Cortex(1:2700*fn);
+                        Cortex_2=Cortex(2700*fn+1:2700*2*fn);
+                        Cortex_3=Cortex(1+2700*2*fn:2700*3*fn);
+                        Cortex_4=Cortex(1+2700*3*fn:2700*4*fn);
                         
                         if ind_mode==2
-                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx);  
-                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx);  
-                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx);  
-                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx);  
+                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:),nr_cohfos(6,:)),nr_single_hpc(i,:),nr_single_cortex(i,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:),nr_cohfos(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:),nr_cohfos(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:),nr_cohfos(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx,fn);  
                         end
                         
                         if ind_mode==3
                                     %Find SD values
-                                    [~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_1,Cortex_1,states1,ss,70,30);    
+                                    %[~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_1,Cortex_1,states1,ss,70,30);
+                                    [sd_swr]=find_std(HPC_1,Cortex_1,states1,ss);
                                     Sd_Swr.sd2_hpc_co(6)=sd_swr.sd2_hpc_co;
                                     Sd_Swr.sd5_hpc_co(6)=sd_swr.sd5_hpc_co;
                                     Sd_Swr.sd2_pfc_co(6)=sd_swr.sd2_pfc_co;
@@ -318,7 +279,8 @@ Cortex=Cortex.*(0.195);
                                     Sd_Swr.sd5_pfc_long(6)=sd_swr.sd5_pfc_long;
                                     
                                     
-                                    [~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_2,Cortex_2,states2,ss,70,30);    
+                                    %[~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_2,Cortex_2,states2,ss,70,30);
+                                    [sd_swr]=find_std(HPC_2,Cortex_2,states2,ss);
                                     Sd_Swr.sd2_hpc_co(7)=sd_swr.sd2_hpc_co;
                                     Sd_Swr.sd5_hpc_co(7)=sd_swr.sd5_hpc_co;
                                     Sd_Swr.sd2_pfc_co(7)=sd_swr.sd2_pfc_co;
@@ -328,7 +290,8 @@ Cortex=Cortex.*(0.195);
                                     Sd_Swr.sd2_pfc_long(7)=sd_swr.sd2_pfc_long;
                                     Sd_Swr.sd5_pfc_long(7)=sd_swr.sd5_pfc_long;
                                     
-                                    [~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_3,Cortex_3,states3,ss,70,30);
+                                    %[~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_3,Cortex_3,states3,ss,70,30);
+                                    [sd_swr]=find_std(HPC_3,Cortex_3,states3,ss);
                                     Sd_Swr.sd2_hpc_co(8)=sd_swr.sd2_hpc_co;
                                     Sd_Swr.sd5_hpc_co(8)=sd_swr.sd5_hpc_co;
                                     Sd_Swr.sd2_pfc_co(8)=sd_swr.sd2_pfc_co;
@@ -338,7 +301,8 @@ Cortex=Cortex.*(0.195);
                                     Sd_Swr.sd2_pfc_long(8)=sd_swr.sd2_pfc_long;
                                     Sd_Swr.sd5_pfc_long(8)=sd_swr.sd5_pfc_long;       
                                     
-                                    [~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_4,Cortex_4,states4,ss,70,30);
+                                    %[~,~,~,~,~,~,~,~,sd_swr]=swr_check_thr(HPC_4,Cortex_4,states4,ss,70,30);
+                                    [sd_swr]=find_std(HPC_4,Cortex_4,states4,ss);
                                     Sd_Swr.sd2_hpc_co(9)=sd_swr.sd2_hpc_co;
                                     Sd_Swr.sd5_hpc_co(9)=sd_swr.sd5_hpc_co;
                                     Sd_Swr.sd2_pfc_co(9)=sd_swr.sd2_pfc_co;
@@ -353,97 +317,15 @@ Cortex=Cortex.*(0.195);
     
                     end
 
- 
-%%
-
 
 
 %%
-% Dwndat_binned=cellfun(@(equis) filtfilt(b2,a2,equis), dwndat_binned ,'UniformOutput',false);
-% Dwndat_binned=cellfun(@(equis) filtfilt(b1,a1,equis), Dwndat_binned ,'UniformOutput',false); %100-300 Hz
-% Dwndat_binned=cellfun(@(equis) times((1/0.195), equis)  ,Dwndat_binned,'UniformOutput',false); %Remove convertion factor for ripple detection
-% %%
-% % All states
-% fn=1000;
-% ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,Dwndat_binned,'UniformOutput',false);
-% D1=100;
-% [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),Dwndat_binned,ti,'UniformOutput',false);    
-% %xo
-% 
-% N=1;
-% allscreen()
-% %ax1=subplot(1,2,1)
-% plot(ti{N},Dwndat_binned{N})
-% hold on
-% stem(Mx_hpc{N},ones(size(Mx_hpc{N}))*1000)
-%%
-% xo
-% dwndat2=filtfilt(b2,a2,dwndat);
-% dwndat2=filtfilt(b1,a1,dwndat2);
-% dwndat2=dwndat2.*(1/0.195);
-% 
-% Ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,{dwndat2},'UniformOutput',false);
-% D1=200;
-% [S_hpc,E_hpc,M_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ),{dwndat2.'},Ti,'UniformOutput',false);    
 
-%%
-
-%                     for m = 1:length(dwndat_binned)
-% 
-%                         stateloc = find(slpscr_binned{m}==ss);
-%                         stateloc2={};
-%                         data=slpscr_binned{m}==ss;
-% 
-%                         if sum(data)>0;
-% 
-% 
-% 
-%                             nonZeroElements = data ~= 0;
-%                             % Define the closest regions can be.  If they are farther away than this,
-%                             % then they will be considered as separate regions.
-%                             if strcmp(barea,'HPC')
-%                             minSeparation = 1;
-%                             else
-%                             minSeparation = 2;                    
-%                             end
-% 
-%                             nonZeroElements = ~bwareaopen(~nonZeroElements, minSeparation);
-%                             [labeledRegions, numRegions] = bwlabel(nonZeroElements);
-% 
-%                             MC=[];
-%                             for p = 1:numRegions
-%                                 stateloc2{p}=dwndat_binned{m}(min(find(labeledRegions==p))*1000-999:max(find(labeledRegions==p))*1000);
-%                                 [NC,~]=epocher( {stateloc2{p}},1);
-%                                 MC=[MC ;NC.'];
-% 
-%                             end
-%                               [pxx,f]=pmtm(MC.',4,[],1000);
-%                               meanp = mean(pxx,2);
-%                               [minDistance1, indexOfMin1] = min(abs(f-5));
-%                               [minDistance2, indexOfMin2] = min(abs(f-8));
-%                               ratiotheta = [ratiotheta sum(meanp(indexOfMin1:indexOfMin2))/ sum(meanp)];
-%                               meanp_pt = [meanp_pt meanp];
-%                               save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i},'_',barea),'meanp_pt')
-% 
-%                               
-%                         else
-%                                 ratiotheta=[ratiotheta NaN];
-%                                 meanp_pt = [meanp_pt NaN];
-%                                 save(strcat('meanp_PT_',stage,'_',g{j},'_',G{i}),'meanp_pt')
-% 
-%                         end
-%                         
-%                     end
                     cd ..
                 else
                     cd .. %Means there is no sleep scoring file.
                 end
                 
-
-%             meanp_sd = [meanp_sd {meanp_pt}];
-%             save(strcat('Meanpower_SD_',stage,'_',g{j},'_',barea), 'meanp_sd')
-%             ratiothetasd = [ratiothetasd {ratiotheta}];
-%             save(strcat('ratiotheta_SD_',stage,'_',g{j},'_',barea),'ratiothetasd')
 % if i==5
 %     xo
 % end            
@@ -453,7 +335,7 @@ Cortex=Cortex.*(0.195);
         end
         
    if ind_mode==2
-
+xo
 %         allscreen()
 %         subplot(1,2,1)
         imagesc(nr_swr_HPC); colorbar(); colormap('gray')
@@ -474,34 +356,47 @@ Cortex=Cortex.*(0.195);
         title([xx{1} ' HFOs'])
         printing(['Cortex_' g{j} '_' stage])
         close all       
+        
+        imagesc(nr_cohfos); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Coocurring' ' HFOs'])
+        
    end
     
    if ind_mode==3
-       xo
+%        xo
        %Sd_Swr
     TT=table;
     TT.Variables=...
         [
-        [{'HPC_2SD_Concatenated'};{'HPC_2SD_Longuest'};{'HPC_5SD_Concatenated'};{'HPC_5SD_Longuest'};{'PFC_2SD_Concatenated'};{'PFC_2SD_Longuest'};{'PFC_5SD_Concatenated'};{'PFC_5SD_Longuest'}]
-    [ Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
+                [{g{j}};{'x'};{'x'};{'x'};{'x'};{'x'};{'x'};{'x'}] ...
+        [{'HPC_2SD_Concatenated'};{'HPC_2SD_Longest'};{'HPC_5SD_Concatenated'};{'HPC_5SD_Longest'};{'PFC_2SD_Concatenated'};{'PFC_2SD_Longest'};{'PFC_5SD_Concatenated'};{'PFC_5SD_Longest'}] ...
+    num2cell([ Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
         ;Sd_Swr.sd2_pfc_co;Sd_Swr.sd2_pfc_long;Sd_Swr.sd5_pfc_co;Sd_Swr.sd5_pfc_long ...
-      ]...
+      ]) ...
+    num2cell([ mean(Sd_Swr.sd2_hpc_co); mean(Sd_Swr.sd2_hpc_long); mean(Sd_Swr.sd5_hpc_co);mean(Sd_Swr.sd5_hpc_long) ...
+        ;mean(Sd_Swr.sd2_pfc_co);mean(Sd_Swr.sd2_pfc_long);mean(Sd_Swr.sd5_pfc_co);mean(Sd_Swr.sd5_pfc_long) ...
+      ])...
       ];
-  
-%       TT.Variables=[Sd_Swr.sd2_hpc_co;Sd_Swr.sd2_hpc_long;Sd_Swr.sd5_hpc_co;Sd_Swr.sd5_hpc_long ...
-%         ;Sd_Swr.sd2_pfc_co;Sd_Swr.sd2_pfc_long;Sd_Swr.sd5_pfc_co;Sd_Swr.sd5_pfc_long
-%       ];
-    
-    
+      
    
-    TT.Properties.VariableNames={'Metric';'PS';'PT1';'PT2';'PT3';'PT4';'PT5_1';'PT5_2';'PT5_3';'PT5_4'};
-
+    TT.Properties.VariableNames={'Condition';'Metric';'PS';'PT1';'PT2';'PT3';'PT4';'PT5_1';'PT5_2';'PT5_3';'PT5_4';'Average Value'};
+    t1=repmat({'x'},[1 12]);
+        if j==1
+            T=[TT];
+        else
+            T=[T;t1;TT];
+        end
+    
    end
               
           
     end
-%     xo
-
+    %xo
+    writetable(T,strcat('SD_values','.xls'),'Sheet',1,'Range','A1:Z50')
     cd ..
 end
 
