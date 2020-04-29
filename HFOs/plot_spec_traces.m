@@ -1,7 +1,11 @@
-function plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+function plot_spec_traces(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
 
+if same_nr_types==1
+    n=N;
+else
     n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
-        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);    
+end
 
 
     %Order ripples

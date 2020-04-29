@@ -1,7 +1,16 @@
-function [values_spec,n]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size)
+function [values_spec,n,RandStruct]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr)
 
+if same_nr_types==1
+   n=N;    
+else
     n=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
         length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+    
+end
+
+type_hfo{1}='cohfos';
+type_hfo{2}='single';
+
 
 for condition=1:length(labelconditions2)
 
@@ -9,12 +18,41 @@ for condition=1:length(labelconditions2)
     p=P.(labelconditions2{condition}).(label1{w}){s}; 
     q=Q.(labelconditions2{condition}).(label1{w}){s}; 
     % R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
-    R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
+    %R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
+    if random_hfo==0
+    R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,151-25:151+25)))),q));
     [~,r]=sort(R,'descend');
     p=p(r);
     q=q(r);
     p=p(1:n);
     q=q(1:n);
+    else
+%         if condition==1
+            if rand_first_run==1 %First time generating rand numbers and saving them
+                 rand_vec=randperm(length(p),n);
+                 RandStruct.([label1{w} '_' type_hfo{s}]).(labelconditions2{condition})=rand_vec;
+%                  if same_nr_types==1
+%                      save(['rand_' label1{w} '_' type_hfo{s} '_SN.mat'],'rand_vec')
+%                  else
+%                      save(['rand_' label1{w} '_' type_hfo{s} '.mat'],'rand_vec')
+%                  end
+            else %Load old rand numbers for repeatability 
+                
+                if condition==1
+                     if same_nr_types==1
+                         load(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2)) '_SN.mat'])
+                     else
+                         load(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2)) '.mat'])
+                     end
+                end
+                
+                rand_vec=RandStruct.([label1{w} '_' type_hfo{s}]).(labelconditions2{condition});
+                 
+            end
+%         end
+        p=p(rand_vec);
+        q=q(rand_vec);
+    end
 
 %     %Order ripples
 %     p_nl=P.nl.(label1{w}){s}; 
@@ -69,6 +107,13 @@ for condition=1:length(labelconditions2)
 
 %     values_spec.baseline=[Mdam;Mdam2;Mdam3;Mdam4];
     values_spec.(labelconditions2{condition})=[Ndam;Ndam2;Ndam3;Ndam4];
+%     prueba.(labelconditions2{condition})=    rand_vec;
 end
 
+ if same_nr_types==1
+     save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2)) '_SN.mat'],'RandStruct')
+ else
+     save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2))  '.mat'],'RandStruct')
+ end
+                 
 end

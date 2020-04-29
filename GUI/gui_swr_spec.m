@@ -375,11 +375,48 @@ progress_bar(k,length(g),f)
 %Corrected:
 %s: 1 for cohfos, 2 for singles.
 %w:1 for hpc centered, 3 for par centered.
-win_size=50;
+%% Find minimum number of ripples per type.
+
 %HPC COHFOS
 s=1;
 w=1;
-[values_spec,n1]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
+ n1=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
+        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+%PAR COHFOS
+s=1;
+w=3;
+ n2=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
+        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+
+%HPC singles
+s=2;
+w=1;
+ n3=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
+        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+
+%PAR singles
+s=2;
+w=3;
+ n4=min([length(P.(labelconditions2{1}).(label1{w}){s}) length(P.(labelconditions2{2}).(label1{w}){s})...
+        length(P.(labelconditions2{3}).(label1{w}){s}) length(P.(labelconditions2{4}).(label1{w}){s})]);
+[n1 n2 n3 n4]
+N=min([n1 n2 n3 n4]);
+
+%% Find values
+random_hfo=1;
+
+
+win_size=50;
+rand_first_run=0; %If you run for the first time.
+same_nr_types=0; %Same N number across types
+
+if same_nr_types==0
+    N=[];
+end
+%HPC COHFOS
+s=1;
+w=1;
+[values_spec,n1]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT=table;
 % TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
 % TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
@@ -389,7 +426,7 @@ TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC N
 %PAR COHFOS
 s=1;
 w=3;
-[values_spec,n2]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n2]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT1=table;
 % TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
@@ -399,7 +436,7 @@ TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC 
 %HPC singles
 s=2;
 w=1;
-[values_spec,n3]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n3]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT2=table;
 % TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
 % TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
@@ -409,7 +446,7 @@ TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC 
 %PAR singles
 s=2;
 w=3;
-[values_spec,n4]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n4]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT3=table;
 % TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
 % TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
@@ -417,19 +454,52 @@ TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num
 TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
 [n1 n2 n3 n4]
-%%
+
 t1=repmat({'x'},[1 13]);
 
 tab=[TT;t1;TT1;t1;TT2;t1;TT3];
 %%
-if win_size== 25
-writetable(tab,strcat('spec_values_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-end
+if random_hfo==0
 
-if win_size== 50
-writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-end
+    if same_nr_types==0
+        if win_size== 25
+        writetable(tab,strcat('spec_values_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
 
+        if win_size== 50
+        writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+    else
+        if win_size== 25
+        writetable(tab,strcat('spec_values_SameNR_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+
+        if win_size== 50
+        writetable(tab,strcat('spec_values_SameNR_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+    end
+
+else
+
+    if same_nr_types==0
+        if win_size== 25
+        writetable(tab,strcat('spec_rand_values_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+
+        if win_size== 50
+        writetable(tab,strcat('spec_rand_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+    else
+        if win_size== 25
+        writetable(tab,strcat('spec_rand_values_SameNR_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+
+        if win_size== 50
+        writetable(tab,strcat('spec_rand_values_SameNR_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+        end
+    end
+
+end
 %%
 HPC_cohfos
 
@@ -452,12 +522,20 @@ PAR_singles
 %HPC specs
 %HPC cohfos
 % xo
+same_nr_types=1; %Same N number across types
+if same_nr_types==0
+    N=[];
+end
 %s: 2 for single, 1 for cohfos
 %w:1 for hpc centered, 3 for par centered.
 s=1;
 w=1;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+if same_nr_types==1
+printing(['Spec_HPC_cohfos_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
+else
+printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 % TT=table;
 % TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
@@ -466,8 +544,13 @@ close all
 
 s=1;
 w=3;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+%printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+if same_nr_types==1
+printing(['Spec_PAR_cohfos_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
+else
+printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 % TT1=table;
 % TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
@@ -475,8 +558,13 @@ close all
 
 s=2;
 w=1;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+% printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+if same_nr_types==1
+printing(['Spec_HPC_single_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
+else
+printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 % TT2=table;
 % TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
@@ -485,8 +573,13 @@ close all
 
 s=2;
 w=3;
-plot_spectra(P,Q,labelconditions2,label1,s,w)
-printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+% printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+if same_nr_types==1
+printing(['Spec_PAR_single_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
+else
+printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 % TT3=table;
 % TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
@@ -499,28 +592,49 @@ xo
 % writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
 
 %%
+same_nr_types=1; %Same N number across types
+if same_nr_types==0
+    N=[];
+end
+
 s=1;
 w=1;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
-printing(['SpecTraces_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+if same_nr_types==1
+printing(['SpecTraces_SameNR_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
+else
+printing(['SpecTraces_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 
 s=1;
 w=3;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
-printing(['SpecTraces_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+if same_nr_types==1
+printing(['SpecTraces_SameNR_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])        
+else
+printing(['SpecTraces_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 
 s=2;
 w=1;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
+plot_spec_traces(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+if same_nr_types==1
+printing(['SpecTraces_SameNR_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])    
+else
 printing(['SpecTraces_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
+end
 close all
 
 s=2;
 w=3;
-plot_spec_traces(P,Q,labelconditions2,label1,s,w)
-printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
+plot_spec_traces(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+if same_nr_types==1
+printing(['SpecTraces_SameNR_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])    
+else
+printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])    
+end
 close all
 
 %%
