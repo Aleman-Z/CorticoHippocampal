@@ -182,12 +182,26 @@ else
 end
  %xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
-  p_cortex,q_cortex,cont_cortex ...
+  p_cortex,q_cortex,cont_cortex,sig_pq_cortex ...
   ]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn);
-
+%xo
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
+
+si_pq=sig_pq_cortex(~cellfun('isempty',sig_pq_cortex));
+si_pq=[si_pq{:}];
+
+Q_cortex=q_cortex(~cellfun('isempty',q_cortex));
+Q_cortex=[Q_cortex{:}];
+
+[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr);
+
+void_index=find(cellfun('isempty',Q_cortex));
+
+%All par HFOS splitted in slow and fast.
+Q_cortex_g1=Q_cortex(si_mixed.i1(~ismember(si_mixed.i1,void_index)));
+Q_cortex_g2=Q_cortex(si_mixed.i2(~ismember(si_mixed.i2,void_index)));
 
 %% HPC     
 
@@ -333,6 +347,66 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
  p_hpc=p_hpc(~cellfun('isempty',p_hpc));
  q_hpc=q_hpc(~cellfun('isempty',q_hpc));
  
+
+% xo
+%% Mixed distribution (Average freq) coHFOs
+Mx_cortex_g1=Mx_cortex;
+Mx_cortex_g2=Mx_cortex;
+Ex_cortex_g1=Ex_cortex;
+Ex_cortex_g2=Ex_cortex;
+Sx_cortex_g1=Sx_cortex;
+Sx_cortex_g2=Sx_cortex;
+
+row=si_mixed.i1;
+cont=0;
+for ll=1:length(Mx_cortex)
+% cont=cont+length(Mx_cortex{ll});
+
+    if ~isempty(Mx_cortex{ll})
+
+        for lll=1:length(Mx_cortex{ll})
+            cont=cont+1;
+    %         xo
+
+            if ~ismember(cont,row)
+                Mx_cortex_g1{ll}(lll)=NaN;
+                Ex_cortex_g1{ll}(lll)=NaN;
+                Sx_cortex_g1{ll}(lll)=NaN;
+                
+            else
+                Mx_cortex_g2{ll}(lll)=NaN;
+                Ex_cortex_g2{ll}(lll)=NaN;
+                Sx_cortex_g2{ll}(lll)=NaN;
+
+            end
+
+        end
+         Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
+         Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
+
+         Ex_cortex_g1{ll}=Ex_cortex_g1{ll}(~isnan(Ex_cortex_g1{ll}));
+         Ex_cortex_g2{ll}=Ex_cortex_g2{ll}(~isnan(Ex_cortex_g2{ll}));
+         Sx_cortex_g1{ll}=Sx_cortex_g1{ll}(~isnan(Sx_cortex_g1{ll}));
+         Sx_cortex_g2{ll}=Sx_cortex_g2{ll}(~isnan(Sx_cortex_g2{ll}));
+         
+         
+    end
+
+end
+
+[~,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
+[~,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
+
+%Single HFOs Cortex
+v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
+%Single HFOs Cortex
+v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2,cohfos2_g2,'UniformOutput',false);
+
+
+[p_cohfos_cortex_g1,q_cohfos_cortex_g1,p_single_cortex_g1,q_single_cortex_g1]=get_window_slowfast(Mx_cortex,Sx_cortex,Ex_cortex, cohfos2_g1,p_cortex,q_cortex,v2_g1);
+[p_cohfos_cortex_g2,q_cohfos_cortex_g2,p_single_cortex_g2,q_single_cortex_g2]=get_window_slowfast(Mx_cortex,Sx_cortex,Ex_cortex, cohfos2_g2,p_cortex,q_cortex,v2_g2);
+
+%%
   p_cortex=p_cortex(~cellfun('isempty',p_cortex));
  p_cortex=[p_cortex{:}];
  q_cortex=q_cortex(~cellfun('isempty',q_cortex));
@@ -340,7 +414,7 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
  p_cortex=p_cortex(~cellfun('isempty',p_cortex));
  q_cortex=q_cortex(~cellfun('isempty',q_cortex));
 
-
+%%
 %  if k==1 %No Learning
 %      P.nl.('hpc')={p_hpc;p_cohfos_hpc;p_single_hpc};
 %      P.nl.('pfc')={p_cortex;p_cohfos_cortex;p_single_cortex};
@@ -366,11 +440,91 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
      Q.(strrep(labelconditions2{k},'-','_')).(label1{1})={q_cohfos_hpc;q_single_hpc;q_hpc};
      Q.(strrep(labelconditions2{k},'-','_')).(label1{3})={q_cohfos_cortex;q_single_cortex;q_cortex};
      
+     
+     %Slow/Fast
+     
+     SP.(strrep(labelconditions2{k},'-','_')).(label1{3})={p_cohfos_cortex_g1;p_single_cortex_g1};
+     SQ.(strrep(labelconditions2{k},'-','_')).(label1{3})={q_cohfos_cortex_g1;q_single_cortex_g1};
+     
+     FP.(strrep(labelconditions2{k},'-','_')).(label1{3})={p_cohfos_cortex_g2;p_single_cortex_g2};
+     FQ.(strrep(labelconditions2{k},'-','_')).(label1{3})={q_cohfos_cortex_g2;q_single_cortex_g2};
+% p_cohfos_cortex_g1,q_cohfos_cortex_g1,p_single_cortex_g1,q_single_cortex_g1
+% 
+
  %xo
 progress_bar(k,length(g),f)
     cd ..    
     end
  xo
+
+%% Find values for slow/fast PAR hfos
+random_hfo=0;
+
+
+win_size=50;
+rand_first_run=0; %If you run for the first time.
+same_nr_types=0; %Same N number across types
+
+if same_nr_types==0
+    N=[];
+end
+
+%SLOW
+%PAR COHFOS
+s=1;
+w=3;
+[values_spec,n1]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+
+ 
+%PAR singles
+s=2;
+w=3;
+[values_spec,n2]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+TT2=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+ 
+%FAST
+%PAR COHFOS
+s=1;
+w=3;
+[values_spec,n3]=getval_spectra(FP,FQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+TT3=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+
+ 
+%PAR singles
+s=2;
+w=3;
+[values_spec,n4]=getval_spectra(FP,FQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+TT4=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
+TT4.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
+TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+
+t1=repmat({'x'},[1 13]);
+
+tab=[TT1;t1;TT2;t1;TT3;t1;TT4];
+
+if win_size== 25
+writetable(tab,strcat('spec_SLOWFAST_values_25_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+end
+
+if win_size== 50
+writetable(tab,strcat('spec_SLOWFAST_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+end
+
 %% 
 % GET ALL RIPPLES.
 win_size=50;
@@ -462,7 +616,7 @@ w=3;
 N=min([n1 n2 n3 n4]);
 
 %% Find values
-random_hfo=1;
+random_hfo=0;
 
 
 win_size=50;

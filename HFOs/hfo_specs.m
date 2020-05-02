@@ -1,4 +1,4 @@
-function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist)
+function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist,Rat,tr)
 
     if ~isempty(si)
 
@@ -21,7 +21,7 @@ function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist)
         %Average frequency
         y=cellfun(@(equis) (meanfreq(equis,1000)) ,si,'UniformOutput',false);
         y=cell2mat(y);
-        th=gaussmix(y);
+        th=gaussmix(y,Rat,tr);
         si_mixed.g1=si(y<=th);
         si_mixed.i1=find(y<=th);
         si_mixed.g2=si(y>th);

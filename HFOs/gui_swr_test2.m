@@ -131,7 +131,7 @@ si=[si{:}];
 All_Par.( strrep(g{k},'-','_'))=si;
 % All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
-[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0);
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
 % cd ..
 % printing(['Histograms_Cortex_Count_' g{k}]);
 % close all
@@ -171,7 +171,7 @@ HPC=HPC.*(0.195);
 %xo
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
   ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc...    
-  ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets);
+  ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets,fn);
 
 
 si=sig_hpc(~cellfun('isempty',sig_hpc));
@@ -185,7 +185,7 @@ si=[si{:}];
 % cd(g{k})
 % xo
 All_HPC.( strrep(g{k},'-','_'))=si;
-[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,1);
+[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,1,Rat,tr);
 cd ..
 printing(['Histograms_HPC_Probability_' g{k}]);
 close all
@@ -330,7 +330,7 @@ Sig_hpc=[Sig_hpc{:}];
 
 
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc,timeasleep,0);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc,timeasleep,0,Rat,tr);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
@@ -360,7 +360,7 @@ single_sx_hpc_val=[single_sx_hpc_val{:}];
 % close all
 % cd(g{k})
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0,Rat,tr);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
@@ -406,7 +406,7 @@ Sig_cortex=[Sig_cortex{:}];
 % cd(g{k})
 
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex,timeasleep,0);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex,timeasleep,0,Rat,tr);
 fi_cohfo_cortex(k)=x;
 fa_cohfo_cortex(k)=y;
 amp_cohfo_cortex(k)=z;
@@ -435,7 +435,7 @@ single_sx_cortex_val=[single_sx_cortex_val{:}];
 % close all
 % cd(g{k})
 
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0,Rat,tr);
 fi_single_cortex(k)=x;
 fa_single_cortex(k)=y;
 amp_single_cortex(k)=z;

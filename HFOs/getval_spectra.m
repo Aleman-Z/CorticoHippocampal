@@ -110,10 +110,12 @@ for condition=1:length(labelconditions2)
 %     prueba.(labelconditions2{condition})=    rand_vec;
 end
 
- if same_nr_types==1
-     save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2)) '_SN.mat'],'RandStruct')
- else
-     save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2))  '.mat'],'RandStruct')
- end
+if random_hfo==1
+     if same_nr_types==1
+         save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2)) '_SN.mat'],'RandStruct')
+     else
+         save(['rand_' label1{w} '_' type_hfo{s} '_' num2str(tr(2))  '.mat'],'RandStruct')
+     end
+end
                  
 end
