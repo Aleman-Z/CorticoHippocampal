@@ -1,6 +1,6 @@
 
-function [granger,granger1,granger_cond]=gc_paper(q,timecell,label,ro,ord,freqrange)
-fn=1000;
+function [granger,granger1,granger_cond]=gc_paper(q,timecell,label,ro,ord,freqrange,fn)
+%fn=1000;
 data1.trial=q;
 data1.time= timecell; %Might have to change this one 
 data1.fsample=fn;

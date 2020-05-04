@@ -66,7 +66,7 @@ lab{6}='PFC -> Parietal';
  ylabel('G-causality')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
 if j==1
-legend(labelconditions,'Location','best') %Might have to change to default. 
+ legend(labelconditions,'Location','best') %Might have to change to default. 
 end
 title(lab{2*j})
  ylim([0 mmax])

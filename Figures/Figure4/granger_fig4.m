@@ -674,7 +674,7 @@ end
     
     %GRANGER ANALYSIS    
     %Widepassed
-    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:1:300]);
+    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
     %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
 
     g{iii}=gran.grangerspctrm;%Non-parametric (Pairwise)
@@ -747,7 +747,7 @@ xo
 % granger_2D_baseplus_stats_only(g1,g1_f,labelconditions,[0 300],0) %g1 looks better due to higher number of samples. 
 
 
-%Widepass
+%Wideband
 %Non-parametric (Pairwise)
  granger_paper4(g,g_f,labelconditions,[0 300]) %All
  printing('Non_parametric_Pairwise')
