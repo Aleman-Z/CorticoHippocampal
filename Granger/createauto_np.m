@@ -3,8 +3,8 @@ function [granger]=createauto_np(data1,freqrange,condition)
     cfg.method    = 'mtmfft';
     cfg.taper     = 'dpss'; 
     cfg.output    = 'fourier'; 
-%     cfg.tapsmofrq = 2; %1/1.2
-    cfg.tapsmofrq = 4; %1/1.2
+    cfg.tapsmofrq = 2; %1/1.2
+%     cfg.tapsmofrq = 4; %1/1.2
     
     cfg.pad = 10;
     cfg.foi=freqrange;

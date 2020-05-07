@@ -1,5 +1,5 @@
 
-function [sig,p,q,cont,sig_pq]=getsignal_spec(Sx,Ex,ti,Mono,k,Mx,V,Mono2,V2,Mono3,V3)
+function [sig,p,q,cont,sig_pq]=getsignal_spec(Sx,Ex,ti,Mono,k,Mx,V,Mono2,V2,Mono3,V3,ro)
 cont=0;
 if ~isempty(Sx{k})
     for j=1:length(Sx{k})
@@ -10,9 +10,9 @@ if ~isempty(Sx{k})
    if nargin>5
     %Ripple-centered window.
     tm=find(ti{k}==Mx{k}(j));
-        if  tm+150<=length(ti{k}) && tm-150>=1
-            p{j}=[V{k}(tm-150:tm+150).';V2{k}(tm-150:tm+150).';V3{k}(tm-150:tm+150).'];
-            q{j}=[Mono{k}(tm-150:tm+150).';Mono2{k}(tm-150:tm+150).';Mono3{k}(tm-150:tm+150).'];
+        if  tm+ro<=length(ti{k}) && tm-ro>=1
+            p{j}=[V{k}(tm-ro:tm+ro).';V2{k}(tm-ro:tm+ro).';V3{k}(tm-ro:tm+ro).'];
+            q{j}=[Mono{k}(tm-ro:tm+ro).';Mono2{k}(tm-ro:tm+ro).';Mono3{k}(tm-ro:tm+ro).'];
             sig_pq{j}=Mono{k}(ts:tend);
             
         else

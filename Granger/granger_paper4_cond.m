@@ -7,15 +7,23 @@ F= [1 3 5] ;
 
 lab=cell(6,1);
 
-lab{1}='HPC -> Parietal';
-lab{2}='Parietal -> HPC';
-
-lab{3}='HPC -> PFC';
-lab{4}='PFC -> HPC';
-
-lab{5}='Parietal -> PFC';
-lab{6}='PFC -> Parietal';
+% lab{1}='HPC -> Parietal';
+% lab{2}='Parietal -> HPC';
 % 
+% lab{3}='HPC -> PFC';
+% lab{4}='PFC -> HPC';
+% 
+% lab{5}='Parietal -> PFC';
+% lab{6}='PFC -> Parietal';
+%
+lab{1}='PFC -> PAR';
+lab{2}='PAR -> PFC';
+
+lab{3}='HPC -> PAR';
+lab{4}='PAR -> HPC';
+
+lab{5}='HPC -> PFC';
+lab{6}='PFC -> HPC';
 %  k=1; %Condition 1.  
  for j=1:3
      %2,1

@@ -1,7 +1,7 @@
-function [granger2]=createauto(data1,order,condition)
+function [granger2]=createauto(data1,ord,condition)
 %Parametric model Order 20
 cfg2         = [];
-cfg2.order   = order;
+cfg2.order   = ord;
 cfg2.toolbox = 'bsmart';
 mdata2       = ft_mvaranalysis(cfg2, data1);
 

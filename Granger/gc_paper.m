@@ -1,13 +1,18 @@
 
-function [granger,granger1,granger_cond]=gc_paper(q,timecell,label,ro,ord,freqrange,fn)
+function [granger,granger1,granger_cond,granger_cond_multi]=gc_paper(q,timecell,label,ro,ord,freqrange,fn)
 %fn=1000;
 data1.trial=q;
 data1.time= timecell; %Might have to change this one 
 data1.fsample=fn;
 data1.label=cell(3,1);
-data1.label{1}='Hippocampus';
-data1.label{2}='Parietal';
-data1.label{3}='PFC';
+% data1.label{1}='Hippocampus';
+% data1.label{2}='Parietal';
+% data1.label{3}='PFC';
+
+data1.label{1}='PAR';
+data1.label{2}='PFC';
+data1.label{3}='HPC';
+
 %data1.label{4}='Reference';
 
 %Parametric model
@@ -32,7 +37,7 @@ data1.label{3}='PFC';
 
 [granger_cond]=createauto_np(data1,freqrange,'yes');
 
-
+[granger_cond_multi]=createauto_cond_multivariate(data1,ord);
 % cfg           = [];
 % cfg.method    = 'mtmfft';
 % cfg.taper     = 'dpss';

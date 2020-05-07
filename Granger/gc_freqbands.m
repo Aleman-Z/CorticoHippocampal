@@ -29,6 +29,7 @@ INN2=[];
 for j=1:length(fieldnames(gc_bands))
     freqlim=GC_bands{j};
     
+    %Find index belonging to freq range.
     i1=max(find(input_vec<=freqlim(1)));
     i2=min(find(input_vec>=freqlim(2)));
     c{j}=input_vec(1,i1:i2); %Frequenciess
@@ -37,7 +38,7 @@ for j=1:length(fieldnames(gc_bands))
     INN{j}=input_gc(:,:,i1:i2);
     INN2{j}=mean(input_gc(:,:,i1:i2),3);
 %     INN3{j}=[INN2{j}(1,2) INN2{j}(2,1); INN2{j}(1,3) INN2{j}(3,1); INN2{j}(2,3) INN2{j}(3,2)];
-    INN3(:,:,j)=[INN2{j}(1,2) INN2{j}(2,1); INN2{j}(1,3) INN2{j}(3,1); INN2{j}(2,3) INN2{j}(3,2)];
+    INN3(:,j)=[INN2{j}(1,2); INN2{j}(2,1); INN2{j}(1,3); INN2{j}(3,1); INN2{j}(2,3); INN2{j}(3,2)];
     else
     INN{j}=input_gc(:,i1:i2);
     INN2{j}=mean(input_gc(:,i1:i2),2);

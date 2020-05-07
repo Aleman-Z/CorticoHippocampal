@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,p,q,cont,sig_pq]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,p,q,cont,sig_pq]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn,ro)
 
 [Mono,V]=swr_preprocessing(CORTEX,states,fn); %Main signal
 [Mono2,V2]=swr_preprocessing(PFC,states,fn); %PFC signal
@@ -19,7 +19,7 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,p,q,cont,sig_pq]
    
     
     for l=1:length(Sx)
-         [sig{l},p{l},q{l},cont{l},sig_pq{l}]=getsignal_spec(Sx,Ex,ti,Mono,l,Mx,V,Mono2,V2,Mono3,V3);
+         [sig{l},p{l},q{l},cont{l},sig_pq{l}]=getsignal_spec(Sx,Ex,ti,Mono,l,Mx,V,Mono2,V2,Mono3,V3,ro);
 %        sig{l}=getsignal(Sx,Ex,ti,V,l);
         
     end

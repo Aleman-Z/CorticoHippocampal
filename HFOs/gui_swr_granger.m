@@ -181,9 +181,10 @@ else
       error('No Scoring found')    
 end
  %xo
+ ro=1200;
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   p_cortex,q_cortex,cont_cortex,sig_pq_cortex ...
-  ]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn);
+  ]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn,ro);
 %xo
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
@@ -207,7 +208,7 @@ Q_cortex_g2=Q_cortex(si_mixed.i2(~ismember(si_mixed.i2,void_index)));
 
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
   p_hpc,q_hpc,cont_hpc ...
-]=gui_findripples_spec(HPC,states,{'HPC'},tr,PFC,CORTEX,fn);
+]=gui_findripples_spec(HPC,states,{'HPC'},tr,PFC,CORTEX,fn,ro);
 
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
@@ -456,12 +457,316 @@ progress_bar(k,length(g),f)
     end
  xo
 %% Granger analysis.
-    ro=150;
+
+
+    labelconditions3{1}='nl';
+    labelconditions3{2}='plusmaze';
+    labelconditions3{3}='novelty';
+    labelconditions3{4}='for';
+    labelconditions3=labelconditions3.';
+
+    
+%-------------
+s=1; %Slow Cohfos
+w=3;
+[g1,g1_f,G,g_f,FB,FB1,n2]=getval_granger(SP,SQ,labelconditions3,label1,s,w,fn);
+
+labelconditions3{1}='baseline';
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+printing(['Parametric_Slow_Cohfos' '_' num2str(tr(2))])
+close all
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+printing(['Non_parametric_Slow_Cohfos' '_' num2str(tr(2))])
+close all
+
+
+TT1_20_np=table;
+TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,12) FB{2}(:,12) FB{3}(:,12) FB{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT1_20_p=table;
+TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT1_300_np=table;
+TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT1_300_p=table;
+TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,13) FB1{2}(:,13) FB1{3}(:,13) FB1{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+
+%-------------
+labelconditions3{1}='nl';
+s=2; %Slow singles
+w=3;
+[g1,g1_f,G,g_f,FB,FB1,n2]=getval_granger(SP,SQ,labelconditions3,label1,s,w,fn);
+
+labelconditions3{1}='baseline';
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+printing(['Parametric_Slow_Singles' '_' num2str(tr(2))])
+close all
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+printing(['Non_parametric_Slow_Singles' '_' num2str(tr(2))])
+close all    
+
+TT2_20_np=table;
+TT2_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,12) FB{2}(:,12) FB{3}(:,12) FB{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT2_20_p=table;
+TT2_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT2_300_np=table;
+TT2_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT2_300_p=table;
+TT2_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,13) FB1{2}(:,13) FB1{3}(:,13) FB1{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+
+
+%-------------    
+labelconditions3{1}='nl';
+s=1; %Fast Cohfos
+w=3;
+[g1,g1_f,G,g_f,FB,FB1,n2]=getval_granger(FP,FQ,labelconditions3,label1,s,w,fn);
+
+labelconditions3{1}='baseline';
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+printing(['Parametric_Fast_Cohfos' '_' num2str(tr(2))])
+close all
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+printing(['Non_parametric_Fast_Cohfos' '_' num2str(tr(2))])
+close all
+
+TT3_20_np=table;
+TT3_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,12) FB{2}(:,12) FB{3}(:,12) FB{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT3_20_p=table;
+TT3_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT3_300_np=table;
+TT3_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT3_300_p=table;
+TT3_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,13) FB1{2}(:,13) FB1{3}(:,13) FB1{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+    
+%-------------    
+
+
+labelconditions3{1}='nl';    
+s=2; %Fast Singles
+w=3;
+[g1,g1_f,G,g_f,FB,FB1,n1]=getval_granger(FP,FQ,labelconditions3,label1,s,w,fn);
+labelconditions3{1}='baseline';
+
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+printing(['Parametric_Fast_Singles' '_' num2str(tr(2))])
+close all
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+printing(['Non_parametric_Fast_Singles' '_' num2str(tr(2))])
+close all
+
+TT4_20_np=table;
+TT4_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,12) FB{2}(:,12) FB{3}(:,12) FB{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT4_20_p=table;
+TT4_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT4_300_np=table;
+TT4_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT4_300_p=table;
+TT4_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,13) FB1{2}(:,13) FB1{3}(:,13) FB1{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+%-------------    
+
+
+%hpc singles
+
+labelconditions3{1}='nl';
+s=2; %Slow singles
+w=1;%HPC
+[g1,g1_f,G,g_f,FB,FB1,n2]=getval_granger(P,Q,labelconditions3,label1,s,w,fn);
+
+labelconditions3{1}='baseline';
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+printing(['Parametric_HPC_Singles' '_' num2str(tr(2))])
+close all
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+printing(['Non_parametric_HPC_Singles' '_' num2str(tr(2))])
+close all
+
+TT5_20_np=table;
+TT5_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,12) FB{2}(:,12) FB{3}(:,12) FB{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT5_20_p=table;
+TT5_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT5_300_np=table;
+TT5_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+   
+TT5_300_p=table;
+TT5_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,13) FB1{2}(:,13) FB1{3}(:,13) FB1{4}(:,13)])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+%%
+
+t1=repmat({'x'},[1 5]);
+
+tab=[TT1_20_p;t1;TT2_20_p;t1;TT3_20_p;t1;TT4_20_p;t1;TT5_20_p];
+writetable(tab,strcat('Granger_20_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
+writetable(tab2,strcat('Granger_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
+writetable(tab3,strcat('Granger_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab4=[TT1_300_p;t1;TT2_300_p;t1;TT3_300_p;t1;TT4_300_p;t1;TT5_300_p];
+writetable(tab4,strcat('Granger_300_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+
+
+%%
+[FB{iii}]=gc_freqbands(gran,0);
+
+[FB1{iii}]=gc_freqbands(gran1,0);
+% [FB2{iii}]=gc_freqbands(grangercon,1);
+
+%%
+
+    ro=1200;
+
+    labelconditions3{1}='Baseline';
+    labelconditions3{2}='Plusmaze';
+    labelconditions3{3}='Novelty';
+    labelconditions3{4}='Foraging';
+    labelconditions3=labelconditions3.';
+    
 % FP 
     %Singles
-    p=FP.plusmaze.PAR{2};
+    
+    p=FP.nl.PAR{2};
     [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
-    %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
+    
+    G{1}=gran.grangerspctrm;%Non-parametric (Pairwise)
+    g1{1}=gran1.grangerspctrm;%Parametric
+    g2{1}=grangercon.grangerspctrm;%Non-parametric (Conditional)
+
+    
+    
+    p=FP.plusmaze.PAR{2};
+    [gran,gran1,grangercon,grangercon_multi]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
+        
+    G{2}=gran.grangerspctrm;%Non-parametric (Pairwise)
+    g1{2}=gran1.grangerspctrm;%Parametric
+    g2{2}=grangercon.grangerspctrm;%Non-parametric (Conditional)
+
+    p=FP.novelty.PAR{2};
+    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
+    
+    G{3}=gran.grangerspctrm;%Non-parametric (Pairwise)
+    g1{3}=gran1.grangerspctrm;%Parametric
+    g2{3}=grangercon.grangerspctrm;%Non-parametric (Conditional)
+    
+    
+    
+    p=FP.for.PAR{2};
+    [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
+    
+    G{4}=gran.grangerspctrm;%Non-parametric (Pairwise)
+    g1{4}=gran1.grangerspctrm;%Parametric
+    g2{4}=grangercon.grangerspctrm;%Non-parametric (Conditional)
+
+g_f=gran.freq;
+g1_f=gran1.freq;
+
+granger_paper4(G,g_f,labelconditions3,[0 300]) %All
+    %%
+granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
+    
+
+    %%
+cfg           = [];
+cfg.parameter = 'grangerspctrm';
+cfg.zlim      = [0 1];
+ft_connectivityplot(cfg, gran);
+figure()
+cfg           = [];
+cfg.parameter = 'grangerspctrm';
+cfg.zlim      = [0 1];
+ft_connectivityplot(cfg, gran1);
+% figure()
+% cfg           = [];
+% cfg.parameter = 'grangerspctrm';
+% cfg.zlim      = [0 1];
+% ft_connectivityplot(cfg, grangercon_multi);
+g2{1}=grangercon.grangerspctrm;
+g2{2}=grangercon.grangerspctrm;
+g2{3}=grangercon.grangerspctrm;
+g2{4}=grangercon.grangerspctrm;
+
+granger_paper4_cond(g2,g_f,labelconditions2,[0 300]) %Non-Parametric (Conditional)
+
+G{1}=gran.grangerspctrm;
+G{2}=gran.grangerspctrm;
+G{3}=gran.grangerspctrm;
+G{4}=gran.grangerspctrm;
+figure()
+granger_paper4(G,g_f,labelconditions2,[0 300]) %All
+
+%%
+
+
+    
     
     G{1}=gran.grangerspctrm;%Non-parametric (Pairwise)
     g1{1}=gran1.grangerspctrm;%Parametric
@@ -469,7 +774,6 @@ progress_bar(k,length(g),f)
 
     p=FP.nl.PAR{2};
     [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
-    %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
     
     G{2}=gran.grangerspctrm;%Non-parametric (Pairwise)
     g1{2}=gran1.grangerspctrm;%Parametric
@@ -477,7 +781,6 @@ progress_bar(k,length(g),f)
 
     p=FP.for.PAR{2};
     [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
-    %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
     
     G{3}=gran.grangerspctrm;%Non-parametric (Pairwise)
     g1{3}=gran1.grangerspctrm;%Parametric
@@ -485,7 +788,6 @@ progress_bar(k,length(g),f)
 
     p=FP.novelty.PAR{2};
     [gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
-    %[gran,gran1,grangercon]=gc_paper(p,create_timecell(ro,length(p)),'Widepass',ro,10,[0:2:300]);
     
     G{4}=gran.grangerspctrm;%Non-parametric (Pairwise)
     g1{4}=gran1.grangerspctrm;%Parametric
@@ -514,7 +816,7 @@ granger_paper4(G,g_f,labelconditions,[0 300]) %All
 % printing('GC2D_NP')
 % close all
 
-granger_paper4(g1,g1_f,labelconditions,[0 300]) %Parametric (501 samples due to fs/2+1)
+granger_paper4(g1,g1_f,labelconditions2,[0 300]) %Parametric (501 samples due to fs/2+1)
 % printing('Parametric')
 % close all
 
