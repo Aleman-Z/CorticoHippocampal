@@ -181,7 +181,7 @@ si=[si{:}];
 All_Par.( strrep(g{k},'-','_'))=si;
 % All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
-% [x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
 % cd ..
 % printing(['Histograms_Cortex_Count_' g{k}]);
 % close all
@@ -302,54 +302,58 @@ M_hpc.(labelconditions2{k})=Mx_hpc;
 % cohfos_count_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})));
 % cohfos_rate_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})))/(timeasleep*(60));
 % end
-
+% xo
 %% Mixed distribution (Average freq) coHFOs
-% Mx_cortex_g1=Mx_cortex;
-% Mx_cortex_g2=Mx_cortex;
-% 
-% row=si_mixed.i1;
-% cont=0;
-% for ll=1:length(Mx_cortex)
-% % cont=cont+length(Mx_cortex{ll});
-% 
-%     if ~isempty(Mx_cortex{ll})
-% 
-%         for lll=1:length(Mx_cortex{ll})
-%             cont=cont+1;
-%     %         xo
-% 
-%             if ~ismember(cont,row)
-%                 Mx_cortex_g1{ll}(lll)=NaN;
-%             else
-%                 Mx_cortex_g2{ll}(lll)=NaN;
-%             end
-% 
-%         end
-%          Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
-%          Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
-% 
-%     end
-% 
-% end
-% 
-% [cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
-% [cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
-% 
-% cohfos_count_g1(k)=sum(cellfun('length',cohfos1_g1));
-% cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
-% 
-% cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
-% cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
-% %xo
-% 
-% v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
-% singles_count_g1(k)=sum(cellfun('length',v2_g1));
-% singles_rate_g1(k)=sum(cellfun('length',v2_g1))/(timeasleep*(60));
-% 
-% 
-% v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2,cohfos2_g2,'UniformOutput',false);
-% singles_count_g2(k)=sum(cellfun('length',v2_g2));
-% singles_rate_g2(k)=sum(cellfun('length',v2_g2))/(timeasleep*(60));
+Mx_cortex_g1=Mx_cortex;
+Mx_cortex_g2=Mx_cortex;
+
+row=si_mixed.i1;
+cont=0;
+for ll=1:length(Mx_cortex)
+% cont=cont+length(Mx_cortex{ll});
+
+    if ~isempty(Mx_cortex{ll})
+
+        for lll=1:length(Mx_cortex{ll})
+            cont=cont+1;
+    %         xo
+
+            if ~ismember(cont,row)
+                Mx_cortex_g1{ll}(lll)=NaN;
+            else
+                Mx_cortex_g2{ll}(lll)=NaN;
+            end
+
+        end
+         Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
+         Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
+
+    end
+
+end
+
+M_cortex_g1.(labelconditions2{k})=Mx_cortex_g1;
+M_cortex_g2.(labelconditions2{k})=Mx_cortex_g2;
+
+%%
+[cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
+[cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
+
+cohfos_count_g1(k)=sum(cellfun('length',cohfos1_g1));
+cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
+
+cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
+cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
+%xo
+
+v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
+singles_count_g1(k)=sum(cellfun('length',v2_g1));
+singles_rate_g1(k)=sum(cellfun('length',v2_g1))/(timeasleep*(60));
+
+
+v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2,cohfos2_g2,'UniformOutput',false);
+singles_count_g2(k)=sum(cellfun('length',v2_g2));
+singles_rate_g2(k)=sum(cellfun('length',v2_g2))/(timeasleep*(60));
 
 
 %%
@@ -513,7 +517,7 @@ progress_bar(k,length(g),f)
   xo
   
 %   [a1,a2]=ttest(random_cohfos_count(3,:),cohfos_count(3),0.05)
-%% Find minimum amount 
+%% All PAR hfos. 
 
 M=sum(cellfun('length', M_cortex.('plusmaze'))); %Plusmaze
 
@@ -568,6 +572,116 @@ xline(cohfos_count(n), '-r','LineWidth',2)
     printing(['Control_Fed_' labelconditions2{n}])
     close all
 end
+%% Slow ripples only.
+M=sum(cellfun('length', M_cortex_g1.('plusmaze'))); %Plusmaze
+
+%n=2;
+for n=2:4
+
+N=sum(cellfun('length', M_cortex_g1.(labelconditions2{n}))); %Condition B
+
+for t=1:1000
+r=randperm(M,N);
+cont=0;
+M_cortex_g1_dummy=M_cortex_g1;
+    for i=1:size(M_cortex_g1.('plusmaze'),1) %EPOCHS
+    vec=M_cortex_g1.('plusmaze'){i};
+
+        for j=1:length(vec) %Detections
+            cont=cont+1;
+            if ~ismember(cont,r)
+                M_cortex_g1_dummy.(labelconditions2{1}){i}(j)=NaN;
+            end
+
+        end
+        
+        vec2=M_cortex_g1_dummy.('plusmaze'){i};
+     M_cortex_g1_dummy.('plusmaze'){i}=vec2(~isnan(vec2));
+    end
+
+    
+    
+[c1,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),M_hpc.('plusmaze'),M_cortex_g1_dummy.('plusmaze'),'UniformOutput',false);
+
+random_count(t)=sum(cellfun('length',c1));
+t
+end
+
+histogram(random_count)
+%     histogram(random_cohfos_count(n,:),15)
+    ylabel('Frequency')
+    xlabel('Count')
+    Y1 = prctile(random_count,5)
+    Y2 = prctile(random_count,95)
+    Y3 = prctile(random_count,2.5)
+    Y4 = prctile(random_count,97.5)
+% 
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    xline(Y3, '--k','LineWidth',2)
+    xline(Y4, '--k','LineWidth',2)
+% 
+xline(cohfos_count_g1(n), '-r','LineWidth',2)
+% 
+    printing(['Control_Fed_Slow_' labelconditions2{n}])
+    close all
+end
+%%
+%% FAST ripples only.
+M=sum(cellfun('length', M_cortex_g2.('plusmaze'))); %Plusmaze
+
+%n=2;
+for n=2:4
+
+N=sum(cellfun('length', M_cortex_g2.(labelconditions2{n}))); %Condition B
+
+for t=1:1000
+r=randperm(M,N);
+cont=0;
+M_cortex_g2_dummy=M_cortex_g2;
+    for i=1:size(M_cortex_g2.('plusmaze'),1) %EPOCHS
+    vec=M_cortex_g2.('plusmaze'){i};
+
+        for j=1:length(vec) %Detections
+            cont=cont+1;
+            if ~ismember(cont,r)
+                M_cortex_g2_dummy.(labelconditions2{1}){i}(j)=NaN;
+            end
+
+        end
+        
+        vec2=M_cortex_g2_dummy.('plusmaze'){i};
+     M_cortex_g2_dummy.('plusmaze'){i}=vec2(~isnan(vec2));
+    end
+
+    
+    
+[c1,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),M_hpc.('plusmaze'),M_cortex_g2_dummy.('plusmaze'),'UniformOutput',false);
+
+random_count(t)=sum(cellfun('length',c1));
+t
+end
+
+histogram(random_count)
+%     histogram(random_cohfos_count(n,:),15)
+    ylabel('Frequency')
+    xlabel('Count')
+    Y1 = prctile(random_count,5)
+    Y2 = prctile(random_count,95)
+    Y3 = prctile(random_count,2.5)
+    Y4 = prctile(random_count,97.5)
+% 
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    xline(Y3, '--k','LineWidth',2)
+    xline(Y4, '--k','LineWidth',2)
+% 
+xline(cohfos_count_g2(n), '-r','LineWidth',2)
+% 
+    printing(['Control_Fed_Fast_' labelconditions2{n}])
+    close all
+end
+
 
 %%
   [a1,a2]=kstest(random_cohfos_count(3,:),'CDF',cohfos_count(3),'Alpha',0.05);
