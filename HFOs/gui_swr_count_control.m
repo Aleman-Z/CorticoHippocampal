@@ -181,7 +181,7 @@ si=[si{:}];
 All_Par.( strrep(g{k},'-','_'))=si;
 % All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
-% [x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
 % cd ..
 % printing(['Histograms_Cortex_Count_' g{k}]);
 % close all
@@ -287,10 +287,10 @@ cohfos_rate(k)=sum(cellfun('length',cohfos1))/(timeasleep*(60));
 
 % CONTROL 1000 PERMUTATIONS
 
-% for r=1:1000
-% [dum_cohfos1,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mr.(['Field_' num2str(r)]),'UniformOutput',false);
-% random_cohfos_count(k,r)=sum(cellfun('length',dum_cohfos1));
-% end
+for r=1:length(fieldnames(Mr))
+[dum_cohfos1,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mr.(['Field_' num2str(r)]),'UniformOutput',false);
+random_cohfos_count(k,r)=sum(cellfun('length',dum_cohfos1));
+end
 
 
 
@@ -301,45 +301,95 @@ cohfos_rate(k)=sum(cellfun('length',cohfos1))/(timeasleep*(60));
 % cohfos_count_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})));
 % cohfos_rate_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})))/(timeasleep*(60));
 % end
+% xo
+%% Random slow fast Mx
+for i=1:length(fieldnames(Mr))
+    Mx_cortex_g1=Mr.(['Field_' num2str(i)]);
+    Mx_cortex_g2=Mr.(['Field_' num2str(i)]);
+
+    row=si_mixed.i1;
+    cont=0;
+    for ll=1:length(Mx_cortex)
+    % cont=cont+length(Mx_cortex{ll});
+
+        if ~isempty(Mx_cortex{ll})
+
+            for lll=1:length(Mx_cortex{ll})
+                cont=cont+1;
+        %         xo
+
+                if ~ismember(cont,row)
+                    Mx_cortex_g1{ll}(lll)=NaN;
+                else
+                    Mx_cortex_g2{ll}(lll)=NaN;
+                end
+
+            end
+             Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
+             Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
+
+        end
+
+    end
+    Mr_g1.(['Field_' num2str(i)])=Mx_cortex_g1;
+    Mr_g2.(['Field_' num2str(i)])=Mx_cortex_g2;
+    
+end
+
+
+for r=1:length(fieldnames(Mr))
+[dum_cohfos1_g1,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mr_g1.(['Field_' num2str(r)]),'UniformOutput',false);
+random_cohfos_count_g1(k,r)=sum(cellfun('length',dum_cohfos1_g1));
+end
+
+
+for r=1:length(fieldnames(Mr))
+[dum_cohfos1_g2,~]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mr_g2.(['Field_' num2str(r)]),'UniformOutput',false);
+random_cohfos_count_g2(k,r)=sum(cellfun('length',dum_cohfos1_g2));
+end
 
 %% Mixed distribution (Average freq) coHFOs
-% Mx_cortex_g1=Mx_cortex;
-% Mx_cortex_g2=Mx_cortex;
+Mx_cortex_g1=Mx_cortex;
+Mx_cortex_g2=Mx_cortex;
+
+row=si_mixed.i1;
+cont=0;
+for ll=1:length(Mx_cortex)
+% cont=cont+length(Mx_cortex{ll});
+
+    if ~isempty(Mx_cortex{ll})
+
+        for lll=1:length(Mx_cortex{ll})
+            cont=cont+1;
+    %         xo
+
+            if ~ismember(cont,row)
+                Mx_cortex_g1{ll}(lll)=NaN;
+            else
+                Mx_cortex_g2{ll}(lll)=NaN;
+            end
+
+        end
+         Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
+         Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
+
+    end
+
+end
+
+
+
+%%
 % 
-% row=si_mixed.i1;
-% cont=0;
-% for ll=1:length(Mx_cortex)
-% % cont=cont+length(Mx_cortex{ll});
-% 
-%     if ~isempty(Mx_cortex{ll})
-% 
-%         for lll=1:length(Mx_cortex{ll})
-%             cont=cont+1;
-%     %         xo
-% 
-%             if ~ismember(cont,row)
-%                 Mx_cortex_g1{ll}(lll)=NaN;
-%             else
-%                 Mx_cortex_g2{ll}(lll)=NaN;
-%             end
-% 
-%         end
-%          Mx_cortex_g1{ll}=Mx_cortex_g1{ll}(~isnan(Mx_cortex_g1{ll}));
-%          Mx_cortex_g2{ll}=Mx_cortex_g2{ll}(~isnan(Mx_cortex_g2{ll}));
-% 
-%     end
-% 
-% end
-% 
-% [cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
-% [cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
-% 
-% cohfos_count_g1(k)=sum(cellfun('length',cohfos1_g1));
-% cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
-% 
-% cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
-% cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
-% %xo
+[cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g1,'UniformOutput',false);
+[cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_hpc,Mx_cortex_g2,'UniformOutput',false);
+
+cohfos_count_g1(k)=sum(cellfun('length',cohfos1_g1));
+cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
+
+cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
+cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
+%xo
 % 
 % v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
 % singles_count_g1(k)=sum(cellfun('length',v2_g1));
@@ -534,6 +584,54 @@ for n=1:4
     printing(['Control_Hist' g{n}])
     close all
 end
+
+%% Slow PAR
+for n=1:4
+
+    histogram(random_cohfos_count_g1(n,:))
+    ylabel('Frequency')
+    xlabel('Count')
+    Y1 = prctile(random_cohfos_count_g1(n,:),5)
+    Y2 = prctile(random_cohfos_count_g1(n,:),95)
+    Y3 = prctile(random_cohfos_count_g1(n,:),2.5)
+    Y4 = prctile(random_cohfos_count_g1(n,:),97.5)
+
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    xline(Y3, '--k','LineWidth',2)
+    xline(Y4, '--k','LineWidth',2)
+
+    xline(cohfos_count_g1(n), '-r','LineWidth',2)
+
+    printing(['Control_Hist_SLOW_' labelconditions2{n}])
+    close all
+end
+
+  mean(random_cohfos_count_g1,2)
+
+%% Fast PAR
+for n=1:4
+
+    histogram(random_cohfos_count_g2(n,:))
+    ylabel('Frequency')
+    xlabel('Count')
+    Y1 = prctile(random_cohfos_count_g2(n,:),5)
+    Y2 = prctile(random_cohfos_count_g2(n,:),95)
+    Y3 = prctile(random_cohfos_count_g2(n,:),2.5)
+    Y4 = prctile(random_cohfos_count_g2(n,:),97.5)
+
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    xline(Y3, '--k','LineWidth',2)
+    xline(Y4, '--k','LineWidth',2)
+
+    xline(cohfos_count_g2(n), '-r','LineWidth',2)
+
+    printing(['Control_Hist_FAST_' labelconditions2{n}])
+    close all
+end
+
+  mean(random_cohfos_count_g2,2)
 
 %%
   [a1,a2]=kstest(random_cohfos_count(3,:),'CDF',cohfos_count(3),'Alpha',0.05);

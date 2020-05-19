@@ -40,7 +40,7 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
     [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
     end
     
-    for r=1:1
+    for r=1:1000
         ti_rand=cellfun(@(equis) equis(randperm(size(equis, 1))),ti,'UniformOutput',false);
         Mr.(['Field_' num2str(r)])=cellfun(@(equis1,equis2,equis3) equis3(find(sum(equis1==equis2,2))).', ti,Mx,ti_rand,'UniformOutput',false );
         r
