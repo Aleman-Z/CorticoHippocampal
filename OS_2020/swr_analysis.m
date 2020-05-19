@@ -31,15 +31,32 @@ end
 
 fn=1000; %Sampling frequency.
 
-xx = inputdlg({'Cortical area (PAR or PFC)'},...
-              'Type your selection', [1 50],{'PFC'}); 
+% xx = inputdlg({'Cortical area (PAR or PFC)'},...
+%               'Type your selection', [1 50],{'PFC'}); 
+          
+%Brain region combinations.
+list = {'HPC & PFC','HPC & PAR','PAR & PFC'};
+[optionlist] = listdlg('PromptString',{'Select brain areas.'},'SelectionMode','single','ListString',list,'InitialValue',1);
+switch optionlist
+    case 1
+      yy={'HPC'};       
+      xx={'PFC'};
+    case 2
+      yy={'HPC'};    
+      xx={'PAR'};  
+    case 3
+      yy={'PAR'};    
+      xx={'PFC'};  
+end
+
+
 
 % D1=70;
 % D2=40;
 
 if ind_mode==1 || ind_mode==2
 %Threshold selection 
-  prompt = {'Select a threshold value for HPC'};
+  prompt = {['Select a threshold value for',' ',yy{1}]};
     dlgtitle = 'Threshold HPC';
     definput = {'70'};
     % opts.Interpreter = 'tex';
@@ -61,6 +78,10 @@ nr_swr_HPC=[];
 nr_swr_Cortex=[];
 
 rat_folder=getfolder;
+%Sort the folder numbers in an ascending way.
+[~,w2]=sort(cellfun(@str2num,rat_folder));
+rat_folder=rat_folder(w2);
+
 for k=1:length(rat_folder)
 %for k=7:length(rat_folder)
     cd(rat_folder{k})    
@@ -115,8 +136,9 @@ G=[cfold cfold2];
 %                     st2=st(cellfun(@(x) ~isempty(strfind(x,barea)),st)); %Brain area.
                     cellfun(@load,A);
 
-
-HPC=dir('*HPC_*.mat');
+%xo
+% HPC=dir('*HPC_*.mat');
+HPC=dir(strcat('*',yy{1},'*.mat'));
 HPC=HPC.name;
 HPC=load(HPC);
 HPC=HPC.HPC;
@@ -195,7 +217,7 @@ Cortex=Cortex.*(0.195);
     
     if ind_mode==2
         %Count events
-        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:), nr_cohfos(i,:),nr_single_hpc(i,:),nr_single_cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx,fn); 
+        [nr_swr_HPC(i,:), nr_swr_Cortex(i,:), nr_cohfos(i,:),nr_single_hpc(i,:),nr_single_cortex(i,:)]=bin_swr_detection(HPC,Cortex,states,ss,D1,D2,xx,yy,fn); 
     end
 
     
@@ -259,10 +281,10 @@ Cortex=Cortex.*(0.195);
                         Cortex_4=Cortex(1+2700*3*fn:2700*4*fn);
                         
                         if ind_mode==2
-                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:),nr_cohfos(6,:),nr_single_hpc(6,:),nr_single_cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx,fn);  
-                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:),nr_cohfos(7,:),nr_single_hpc(7,:),nr_single_cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx,fn);  
-                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:),nr_cohfos(8,:),nr_single_hpc(8,:),nr_single_cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx,fn);  
-                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:),nr_cohfos(9,:),nr_single_hpc(9,:),nr_single_cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx,fn);  
+                            [nr_swr_HPC(6,:), nr_swr_Cortex(6,:),nr_cohfos(6,:),nr_single_hpc(6,:),nr_single_cortex(6,:)]=bin_swr_detection(HPC_1,Cortex_1,states1,ss,D1,D2,xx,yy,fn);  
+                            [nr_swr_HPC(7,:), nr_swr_Cortex(7,:),nr_cohfos(7,:),nr_single_hpc(7,:),nr_single_cortex(7,:)]=bin_swr_detection(HPC_2,Cortex_2,states2,ss,D1,D2,xx,yy,fn);  
+                            [nr_swr_HPC(8,:), nr_swr_Cortex(8,:),nr_cohfos(8,:),nr_single_hpc(8,:),nr_single_cortex(8,:)]=bin_swr_detection(HPC_3,Cortex_3,states3,ss,D1,D2,xx,yy,fn);  
+                            [nr_swr_HPC(9,:), nr_swr_Cortex(9,:),nr_cohfos(9,:),nr_single_hpc(9,:),nr_single_cortex(9,:)]=bin_swr_detection(HPC_4,Cortex_4,states4,ss,D1,D2,xx,yy,fn);  
                         end
                         
                         if ind_mode==3
