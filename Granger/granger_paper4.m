@@ -48,7 +48,7 @@ lab{5}='PFC -> HPC';
  plot(g_f, squeeze(g{4}(f(1),f(2),:)),'LineWidth',2,'Color',myColorMap(4,:))
  
  xlim(freqrange)
- ylim([0 mmax])
+%  ylim([0 mmax])
  
  %grid minor
  xlabel('Frequency (Hz)')
@@ -77,7 +77,7 @@ if j==1
  legend(labelconditions,'Location','best') %Might have to change to default. 
 end
 title(lab{2*j})
- ylim([0 mmax])
+ %ylim([0 mmax])
  
  end
  

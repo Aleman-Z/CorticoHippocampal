@@ -1,6 +1,12 @@
-function [INN3]=gc_freqbands(gran,condi)
+function [INN3]=gc_freqbands(gran,condi,method)
 input_vec=gran.freq;
+if strcmp(method,'granger')
 input_gc=gran.grangerspctrm;
+end
+if strcmp(method,'psi')
+input_gc=gran.psispctrm;
+input_gc(input_gc<0)=0; %ignore negative values.
+end
 
 gc_bands=struct;
 gc_bands.so=[0.01 1.5];
