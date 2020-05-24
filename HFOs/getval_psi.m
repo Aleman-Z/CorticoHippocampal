@@ -42,13 +42,13 @@ for condition=1:length(labelconditions3)
     
     ro=1200;
     
-    [freq,freq2]=psi_paper(p,create_timecell(ro,length(p)),[0:1:300],fn); %freq2 is parametric
+    [freq,freq2]=psi_paper(p,create_timecell(ro,length(p)),[0:0.5:300],fn); %freq2 is parametric
     
 %Fieldtrip approach
 % connectivity estimation
 cfg           = [];
 cfg.method    = 'psi';
-cfg.bandwidth = 5;
+cfg.bandwidth = 3;
 psi           = ft_connectivityanalysis(cfg, freq);
 psi2           = ft_connectivityanalysis(cfg, freq2); %Parametric
 cfg        = [];

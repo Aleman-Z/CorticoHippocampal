@@ -5,14 +5,16 @@ input_gc=gran.grangerspctrm;
 end
 if strcmp(method,'psi')
 input_gc=gran.psispctrm;
-input_gc(input_gc<0)=0; %ignore negative values.
+% input_gc(input_gc<0)=0; %ignore negative values.
 end
 
 gc_bands=struct;
-gc_bands.so=[0.01 1.5];
+%gc_bands.so=[0.01 1.5];
+gc_bands.so=[0.01 4];
 gc_bands.delta=[2 4];
 gc_bands.theta=[4 8];
-gc_bands.spindle_beta=[10 20];
+% gc_bands.spindle_beta=[10 20];
+gc_bands.spindle_beta=[8 20];
 gc_bands.swr=[100 250];
 gc_bands.gamma_low=[30 50];
 gc_bands.gamma_high=[50 100];

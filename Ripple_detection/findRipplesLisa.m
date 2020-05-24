@@ -161,7 +161,7 @@ length(TRStart);
 length(TREnd);
 i = 1;
 while i <= length(TRStart)
-  if(TREnd(i) - TRStart(i)) < MinRippleDuration
+  if(TREnd(i)+0.000001 - TRStart(i)) < MinRippleDuration
     TRStart = [TRStart(1:i-1) TRStart(i+1:end)];
     TREnd = [TREnd(1:i-1) TREnd(i+1:end)];
     TRMax = [TRMax(1:i-1), TRMax(i+1:end)];

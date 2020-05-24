@@ -52,7 +52,8 @@ lab{5}='PFC -> HPC';
  
  %grid minor
  xlabel('Frequency (Hz)')
- ylabel('G-causality')
+% ylabel('G-causality')
+ ylabel('PSI')
  title(lab{2*j-1})
 % legend('Parametric: AR(10)','Non-P:Multitaper')
 %if j==1
@@ -71,7 +72,8 @@ lab{5}='PFC -> HPC';
  xlim(freqrange)
  %grid minor
  xlabel('Frequency (Hz)')
- ylabel('G-causality')
+%  ylabel('G-causality')
+  ylabel('PSI')
 %legend('Parametric: AR(10)','Non-P:Multitaper')
 if j==1
  legend(labelconditions,'Location','best') %Might have to change to default. 

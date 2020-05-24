@@ -14,7 +14,6 @@ Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
 
 %LPF 300 Hz:
-fn=1000; % New sampling frequency. 
 Wn1=[320/(fn/2)]; % Cutoff=320 Hz
 [b2,a2] = butter(3,Wn1); %Filter coefficients
 
@@ -77,7 +76,6 @@ signal2_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',
 V_pfc=cellfun(@(equis) filtfilt(b2,a2,equis), v_pfc ,'UniformOutput',false);
 Mono_pfc=cellfun(@(equis) filtfilt(b1,a1,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal2_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
-fn=1000;
 
 ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_hpc,'UniformOutput',false);
 % ti_pfc=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2_pfc,'UniformOutput',false);
