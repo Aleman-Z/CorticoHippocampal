@@ -207,7 +207,7 @@ Cortex=Cortex.*(0.195);
         % 
         % 
         yticks([100 150 220 290])
-        yticklabels({'HPC',xx{1},'HPC (Bandpassed)',[xx{1} '(Bandpassed)']})
+        yticklabels({yy{1},xx{1},[yy{1} '(Bandpassed)'],[xx{1} '(Bandpassed)']})
         a = get(gca,'YTickLabel');
         set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
     'Stop the code here'

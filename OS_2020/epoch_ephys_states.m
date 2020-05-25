@@ -1,4 +1,4 @@
-function [swr_hpc,Mx_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx,fn)
+function [swr_hpc,Mx_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,xx,fn)
     %Convert signal to 1 sec epochs.
         e_t=1;
         e_samples=e_t*(fn); %fs=1kHz
@@ -27,6 +27,7 @@ function [swr_hpc,Mx_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,D2,xx,
     %     v{1}=reshape(A, numel(A), 1);
     for epoch_count=1:length(v_index)
     v_hpc{epoch_count,1}=reshape(NC(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
+    end
     %v_pfc{epoch_count,1}=reshape(NC2(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
 %%    
 V_hpc=cellfun(@(equis) filtfilt(b2,a2,equis), v_hpc ,'UniformOutput',false);
@@ -44,7 +45,7 @@ end
 
 swr_hpc=[Sx_hpc Ex_hpc Mx_hpc];
 %%    
-    end 
+    %end 
         else
             %v_hpc=[];
             swr_hpc={};

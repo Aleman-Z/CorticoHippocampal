@@ -31,8 +31,8 @@ i=1;
                         for n=1:nbins
     %                        HPC_binned = [HPC_binned HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
     %                         epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss);
-                           [HPC_binned{n}, Mx_hpc{n}] =  epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2,yy{1},fn);
-                           [Cortex_binned{n},Mx_cortex{n}] = epoch_ephys_states(Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,D2,xx{1},fn);
+                           [HPC_binned{n}, Mx_hpc{n}] =  epoch_ephys_states(HPC(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D1,yy{1},fn);
+                           [Cortex_binned{n},Mx_cortex{n}] = epoch_ephys_states(Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).',slpscr_binned{n},ss,a1,a2,b1,b2,D2,xx{1},fn);
     %                        Cortex_binned = [Cortex_binned Cortex(:,1+(n-1)*bin_size2:bin_size2*(n)).'];
                              if ~isempty(HPC_binned{n})
                                  nr_swr_HPC(i,n)=sum(cellfun('length',HPC_binned{n}(:,1)));
