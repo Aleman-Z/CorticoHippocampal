@@ -56,8 +56,8 @@ end
  
 % DoLim=[20 50 90 150];
 % UpLim=[50 90 150 300];
-DoLim=[0 20];
-UpLim=[20 300];
+DoLim=[0 20 0 4 8 100];
+UpLim=[20 300 4 8 20 250];
  
 % Here I compute the Phase Slope Index for different frequency ranges (you can change this)
  

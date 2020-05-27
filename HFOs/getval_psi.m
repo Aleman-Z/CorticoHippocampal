@@ -26,9 +26,9 @@ for condition=1:length(labelconditions3)
 
 
     %Max 1000 ripples.
-    if length(q)>1000
-        q=q(1:1000);
-        p=p(1:1000);
+    if length(q)>200
+        q=q(1:200);
+        p=p(1:200);
 %         q_nl=q_nl(1:1000);
 %         p_nl=p_nl(1:1000);
     end
@@ -68,7 +68,79 @@ granger2    = ft_connectivityanalysis(cfg, freq2);
 
     
     
-%Federico approach    
+%Federico approach
+%Need to compute TF wavelet on Fieldtrip.
+freqrange=[0.5:0.5:300];
+data1.trial=p;
+data1.time=create_timecell(ro,length(p)); %Might have to change this one 
+data1.fsample=fn;
+data1.label=cell(3,1);
+
+data1.label{1}='PAR';
+data1.label{2}='PFC';
+data1.label{3}='HPC';
+%
+equis=0.5;
+%%       
+cfg = [];
+cfg.method = 'mtmconvol';
+%cfg.method = 'wavelet';
+
+cfg.taper = 'hanning';
+% cfg.taper = 'dpss';
+
+%cfg.pad='nextpow2';
+cfg.pad=4;
+%cfg.padtype='edge';
+cfg.foi = freqrange;
+%cfg.t_ftimwin = 0.4 * ones(size(cfg.foi));
+cfg.t_ftimwin = 0.1.*ones(size(4./cfg.foi')); 
+% cfg.tapsmofrq =20.*ones(size(4./cfg.foi'));
+
+
++  
+%cfg.toi=toy;
+% cfg.toi       = -1:0.1:1;
+cfg.toi       =data1.time{1};
+% cfg.output         = 'pow';
+cfg.output         = 'fourier';
+
+cfg.keeptrials = 'yes';
+
+
+freq = ft_freqanalysis(cfg, data1);
+%%
+% cfg = [];
+% cfg.method     = 'wavelet';
+% cfg.pad=4;
+% cfg.width      = 7;
+% cfg.toi       =data1.time{1};
+% cfg.foi = freqrange;
+% freq2 = ft_freqanalysis(cfg, data1);
+%%
+% cfg=[];ft_singleplotTFR(cfg, freq2);
+aver=squeeze(mean(freq.fourierspctrm,1));
+aver=aver(:,:,101:end-100);
+%aver=aver(1,:,201:end-200);
+% aver=squeeze(aver(1,:,:));
+
+% [granger]=createauto_timefreq(data1,freqrange);
+% %Non parametric
+% [granger]=createauto_np(data1,freqrange,[]);
+
+%     cfg           = [];
+%     cfg.method    = 'mtmfft';
+%     cfg.taper     = 'dpss'; 
+%     cfg.output    = 'fourier'; 
+%     cfg.tapsmofrq = 2; %1/1.2
+% %     cfg.tapsmofrq = 4; %1/1.2
+%     
+%     cfg.pad = 10;
+%     cfg.foi=freqrange;
+%     %[0:1:500]
+%     freq          = ft_freqanalysis(cfg, data1);
+
+
     F= [1 2; 1 3; 2 3] ;
 
     lab{2}='PFC -> PAR';
@@ -84,21 +156,28 @@ granger2    = ft_connectivityanalysis(cfg, freq2);
      
  f=F(j,:);
     
-    cwt_sig_area_1=squeeze(freq.fourierspctrm(:,f(1),:));
-    cwt_sig_area_1=transpose(cwt_sig_area_1);
-%     cwt_sig_area_1=abs(cwt_sig_area_1);
-    cwt_sig_area_2=squeeze(freq.fourierspctrm(:,f(2),:));
-    cwt_sig_area_2=transpose(cwt_sig_area_2);
-%     cwt_sig_area_2=abs(cwt_sig_area_2);
+%     cwt_sig_area_1=squeeze(freq.fourierspctrm(:,f(1),:));
+%     cwt_sig_area_1=transpose(cwt_sig_area_1);
+%     cwt_sig_area_2=squeeze(freq.fourierspctrm(:,f(2),:));
+%     cwt_sig_area_2=transpose(cwt_sig_area_2);
+     cwt_sig_area_1=squeeze(aver(f(1),:,:));
+%      cwt_sig_area_1=cwt_sig_area_1(:,201:end-200);
+     cwt_sig_area_2=squeeze(aver(f(2),:,:));
+%      cwt_sig_area_2=cwt_sig_area_2(:,201:end-200);
+
+
+
     psi_val(2*j-1,:)=PSI_Analysis(cwt_sig_area_1,cwt_sig_area_2,freq.freq);
     
 
-    cwt_sig_area_1=squeeze(freq.fourierspctrm(:,f(2),:));
-    cwt_sig_area_1=transpose(cwt_sig_area_1);
-%     cwt_sig_area_1=abs(cwt_sig_area_1);
-    cwt_sig_area_2=squeeze(freq.fourierspctrm(:,f(1),:));
-    cwt_sig_area_2=transpose(cwt_sig_area_2);
-%     cwt_sig_area_2=abs(cwt_sig_area_2);
+%     cwt_sig_area_1=squeeze(freq.fourierspctrm(:,f(2),:));
+%     cwt_sig_area_1=transpose(cwt_sig_area_1);
+%     cwt_sig_area_2=squeeze(freq.fourierspctrm(:,f(1),:));
+%     cwt_sig_area_2=transpose(cwt_sig_area_2);
+     cwt_sig_area_1=squeeze(aver(f(2),:,:));
+     cwt_sig_area_2=squeeze(aver(f(1),:,:));
+
+
     psi_val(2*j,:)=PSI_Analysis(cwt_sig_area_1,cwt_sig_area_2,freq.freq);
    
     

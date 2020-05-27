@@ -876,17 +876,35 @@ TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 %    
-% TT1_20_p=table;
-% TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,12) FB1{2}(:,12) FB1{3}(:,12) FB1{4}(:,12)])];
-% % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
-% TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
-
 
 TT1_300_np=table;
 TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,2) PSI_all.(labelconditions3{2})(:,2) PSI_all.(labelconditions3{3})(:,2) PSI_all.(labelconditions3{4})(:,2) ])];
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
    
+
+TT1_so_np=table;
+TT1_so_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,3) PSI_all.(labelconditions3{2})(:,3) PSI_all.(labelconditions3{3})(:,3) PSI_all.(labelconditions3{4})(:,3) ])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_so_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT1_theta_np=table;
+TT1_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,4) PSI_all.(labelconditions3{2})(:,4) PSI_all.(labelconditions3{3})(:,4) PSI_all.(labelconditions3{4})(:,4) ])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT1_spindle_np=table;
+TT1_spindle_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,5) PSI_all.(labelconditions3{2})(:,5) PSI_all.(labelconditions3{3})(:,5) PSI_all.(labelconditions3{4})(:,5) ])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_spindle_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT1_ripple_np=table;
+TT1_ripple_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,6) PSI_all.(labelconditions3{2})(:,6) PSI_all.(labelconditions3{3})(:,6) PSI_all.(labelconditions3{4})(:,6) ])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT1_ripple_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
 
 %-------------
 s=2; %Slow singles
@@ -909,6 +927,27 @@ TT2_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT2_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
    
+TT2_so_np=table;
+TT2_so_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,3) PSI_all.(labelconditions3{2})(:,3) PSI_all.(labelconditions3{3})(:,3) PSI_all.(labelconditions3{4})(:,3) ])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_so_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT2_theta_np=table;
+TT2_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,4) PSI_all.(labelconditions3{2})(:,4) PSI_all.(labelconditions3{3})(:,4) PSI_all.(labelconditions3{4})(:,4) ])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT2_spindle_np=table;
+TT2_spindle_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,5) PSI_all.(labelconditions3{2})(:,5) PSI_all.(labelconditions3{3})(:,5) PSI_all.(labelconditions3{4})(:,5) ])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_spindle_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT2_ripple_np=table;
+TT2_ripple_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,6) PSI_all.(labelconditions3{2})(:,6) PSI_all.(labelconditions3{3})(:,6) PSI_all.(labelconditions3{4})(:,6) ])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT2_ripple_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 
 %-------------    
@@ -930,6 +969,29 @@ TT3_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT3_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
    
+TT3_so_np=table;
+TT3_so_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,3) PSI_all.(labelconditions3{2})(:,3) PSI_all.(labelconditions3{3})(:,3) PSI_all.(labelconditions3{4})(:,3) ])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_so_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT3_theta_np=table;
+TT3_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,4) PSI_all.(labelconditions3{2})(:,4) PSI_all.(labelconditions3{3})(:,4) PSI_all.(labelconditions3{4})(:,4) ])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT3_spindle_np=table;
+TT3_spindle_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,5) PSI_all.(labelconditions3{2})(:,5) PSI_all.(labelconditions3{3})(:,5) PSI_all.(labelconditions3{4})(:,5) ])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_spindle_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT3_ripple_np=table;
+TT3_ripple_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,6) PSI_all.(labelconditions3{2})(:,6) PSI_all.(labelconditions3{3})(:,6) PSI_all.(labelconditions3{4})(:,6) ])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT3_ripple_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
     
 %-------------    
 
@@ -951,7 +1013,29 @@ TT4_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{
 % TT4_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT4_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
-   
+
+TT4_so_np=table;
+TT4_so_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,3) PSI_all.(labelconditions3{2})(:,3) PSI_all.(labelconditions3{3})(:,3) PSI_all.(labelconditions3{4})(:,3) ])];
+% TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_so_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT4_theta_np=table;
+TT4_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,4) PSI_all.(labelconditions3{2})(:,4) PSI_all.(labelconditions3{3})(:,4) PSI_all.(labelconditions3{4})(:,4) ])];
+% TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT4_spindle_np=table;
+TT4_spindle_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,5) PSI_all.(labelconditions3{2})(:,5) PSI_all.(labelconditions3{3})(:,5) PSI_all.(labelconditions3{4})(:,5) ])];
+% TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_spindle_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT4_ripple_np=table;
+TT4_ripple_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,6) PSI_all.(labelconditions3{2})(:,6) PSI_all.(labelconditions3{3})(:,6) PSI_all.(labelconditions3{4})(:,6) ])];
+% TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT4_ripple_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
 %-------------    
 
 
@@ -974,20 +1058,58 @@ TT5_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{
 %TT5_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,13) FB{2}(:,13) FB{3}(:,13) FB{4}(:,13)])];
 % TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 TT5_300_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
-   
+
+TT5_so_np=table;
+TT5_so_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,3) PSI_all.(labelconditions3{2})(:,3) PSI_all.(labelconditions3{3})(:,3) PSI_all.(labelconditions3{4})(:,3) ])];
+% TT5.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_so_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT5_theta_np=table;
+TT5_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,4) PSI_all.(labelconditions3{2})(:,4) PSI_all.(labelconditions3{3})(:,4) PSI_all.(labelconditions3{4})(:,4) ])];
+% TT5.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+
+TT5_spindle_np=table;
+TT5_spindle_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,5) PSI_all.(labelconditions3{2})(:,5) PSI_all.(labelconditions3{3})(:,5) PSI_all.(labelconditions3{4})(:,5) ])];
+% TT5.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_spindle_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT5_ripple_np=table;
+TT5_ripple_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([PSI_all.(labelconditions3{1})(:,6) PSI_all.(labelconditions3{2})(:,6) PSI_all.(labelconditions3{3})(:,6) PSI_all.(labelconditions3{4})(:,6) ])];
+% TT5.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
+TT5_ripple_np.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
 %%
 
 t1=repmat({'x'},[1 5]);
 
+tab_20=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
+tab_300=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
+tab_so=[TT1_so_np;t1;TT2_so_np;t1;TT3_so_np;t1;TT4_so_np;t1;TT5_so_np];
+tab_theta=[TT1_theta_np;t1;TT2_theta_np;t1;TT3_theta_np;t1;TT4_theta_np;t1;TT5_theta_np];
+tab_spindle=[TT1_spindle_np;t1;TT2_spindle_np;t1;TT3_spindle_np;t1;TT4_spindle_np;t1;TT5_spindle_np];
+tab_ripple=[TT1_ripple_np;t1;TT2_ripple_np;t1;TT3_ripple_np;t1;TT4_ripple_np;t1;TT5_ripple_np];
 
-tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
-writetable(tab2,strcat('PSI_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+tab=[tab_20;t1;tab_300;t1;tab_so;t1;tab_theta;t1;tab_spindle;t1;tab_ripple];
 
-tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
-writetable(tab3,strcat('PSI_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+writetable(tab,strcat('PSI_TimeFreq_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z250')  
+
+% tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
+% writetable(tab2,strcat('PSI_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+% 
+% tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
+% writetable(tab3,strcat('PSI_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
 
 
-
+% hfo_specs
+%        th=gaussmix(y,Rat,tr);
+%         si_mixed.g1=si(y<=th);
+%         si_mixed.i1=find(y<=th);
+%         si_mixed.g2=si(y>th);
+%         si_mixed.i2=find(y>th);
+ 
 %%
 [FB{iii}]=gc_freqbands(gran,0);
 
