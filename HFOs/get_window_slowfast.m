@@ -1,4 +1,4 @@
-function [p_cohfos_cortex,q_cohfos_cortex,p_single_cortex,q_single_cortex]=get_window_slowfast(Mx_cortex,Sx_cortex,Ex_cortex, cohfos2_g1,p_cortex,q_cortex,v2_g1)
+function [p_cohfos_cortex,q_cohfos_cortex,p_single_cortex,q_single_cortex,use_me]=get_window_slowfast(Mx_cortex,Sx_cortex,Ex_cortex, cohfos2_g1,p_cortex,q_cortex,v2_g1)
 
 %Cortical COHFOS
 cohf_mx_cortex=Mx_cortex(~cellfun('isempty',cohfos2_g1));%Peak values cells where cortex cohfos were found.
@@ -15,12 +15,12 @@ coh_samp_cortex= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_
 p_cohfos_cortex=p_cortex(~cellfun('isempty',cohfos2_g1));
 p_cohfos_cortex=cellfun(@(equis1,equis2) equis1(equis2),p_cohfos_cortex,coh_samp_cortex,'UniformOutput',false);
 p_cohfos_cortex=[p_cohfos_cortex{:}];
+use_me=~cellfun('isempty',p_cohfos_cortex);
 q_cohfos_cortex=q_cortex(~cellfun('isempty',cohfos2_g1));
 q_cohfos_cortex=cellfun(@(equis1,equis2) equis1(equis2),q_cohfos_cortex,coh_samp_cortex,'UniformOutput',false);
 q_cohfos_cortex=[q_cohfos_cortex{:}];
 p_cohfos_cortex=p_cohfos_cortex(~cellfun('isempty',p_cohfos_cortex));
 q_cohfos_cortex=q_cohfos_cortex(~cellfun('isempty',q_cohfos_cortex));
-
 
 
 
