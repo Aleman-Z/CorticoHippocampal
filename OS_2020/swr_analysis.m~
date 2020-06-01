@@ -378,8 +378,6 @@ Cortex=Cortex.*(0.195);
 
                     cd ..
                 else
-                  warndlg(['No sleep scoring found for Rat_' rat_folder{k} '_' g{j} '_' G{i}])
-%xo
                     cd .. %Means there is no sleep scoring file.
                 end
                 
@@ -392,62 +390,61 @@ Cortex=Cortex.*(0.195);
         end
         
    if ind_mode==2
-%xo
+xo
 
-save(['Mfreq_' xx{1} '_' g{j} '.mat'],'Mfreq_cortex');
-save(['Mfreq_' yy{1} '_' g{j} '.mat'],'Mfreq_hpc');
+save('Mfreq_cortex')
 
-clear Mfreq_cortex Mfreq_hpc nr_swr_HPC nr_swr_Cortex  nr_cohfos nr_single_hpc nr_single_cortex
+
 
 %         allscreen()
 %         subplot(1,2,1)
-%         imagesc(nr_swr_HPC); colorbar(); colormap('gray')
-%         xticks([1.5:9.5])
-%         xticklabels({'5','10','15','20','25','30','35','40','45'})
-%         yticks([1:9])
-%         yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
-%         title('HPC HFOs')
-%         printing(['HPC_' g{j} '_' stage])
-%         close all
+        imagesc(nr_swr_HPC); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title('HPC HFOs')
+        printing(['HPC_' g{j} '_' stage])
+        close all
         
 %         subplot(1,2,2)
-%         imagesc(nr_swr_Cortex); colorbar(); colormap('gray')
-%         xticks([1.5:9.5])
-%         xticklabels({'5','10','15','20','25','30','35','40','45'})
-%         yticks([1:9])
-%         yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
-%         title([xx{1} ' HFOs'])
-%         printing(['Cortex_' g{j} '_' stage])
-%         close all       
+        imagesc(nr_swr_Cortex); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title([xx{1} ' HFOs'])
+        printing(['Cortex_' g{j} '_' stage])
+        close all       
         
-%         imagesc(nr_cohfos); colorbar(); colormap('gray')
-%         xticks([1.5:9.5])
-%         xticklabels({'5','10','15','20','25','30','35','40','45'})
-%         yticks([1:9])
-%         yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
-%         title(['Coocurring' ' HFOs'])
-%         printing(['Coocurring_' g{j} '_' stage])
-%         close all
+        imagesc(nr_cohfos); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Coocurring' ' HFOs'])
+        printing(['Coocurring_' g{j} '_' stage])
+        close all
         
         %Single HPC
-%         imagesc(nr_single_hpc); colorbar(); colormap('gray')
-%         xticks([1.5:9.5])
-%         xticklabels({'5','10','15','20','25','30','35','40','45'})
-%         yticks([1:9])
-%         yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
-%         title(['Single HPC' ' HFOs'])
-%         printing(['Single_HPC_' g{j} '_' stage])
-%         close all
+        imagesc(nr_single_hpc); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Single HPC' ' HFOs'])
+        printing(['Single_HPC_' g{j} '_' stage])
+        close all
         
         %Single PFC
-%         imagesc(nr_single_cortex); colorbar(); colormap('gray')
-%         xticks([1.5:9.5])
-%         xticklabels({'5','10','15','20','25','30','35','40','45'})
-%         yticks([1:9])
-%         yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
-%         title(['Single Cortex' ' HFOs'])
-%         printing(['Single_Cortex_' g{j} '_' stage])
-%         close all
+        imagesc(nr_single_cortex); colorbar(); colormap('gray')
+        xticks([1.5:9.5])
+        xticklabels({'5','10','15','20','25','30','35','40','45'})
+        yticks([1:9])
+        yticklabels({'PS','PT1','PT2','PT3','PT4','PT5_1','PT5_2','PT5_3','PT5_4'})
+        title(['Single Cortex' ' HFOs'])
+        printing(['Single_Cortex_' g{j} '_' stage])
+        close all
         
    end
     
@@ -480,19 +477,8 @@ clear Mfreq_cortex Mfreq_hpc nr_swr_HPC nr_swr_Cortex  nr_cohfos nr_single_hpc n
               
           
     end
-%    xo
-
-   if ind_mode==3
+    %xo
     writetable(T,strcat('SD_values','.xls'),'Sheet',1,'Range','A1:Z50')
-   end
-
-   if ind_mode==2
-       if k==1
-            P_bar=waitbar(0,'Please wait...');
-       end
-           progress_bar(k,length(rat_folder),P_bar)
-   end
-
     cd ..
 end
 

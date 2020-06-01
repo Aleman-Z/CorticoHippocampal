@@ -1,4 +1,4 @@
-function [swr_hpc,Mx_hpc]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,xx,fn)
+function [swr_hpc,Mx_hpc,mfreq]=epoch_ephys_states(HPC,states,ss,a1,a2,b1,b2,D1,xx,fn)
     %Convert signal to 1 sec epochs.
         e_t=1;
         e_samples=e_t*(fn); %fs=1kHz
@@ -44,12 +44,25 @@ else
 end
 
 swr_hpc=[Sx_hpc Ex_hpc Mx_hpc];
+%%
+    for l=1:length(Sx_hpc)
+         sig{l}=getsignal(Sx_hpc,Ex_hpc,ti,Mono_hpc,l);
+    end
+    sig=sig.';
+    sig=([sig{:}]);
+    if ~isempty(sig)
+    mfreq=cellfun(@(equis) (meanfreq(equis,1000)) ,sig,'UniformOutput',false);
+    mfreq=cell2mat(mfreq);
+    else  %In case of no detections.
+     mfreq={};
+    end
 %%    
     %end 
         else
             %v_hpc=[];
             swr_hpc={};
             Mx_hpc={};
+            mfreq={};
         end
     
 end
