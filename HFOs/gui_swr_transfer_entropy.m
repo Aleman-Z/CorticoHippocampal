@@ -456,7 +456,7 @@ progress_bar(k,length(g),f)
     cd ..    
     end
  xo
-%% Granger analysis.
+%% Transfer entropy analysis.
 
 
     labelconditions3{1}='nl';
@@ -465,19 +465,208 @@ progress_bar(k,length(g),f)
     labelconditions3{4}='for';
     labelconditions3=labelconditions3.';
 
-    
+  
 %-------------
 s=1; %Slow Cohfos
 w=3;
+
+[n1]=getval_n(SP,SQ,labelconditions3,label1,s,w,fn);
+
+
+s=2; %Slow Single
+w=3;
+
+[n2]=getval_n(SP,SQ,labelconditions3,label1,s,w,fn);
+
+
+s=1; %Fast Cohfos
+w=3;
+
+[n3]=getval_n(FP,FQ,labelconditions3,label1,s,w,fn);
+
+s=2; %FAST Single
+w=3;
+
+[n4]=getval_n(FP,FQ,labelconditions3,label1,s,w,fn);
+
+
+s=2; % singles
+w=1;%HPC
+[n5]=getval_n(P,Q,labelconditions3,label1,s,w,fn);
+
+min_amount_trials=min([n1 n2 n3 n4 n5]);
+%%
+s=1; %Slow Cohfos
+w=3;
+
+[TGA1]=getval_transfer_entropy(SP,SQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+s=2; %Slow Single
+w=3;
+[TGA2]=getval_transfer_entropy(SP,SQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+s=1; %Fast Cohfos
+w=3;
+[TGA3]=getval_transfer_entropy(FP,FQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+s=2; %FAST Single
+w=3;
+[TGA4]=getval_transfer_entropy(FP,FQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+s=2; % singles
+w=1;%HPC
+
+[TGA5]=getval_transfer_entropy(P,Q,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+
+% TGA_results.TEpermvalues(:,4);
+% TGA_results.TEbyU
+
+%     {'PAR'}    {'PFC'}
+%     {'PAR'}    {'HPC'}
+%     {'PFC'}    {'PAR'}
+%     {'PFC'}    {'HPC'}
+%     {'HPC'}    {'PAR'}
+%     {'HPC'}    {'PFC'}
+
+
+%% prepare configuration structure for TEprepare.m
+
+cfgTEP = [];
+
+% data
+cfgTEP.toi     = [data.time{1}(1) data.time{1}(end)]; % time of interest
+cfgTEP.channel = data.label;                          % channels to be analyzed
+
+% ensemble methode
+cfgTEP.ensemblemethod = 'no';
+
+% scanning of interaction delays u
+cfgTEP.predicttimemin_u    = 10;      % minimum u to be scanned
+cfgTEP.predicttimemax_u    = 300;	  % maximum u to be scanned
+cfgTEP.predicttimestepsize = 10; 	  % time steps between u's to be scanned
+
+% estimator
+cfgTEP.TEcalctype  = 'VW_ds';         % use the new TE estimator (Wibral, 2013)
+
+% ACT estimation and constraints on allowed ACT(autocorelation time)
+cfgTEP.maxlag      = 1000;  % max. lag for the calculation of the ACT
+cfgTEP.actthrvalue = 100;   % threshold for ACT
+cfgTEP.minnrtrials = 15;    % minimum acceptable number of trials
+
+% optimizing embedding
+cfgTEP.optimizemethod ='ragwitz';  % criterion used
+cfgTEP.ragdim         = 2:9;       % dimensions d to be used
+cfgTEP.ragtaurange    = [0.2 0.4]; % tau range to be used
+cfgTEP.ragtausteps    = 3;         % steps for ragwitz tau
+cfgTEP.repPred        = 100;       % no. local prediction/points used for the Ragwitz criterion
+
+% kernel-based TE estimation
+cfgTEP.flagNei = 'Mass' ;           % type of neigbour search (knn)
+cfgTEP.sizeNei = 4;                 % number of neighbours in the mass/knn search
+
+% set the level of verbosity of console outputs
+cfgTEP.verbosity = 'info_minor';
+%% define cfg for TEsurrogatestats.m
+
+cfgTESS = [];
+
+% use individual dimensions for embedding
+cfgTESS.optdimusage = 'indivdim';
+cfgTESS.embedsource = 'no';
+
+% statistical testing
+cfgTESS.tail           = 1;
+%cfgTESS.numpermutation = 5e4;
+cfgTESS.numpermutation = 1000;
+
+cfgTESS.surrogatetype  = 'trialshuffling';
+
+% shift test
+cfgTESS.shifttest      = 'no';      % don't test for volume conduction
+
+% prefix for output data
+cfgTESS.fileidout  = fullfile(outputpath, 'plusmaze_bandpassed');
+
+%% TE analysis 
+
+TGA_results = InteractionDelayReconstruction_calculate(cfgTEP,cfgTESS,data);
+%%
+
+cfgGA = [];
+
+cfgGA.threshold = 4;    % use a threshold/error tolerance of 4 ms
+cfgGA.cmc       = 1;    % use links after correction for multiple comparison
+
+TGA_results_GA = TEgraphanalysis(cfgGA,TGA_results);
+
+save([cfgTESS.fileidout '_CPU_TGA_results_GA.mat'],'TGA_results','TGA_results_GA');
+%%
+%% get data and results
+load('lorenz_3_layout.mat');  % load layout file
+
+lay_Lorenz.label=flip(label1);
+
+cd(outputpath)
+files = dir(fullfile(outputpath, 'plusmaze_bandpassed*TGA_results_GA.mat'));
+load(fullfile(outputpath, files(1).name));
+
+%% cfg structure for plotting
+
+cfgPLOT = [];
+
+cfgPLOT.layout        = lay_Lorenz;   	% layout structure, see fieldtrip's ft_prepare_layout.m
+
+cfgPLOT.statstype     = 1;              % 1: corrected; 2:uncorrected; 3: 1-pval; 4:rawdistance; 5:graph analysis
+cfgPLOT.alpha         = 0.05;
+cfgPLOT.arrowpos      = 2;              % plot arrowheads in the middle
+cfgPLOT.arrowcolorpos = [0 0.5 0.8];    % arrow color
+
+cfgPLOT.electrodes    = 'on';           % plot markers for nodes
+cfgPLOT.hlmarker      = 'o';            % maker type
+cfgPLOT.hlcolor       = [0 0 0];        % marker color
+cfgPLOT.hlmarkersize  = 4;              % maerker size
+
+cfgPLOT.showlabels    = 'yes';          % node labels
+cfgPLOT.efontsize     = 20;             % text size for node labels
+
+cfgPLOT.plothead      = 0;
+
+% plot TE results
+
+figure;
+TEplot2D(cfgPLOT,TGA_results);
+
+%% plot TE results after correction for multivariate effects
+
+cfgPLOT.arrowcolor   = [0 0.5 0.8];
+cfgPLOT.plottype     = 'graphanalysis';
+cfgPLOT.statstype    = 'corrected';
+cfgPLOT.linktype     = 'graphres';
+cfgPLOT.head         = 'off';
+cfgPLOT.electrodes   = 'labels';
+
+figure;
+TEplot2D_beta(cfgPLOT,TGA_results_GA);
+
+%%
 [g1,g1_f,G,g_f,FB,FB1,n2]=getval_granger(SP,SQ,labelconditions3,label1,s,w,fn);
 
 labelconditions3{1}='baseline';
 granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
-printing(['Parametric_Slow_Cohfos'])
+printing(['Parametric_Slow_Cohfos' '_' num2str(tr(2))])
 close all
 
 granger_paper4(G,g_f,labelconditions3,[0 300]) %All
-printing(['Non_parametric_Slow_Cohfos'])
+printing(['Non_parametric_Slow_Cohfos' '_' num2str(tr(2))])
 close all
 
 
@@ -512,11 +701,11 @@ w=3;
 
 labelconditions3{1}='baseline';
 granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
-printing(['Parametric_Slow_Singles'])
+printing(['Parametric_Slow_Singles' '_' num2str(tr(2))])
 close all
 
 granger_paper4(G,g_f,labelconditions3,[0 300]) %All
-printing(['Non_parametric_Slow_Singles'])
+printing(['Non_parametric_Slow_Singles' '_' num2str(tr(2))])
 close all    
 
 TT2_20_np=table;
@@ -551,11 +740,11 @@ w=3;
 
 labelconditions3{1}='baseline';
 granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
-printing(['Parametric_Fast_Cohfos'])
+printing(['Parametric_Fast_Cohfos' '_' num2str(tr(2))])
 close all
 
 granger_paper4(G,g_f,labelconditions3,[0 300]) %All
-printing(['Non_parametric_Fast_Cohfos'])
+printing(['Non_parametric_Fast_Cohfos' '_' num2str(tr(2))])
 close all
 
 TT3_20_np=table;
@@ -590,11 +779,11 @@ w=3;
 labelconditions3{1}='baseline';
 
 granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
-printing(['Parametric_Fast_Singles'])
+printing(['Parametric_Fast_Singles' '_' num2str(tr(2))])
 close all
 
 granger_paper4(G,g_f,labelconditions3,[0 300]) %All
-printing(['Non_parametric_Fast_Singles'])
+printing(['Non_parametric_Fast_Singles' '_' num2str(tr(2))])
 close all
 
 TT4_20_np=table;
@@ -630,11 +819,11 @@ w=1;%HPC
 
 labelconditions3{1}='baseline';
 granger_paper4(g1,g1_f,labelconditions3,[0 300]) %All
-printing(['Parametric_HPC_Singles'])
+printing(['Parametric_HPC_Singles' '_' num2str(tr(2))])
 close all
 
 granger_paper4(G,g_f,labelconditions3,[0 300]) %All
-printing(['Non_parametric_HPC_Singles'])
+printing(['Non_parametric_HPC_Singles' '_' num2str(tr(2))])
 close all
 
 TT5_20_np=table;
@@ -661,7 +850,18 @@ TT5_300_p.Properties.VariableNames=[{'Direction'};{labelconditions3{1}};{labelco
 
 t1=repmat({'x'},[1 5]);
 
-tab=[TT1_20_p;t1;TT2;t1;TT3;t1;TT4];
+tab=[TT1_20_p;t1;TT2_20_p;t1;TT3_20_p;t1;TT4_20_p;t1;TT5_20_p];
+writetable(tab,strcat('Granger_20_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
+writetable(tab2,strcat('Granger_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
+writetable(tab3,strcat('Granger_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
+tab4=[TT1_300_p;t1;TT2_300_p;t1;TT3_300_p;t1;TT4_300_p;t1;TT5_300_p];
+writetable(tab4,strcat('Granger_300_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+
 
 
 %%
