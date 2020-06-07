@@ -111,7 +111,7 @@ try
 
 catch exception
     disp('There was an error with the number of points')
-cfgTEP.repPred        = 1;       % no. local prediction/points used for the Ragwitz criterion
+cfgTEP.predicttimemax_u=1600;
     TGA_results.(labelconditions3{condition}) = InteractionDelayReconstruction_calculate(cfgTEP,cfgTESS,data);
 
 end

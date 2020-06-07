@@ -456,7 +456,7 @@ progress_bar(k,length(g),f)
     cd ..    
     end
  xo
-%% Granger analysis.
+%% Transfer entropy analysis.
 
 
     labelconditions3{1}='nl';
@@ -465,55 +465,137 @@ progress_bar(k,length(g),f)
     labelconditions3{4}='for';
     labelconditions3=labelconditions3.';
 
-    
+  
 %-------------
 s=1; %Slow Cohfos
 w=3;
 
-P=SP;
-Q=SQ;
+[n1]=getval_n(SP,SQ,labelconditions3,label1,s,w,fn);
 
 
-    n=min([length(P.(labelconditions3{1}).(label1{w}){s}) length(P.(labelconditions3{2}).(label1{w}){s})...
-        length(P.(labelconditions3{3}).(label1{w}){s}) length(P.(labelconditions3{4}).(label1{w}){s})]);
-    
+s=2; %Slow Single
+w=3;
+
+[n2]=getval_n(SP,SQ,labelconditions3,label1,s,w,fn);
 
 
-type_hfo{1}='cohfos';
-type_hfo{2}='single';
+s=1; %Fast Cohfos
+w=3;
 
-condition=1;
+[n3]=getval_n(FP,FQ,labelconditions3,label1,s,w,fn);
 
+s=2; %FAST Single
+w=3;
 
-%Order ripples
-p=P.(labelconditions3{condition}).(label1{w}){s}; 
-q=Q.(labelconditions3{condition}).(label1{w}){s}; 
-% R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,:)))),q));
-%R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,121-50:121+50)))),q));
-R=(cellfun(@(equis1) max(abs(hilbert(equis1(1,151-25:151+25)))),q));
-[~,r]=sort(R,'descend');
-p=p(r);
-q=q(r);
-p=p(1:n);
-q=q(1:n);
+[n4]=getval_n(FP,FQ,labelconditions3,label1,s,w,fn);
 
 
-%Max 1000 ripples.
-if length(q)>1000
-    q=q(1:1000);
-    p=p(1:1000);
-%         q_nl=q_nl(1:1000);
-%         p_nl=p_nl(1:1000);
-end
+s=2; % singles
+w=1;%HPC
+[n5]=getval_n(P,Q,labelconditions3,label1,s,w,fn);
 
-myOutputpath = '/home/adrian/Documents/TRENTOOL_results/';
-outputpath=myOutputpath;
-% aver=load('lorenz_1-2-3_delay_20_20_ms.mat');
-data.fsample=1000;
-data.label={'PAR' 'PFC' 'HPC'};
-data.trial=q;
-ro=1200;
-data.time=create_timecell(ro,length(p));
+min_amount_trials=min([n1 n2 n3 n4 n5]);
+%%
+s=1; %Slow Cohfos
+w=3;
+
+[TGA1]=getval_transfer_entropy(SP,SQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+s=2; %Slow Single
+w=3;
+[TGA2]=getval_transfer_entropy(SP,SQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+s=1; %Fast Cohfos
+w=3;
+[TGA3]=getval_transfer_entropy(FP,FQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+s=2; %FAST Single
+w=3;
+[TGA4]=getval_transfer_entropy(FP,FQ,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+s=2; % singles
+w=1;%HPC
+
+[TGA5]=getval_transfer_entropy(P,Q,labelconditions3,label1,s,w,fn,min_amount_trials);
+
+
+
+
+% TGA_results.TEpermvalues(:,4);
+% TGA_results.TEbyU
+
+%     {'PAR'}    {'PFC'}
+%     {'PAR'}    {'HPC'}
+%     {'PFC'}    {'PAR'}
+%     {'PFC'}    {'HPC'}
+%     {'HPC'}    {'PAR'}
+%     {'HPC'}    {'PFC'}
+%%
+% [TGA1.nl.TEpermvalues(:,4) TGA1.plusmaze.TEpermvalues(:,4) TGA1.novelty.TEpermvalues(:,4) TGA1.for.TEpermvalues(:,4)]
+
+
+[ TGA1.nl.TEprepare.u_in_ms(1)
+TGA1.nl.TEprepare.opttau
+TGA1.nl.TEprepare.optdim
+TGA1.nl.TEprepare.maxact
+TGA1.nl.cfg.repPred
+TGA1.nl.cfg.predicttimemax_u]
+%%
+TT1=table;
+TT1.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA1.nl.TEpermvalues(:,4) TGA1.plusmaze.TEpermvalues(:,4) TGA1.novelty.TEpermvalues(:,4) TGA1.for.TEpermvalues(:,4)])];
+TT1.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT2=table;
+TT2.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA2.nl.TEpermvalues(:,4) TGA2.plusmaze.TEpermvalues(:,4) TGA2.novelty.TEpermvalues(:,4) TGA2.for.TEpermvalues(:,4)])];
+TT2.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT3=table;
+TT3.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA3.nl.TEpermvalues(:,4) TGA3.plusmaze.TEpermvalues(:,4) TGA3.novelty.TEpermvalues(:,4) TGA3.for.TEpermvalues(:,4)])];
+TT3.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT4=table;
+TT4.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA4.nl.TEpermvalues(:,4) TGA4.plusmaze.TEpermvalues(:,4) TGA4.novelty.TEpermvalues(:,4) TGA4.for.TEpermvalues(:,4)])];
+TT4.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT5=table;
+TT5.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA5.nl.TEpermvalues(:,4) TGA5.plusmaze.TEpermvalues(:,4) TGA5.novelty.TEpermvalues(:,4) TGA5.for.TEpermvalues(:,4)])];
+TT5.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+%%
+t1=repmat({'x'},[1 5]);
+
+tab=[TT1;t1;TT2;t1;TT3;t1;TT4;t1;TT5];
+writetable(tab,strcat('TransferEntropy_Wideband_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+%%
+
+TT1=table;
+TT1.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA1.nl.TEprepare.u_in_ms(1);  TGA1.nl.cfg.predicttimemax_u;TGA1.nl.TEprepare.opttau; TGA1.nl.TEprepare.optdim; TGA1.nl.TEprepare.maxact; TGA1.nl.cfg.repPred]) num2cell([ TGA1.plusmaze.TEprepare.u_in_ms(1);  TGA1.plusmaze.cfg.predicttimemax_u;TGA1.plusmaze.TEprepare.opttau; TGA1.plusmaze.TEprepare.optdim; TGA1.plusmaze.TEprepare.maxact; TGA1.plusmaze.cfg.repPred]) ];
+
+TT1.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT2=table;
+TT2.Variables=    [[{'Delay'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA2.nl.TEpermvalues(:,4) TGA2.plusmaze.TEpermvalues(:,4) TGA2.novelty.TEpermvalues(:,4) TGA2.for.TEpermvalues(:,4)])];
+TT2.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT3=table;
+TT3.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA3.nl.TEpermvalues(:,4) TGA3.plusmaze.TEpermvalues(:,4) TGA3.novelty.TEpermvalues(:,4) TGA3.for.TEpermvalues(:,4)])];
+TT3.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT4=table;
+TT4.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA4.nl.TEpermvalues(:,4) TGA4.plusmaze.TEpermvalues(:,4) TGA4.novelty.TEpermvalues(:,4) TGA4.for.TEpermvalues(:,4)])];
+TT4.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+TT5=table;
+TT5.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([TGA5.nl.TEpermvalues(:,4) TGA5.plusmaze.TEpermvalues(:,4) TGA5.novelty.TEpermvalues(:,4) TGA5.for.TEpermvalues(:,4)])];
+TT5.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
+
+[ TGA1.nl.TEprepare.u_in_ms(1); TGA1.nl.TEprepare.opttau; TGA1.nl.TEprepare.optdim; TGA1.nl.TEprepare.maxact; TGA1.nl.cfg.repPred; TGA1.nl.cfg.predicttimemax_u]
 
 %% prepare configuration structure for TEprepare.m
 
@@ -527,9 +609,9 @@ cfgTEP.channel = data.label;                          % channels to be analyzed
 cfgTEP.ensemblemethod = 'no';
 
 % scanning of interaction delays u
-cfgTEP.predicttimemin_u    = 15;      % minimum u to be scanned
-cfgTEP.predicttimemax_u    = 45;	  % maximum u to be scanned
-cfgTEP.predicttimestepsize = 1; 	  % time steps between u's to be scanned
+cfgTEP.predicttimemin_u    = 10;      % minimum u to be scanned
+cfgTEP.predicttimemax_u    = 300;	  % maximum u to be scanned
+cfgTEP.predicttimestepsize = 10; 	  % time steps between u's to be scanned
 
 % estimator
 cfgTEP.TEcalctype  = 'VW_ds';         % use the new TE estimator (Wibral, 2013)
@@ -562,7 +644,9 @@ cfgTESS.embedsource = 'no';
 
 % statistical testing
 cfgTESS.tail           = 1;
-cfgTESS.numpermutation = 5e4;
+%cfgTESS.numpermutation = 5e4;
+cfgTESS.numpermutation = 1000;
+
 cfgTESS.surrogatetype  = 'trialshuffling';
 
 % shift test
@@ -578,7 +662,7 @@ TGA_results = InteractionDelayReconstruction_calculate(cfgTEP,cfgTESS,data);
 
 cfgGA = [];
 
-cfgGA.threshold = 400;    % use a threshold/error tolerance of 4 ms
+cfgGA.threshold = 4;    % use a threshold/error tolerance of 4 ms
 cfgGA.cmc       = 1;    % use links after correction for multiple comparison
 
 TGA_results_GA = TEgraphanalysis(cfgGA,TGA_results);
