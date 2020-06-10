@@ -423,7 +423,7 @@ pause(.1)
         % hObject    handle to MemoryDynamics (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
-        url = ' http://memorydynamics.org/';
+        url = ' http://www.genzellab.com/';
         web(url,'-browser')
 
 

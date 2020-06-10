@@ -33,6 +33,11 @@ if w==1 %HPC-centered ripples.
      q=cellfun(@(equis1) flip(equis1),q,'UniformOutput',false);
 end
 
+    Wn1=[ 20/(fn/2) 300/(fn/2)]; % Cutoff
+%     [b1,a1] = butter(3,Wn1); %Filter coefficients
+    [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
+    p=cellfun(@(equis) filtfilt(b1,a1,equis.').', p ,'UniformOutput',false);
+
 myOutputpath = '/home/adrian/Documents/TRENTOOL_results/';
 outputpath=myOutputpath;
 % aver=load('lorenz_1-2-3_delay_20_20_ms.mat');
@@ -75,7 +80,8 @@ cfgTEP.optimizemethod ='ragwitz';  % criterion used
 cfgTEP.ragdim         = 2:5;       % dimensions d to be used
 cfgTEP.ragtaurange    = [0.1 0.6]; % tau range to be used
 cfgTEP.ragtausteps    = 5;         % steps for ragwitz tau
-cfgTEP.repPred        = 129;       % no. local prediction/points used for the Ragwitz criterion
+% cfgTEP.repPred        = 129;       % no. local prediction/points used for the Ragwitz criterion
+cfgTEP.repPred        = 200;       % no. local prediction/points used for the Ragwitz criterion
 
 % kernel-based TE estimation
 cfgTEP.flagNei = 'Mass' ;           % type of neigbour search (knn)

@@ -496,7 +496,7 @@ w=1;%HPC
 
 min_amount_trials=min([n1 n2 n3 n4 n5]);
 
-%
+%%
 s=1; %Slow Cohfos
 w=3;
 
@@ -559,33 +559,33 @@ TT5.Properties.VariableNames=[{'Direction'};{'baseline'};{labelconditions3{2}};{
 t1=repmat({'x'},[1 5]);
 
 tab=[TT1;t1;TT2;t1;TT3;t1;TT4;t1;TT5];
-writetable(tab,strcat('TransferEntropy_Wideband_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+writetable(tab,strcat('TransferEntropy_300_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
 %%
 
 TT1=table;
-TT1.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA1.nl.TEprepare.u_in_ms(1);  TGA1.nl.cfg.predicttimemax_u;TGA1.nl.TEprepare.opttau; TGA1.nl.TEprepare.optdim; TGA1.nl.TEprepare.maxact; TGA1.nl.cfg.repPred]) num2cell([ TGA1.plusmaze.TEprepare.u_in_ms(1);  TGA1.plusmaze.cfg.predicttimemax_u;TGA1.plusmaze.TEprepare.opttau; TGA1.plusmaze.TEprepare.optdim; TGA1.plusmaze.TEprepare.maxact; TGA1.plusmaze.cfg.repPred]) num2cell([ TGA1.novelty.TEprepare.u_in_ms(1);  TGA1.novelty.cfg.predicttimemax_u;TGA1.novelty.TEprepare.opttau; TGA1.novelty.TEprepare.optdim; TGA1.novelty.TEprepare.maxact; TGA1.novelty.cfg.repPred]) num2cell([ TGA1.for.TEprepare.u_in_ms(1);  TGA1.for.cfg.predicttimemax_u;TGA1.for.TEprepare.opttau; TGA1.for.TEprepare.optdim; TGA1.for.TEprepare.maxact; TGA1.for.cfg.repPred])];
+TT1.Variables=    [[{'Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA1.nl.TEprepare.u_in_ms(1);  TGA1.nl.TEprepare.opttau; TGA1.nl.TEprepare.optdim; TGA1.nl.TEprepare.maxact; TGA1.nl.cfg.repPred]) num2cell([ TGA1.plusmaze.TEprepare.u_in_ms(1); TGA1.plusmaze.TEprepare.opttau; TGA1.plusmaze.TEprepare.optdim; TGA1.plusmaze.TEprepare.maxact; TGA1.plusmaze.cfg.repPred]) num2cell([ TGA1.novelty.TEprepare.u_in_ms(1);  TGA1.novelty.TEprepare.opttau; TGA1.novelty.TEprepare.optdim; TGA1.novelty.TEprepare.maxact; TGA1.novelty.cfg.repPred]) num2cell([ TGA1.for.TEprepare.u_in_ms(1);  TGA1.for.TEprepare.opttau; TGA1.for.TEprepare.optdim; TGA1.for.TEprepare.maxact; TGA1.for.cfg.repPred])];
 TT1.Properties.VariableNames=[{'Parameter'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 TT2=table;
-TT2.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA2.nl.TEprepare.u_in_ms(1);  TGA2.nl.cfg.predicttimemax_u;TGA2.nl.TEprepare.opttau; TGA2.nl.TEprepare.optdim; TGA2.nl.TEprepare.maxact; TGA2.nl.cfg.repPred]) num2cell([ TGA2.plusmaze.TEprepare.u_in_ms(1);  TGA2.plusmaze.cfg.predicttimemax_u;TGA2.plusmaze.TEprepare.opttau; TGA2.plusmaze.TEprepare.optdim; TGA2.plusmaze.TEprepare.maxact; TGA2.plusmaze.cfg.repPred]) num2cell([ TGA2.novelty.TEprepare.u_in_ms(1);  TGA2.novelty.cfg.predicttimemax_u;TGA2.novelty.TEprepare.opttau; TGA2.novelty.TEprepare.optdim; TGA2.novelty.TEprepare.maxact; TGA2.novelty.cfg.repPred]) num2cell([ TGA2.for.TEprepare.u_in_ms(1);  TGA2.for.cfg.predicttimemax_u;TGA2.for.TEprepare.opttau; TGA2.for.TEprepare.optdim; TGA2.for.TEprepare.maxact; TGA2.for.cfg.repPred])];
+TT2.Variables=    [[{'Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA2.nl.TEprepare.u_in_ms(1); TGA2.nl.TEprepare.opttau; TGA2.nl.TEprepare.optdim; TGA2.nl.TEprepare.maxact; TGA2.nl.cfg.repPred]) num2cell([ TGA2.plusmaze.TEprepare.u_in_ms(1); TGA2.plusmaze.TEprepare.opttau; TGA2.plusmaze.TEprepare.optdim; TGA2.plusmaze.TEprepare.maxact; TGA2.plusmaze.cfg.repPred]) num2cell([ TGA2.novelty.TEprepare.u_in_ms(1);  TGA2.novelty.TEprepare.opttau; TGA2.novelty.TEprepare.optdim; TGA2.novelty.TEprepare.maxact; TGA2.novelty.cfg.repPred]) num2cell([ TGA2.for.TEprepare.u_in_ms(1);  TGA2.for.TEprepare.opttau; TGA2.for.TEprepare.optdim; TGA2.for.TEprepare.maxact; TGA2.for.cfg.repPred])];
 TT2.Properties.VariableNames=[{'Parameter'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 TT3=table;
-TT3.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA3.nl.TEprepare.u_in_ms(1);  TGA3.nl.cfg.predicttimemax_u;TGA3.nl.TEprepare.opttau; TGA3.nl.TEprepare.optdim; TGA3.nl.TEprepare.maxact; TGA3.nl.cfg.repPred]) num2cell([ TGA3.plusmaze.TEprepare.u_in_ms(1);  TGA3.plusmaze.cfg.predicttimemax_u;TGA3.plusmaze.TEprepare.opttau; TGA3.plusmaze.TEprepare.optdim; TGA3.plusmaze.TEprepare.maxact; TGA3.plusmaze.cfg.repPred]) num2cell([ TGA3.novelty.TEprepare.u_in_ms(1);  TGA3.novelty.cfg.predicttimemax_u;TGA3.novelty.TEprepare.opttau; TGA3.novelty.TEprepare.optdim; TGA3.novelty.TEprepare.maxact; TGA3.novelty.cfg.repPred]) num2cell([ TGA3.for.TEprepare.u_in_ms(1);  TGA3.for.cfg.predicttimemax_u;TGA3.for.TEprepare.opttau; TGA3.for.TEprepare.optdim; TGA3.for.TEprepare.maxact; TGA3.for.cfg.repPred])];
+TT3.Variables=    [[{'Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA3.nl.TEprepare.u_in_ms(1);  TGA3.nl.TEprepare.opttau; TGA3.nl.TEprepare.optdim; TGA3.nl.TEprepare.maxact; TGA3.nl.cfg.repPred]) num2cell([ TGA3.plusmaze.TEprepare.u_in_ms(1); TGA3.plusmaze.TEprepare.opttau; TGA3.plusmaze.TEprepare.optdim; TGA3.plusmaze.TEprepare.maxact; TGA3.plusmaze.cfg.repPred]) num2cell([ TGA3.novelty.TEprepare.u_in_ms(1);  TGA3.novelty.TEprepare.opttau; TGA3.novelty.TEprepare.optdim; TGA3.novelty.TEprepare.maxact; TGA3.novelty.cfg.repPred]) num2cell([ TGA3.for.TEprepare.u_in_ms(1);  TGA3.for.TEprepare.opttau; TGA3.for.TEprepare.optdim; TGA3.for.TEprepare.maxact; TGA3.for.cfg.repPred])];
 TT3.Properties.VariableNames=[{'Parameter'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 TT4=table;
-TT4.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA4.nl.TEprepare.u_in_ms(1);  TGA4.nl.cfg.predicttimemax_u;TGA4.nl.TEprepare.opttau; TGA4.nl.TEprepare.optdim; TGA4.nl.TEprepare.maxact; TGA4.nl.cfg.repPred]) num2cell([ TGA4.plusmaze.TEprepare.u_in_ms(1);  TGA4.plusmaze.cfg.predicttimemax_u;TGA4.plusmaze.TEprepare.opttau; TGA4.plusmaze.TEprepare.optdim; TGA4.plusmaze.TEprepare.maxact; TGA4.plusmaze.cfg.repPred]) num2cell([ TGA4.novelty.TEprepare.u_in_ms(1);  TGA4.novelty.cfg.predicttimemax_u;TGA4.novelty.TEprepare.opttau; TGA4.novelty.TEprepare.optdim; TGA4.novelty.TEprepare.maxact; TGA4.novelty.cfg.repPred]) num2cell([ TGA4.for.TEprepare.u_in_ms(1);  TGA4.for.cfg.predicttimemax_u;TGA4.for.TEprepare.opttau; TGA4.for.TEprepare.optdim; TGA4.for.TEprepare.maxact; TGA4.for.cfg.repPred])];
+TT4.Variables=    [[{'Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA4.nl.TEprepare.u_in_ms(1); TGA4.nl.TEprepare.opttau; TGA4.nl.TEprepare.optdim; TGA4.nl.TEprepare.maxact; TGA4.nl.cfg.repPred]) num2cell([ TGA4.plusmaze.TEprepare.u_in_ms(1);  TGA4.plusmaze.TEprepare.opttau; TGA4.plusmaze.TEprepare.optdim; TGA4.plusmaze.TEprepare.maxact; TGA4.plusmaze.cfg.repPred]) num2cell([ TGA4.novelty.TEprepare.u_in_ms(1); TGA4.novelty.TEprepare.opttau; TGA4.novelty.TEprepare.optdim; TGA4.novelty.TEprepare.maxact; TGA4.novelty.cfg.repPred]) num2cell([ TGA4.for.TEprepare.u_in_ms(1);  TGA4.for.TEprepare.opttau; TGA4.for.TEprepare.optdim; TGA4.for.TEprepare.maxact; TGA4.for.cfg.repPred])];
 TT4.Properties.VariableNames=[{'Parameter'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 TT5=table;
-TT5.Variables=    [[{'Prediction Time'};{'Max Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA5.nl.TEprepare.u_in_ms(1);  TGA5.nl.cfg.predicttimemax_u;TGA5.nl.TEprepare.opttau; TGA5.nl.TEprepare.optdim; TGA5.nl.TEprepare.maxact; TGA5.nl.cfg.repPred]) num2cell([ TGA5.plusmaze.TEprepare.u_in_ms(1);  TGA5.plusmaze.cfg.predicttimemax_u;TGA5.plusmaze.TEprepare.opttau; TGA5.plusmaze.TEprepare.optdim; TGA5.plusmaze.TEprepare.maxact; TGA5.plusmaze.cfg.repPred]) num2cell([ TGA5.novelty.TEprepare.u_in_ms(1);  TGA5.novelty.cfg.predicttimemax_u;TGA5.novelty.TEprepare.opttau; TGA5.novelty.TEprepare.optdim; TGA5.novelty.TEprepare.maxact; TGA5.novelty.cfg.repPred]) num2cell([ TGA5.for.TEprepare.u_in_ms(1);  TGA5.for.cfg.predicttimemax_u;TGA5.for.TEprepare.opttau; TGA5.for.TEprepare.optdim; TGA5.for.TEprepare.maxact; TGA5.for.cfg.repPred])];
+TT5.Variables=    [[{'Prediction Time'};{'Tau'};{'Dim'};{'Max ACT'};{'repPred'}] num2cell([ TGA5.nl.TEprepare.u_in_ms(1);  TGA5.nl.TEprepare.opttau; TGA5.nl.TEprepare.optdim; TGA5.nl.TEprepare.maxact; TGA5.nl.cfg.repPred]) num2cell([ TGA5.plusmaze.TEprepare.u_in_ms(1);  TGA5.plusmaze.TEprepare.opttau; TGA5.plusmaze.TEprepare.optdim; TGA5.plusmaze.TEprepare.maxact; TGA5.plusmaze.cfg.repPred]) num2cell([ TGA5.novelty.TEprepare.u_in_ms(1);  TGA5.novelty.TEprepare.opttau; TGA5.novelty.TEprepare.optdim; TGA5.novelty.TEprepare.maxact; TGA5.novelty.cfg.repPred]) num2cell([ TGA5.for.TEprepare.u_in_ms(1);  TGA5.for.TEprepare.opttau; TGA5.for.TEprepare.optdim; TGA5.for.TEprepare.maxact; TGA5.for.cfg.repPred])];
 TT5.Properties.VariableNames=[{'Parameter'};{'baseline'};{labelconditions3{2}};{labelconditions3{3}};{labelconditions3{4}}];    
 
 t1=repmat({'x'},[1 5]);
 
 tab=[TT1;t1;TT2;t1;TT3;t1;TT4;t1;TT5];
-writetable(tab,strcat('TransferEntropyParameters_Wideband_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+writetable(tab,strcat('TransferEntropyParameters_300_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
 xo
 %% prepare configuration structure for TEprepare.m
 

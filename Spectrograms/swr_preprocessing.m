@@ -3,7 +3,7 @@ function [Mono,V]=swr_preprocessing(CORTEX,states,fn)
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
     %LPF 300 Hz:
-    fn=1000; % New sampling frequency.
+    %fn=1000; % New sampling frequency.
     Wn1=[320/(fn/2)]; % Cutoff=320 Hz
     [b2,a2] = butter(3,Wn1); %Filter coefficients
 %Convert signal to 1 sec epochs.
