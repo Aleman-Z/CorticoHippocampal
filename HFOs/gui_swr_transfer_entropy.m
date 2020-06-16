@@ -180,7 +180,7 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
- %xo
+ xo
  ro=1200;
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   p_cortex,q_cortex,cont_cortex,sig_pq_cortex ...
@@ -455,7 +455,7 @@ v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2
 progress_bar(k,length(g),f)
     cd ..    
     end
- 
+ xo
 %% Transfer entropy analysis.
 
 

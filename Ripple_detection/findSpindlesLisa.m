@@ -52,10 +52,10 @@ TRMax = [];
 TRMaxValue = [];
 
 i = 0;
-h = waitbar(0, 'Find Ripples...');
+% h = waitbar(0, 'Find Ripples...');
 
 while ChStart < EEGEnd
-  waitbar(i/nChunks, h);
+%   waitbar(i/nChunks, h);
 
   t1 = find(timestamps >= ChStart, 1);
   t2 = find(timestamps >= ChEnd, 1);
@@ -127,7 +127,7 @@ while ChStart < EEGEnd
 
   ChEnd = min(ChStart + LChunk, EEGEnd);
 end
-close(h);
+% close(h);
 i = 2;
 
 
@@ -144,11 +144,11 @@ while i <= length(TRStart)
   end
   
 end
-length(TRStart)
-length(TREnd)
+length(TRStart);
+length(TREnd);
 i = 1;
 while i <= length(TRStart)
-  if(TREnd(i) - TRStart(i)) < MinRippleDuration
+  if(TREnd(i)+0.000001 - TRStart(i)) < MinRippleDuration
     TRStart = [TRStart(1:i-1) TRStart(i+1:end)];
     TREnd = [TREnd(1:i-1) TREnd(i+1:end)];
     TRMax = [TRMax(1:i-1), TRMax(i+1:end)];
@@ -162,7 +162,7 @@ end
 %%Max duration criteria
 i = 1;
 while i <= length(TRStart)
-  if(TREnd(i) - TRStart(i)) >= MaxRippleDuration
+  if(TREnd(i)-0.000001 - TRStart(i)) >= MaxRippleDuration
     TRStart = [TRStart(1:i-1) TRStart(i+1:end)];
     TREnd = [TREnd(1:i-1) TREnd(i+1:end)];
     TRMax = [TRMax(1:i-1), TRMax(i+1:end)];
