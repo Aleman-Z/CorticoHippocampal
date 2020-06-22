@@ -87,23 +87,11 @@ signal3_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',
 Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
 signal2_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
 
-Wn1=[9/(fn/2) 20/(fn/2)]; % Cutoff=100-300 Hz
-[b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
-Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
-signal4_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
-
-
-
 V_pfc=cellfun(@(equis) filtfilt(b2,a2,equis), v_pfc ,'UniformOutput',false);
 Mono_pfc=cellfun(@(equis) wavelet_bandpass(equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal3_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
 Mono_pfc=cellfun(@(equis) filtfilt(b1,a1,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal2_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
-
-Wn1=[9/(fn/2) 20/(fn/2)]; % Cutoff=100-300 Hz
-[b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
-Mono_pfc=cellfun(@(equis) filtfilt(b1,a1,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
-signal4_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
 
 fn=1000;
 
@@ -150,8 +138,8 @@ max_length=cellfun(@length,v_hpc);
 nrem_epoch=find(max_length==max(max_length)==1);
 nrem_epoch=nrem_epoch(1);
 
-    D1=6.*std(signal3_hpc{nrem_epoch}) +mean(signal3_hpc{nrem_epoch});
-    D2=6.*std(signal3_pfc{nrem_epoch})+mean(signal3_pfc{nrem_epoch});
+    D1=5.*std(signal3_hpc{nrem_epoch}) +mean(signal3_hpc{nrem_epoch})+10;
+    D2=5.*std(signal3_pfc{nrem_epoch})+mean(signal3_pfc{nrem_epoch})+10;
 clear max_length nrem_epoch
 else
 %%
@@ -174,7 +162,7 @@ else
 end
 %% SWR in HPC
 % D1=70;%THRESHOLD
-minpeak=4;
+minpeak=10;
 k=1; %xo
     %[Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);
 %    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findSpindlesLisa(equis1, equis2, D1, (D1)*(1/2), fn), signal3_hpc,ti,'UniformOutput',false);    
@@ -192,9 +180,7 @@ k=1; %xo
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
 %%
-signal2_hpc=signal4_hpc;
-signal2_pfc=signal4_pfc;
-
+signal2_hpc=
 % Find max and plot
 %xo
 %LARGEST EPOCH.
@@ -210,7 +196,6 @@ max_length=cellfun(@length,swr_pfc(:,1));
 n=find(max_length==max(max_length));
 %%
 n=n(1);
-% n=68;
 % n=67
 % n=58;
 % n=48;%35;%48
