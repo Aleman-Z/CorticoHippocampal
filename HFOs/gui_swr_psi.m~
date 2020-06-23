@@ -1095,7 +1095,7 @@ tab_ripple=[TT1_ripple_np;t1;TT2_ripple_np;t1;TT3_ripple_np;t1;TT4_ripple_np;t1;
 tab=[tab_20;t1;tab_300;t1;tab_so;t1;tab_theta;t1;tab_spindle;t1;tab_ripple];
 
 % writetable(tab,strcat('PSI_TimeFreq_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z250')  
-writetable(tab,strcat('PSI_Wavelet_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z250')  
+writetable(tab,strcat('PSI_TimeFreq_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z250')  
 
 % tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
 % writetable(tab2,strcat('PSI_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  

@@ -194,6 +194,9 @@ cwt_sig_area_2(isnan(cwt_sig_area_2))=mean(mean(cwt_sig_area_2(~isnan(cwt_sig_ar
 %     cwt_sig_area_2=transpose(cwt_sig_area_2);
      cwt_sig_area_1=squeeze(aver(f(2),:,:));
      cwt_sig_area_2=squeeze(aver(f(1),:,:));
+%Replace nans with average values.
+cwt_sig_area_1(isnan(cwt_sig_area_1))=mean(mean(cwt_sig_area_1(~isnan(cwt_sig_area_1))));
+cwt_sig_area_2(isnan(cwt_sig_area_2))=mean(mean(cwt_sig_area_2(~isnan(cwt_sig_area_2))));
 
 
     psi_val(2*j,:)=PSI_Analysis(cwt_sig_area_1,cwt_sig_area_2,freq.freq);
