@@ -98,7 +98,7 @@ cfg.t_ftimwin = 0.1.*ones(size(4./cfg.foi'));
 % cfg.tapsmofrq =20.*ones(size(4./cfg.foi'));
 
 
-+  
+% +  
 %cfg.toi=toy;
 % cfg.toi       = -1:0.1:1;
 cfg.toi       =data1.time{1};
@@ -109,6 +109,21 @@ cfg.keeptrials = 'yes';
 
 
 freq = ft_freqanalysis(cfg, data1);
+%% Wavelet 
+
+cfg = [];
+cfg.method = 'wavelet';
+cfg.foi = freqrange;
+cfg.toi       =data1.time{1};
+cfg.output='fourier';
+%'powandcsd'
+
+cfg.width=10;
+% cfg.gwidth=3;
+
+% cfg.pad     = 10;
+freq = ft_freqanalysis(cfg, data1);
+
 %%
 % cfg = [];
 % cfg.method     = 'wavelet';
@@ -120,7 +135,8 @@ freq = ft_freqanalysis(cfg, data1);
 %%
 % cfg=[];ft_singleplotTFR(cfg, freq2);
 aver=squeeze(mean(freq.fourierspctrm,1));
-aver=aver(:,:,101:end-100);
+%aver=aver(:,:,101:end-100);
+
 %aver=aver(1,:,201:end-200);
 % aver=squeeze(aver(1,:,:));
 
@@ -164,7 +180,9 @@ aver=aver(:,:,101:end-100);
 %      cwt_sig_area_1=cwt_sig_area_1(:,201:end-200);
      cwt_sig_area_2=squeeze(aver(f(2),:,:));
 %      cwt_sig_area_2=cwt_sig_area_2(:,201:end-200);
-
+%Replace nans with average values.
+cwt_sig_area_1(isnan(cwt_sig_area_1))=mean(mean(cwt_sig_area_1(~isnan(cwt_sig_area_1))));
+cwt_sig_area_2(isnan(cwt_sig_area_2))=mean(mean(cwt_sig_area_2(~isnan(cwt_sig_area_2))));
 
 
     psi_val(2*j-1,:)=PSI_Analysis(cwt_sig_area_1,cwt_sig_area_2,freq.freq);
