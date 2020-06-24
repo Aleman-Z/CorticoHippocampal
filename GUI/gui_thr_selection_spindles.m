@@ -178,7 +178,7 @@ minpeak=4;
 k=1; %xo
     %[Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);
 %    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findSpindlesLisa(equis1, equis2, D1, (D1)*(1/2), fn), signal3_hpc,ti,'UniformOutput',false);    
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D1, (D1)*(1/2), fn,minpeak), signal3_hpc,signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D1, (D1)*(0.75), fn,minpeak), signal3_hpc,signal2_hpc,ti,'UniformOutput',false);    
 
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);

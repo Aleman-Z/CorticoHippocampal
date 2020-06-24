@@ -117,7 +117,7 @@ end
  xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
-  ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
+  ]=gui_findspindles(CORTEX,states,xx,multiplets,fn);
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
