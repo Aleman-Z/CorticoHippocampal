@@ -657,10 +657,9 @@ xline(y1, '--r','LineWidth',2)
 xline(y2, '--r','LineWidth',2)
 %% NORMALIZED
 %aver=random_cohfos_count_g2./cohfos_count_g2.';
-aver=[aver_g1_24 aver_g1_24 aver_g1_24];
 
 vec=aver(:);
- histogram(vec,20,'FaceColor',[0 0 0])
+ histogram(vec,'FaceColor',[0 0 0])
     ylabel('Frequency')
     xlabel('Count')
     Y1 = prctile(vec,5)
@@ -679,7 +678,7 @@ vec=aver(:);
 % y1=prctile([cohfos_count_g1],5)
 % y2=prctile([cohfos_count_g1],95)
 % 
-xline(1, '-r','LineWidth',2)
+% xline(y1, '--r','LineWidth',2)
 % xline(y2, '--r','LineWidth',2)
 
 %%    
@@ -693,9 +692,6 @@ vec_g1_24=random_cohfos_count_g1;
 vec_g2_24=random_cohfos_count_g2;
 vec_g1_count_24=cohfos_count_g1;
 vec_g2_count_24=cohfos_count_g2;
-
-aver_g1_24=vec_g1_24./vec_g1_count_24.';
-aver_g2_24=vec_g2_24./vec_g2_count_24.';
 %%
 % vec_g1_26=random_cohfos_count_g1(:);
 % vec_g2_26=random_cohfos_count_g2(:);
@@ -705,8 +701,8 @@ vec_g1_count_26=cohfos_count_g1;
 vec_g2_count_26=cohfos_count_g2;
 
 
-aver_g1_26=vec_g1_26./vec_g1_count_26.';
-aver_g2_26=vec_g2_26./vec_g2_count_26.';
+aver_g1_27=vec_g1_27./vec_g1_count_27.';
+aver_g2_27=vec_g2_27./vec_g2_count_26.';
 %%
 
 % vec_g1_27=random_cohfos_count_g1(:);
