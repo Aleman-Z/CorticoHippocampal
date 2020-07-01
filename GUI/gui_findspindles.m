@@ -5,7 +5,7 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
     %LPF 300 Hz:
     Wn1=[0.3/(fn/2) 300/(fn/2)]; 
-    [b2,a2] = butter(3,Wn1); %Filter coefficients
+    [b2,a2] = butter(3,Wn1); %0.3 to 300Hz
 %Convert signal to 1 sec epochs.
         e_t=1;
         e_samples=e_t*(fn); %fs=1kHz
@@ -25,17 +25,18 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
     for epoch_count=1:length(v_index)
     v{epoch_count,1}=reshape(NC(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
     end
-    V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false);
-    Mono=cellfun(@(equis) wavelet_bandpass(equis), V ,'UniformOutput',false);
+    V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false); %0.3 to 300Hz
     
+    Mono=cellfun(@(equis) wavelet_bandpass(equis), V ,'UniformOutput',false); %9-20Hz wavelet
     signal3=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false); %Remove convertion factor for ripple detection
-    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %bandpassed 
+    
+    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %5 to 20Hz for peak detection
     signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false); %Remove convertion factor for ripple detection
 
     Wn1=[9/(fn/2) 20/(fn/2)]; % Cutoff=9-20 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
-    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %100-300 Hz
-    signal4=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false); %Remove convertion factor for ripple detection
+    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %Regular 9-20Hz bandpassed for sig variable.
+%     signal4=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false); %Remove convertion factor for ripple detection
 
     
     
@@ -51,9 +52,9 @@ max_length=cellfun(@length,v);
 nrem_epoch=find(max_length==max(max_length)==1);
 nrem_epoch=nrem_epoch(1);
 
-D1=6.*std(signal3{nrem_epoch}) +mean(signal3{nrem_epoch});
+D1=6.*std(signal3{nrem_epoch}) +mean(signal3{nrem_epoch}); % Threshold on wavelet signal.
 clear max_length nrem_epoch
-minpeak=4;
+minpeak=4; %Minimum number of large peaks within spindle detection.
     
     
     if strcmp(xx{1},'HPC')

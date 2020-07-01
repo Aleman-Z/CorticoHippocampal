@@ -3,7 +3,9 @@ function [S, E, M] = findSpindlesWithPeaks(Filt_EEG,SignalPeaks,timestamps, Dete
 % 
 % INPUTS: 
 % fn: Sampling frequency.
-% Filt_EEG: EEG tsd filtered in the ripples (e.g. 100-300 Hz) range
+% Filt_EEG: LFP wavelet-filtered in the spindle range
+% SignalPeaks: LFP non-wavelet filtered to detect peaks. 
+
 % DetectThreshold: Threshold for detection of ripples 
 % LimitThreshold: Threshold for finding the ripple boundaries
 %
@@ -30,6 +32,7 @@ Q1 = 3;
 % CloseThreshold = 500 / 1000;
 % MinRippleDuration = 500 / 1000;
 CloseThreshold = 1000 / fn;
+
 MinRippleDuration = 300 / fn;
 MaxRippleDuration = 2000 / fn;
 
@@ -178,6 +181,7 @@ i=1;
 while i <= length(TRStart)
 x=SignalPeaks(findclosest(timestamps,TRStart(i)):findclosest(timestamps,TREnd(i)));
 [~,locs,~,pr] =findpeaks(-x);
+rng('default');
 clus=kmeans(pr,2);
 c1=pr(find(clus==1));
 c1=max(c1);

@@ -20,7 +20,7 @@ cd(num2str(Rat))
 %xx={'PAR'};
           
 %Brain region combinations.
-list = {'HPC & PFC','HPC & PAR','PAR & PFC','PFC & PAR'};
+list = {'HPC & PFC','HPC & PAR','PAR & PFC'};
 [optionlist] = listdlg('PromptString',{'Select brain areas.'},'SelectionMode','single','ListString',list,'InitialValue',2);
 switch optionlist
     case 1
@@ -32,11 +32,6 @@ switch optionlist
     case 3
       yy={'PAR'};    
       xx={'PFC'};  
-      
-    case 4
-      yy={'PFC'};    
-      xx={'PAR'};  
-        
 end
 
 fn=1000;
@@ -103,55 +98,7 @@ iii=1;
     end
   %% Colormap
        % n=length(g);
-myColorMap=jet(length(g));
-
-%%
-    %Center figure.
-    f=figure();
-    movegui(gcf,'center');
-
-    %Checkboxes
-    Boxcheck = cell(1,4);
-    for h1=1:length(labelconditions)
-    boxcheck = uicontrol(f,'Style','checkbox','String',labelconditions{h1},'Position',[10 f.Position(4)-30*h1 400 20]);
-    boxcheck.FontSize=11;
-    boxcheck.Value=1;
-    Boxcheck{h1}=boxcheck;   
-    end
-
-    set(f, 'NumberTitle', 'off', ...
-        'Name', 'Select conditions');
-
-    %Push button
-    c = uicontrol;
-    c.String = 'Continue';
-    c.FontSize=10;
-    c.Position=[f.Position(1)/3.5 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
-
-    %Callback
-    c.Callback='uiresume(gcbf)';
-    uiwait(gcf); 
-    boxch=cellfun(@(x) get(x,'Value'),Boxcheck);
-    clear Boxcheck
-%     labelconditions=labelconditions(find(boxch~=0));
-%     labelconditions2=labelconditions2(find(boxch~=0));
-% xo
-    close(f);
-g={g{logical(boxch)}};    
-
-if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
-%     if  find(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false))==1)~=1
-%         g=flip(g);
-%     end
-g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{3}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
-
-else
-    error('Name issue')
-end
-
+myColorMap=jet(length(g));              
 %%
 f=waitbar(0,'Please wait...');
     for k=1:length(g)
@@ -196,11 +143,11 @@ si=[si{:}];
 All_Par.( strrep(g{k},'-','_'))=si;
 % All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
 %xo
-[x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,1);
-cd ..
-printing(['Histograms_Spindles_' xx{1} '_Count_' g{k}]);
-close all
-cd(g{k})
+[x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+% cd ..
+% printing(['Histograms_Cortex_Count_' g{k}]);
+% close all
+% cd(g{k})
 
 fi_cortex(k)=x;
 fa_cortex(k)=y;
@@ -260,11 +207,11 @@ si=[si{:}];
 All_HPC.( strrep(g{k},'-','_'))=si;
 
 
-[x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,1);
-cd ..
-printing(['Histograms_Spindles_' yy{1} '_Count_' g{k}]);
-close all
-cd(g{k})
+[x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+% cd ..
+% printing(['Histograms_HPC_Probability_' g{k}]);
+% close all
+% cd(g{k})
 
 fi_hpc(k)=x;
 fa_hpc(k)=y;
@@ -300,9 +247,9 @@ for ll=1:length(multiplets)
    eval(['hfos_hpc_rate_' multiplets{ll} '(k)=RipFreq_multiplets_hpc.' multiplets{ll} ';']) 
    eval(['hfos_hpc_duration_' multiplets{ll} '(k)=rip_duration_multiplets_hpc.' multiplets{ll} ';'])    
 end
- %xo
+xo
 %% Coocurent hfos
-[cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_hpc,Mx_hpc,Ex_hpc,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
+[cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_hpc,Mx_hpc,Mx_cortex,'UniformOutput',false);
 %cohfos1: HPC.
 %cohfos2: Cortex.
 %Common values:
@@ -552,7 +499,7 @@ progress_bar(k,length(g),f)
     TT.Variables=    [[{['Count_' xx{1} '_total']};{['Count_' yy{1} '_total']};{['Count_coocur_' xx{1} '_' yy{1}]};{['Count_single_' xx{1}]};{['Count_single_' yy{1}]}] num2cell([...
         hfos_cortex;hfos_hpc;count_cohfo_hpc;count_single_cortex;count_single_hpc])];
 
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
 
             writetable(TT,strcat(xx{1},'_',yy{1},'_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
 %%

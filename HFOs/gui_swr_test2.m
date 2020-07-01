@@ -114,7 +114,7 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
- xo
+% xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
@@ -185,11 +185,11 @@ si=[si{:}];
 % cd(g{k})
 % xo
 All_HPC.( strrep(g{k},'-','_'))=si;
-[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,1,Rat,tr);
-cd ..
-printing(['Histograms_HPC_Probability_' g{k}]);
-close all
-cd(g{k})
+% [x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,0);
+% cd ..
+% printing(['Histograms_HPC_Probability_' g{k}]);
+% close all
+% cd(g{k})
 
 fi_hpc(k)=x;
 fa_hpc(k)=y;
@@ -444,6 +444,7 @@ rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
 auc_single_cortex(k)=l;
 p2p_single_cortex(k)=p;
+%%
 % xo
 progress_bar(k,length(g),f)
     cd ..    
