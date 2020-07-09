@@ -21,7 +21,7 @@ cd(num2str(Rat))
           
 %Brain region combinations.
 list = {'HPC & PFC','HPC & PAR','PAR & PFC','PFC & PAR'};
-[optionlist] = listdlg('PromptString',{'Select brain areas.'},'SelectionMode','single','ListString',list,'InitialValue',2);
+[optionlist] = listdlg('PromptString',{'Select brain areas.'},'SelectionMode','single','ListString',list,'InitialValue',3);
 switch optionlist
     case 1
       yy={'HPC'};       
@@ -138,7 +138,7 @@ myColorMap=jet(length(g));
 % xo
     close(f);
 g={g{logical(boxch)}};    
-
+%xo
 if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
 %     if  find(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false))==1)~=1
 %         g=flip(g);
@@ -179,10 +179,10 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
- %xo
+% xo
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
-  ]=gui_findspindles(CORTEX,states,xx,multiplets,fn);
+  ]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn);
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
@@ -244,7 +244,7 @@ HPC=HPC.*(0.195);
 %xo
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
   ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc...    
-  ]=gui_findspindles(HPC,states,yy,multiplets,fn);
+  ]=gui_findspindlesYASA(HPC,states,yy,multiplets,fn);
 
 
 si=sig_hpc(~cellfun('isempty',sig_hpc));
@@ -300,9 +300,13 @@ for ll=1:length(multiplets)
    eval(['hfos_hpc_rate_' multiplets{ll} '(k)=RipFreq_multiplets_hpc.' multiplets{ll} ';']) 
    eval(['hfos_hpc_duration_' multiplets{ll} '(k)=rip_duration_multiplets_hpc.' multiplets{ll} ';'])    
 end
- %xo
+% xo
 %% Coocurent hfos
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_hpc,Mx_hpc,Ex_hpc,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
+%Remove repeated values
+[cohfos1,cohfos2]=cellfun(@(equis1,equis2) coocur_repeat(equis1,equis2), cohfos1,cohfos2,'UniformOutput',false);
+
+
 %cohfos1: HPC.
 %cohfos2: Cortex.
 %Common values:
@@ -526,7 +530,19 @@ progress_bar(k,length(g),f)
   xo
 % All_timeasleep
 % All_Par
-% A_cell = struct2cell(All_Par);
+A_cell = struct2cell(All_Par);
+All_Par_26=[A_cell{:}];
+hfo_specs_spindles(All_Par_26,timeasleep,fn,1)
+printing(['HistogramSpindles_' num2str(Rat) '_All_PFC_count'])
+close all
+
+
+A_cell = struct2cell(All_HPC);
+All_Par_26=[A_cell{:}];
+hfo_specs_spindles(All_Par_26,timeasleep,fn,1)
+printing(['HistogramSpindles_' num2str(Rat) '_All_PAR_count'])
+close all
+
 % All_Par_24_35=[A_cell{:}];
 % %%
 % All_40=[All_Par_26 All_Par_27 All_Par_24_40];
@@ -565,17 +581,20 @@ progress_bar(k,length(g),f)
     count_cohfo_hpc
     count_single_hpc
     %%
+    %All detections cortex
 %     xo
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_cortex;hfos_cortex_rate;hfos_cortex_duration;fa_cortex;fi_cortex; amp_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat(xx{1},'_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(xx{1},'_Features_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
+
+%            writetable(TT,strcat(xx{1},'_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 
 %%
@@ -584,36 +603,36 @@ progress_bar(k,length(g),f)
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_cortex;rate_cohfo_cortex;dura_cohfo_cortex;fa_cohfo_cortex;fi_cohfo_cortex; amp_cohfo_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat(xx{1},'_spindles','_cohfos_HPC','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(xx{1},'_spindles','_cohfos','.xls'),'Sheet',1,'Range','A2:L10')    
 
 %Cortex singles
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_cortex;rate_single_cortex;dura_single_cortex;fa_single_cortex;fi_single_cortex; amp_single_cortex])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat(xx{1},'_spindles','_singles_HPC','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(xx{1},'_spindles','_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
   %%  HPC        
-
+%All detections
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration;fa_hpc;fi_hpc;amp_hpc])];        
 %    TT.Properties.VariableNames=['Metric';g];
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(yy{1},'_Features_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
 %     end
 
 
@@ -623,24 +642,24 @@ progress_bar(k,length(g),f)
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_hpc;rate_cohfo_hpc;dura_cohfo_hpc;fa_cohfo_hpc;fi_cohfo_hpc; amp_cohfo_hpc])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_spindles','_cohfos_',xx{1},'.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(yy{1},'_spindles','_cohfos_','.xls'),'Sheet',1,'Range','A2:L10')    
 
 %hpc singles
     TT=table;
     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_hpc;rate_single_hpc;dura_single_hpc;fa_single_hpc;fi_single_hpc; amp_single_hpc])];
 %     TT.Variables=    [[{'Count'};{'Rate'};{'Duration'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration])];
     
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
+    TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
 %     if strcmp(xx{1},'HPC')
 %             writetable(TT,strcat(xx{1},'_',num2str(tr(1)),'.xls'),'Sheet',1,'Range','A2:L6')    
 %     else
-            writetable(TT,strcat('HPC','_spindles','_singles',xx{1},'.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat(yy{1},'_spindles','_singles','.xls'),'Sheet',1,'Range','A2:L10')    
 
 
 

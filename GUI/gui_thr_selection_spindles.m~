@@ -1,9 +1,29 @@
 %gui_threshold_ripples
 %% Find location
+
+%Fieldtrip
+addpath('/home/adrian/Documents/fieldtrip-master/');
+% addpath(genpath('/home/adrian/Documents/fieldtrip-master/'));
+
+%CorticoHippocampal
+addpath(genpath('/home/adrian/Documents/GitHub/CorticoHippocampal/'));
+
+%ADRITOOLS
+addpath(genpath('/home/adrian/Documents/GitHub/ADRITOOLS/'));
+
+
 clear variables
 close all
 dname=uigetdir([],'Select folder with Matlab data of trial');
 cd(dname)
+
+% %Select rat number
+% opts.Resize = 'on';
+% opts.WindowStyle = 'modal';
+% opts.Interpreter = 'tex';
+% prompt=strcat('\bf Select a rat#.' );
+% answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+% Rat=str2num(answer{1});
 
 %%
 %Band pass filter design:
@@ -21,14 +41,39 @@ fn=1000; % New sampling frequency.
 Wn1=[0.3/(fn/2) 300/(fn/2)]; % Cutoff=320 Hz
 [b2,a2] = butter(3,Wn1,'bandpass'); %Filter coefficients
 
-HPC=dir('*HPC*.mat');
+Wn3=[9/(fn/2) 20/(fn/2)]; % Cutoff=100-300 Hz
+[b3,a3] = butter(3,Wn3,'bandpass'); %Filter coefficients
+
+%Brain region combinations.
+list = {'HPC & PFC','HPC & PAR','PAR & PFC'}; %,'PFC & PAR'
+[optionlist] = listdlg('PromptString',{'Select brain areas.'},'SelectionMode','single','ListString',list,'InitialValue',3);
+switch optionlist
+    case 1
+      yy={'HPC'};       
+      xx={'PFC'};
+    case 2
+      yy={'HPC'};    
+      xx={'PAR'};  
+    case 3
+      yy={'PAR'};    
+      xx={'PFC'};  
+       
+%     case 4
+%       yy={'PFC'};    
+%       xx={'PAR'};  
+        
+end
+
+% 
+% xx = inputdlg({'Cortical area (PAR or PFC)'},...
+%               'Type your selection', [1 50]); 
+
+
+HPC=dir(strcat('*',yy{1},'*.mat'));
 HPC=HPC.name;
 HPC=load(HPC);
-HPC=HPC.HPC;
+HPC=getfield(HPC,yy{1});
 HPC=HPC.*(0.195);
-
-xx = inputdlg({'Cortical area (PAR or PFC)'},...
-              'Type your selection', [1 50]); 
 
 
 %PFC=dir('*PFC*.mat');
@@ -87,11 +132,23 @@ signal3_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',
 Mono_hpc=cellfun(@(equis) filtfilt(b1,a1,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
 signal2_hpc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
 
+% Wn3=[9/(fn/2) 20/(fn/2)]; % Cutoff=100-300 Hz
+% [b3,a3] = butter(3,Wn3,'bandpass'); %Filter coefficients
+Mono_hpc=cellfun(@(equis) filtfilt(b3,a3,equis), V_hpc ,'UniformOutput',false); %100-300 Hz
+signal4_hpc=cellfun(@(equis) (times((1/0.195), equis))  ,Mono_hpc,'UniformOutput',false); %Remove convertion factor for ripple detection
+
+
+
 V_pfc=cellfun(@(equis) filtfilt(b2,a2,equis), v_pfc ,'UniformOutput',false);
 Mono_pfc=cellfun(@(equis) wavelet_bandpass(equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal3_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
 Mono_pfc=cellfun(@(equis) filtfilt(b1,a1,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
 signal2_pfc=cellfun(@(equis) times((1/0.195), equis)  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
+
+% Wn1=[9/(fn/2) 20/(fn/2)]; % Cutoff=100-300 Hz
+% [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
+Mono_pfc=cellfun(@(equis) filtfilt(b3,a3,equis), V_pfc ,'UniformOutput',false); %100-300 Hz
+signal4_pfc=cellfun(@(equis) (times((1/0.195), equis))  ,Mono_pfc,'UniformOutput',false); %Remove convertion factor for ripple detection
 
 fn=1000;
 
@@ -102,71 +159,24 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
 % %% Find largest epoch.
 % max_length=cellfun(@length,v_hpc);
 % nrem_epoch=find(max_length==max(max_length)==1);
-%% Pop up window
-f=figure();
-movegui(gcf,'center');
-f.Position=[f.Position(1) f.Position(2) 350 f.Position(4)/3];
-movegui(gcf,'center');
-
-%Checkboxes
-manual_select = uicontrol('Style','checkbox','String','Manual selection of threshold','Position',[10 f.Position(4)-30 250 20],'Value',1);
-manual_select.FontSize=11;
-% aver_trial = uicontrol('Style','checkbox','String','Average trials','Position',[10 f.Position(4)-60 200 20]);
-% aver_trial.FontSize=11;
-
-set(f, 'NumberTitle', 'off', ...
-    'Name', 'Select an option');
-
-%Push button
-c = uicontrol;
-c.String = 'Continue';
-c.FontSize=10;
-c.Position=[f.Position(1)/7 c.Position(2)-10 f.Position(3)/2 c.Position(4)];
-
-%Callback
-c.Callback='uiresume(gcbf)';
-uiwait(gcf); 
-% scoring=scoring.Value;
-manual_select=manual_select.Value;
-% aver_trial=aver_trial.Value;
-close(f);
 
 %%
-if manual_select==0
 % %% Find largest epoch.
 max_length=cellfun(@length,v_hpc);
 nrem_epoch=find(max_length==max(max_length)==1);
 nrem_epoch=nrem_epoch(1);
 
-    D1=5.*std(signal3_hpc{nrem_epoch}) +mean(signal3_hpc{nrem_epoch})+10;
-    D2=5.*std(signal3_pfc{nrem_epoch})+mean(signal3_pfc{nrem_epoch})+10;
+    D1=5.*std(signal4_hpc{nrem_epoch}) +mean(signal4_hpc{nrem_epoch});
+    D2=5.*std(signal4_pfc{nrem_epoch})+mean(signal4_pfc{nrem_epoch});
 clear max_length nrem_epoch
-else
-%%
-    prompt = {'Select a threshold value for HPC'};
-    dlgtitle = 'Threshold HPC';
-    definput = {'70'};
-    % opts.Interpreter = 'tex';
-    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-    D1=str2num(answer{1}) 
-    %100 for Rat 26
 
-
-    prompt = {['Select a threshold value for',' ',xx{1}]};
-    dlgtitle = ['Threshold',' ',xx{1}]; %'Threshold PFC';
-    definput = {'40'};
-    % opts.Interpreter = 'tex';
-    answer = inputdlg(prompt,dlgtitle,[1 40],definput);
-    D2=str2num(answer{1}) 
-%35 for Rat 26
-end
 %% SWR in HPC
 % D1=70;%THRESHOLD
-minpeak=10;
+minpeak=4;
 k=1; %xo
     %[Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);
 %    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findSpindlesLisa(equis1, equis2, D1, (D1)*(1/2), fn), signal3_hpc,ti,'UniformOutput',false);    
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D1, (D1)*(1/2), fn,minpeak), signal3_hpc,signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D1, (D1)*(0.75), fn,minpeak), signal4_hpc,signal2_hpc,ti,'UniformOutput',false);    
 
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
@@ -174,13 +184,108 @@ k=1; %xo
 %D2=35;%THRESHOLD
 %     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
 %     [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findSpindlesLisa(equis1, equis2, D2, (D2)*(1/2), fn), signal3_pfc,ti,'UniformOutput',false);    
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D2, (D2)*(1/2), fn,minpeak), signal3_pfc,signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2,equis3) findSpindlesWithPeaks(equis1, equis2,equis3, D2, (D2)*(0.75), fn,minpeak), signal4_pfc,signal2_pfc,ti,'UniformOutput',false);    
 
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
+
+signal2_hpc=signal4_hpc;
+signal2_pfc=signal4_pfc;
+%% Save data for YASA inputs.
+xo
 %%
-signal2_hpc=
+save(['YASA'  '_' yy{1} '.mat'],'V_hpc');
+save(['YASA'  '_' xx{1} '.mat'],'V_pfc');
+
+msgbox('Run YASA on Python');
+xo
+%%
+% cd('/home/adrian/Documents/Plusmaze_downsampled')
+% path2func=fileparts(which('my_function.py'));
+% if count(py.sys.path,path2func)== 0
+%     insert(py.sys.path,int32(0),path2func);
+% end
+% %%
+% py.my_function.my_function('/home/adrian/Documents/Plusmaze_downsampled',...
+%     '/home/adrian/Documents/Plusmaze_downsampled/26/rat26_plusmaze_base_2016-03-08_10-24-41',...
+%     ['rat' num2str(Rat) '_' yy{1} '.mat'],'V_hpc','probando')
+
+%% YASA detector
+clear swr_hpc swr_pfc
+spindout=load('YASA_PAR_spindles.mat');
+spindout=spindout.averout;
+
+for jj=1:length(spindout)
+    if ~isempty(spindout{jj})
+        aver=spindout{jj}(:,1:3);
+        aver=[aver{:}];
+        aver=sort(aver);
+        aver=reshape(aver,[3,length(aver)/3]);
+        Sx_spind{jj}=aver(1,:);
+        Mx_spind{jj}=aver(2,:);
+        Ex_spind{jj}=aver(3,:);
+    else
+        Sx_spind{jj}=[];
+        Mx_spind{jj}=[];
+        Ex_spind{jj}=[];
+        
+    end
+    
+end
+%     Sx_spind=Sx_spind.';
+%     Mx_spind=Mx_spind.';
+%     Ex_spind=Ex_spind.';
+
+  Sx_hpc=Sx_spind.';
+  Ex_hpc=Ex_spind.';
+  Mx_hpc=Mx_spind.';
+    
+
+swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
+s_hpc(:,k)=cellfun('length',Sx_hpc);
+%
+spindout=load('YASA_PFC_spindles.mat');
+spindout=spindout.averout;
+
+for jj=1:length(spindout)
+    if ~isempty(spindout{jj})
+        aver=spindout{jj}(:,1:3);
+        aver=[aver{:}];
+        aver=sort(aver);
+        aver=reshape(aver,[3,length(aver)/3]);
+        Sx_spind{jj}=aver(1,:);
+        Mx_spind{jj}=aver(2,:);
+        Ex_spind{jj}=aver(3,:);
+    else
+        Sx_spind{jj}=[];
+        Mx_spind{jj}=[];
+        Ex_spind{jj}=[];
+        
+    end
+    
+end
+%     Sx_spind=Sx_spind.';
+%     Mx_spind=Mx_spind.';
+%     Ex_spind=Ex_spind.';
+
+  Sx_pfc=Sx_spind.';
+  Ex_pfc=Ex_spind.';
+  Mx_pfc=Mx_spind.';
+    
+
+swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
+s_pfc(:,k)=cellfun('length',Sx_pfc);
+
+'PFC RATE'
+sum(s_pfc)/(sum(cellfun('length',V_hpc))/1000/60)
+'PAR'
+sum(s_hpc)/(sum(cellfun('length',V_hpc))/1000/60)
+
+% sum(s_hpc)/sum(s_pfc)
+
+    
+%%
 % Find max and plot
 %xo
 %LARGEST EPOCH.
@@ -195,14 +300,21 @@ max_length=cellfun(@length,swr_pfc(:,1));
 % pfc2=signal2_pfc{max_length==max(max_length)};
 n=find(max_length==max(max_length));
 %%
-n=n(1);
+ n=n(1);
+ n=61;
+ 
+%n=68;
 % n=67
 % n=58;
 % n=48;%35;%48
 hpc=V_hpc{n};
 pfc=V_pfc{n};
-hpc2=signal2_hpc{n};
-pfc2=signal2_pfc{n};
+hpc2=[(signal2_hpc{n})];
+pfc2=[(signal2_pfc{n})];
+
+% hpc2=[0 ;diff(angle(hilbert(signal2_hpc{n})))];
+% pfc2=[0; diff(angle(hilbert(signal2_pfc{n})))];
+
 
 
 % plot((1:length(hpc))./1000./60,5.*zscore(hpc)+100,'Color','blue')
@@ -219,7 +331,7 @@ set(gca,'XTick',[xbounds(1):0.5:xbounds(2)]);
 
 yticks([100 150 220 290])
 % yticklabels({'HPC',xx{1},'HPC (100-300Hz)',[xx{1} '(100-300Hz)']})
-yticklabels({'HPC',xx{1},'HPC (9-20Hz)',[xx{1} ' (9-20Hz)']})
+yticklabels({yy{1},xx{1},[yy{1} ' (9-20Hz)'],[xx{1} ' (9-20Hz)']})
 
 % a = get(gca,'YTickLabel');
 % set(gca,'YTickLabel',a,'FontName','Times','fontsize',12)
@@ -249,296 +361,4 @@ stem([swr_pfc{n,3}],ones(length([swr_pfc{n}]),1).*350,'Color','red')%Seconds
 end
 
 title('Traces')
-%%
-xo
-answer1 = questdlg('Compute spectrograms?', ...
-	'Select one', ...
-	'Yes','No','No');
-% Handle response
-switch answer1
-    case 'Yes'
-        dessert = 1;
-    case 'No'
-        dessert = 0;
-    otherwise
-        xo
-end
-
-
-if dessert==1
-%%  Spectrogram HPC
-
-    % figure()
-    figure('Name','HPC spectrogram','NumberTitle','off')
-    aver=hpc;
-    t_aver=1:length(aver);
-    t_aver=t_aver-1;
-    t_aver=t_aver/1000;
-    t_aver={t_aver};
-
-    w=1;
-    %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.05:length(t_aver{1})/1000]; %secs %480
-
-    %toy=[-1:.01:1];
-    % q={[aver  ].'};
-    q={[aver aver aver ].'};
-
-    freq4=barplot2_ft(q,t_aver,[100:2:300],w,toy);
-    [freq4]=spectral_correction(freq4);
-
-    cfg              = [];
-    %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-    cfg.channel      = freq4.label{w};
-    cfg.colormap=colormap(jet(256));
-
-    a1=subplot(2,1,1)
-    ft_singleplotTFR(cfg, freq4);
-    xlim([0 max(t_aver{1})])
-    g=title('High Frequencies HPC');
-    g.FontSize=12;
-    xlabel('Time (s)')
-    %ylabel('uV')
-    ylabel('Frequency (Hz)')
-    % xlim([0.3 0.8])
-
-    a2=subplot(2,1,2)
-    plot(t_aver{1},aver)
-    xlim([0 max(t_aver{1})])
-    colorbar()
-
-    linkaxes([a1 a2],'x')
-
-    %%  Spectrogram Cortical region
-
-    % figure()
-    figure('Name',[xx{1} ' spectrogram'],'NumberTitle','off')
-    aver=pfc;
-    t_aver=1:length(aver);
-    t_aver=t_aver-1;
-    t_aver=t_aver/1000;
-    t_aver={t_aver};
-
-    w=1;
-    %toy=[1:60:length(t_aver{1})/1000]; %secs
-    toy=[1:0.025:length(t_aver{1})/1000]; %secs %480
-
-    %toy=[-1:.01:1];
-    % q={[aver  ].'};
-    q={[aver aver aver ].'};
-
-    freq4=barplot2_ft(q,t_aver,[100:2:300],w,toy);
-    [freq4]=spectral_correction(freq4);
-
-    cfg              = [];
-    %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-    cfg.channel      = freq4.label{w};
-    cfg.colormap=colormap(jet(256));
-
-    a1=subplot(2,1,1)
-    ft_singleplotTFR(cfg, freq4);
-    xlim([0 max(t_aver{1})])
-    g=title(['High Frequencies ' xx{1}]);
-    g.FontSize=12;
-    xlabel('Time (s)')
-    %ylabel('uV')
-    ylabel('Frequency (Hz)')
-    % xlim([0.3 0.8])
-
-    a2=subplot(2,1,2)
-    plot(t_aver{1},aver)
-    xlim([0 max(t_aver{1})])
-    colorbar()
-
-    linkaxes([a1 a2],'x')
-%%
-end
-
-xo
-%% Bandpassed signals.
-%num_1=0;
-figure()
-hpc=signal2_hpc{max_length==max(max_length)};
-pfc=signal2_pfc{max_length==max(max_length)};
-ax1 = subplot(2,1,2)
-plot((1:length(hpc))./1000./60,(hpc),'Color','blue')
-title('HPC (100-300 Hz)')  
-D=ones(1,length(hpc)).*D1;
-hold on
-plot((1:length(hpc))./1000./60,(D),'Color','black')
-
-% yticks([num_1 (D1)+num_1])
-% yticklabels({'HPC',['Thr: ' num2str(D1)]})
-stem([swr_hpc{n,3}/60],ones(length([swr_hpc{n}]),1).*250,'Color','black')
-xlabel('Time (Minutes)')
-b=gca;
-b.FontSize=10;
-
-ax2 = subplot(2,1,1)
-plot((1:length(pfc))./1000./60,(pfc),'Color','red')
-title([xx{1} ' (100-300 Hz)'])
-D=ones(1,length(pfc)).*D2;
-hold on
-plot((1:length(pfc))./1000./60,D,'Color','black')
-
-stem([swr_pfc{n,3}/60],ones(length([swr_pfc{n}]),1).*100,'Color','black')
-xlabel('Time (Minutes)')
-linkaxes([ax1 ax2 ],'xy')
-
-% b = get(gca,'XTickLabel');
-b=gca;
-b.FontSize=10;
-% set(gca,'XTickLabel',b,'FontName','Times','fontsize',10)
-%set(gca,'XTickLabel',b,'FontName','Times','fontsize',10)
-
-% %%  Spectrogram HPC
-% 
-% figure()
-% aver=hpc;
-% t_aver=1:length(aver);
-% t_aver=t_aver-1;
-% t_aver=t_aver/1000;
-% t_aver={t_aver};
-% 
-% w=1;
-% %toy=[1:60:length(t_aver{1})/1000]; %secs
-% toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
-% 
-% %toy=[-1:.01:1];
-% % q={[aver  ].'};
-% q={[aver aver aver ].'};
-% 
-% freq4=barplot2_ft(q,t_aver,[100:1:300],w,toy);
-% [freq4]=spectral_correction(freq4);
-% 
-% cfg              = [];
-% %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-% cfg.channel      = freq4.label{w};
-% cfg.colormap=colormap(jet(256));
-% 
-% a1=subplot(2,1,1)
-% ft_singleplotTFR(cfg, freq4);
-% xlim([0 max(t_aver{1})])
-% g=title('High Frequencies');
-% g.FontSize=12;
-% xlabel('Time (s)')
-% %ylabel('uV')
-% ylabel('Frequency (Hz)')
-% % xlim([0.3 0.8])
-% 
-% a2=subplot(2,1,2)
-% plot(t_aver{1},aver)
-% xlim([0 max(t_aver{1})])
-% colorbar()
-% 
-% linkaxes([a1 a2],'x')
-% 
-% %%  Spectrogram PFC
-% 
-% figure()
-% aver=pfc;
-% t_aver=1:length(aver);
-% t_aver=t_aver-1;
-% t_aver=t_aver/1000;
-% t_aver={t_aver};
-% 
-% w=1;
-% %toy=[1:60:length(t_aver{1})/1000]; %secs
-% toy=[1:0.5:length(t_aver{1})/1000]; %secs %480
-% 
-% %toy=[-1:.01:1];
-% % q={[aver  ].'};
-% q={[aver aver aver ].'};
-% 
-% freq4=barplot2_ft(q,t_aver,[100:1:300],w,toy);
-% [freq4]=spectral_correction(freq4);
-% 
-% cfg              = [];
-% %cfg.zlim=zlim; %U might want to uncomment this if you use a smaller step: (Memory purposes)
-% cfg.channel      = freq4.label{w};
-% cfg.colormap=colormap(jet(256));
-% 
-% a1=subplot(2,1,1)
-% ft_singleplotTFR(cfg, freq4);
-% xlim([0 max(t_aver{1})])
-% g=title('High Frequencies');
-% g.FontSize=12;
-% xlabel('Time (s)')
-% %ylabel('uV')
-% ylabel('Frequency (Hz)')
-% % xlim([0.3 0.8])
-% 
-% a2=subplot(2,1,2)
-% plot(t_aver{1},aver)
-% xlim([0 max(t_aver{1})])
-% colorbar()
-% 
-% linkaxes([a1 a2],'x')
-
-
-
-
-
-
-
-
-
-
-
-
-
-%%
-% %
-% %ax3=subplot(2,1,2)
-% plot((1:length(hpc))./1000./60,5.*zscore(hpc),'Color','blue')
-% %stem([swr_hpc{n,3}/60],ones(length([swr_hpc{n}]),1).*5,'Color','blue')
-% stem([swr_hpc{n,3}/60],ones(length([swr_hpc{n}]),1).*80,'Color','blue')
-% title('HPC')
-% xlabel('Time (Seconds)')
-% 
-% ax4=subplot(2,1,1)
-% 
-% plot((1:length(pfc))./1000./60,5.*zscore(pfc)+150,'Color','red')
-% stem([swr_pfc{n,3}/60],ones(length([swr_pfc{n}]),1).*5,'Color','red')
-% title('PFC')
-% 
-% xlabel('Time (Seconds)')
-
-%%
-
-
-
-% plot((1:length(hpc))./1000./60,5.*zscore(hpc)+100,'Color','blue')
-% hold on
-% plot((1:length(pfc))./1000./60,5.*zscore(pfc)+250,'Color',[1 0.5 0])
-% xlabel('Time (Seconds)')
-
-
-
-%%
-% stem([swr_hpc{68}],ones(length([swr_hpc{68}]),1).*200)
-
-% rip_times(:,:,1)=[Sx_hpc Ex_hpc Mx_hpc]; %Stack them    
-% %%
-% 
-% for ind=1:size(s_hpc,2)
-% veamos{:,ind}=find(s_hpc(:,ind)~=0);  %Epochs with ripples detected
-% cara{:,:,ind}=swr_hpc(veamos{:,ind},:,ind);
-% ripples_times{:,:,ind}=rip_times(veamos{:,ind},:,ind);
-% 
-% % veamos2{:,ind}=find(s217(:,ind)~=0);  %Epochs with ripples detected
-% % cara2{:,:,ind}=swr217(veamos2{:,ind},:,ind);
-% end
-% 
-% %%
-% %Run ripple detection
-% for kk=1:size(signal2_hpc,1)
-%    % ti2{kk,1}=(transitions(kk,2):1/1000:transitions(kk,3));
-%      ti{kk,1}=linspace(transitions(kk,2),transitions(kk,3),length(signal2_hpc{kk}));
-% end
-% 
-% %%
-% plot_traces(sig2,veamos,cara,ti,amp_vec,iii,labelconditions,chtm,include_hpc,cara_hpc,veamos_hpc,chtm_hpc);
-% 
-
-
+% xlim([85 88])

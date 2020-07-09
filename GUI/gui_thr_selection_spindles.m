@@ -1,9 +1,29 @@
 %gui_threshold_ripples
 %% Find location
+
+%Fieldtrip
+addpath('/home/adrian/Documents/fieldtrip-master/');
+% addpath(genpath('/home/adrian/Documents/fieldtrip-master/'));
+
+%CorticoHippocampal
+addpath(genpath('/home/adrian/Documents/GitHub/CorticoHippocampal/'));
+
+%ADRITOOLS
+addpath(genpath('/home/adrian/Documents/GitHub/ADRITOOLS/'));
+
+
 clear variables
 close all
 dname=uigetdir([],'Select folder with Matlab data of trial');
 cd(dname)
+
+% %Select rat number
+% opts.Resize = 'on';
+% opts.WindowStyle = 'modal';
+% opts.Interpreter = 'tex';
+% prompt=strcat('\bf Select a rat#.' );
+% answer = inputdlg(prompt,'Input',[2 30],{''},opts);
+% Rat=str2num(answer{1});
 
 %%
 %Band pass filter design:
@@ -146,8 +166,8 @@ max_length=cellfun(@length,v_hpc);
 nrem_epoch=find(max_length==max(max_length)==1);
 nrem_epoch=nrem_epoch(1);
 
-    D1=4.*std(signal4_hpc{nrem_epoch}) +mean(signal4_hpc{nrem_epoch});
-    D2=4.*std(signal4_pfc{nrem_epoch})+mean(signal4_pfc{nrem_epoch});
+    D1=5.*std(signal4_hpc{nrem_epoch}) +mean(signal4_hpc{nrem_epoch});
+    D2=5.*std(signal4_pfc{nrem_epoch})+mean(signal4_pfc{nrem_epoch});
 clear max_length nrem_epoch
 
 %% SWR in HPC
@@ -169,10 +189,103 @@ k=1; %xo
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 
-%%
+
 signal2_hpc=signal4_hpc;
 signal2_pfc=signal4_pfc;
+%% Save data for YASA inputs.
+xo
+%%
+save(['YASA'  '_' yy{1} '.mat'],'V_hpc');
+save(['YASA'  '_' xx{1} '.mat'],'V_pfc');
 
+msgbox('Run YASA on Python');
+xo
+%%
+% cd('/home/adrian/Documents/Plusmaze_downsampled')
+% path2func=fileparts(which('my_function.py'));
+% if count(py.sys.path,path2func)== 0
+%     insert(py.sys.path,int32(0),path2func);
+% end
+% %%
+% py.my_function.my_function('/home/adrian/Documents/Plusmaze_downsampled',...
+%     '/home/adrian/Documents/Plusmaze_downsampled/26/rat26_plusmaze_base_2016-03-08_10-24-41',...
+%     ['rat' num2str(Rat) '_' yy{1} '.mat'],'V_hpc','probando')
+
+%% YASA detector
+clear swr_hpc swr_pfc
+spindout=load('YASA_PAR_spindles.mat');
+spindout=spindout.averout;
+
+for jj=1:length(spindout)
+    if ~isempty(spindout{jj})
+        aver=spindout{jj}(:,1:3);
+        aver=[aver{:}];
+        aver=sort(aver);
+        aver=reshape(aver,[3,length(aver)/3]);
+        Sx_spind{jj}=aver(1,:);
+        Mx_spind{jj}=aver(2,:);
+        Ex_spind{jj}=aver(3,:);
+    else
+        Sx_spind{jj}=[];
+        Mx_spind{jj}=[];
+        Ex_spind{jj}=[];
+        
+    end
+    
+end
+%     Sx_spind=Sx_spind.';
+%     Mx_spind=Mx_spind.';
+%     Ex_spind=Ex_spind.';
+
+  Sx_hpc=Sx_spind.';
+  Ex_hpc=Ex_spind.';
+  Mx_hpc=Mx_spind.';
+    
+
+swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
+s_hpc(:,k)=cellfun('length',Sx_hpc);
+%
+spindout=load('YASA_PFC_spindles.mat');
+spindout=spindout.averout;
+
+for jj=1:length(spindout)
+    if ~isempty(spindout{jj})
+        aver=spindout{jj}(:,1:3);
+        aver=[aver{:}];
+        aver=sort(aver);
+        aver=reshape(aver,[3,length(aver)/3]);
+        Sx_spind{jj}=aver(1,:);
+        Mx_spind{jj}=aver(2,:);
+        Ex_spind{jj}=aver(3,:);
+    else
+        Sx_spind{jj}=[];
+        Mx_spind{jj}=[];
+        Ex_spind{jj}=[];
+        
+    end
+    
+end
+%     Sx_spind=Sx_spind.';
+%     Mx_spind=Mx_spind.';
+%     Ex_spind=Ex_spind.';
+
+  Sx_pfc=Sx_spind.';
+  Ex_pfc=Ex_spind.';
+  Mx_pfc=Mx_spind.';
+    
+
+swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
+s_pfc(:,k)=cellfun('length',Sx_pfc);
+
+'PFC RATE'
+sum(s_pfc)/(sum(cellfun('length',V_hpc))/1000/60)
+'PAR'
+sum(s_hpc)/(sum(cellfun('length',V_hpc))/1000/60)
+
+% sum(s_hpc)/sum(s_pfc)
+
+    
+%%
 % Find max and plot
 %xo
 %LARGEST EPOCH.
@@ -187,9 +300,10 @@ max_length=cellfun(@length,swr_pfc(:,1));
 % pfc2=signal2_pfc{max_length==max(max_length)};
 n=find(max_length==max(max_length));
 %%
-%n=n(1);
- n=66;
-% n=68;
+ n=n(3);
+%  n=61;
+ 
+%n=62;
 % n=67
 % n=58;
 % n=48;%35;%48
