@@ -195,6 +195,9 @@ si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 % All_Par.( strrep(g{k},'-','_'))=si;
 % [x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+%PRE POST ANALYSIS
+[Sx_cortex,Mx_cortex,Ex_cortex,Sx_post,Mx_post,Ex_post]=cellfun(@(equis1,equis2,equis3) pre_post_spindle(equis1,equis2,equis3) ,Sx_cortex,Mx_cortex,Ex_cortex ,'UniformOutput',false);
+
 %%
 %Convert signal to 1 sec epochs.
         e_t=1;
@@ -446,6 +449,9 @@ si=[si{:}];
 
 
 [x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+%PRE POST ANALYSIS
+[Sx_hpc,Mx_co,Ex_cortex,Sx_post,Mx_post,Ex_post]=cellfun(@(equis1,equis2,equis3) pre_post_spindle(equis1,equis2,equis3) ,Sx_hpc,Mx_hpc,Ex_hpc ,'UniformOutput',false);
+
 %%
 
 %Convert signal to 1 sec epochs.
@@ -826,10 +832,11 @@ for n=1:4
 %     xline(Y4, '--k','LineWidth',2)
 
   xline(cellfun('length',Cohfos2_PAR_hpc(n)), '-r','LineWidth',2)
-%    xlim([25 300])
-%     xticks([25:25:300])
-%      printing(['Spindle_SWR_coocur_control_PAR_ALL_Rat' num2str(Rat) '_' labelconditions2{n}])
-%      close all
+%     xlim([25 325])
+%      xticks([25:25:325])
+%       printing(['Aa_Spindle_SWR_coocur_control_PAR_ALL_Rat' num2str(Rat) '_' labelconditions2{n}])
+pause(1)
+       close all
 
 end
 %%
@@ -851,6 +858,7 @@ for n=1:4
 
   xline(cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PAR_hpc(n),'UniformOutput',false)), '-r','LineWidth',2)
      xlim([20 160])
+     xticks([20:20:160])
       printing(['Spindle_SWR_coocur_control_PAR_unique_Rat' num2str(Rat) '_' labelconditions2{n}])
       close all
 
@@ -873,7 +881,8 @@ for n=1:4
 %     xline(Y4, '--k','LineWidth',2)
 
   xline(cellfun('length',Cohfos2_PFC_hpc(n)), '-r','LineWidth',2)
-     xlim([20 200])
+     xlim([25 350])
+     xticks([25:25: 350])
       printing(['Spindle_SWR_coocur_control_PFC_ALL_Rat' num2str(Rat) '_' labelconditions2{n}])
       close all
 
@@ -897,8 +906,8 @@ for n=1:4
 %     xline(Y4, '--k','LineWidth',2)
 
   xline(cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PFC_hpc(n),'UniformOutput',false)), '-r','LineWidth',2)
-       xlim([15 105])
-       xticks([15:15:105])
+       xlim([25 175])
+       xticks([25:25:175])
       printing(['Spindle_SWR_coocur_control_PFC_unique_Rat' num2str(Rat) '_' labelconditions2{n}])
       close all
 

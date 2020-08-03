@@ -692,6 +692,31 @@ progress_bar(k,length(g),f)
     end
   xo
 %%
+Cohfos1_PAR_g1_pre
+Cohfos1_PAR_g2_pre
+Cohfos1_PFC_g1_pre
+Cohfos1_PFC_g2_pre
+
+Cohfos1_PAR_g1_post
+Cohfos1_PAR_g2_post
+Cohfos1_PFC_g1_post
+Cohfos1_PFC_g2_post
+
+Cohfos2_PAR_hpc_pre
+Cohfos2_PAR_hpc_post
+Cohfos2_PFC_hpc_pre
+Cohfos2_PFC_hpc_post
+
+Out_PAR_pre
+Out_PFC_pre
+Out_PAR_post
+Out_PFC_post
+
+save('PREPOST_24.mat','Cohfos1_PAR_g1_pre','Cohfos1_PAR_g2_pre','Cohfos1_PFC_g1_pre','Cohfos1_PFC_g2_pre',...
+    'Cohfos1_PAR_g1_post','Cohfos1_PAR_g2_post','Cohfos1_PFC_g1_post','Cohfos1_PFC_g2_post',...
+    'Cohfos2_PAR_hpc_pre','Cohfos2_PAR_hpc_post','Cohfos2_PFC_hpc_pre','Cohfos2_PFC_hpc_post',...
+    'Out_PAR_pre','Out_PFC_pre','Out_PAR_post','Out_PFC_post');
+
   %% HFOs-spindles PRE and POST
     TT=table;
     TT.Variables= [cellfun('length',Cohfos1_PAR_g1_pre); cellfun('length',Cohfos1_PAR_g2_pre);...

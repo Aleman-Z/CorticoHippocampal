@@ -195,6 +195,9 @@ si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
 % All_Par.( strrep(g{k},'-','_'))=si;
 % [x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+%PRE POST ANALYSIS
+% [Sx_pre,Mx_pre,Ex_pre,Sx_post,Mx_post,Ex_post]=cellfun(@(equis1,equis2,equis3) pre_post_spindle(equis1,equis2,equis3) ,Sx_cortex,Mx_cortex,Ex_cortex ,'UniformOutput',false);
+
 %%
 %Convert signal to 1 sec epochs.
         e_t=1;
@@ -446,6 +449,9 @@ si=[si{:}];
 
 
 [x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,0);
+%PRE POST ANALYSIS
+% [Sx_pre,Mx_pre,Ex_pre,Sx_post,Mx_post,Ex_post]=cellfun(@(equis1,equis2,equis3) pre_post_spindle(equis1,equis2,equis3) ,Sx_hpc,Mx_hpc,Ex_hpc ,'UniformOutput',false);
+
 %%
 
 %Convert signal to 1 sec epochs.

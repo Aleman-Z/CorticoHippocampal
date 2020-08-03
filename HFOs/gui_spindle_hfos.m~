@@ -356,35 +356,19 @@ Cohfos2_PFC_hpc_pre{k}= ([cohfos2_hpc_pre{:}]);
 Cohfos1_PFC_hpc_post{k}= ([cohfos1_hpc_post{:}]);
 Cohfos2_PFC_hpc_post{k}= ([cohfos2_hpc_post{:}]);
 
-%%
-rep_coccur=diff(sort([cohfos2_hpc{:}]));
-
-rep_coccur(rep_coccur~=0)=1;
-
-rep_coccur=not(rep_coccur);
-
- rep_coccur=ConsecutiveOnes(rep_coccur);
- rep_coccur=rep_coccur(rep_coccur~=0)+1 ;%Ignore single values and add one to label as number of coocur
-
-
-a = 1:6;
-out_pfc = [a.',histc(rep_coccur(:),a)];
-out_pfc(1,2)=length([cohfos2_hpc{:}])-sum(out_pfc(:,1).*out_pfc(:,2)); %Add the extra coocur lost when using diff()
+%% COOCUR SPINDLE-HPC MULTIPLETS
+[out_pfc]=coccur_multiplets(cohfos2_hpc);
 Out_PFC{k}=out_pfc;
 
+[out_pfc_pre]=coccur_multiplets(cohfos2_hpc_pre);
+Out_PFC_pre{k}=out_pfc_pre;
 
-
-
- 
-
+[out_pfc_post]=coccur_multiplets(cohfos2_hpc_post);
+Out_PFC_post{k}=out_pfc_post;
 
 %%
 %Remove repeated values
 %[cohfos1,cohfos2]=cellfun(@(equis1,equis2) coocur_repeat(equis1,equis2), cohfos1,cohfos2,'UniformOutput',false);
-
-
-
-
 
 %% HPC
 
@@ -478,20 +462,15 @@ Cohfos1_PAR_hpc_post{k}= ([cohfos1_hpc_post{:}]);
 Cohfos2_PAR_hpc_post{k}= ([cohfos2_hpc_post{:}]);
 
 
-%%
-rep_coccur=diff(sort([cohfos2_hpc{:}]));
-
-rep_coccur(rep_coccur~=0)=1;
-
-rep_coccur=not(rep_coccur);
-
- rep_coccur=ConsecutiveOnes(rep_coccur);
-rep_coccur=rep_coccur(rep_coccur~=0)+1 ;%Ignore single values and add one to label as number of coocur
-
-a = 1:6;
-out_par = [a.',histc(rep_coccur(:),a)];
-out_par(1,2)=length([cohfos2_hpc{:}])-sum(out_par(:,1).*out_par(:,2)); %Add the extra coocur lost when using diff()
+%% COOCUR SPINDLE-HPC MULTIPLETS
+[out_par]=coccur_multiplets(cohfos2_hpc);
 Out_PAR{k}=out_par;
+
+[out_par_pre]=coccur_multiplets(cohfos2_hpc_pre);
+Out_PAR_pre{k}=out_par_pre;
+
+[out_par_post]=coccur_multiplets(cohfos2_hpc_post);
+Out_PAR_post{k}=out_par_post;
 
 %%
 % %Instantaneous frequency.
@@ -713,14 +692,69 @@ progress_bar(k,length(g),f)
     end
   xo
 %%
-  %% HFOs-spindles PRE
+Cohfos1_PAR_g1_pre
+Cohfos1_PAR_g2_pre
+Cohfos1_PFC_g1_pre
+Cohfos1_PFC_g2_pre
+
+Cohfos1_PAR_g1_post
+Cohfos1_PAR_g2_post
+Cohfos1_PFC_g1_post
+Cohfos1_PFC_g2_post
+
+Cohfos2_PAR_hpc_pre
+Cohfos2_PAR_hpc_post
+Cohfos2_PFC_hpc_pre
+Cohfos2_PFC_hpc_post
+
+Out_PAR_pre
+Out_PFC_pre
+Out_PAR_post
+Out_PFC_post
+
+save('PREPOST.mat','Cohfos1_PAR_g1_pre','Cohfos1_PAR_g2_pre','Cohfos1_PFC_g1_pre','Cohfos1_PFC_g2_pre',..)
+
+  %% HFOs-spindles PRE and POST
     TT=table;
-    TT.Variables= [cellfun('length',Cohfos1_PAR_g1_pre); cellfun('length',Cohfos1_PAR_g2);...
-       cellfun('length',Cohfos1_PFC_g1); cellfun('length',Cohfos1_PFC_g2); 
+    TT.Variables= [cellfun('length',Cohfos1_PAR_g1_pre); cellfun('length',Cohfos1_PAR_g2_pre);...
+       cellfun('length',Cohfos1_PFC_g1_pre); cellfun('length',Cohfos1_PFC_g2_pre); 
     ] ;
     TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+    writetable(TT,strcat('ripple_spindles_pre','.xls'),'Sheet',1,'Range','A2:L10')    
 
-  
+    TT=table;
+    TT.Variables= [cellfun('length',Cohfos1_PAR_g1_post); cellfun('length',Cohfos1_PAR_g2_post);...
+       cellfun('length',Cohfos1_PFC_g1_post); cellfun('length',Cohfos1_PFC_g2_post); 
+    ] ;
+    TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+    writetable(TT,strcat('ripple_spindles_post','.xls'),'Sheet',1,'Range','A2:L10')    
+
+%% HPC ripples-spindles PRE POST
+    TT=table;
+    TT.Variables= [cellfun('length',Cohfos2_PAR_hpc_pre); cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PAR_hpc_pre,'UniformOutput',false));...
+       cellfun('length',Cohfos2_PFC_hpc_pre); cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PFC_hpc_pre,'UniformOutput',false))]; 
+    
+    TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+                writetable(TT,strcat('hpc_ripple_spindles_pre','.xls'),'Sheet',1,'Range','A2:L50')    
+
+                    TT=table;
+    TT.Variables= [cellfun('length',Cohfos2_PAR_hpc_post); cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PAR_hpc_post,'UniformOutput',false));...
+       cellfun('length',Cohfos2_PFC_hpc_post); cell2mat(cellfun(@(equis) length(unique(equis)),Cohfos2_PFC_hpc_post,'UniformOutput',false))]; 
+    
+    TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+                writetable(TT,strcat('hpc_ripple_spindles_post','.xls'),'Sheet',1,'Range','A2:L50')    
+
+%% HPC ripples-spindles-multiplets PRE POST
+    TT=table;
+    TT.Variables=([Out_PAR_pre{1}(:,2) Out_PAR_pre{2}(:,2) Out_PAR_pre{3}(:,2) Out_PAR_pre{4}(:,2); [NaN NaN NaN NaN] ;Out_PFC_pre{1}(:,2) Out_PFC_pre{2}(:,2) Out_PFC_pre{3}(:,2) Out_PFC_pre{4}(:,2)] );
+    TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+                 writetable(TT,strcat('hpc_ripple_spindles_multiplets_pre','.xls'),'Sheet',1,'Range','A2:L50')    
+
+    TT=table;
+    TT.Variables=([Out_PAR_post{1}(:,2) Out_PAR_post{2}(:,2) Out_PAR_post{3}(:,2) Out_PAR_post{4}(:,2); [NaN NaN NaN NaN] ;Out_PFC_post{1}(:,2) Out_PFC_post{2}(:,2) Out_PFC_post{3}(:,2) Out_PFC_post{4}(:,2)] );
+    TT.Properties.VariableNames=[cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
+                 writetable(TT,strcat('hpc_ripple_spindles_multiplets_post','.xls'),'Sheet',1,'Range','A2:L50')    
+
   %% HFOs-spindles
     TT=table;
     TT.Variables= [cellfun('length',Cohfos1_PAR_g1); cellfun('length',Cohfos1_PAR_g2);...
