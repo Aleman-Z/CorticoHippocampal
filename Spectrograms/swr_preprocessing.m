@@ -8,7 +8,7 @@ function [Mono,V]=swr_preprocessing(CORTEX,states,fn)
     [b2,a2] = butter(3,Wn1); %Filter coefficients
 %Convert signal to 1 sec epochs.
         e_t=1;
-        e_samples=e_t*(1000); %fs=1kHz
+        e_samples=e_t*(fn); %fs=1kHz
         ch=length(CORTEX);
         nc=floor(ch/e_samples); %Number of epochsw
         NC=[];
