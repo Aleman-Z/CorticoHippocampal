@@ -40,10 +40,10 @@ ax.XAxis.FontName='Arial';
 
     Y1 = prctile(vec,5)
     Y2 = prctile(vec,95)
-plot([Y2 Y2],[0 max(k1.Values)],'-.k');
+plot([Y2 Y2],[0 max(k1.Values)],'-.k','LineWidth',2);
 ylim([0 max(k1.Values)]);
 plot([0 0],[0 max(k1.Values)],'-r','LineWidth',2);
-plot([Y1 Y1],[0 max(k1.Values)],'-.k');
+plot([Y1 Y1],[0 max(k1.Values)],'-.k','LineWidth',2);
 xlim([-6 6])
 %%
 printing(['new_PAR_g1' '_' labelconditions{n}])

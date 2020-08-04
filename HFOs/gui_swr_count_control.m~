@@ -657,29 +657,22 @@ xline(y1, '--r','LineWidth',2)
 xline(y2, '--r','LineWidth',2)
 %% NORMALIZED
 %aver=random_cohfos_count_g2./cohfos_count_g2.';
-set(0,'defaultAxesFontName', 'Arial')
-set(0,'defaultTextFontName', 'Arial')
-
 close all
-n=4;
-aver=[aver_g2_26(n,:) aver_g2_27(n,:) aver_g2_24(n,:)];
+n=1;
+aver=[aver_g1_26(n,:) aver_g1_27(n,:) aver_g1_24(n,:)];
 
 vec=aver(:);
- histogram(vec,[-6.5:1:6.5],'FaceColor',[0 0 0])
- xlim([-6 6])
- xticks([-6:2:6])
+%  histogram(vec,[-6.5:1:6.5],'FaceColor',[0 0 0])
+%  xlim([-6 6])
 
-%  histogram(vec,[-20.5:2:6.5],'FaceColor',[0 0 0])
-%  xlim([-20 20])
-
- %xticks([-18:6:18])
-set(gca,'FontName','Arial')
-set(gca,'FontSize',10)
+ histogram(vec,[-20.5:2:6.5],'FaceColor',[0 0 0])
+ xlim([-20 20])
+ x%ticks([-18:6:18])
 
 %  histogram(vec,[-16.5:2:6.5],'FaceColor',[0 0 0])
 %  xlim([-20 5])
-    ylabel('Frequency','FontSize',10,'FontName','Arial')
-    xlabel('Count','FontSize',10,'FontName','Arial')
+    ylabel('Frequency')
+    xlabel('Count')
     Y1 = prctile(vec,5)
     Y2 = prctile(vec,95)
 %     Y3 = prctile(vec,2.5)
@@ -699,17 +692,9 @@ set(gca,'FontSize',10)
 xline(0, '-r','LineWidth',2)
 % xline(y2, '--r','LineWidth',2)
 (1+sum(vec >=1))/(length(vec)+1)
-set(gca,'FontName','Arial')
-set(gca,'FontSize',10)
-ax = gca;
-ax.YAxis.FontSize = 18 %for y-axis 
-ax.XAxis.FontSize = 18 %for y-axis 
-ax.XAxis.FontName='Arial';
-ax.XAxis.FontName='Arial';
-
-
-printing(['plotnorm_fast_' labelconditions{n}])
- close all
+%%
+printing(['plotnorm_slow_' labelconditions{n}])
+% close all
 %%    
   printing('control_24_simulated_slow_95lines')  
 %% NEW NORMALIZATION (Z-SCORE-LIKE)
