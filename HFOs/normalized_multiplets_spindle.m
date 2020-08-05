@@ -38,9 +38,9 @@ labelconditions=[
 %n=1;% condition
 for n=1:4
 %w=1;
-a_26=Multi_norm_26(n,:);
-a_27=Multi_norm_27(n,:);
-a_24=Multi_norm_24(n,:);
+a_26=Multi_norm_categories_26(n,:);
+a_27=Multi_norm_categories_27(n,:);
+a_24=Multi_norm_categories_24(n,:);
 
 vec=[a_26 a_27 a_24];
 
@@ -74,4 +74,30 @@ ax.XAxis.FontName='Arial';
 printing(['PAR_Multiplets_' labelconditions{n}])
 close all
 
+end
+%% Counting multiplets, not individual ripples.
+
+for n=1:4
+total_am(n)=sum(Out_PAR{n}(2:end,2));
+end
+
+for n=1:4
+aver=squeeze(Out_rand_PAR(n,:,:));
+
+for multi=1:1000
+    vec(multi)=sum(aver(multi,2:end));
+end
+
+histogram(vec)
+xline(total_am(n),'-r','LineWidth',2)
+
+    Y1 = prctile(vec,5)
+    Y2 = prctile(vec,95)
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    close all
+aj(n)=(1+sum(vec >=total_am(n)))/(length(vec)+1)
+
+
+Multi_norm_categories_24(n,:)=(vec-total_am(n))/std(vec);
 end
