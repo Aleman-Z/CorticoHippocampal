@@ -209,3 +209,84 @@ printing(['post_Anew_PFC_unique' '_' labelconditions{n}])
 cd ..
 %printing(['new_PFC_g1' '_' 'across_unique'])
 close all
+%% MULTIPLETS
+
+N_Out_rand_PAR_24=nan(size(Out_rand_PAR));
+N_Out_rand_PFC_24=nan(size(Out_rand_PFC));
+
+for n=1:4
+    for multi=1:6
+        N_Out_rand_PAR_24(n,:,multi)=( Out_rand_PAR(n,:,multi)-Out_PAR{n}(multi,2) ) /std(Out_rand_PAR(n,:,multi));
+        N_Out_rand_PFC_24(n,:,multi)=( Out_rand_PFC(n,:,multi)-Out_PFC{n}(multi,2) ) /std(Out_rand_PFC(n,:,multi));
+        
+%         
+        
+    end
+end
+%%
+save('Multi_24.mat','N_Out_rand_PAR_24','N_Out_rand_PFC_24')
+%%
+labelconditions=[
+    {'plusmaze'}
+    {'baseline'      }
+    {'foraging'     }
+    {'novelty' }];
+
+multiplets=[
+    {'single'}
+    {'doublet'      }
+    {'triplet'     }    
+    {'quatruplet'}
+    {'pentuplet'      }
+    {'sextuplet'     }    
+    
+];
+    
+multi=6; %singles
+%n=1;% condition
+for n=1:4
+%w=1;
+a_26=squeeze(N_Out_rand_PFC_26(n,:,:));
+a_27=squeeze(N_Out_rand_PFC_27(n,:,:));
+a_24=squeeze(N_Out_rand_PFC_24(n,:,:));
+
+vec=[a_26(:,multi); a_27(:,multi) ;a_24(:,multi)];
+
+% vec=a(:,mult);
+
+histogram(vec,[-6.5:1:6.5],'FaceColor',[0 0 0])
+    Y1 = prctile(vec,5)
+    Y2 = prctile(vec,95)
+    xline(Y1, '-.k','LineWidth',2)
+     xline(Y2, '-.k','LineWidth',2)
+
+xline(0, '-r','LineWidth',2)
+xlim([-6 6])
+(1+sum(vec >=0))/(length(vec)+1)
+
+printing(['PFC_'  multiplets{multi} '_' labelconditions{n}])
+close all
+
+end
+%%
+n=4;
+ %aver=[aver_g1_26(1:4,:) aver_g1_27(1:4,:) aver_g1_24(1:4,:)];
+aver=[Norm_Cohfos2_PAR_24_all(n,:) Norm_Cohfos2_PAR_26_all(n,:) Norm_Cohfos2_PAR_27_all(n,:)];
+vec=aver(:);
+(1+sum(vec >=0))/(length(vec)+1)
+
+%%
+N_Out_rand_PAR_26=nan(size(Out_rand_PAR));
+N_Out_rand_PFC_26=nan(size(Out_rand_PFC));
+
+for n=1:4
+    for multi=1:6
+        N_Out_rand_PAR_26(n,:,multi)=( Out_rand_PAR(n,:,multi)-Out_PAR{n}(multi,2) ) /std(Out_rand_PAR(n,:,multi));
+        N_Out_rand_PFC_26(n,:,multi)=( Out_rand_PFC(n,:,multi)-Out_PFC{n}(multi,2) ) /std(Out_rand_PFC(n,:,multi));
+        
+%         
+        
+    end
+end
+%%
+save('Multi_26.mat','N_Out_rand_PAR_26','N_Out_rand_PFC_26')

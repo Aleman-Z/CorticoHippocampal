@@ -698,7 +698,7 @@ set(gca,'FontSize',10)
 % 
 xline(0, '-r','LineWidth',2)
 % xline(y2, '--r','LineWidth',2)
-(1+sum(vec >=1))/(length(vec)+1)
+(1+sum(vec >=0))/(length(vec)+1)
 set(gca,'FontName','Arial')
 set(gca,'FontSize',10)
 ax = gca;
