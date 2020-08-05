@@ -307,3 +307,29 @@ for n=1:4
 end
 %%
 save('Multi_26.mat','N_Out_rand_PAR_26','N_Out_rand_PFC_26')
+%% ONLY MULTI!
+for n=1:4
+total_am(n)=sum(times(Out_PAR{n}(2:end,1),Out_PAR{n}(2:end,2)));
+end
+
+for n=1:4
+aver=squeeze(Out_rand_PAR(n,:,:));
+
+for multi=1:1000
+    vec(multi)=sum(aver(multi,2:end).*[2:6]);
+end
+
+histogram(vec)
+xline(total_am(n),'-r','LineWidth',2)
+
+    Y1 = prctile(vec,5)
+    Y2 = prctile(vec,95)
+    xline(Y1, '-.k','LineWidth',2)
+    xline(Y2, '-.k','LineWidth',2)
+    close all
+aj(n)=(1+sum(vec >=total_am(n)))/(length(vec)+1)
+
+
+Multi_norm_24(n,:)=(vec-total_am(n))/std(vec);
+end
+
