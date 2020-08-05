@@ -226,6 +226,9 @@ end
 %%
 save('Multi_24.mat','N_Out_rand_PAR_24','N_Out_rand_PFC_24')
 %%
+set(0,'defaultAxesFontName', 'Arial')
+set(0,'defaultTextFontName', 'Arial')
+
 labelconditions=[
     {'plusmaze'}
     {'baseline'      }
@@ -244,27 +247,41 @@ multiplets=[
     
 multi=6; %singles
 %n=1;% condition
-for n=1:4
+for n=4:4
 %w=1;
-a_26=squeeze(N_Out_rand_PFC_26(n,:,:));
-a_27=squeeze(N_Out_rand_PFC_27(n,:,:));
-a_24=squeeze(N_Out_rand_PFC_24(n,:,:));
+a_26=squeeze(N_Out_rand_PAR_26(n,:,:));
+a_27=squeeze(N_Out_rand_PAR_27(n,:,:));
+a_24=squeeze(N_Out_rand_PAR_24(n,:,:));
 
 vec=[a_26(:,multi); a_27(:,multi) ;a_24(:,multi)];
 
 % vec=a(:,mult);
 
-histogram(vec,[-6.5:1:6.5],'FaceColor',[0 0 0])
+histogram(vec,[-8.5:1:8.5],'FaceColor',[0 0 0])
     Y1 = prctile(vec,5)
     Y2 = prctile(vec,95)
     xline(Y1, '-.k','LineWidth',2)
      xline(Y2, '-.k','LineWidth',2)
 
 xline(0, '-r','LineWidth',2)
-xlim([-6 6])
-(1+sum(vec >=0))/(length(vec)+1)
+xlim([-8 8])
+xticks([-8:2:8])
 
-printing(['PFC_'  multiplets{multi} '_' labelconditions{n}])
+(1+sum(vec >=0))/(length(vec)+1)
+set(gca,'FontName','Arial')
+set(gca,'FontSize',10)
+ hold on
+    ylabel('Frequency','FontSize',10,'FontName','Arial')
+    xlabel('Count','FontSize',10,'FontName','Arial')
+set(gca,'FontName','Arial')
+set(gca,'FontSize',10)
+ax = gca;
+ax.YAxis.FontSize = 18 %for y-axis 
+ax.XAxis.FontSize = 18 %for y-axis 
+ax.XAxis.FontName='Arial';
+ax.XAxis.FontName='Arial';
+
+printing(['PAR_'  multiplets{multi} '_' labelconditions{n}])
 close all
 
 end
