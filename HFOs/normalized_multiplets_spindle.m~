@@ -27,7 +27,7 @@ aj(n)=(1+sum(vec >=total_am(n)))/(length(vec)+1)
 
 
 % All_norm_post_24(n,:)=(vec-total_am(n))/std(vec);
-All_PFC_norm_post_24(n,:)=(vec-total_am(n))/std(vec);
+All_PFC_norm_post_26(n,:)=(vec-total_am(n))/std(vec);
 
 end
 %% All conditions
