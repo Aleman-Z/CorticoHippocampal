@@ -136,7 +136,7 @@ else
     error('Name issue')
 end
 
-%xo
+ %xo
 %%
 f=waitbar(0,'Please wait...');
     for k=1:length(g)
@@ -833,17 +833,17 @@ ax.XAxis.FontName='Arial';
 end
 
 %%
-vec=Fed_Fast_24;
+vec=Fed_slow_24;
 vec=vec(:);
 
 (1+sum(vec >=0))/(length(vec)+1)
 %%
 
-for n=1:3
+for n=1:4
 %w=1;
-a_26=Fed_Fast_26(n,:);
-a_27=Fed_Fast_27(n,:);
-a_24=Fed_Fast_24(n,:);
+a_26=Fed_slow_26(n,:);
+a_27=All_PFC_norm_post_27(n,:);
+a_24=All_PFC_norm_post_24(n,:);
 
 % a_26=All_norm_post_26(n,:);
 % a_27=All_norm_post_27(n,:);
@@ -854,20 +854,8 @@ a_24=Fed_Fast_24(n,:);
 % a_24=All_norm_post_24(n,:);
 
 vec=[a_26 a_27 a_24];
-
-aj(n)=(1+sum(vec >=0))/(length(vec)+1);
 end
-%%
-a_26=Fed_Fast_26(:,:);
-a_26=a_26(:);
-a_27=Fed_Fast_27(:,:);
-a_27=a_27(:);
-a_24=Fed_Fast_24(:,:);
-a_24=a_24(:);
 
-vec=[a_26; a_27; a_24]; %a_26; a_27; a_24
-vec=vec(:);
-(1+sum(vec >=0))/(length(vec)+1)
 %%
   [a1,a2]=kstest(random_cohfos_count(3,:),'CDF',cohfos_count(3),'Alpha',0.05);
     

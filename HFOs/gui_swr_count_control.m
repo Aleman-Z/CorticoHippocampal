@@ -784,6 +784,56 @@ vec_g2_count_27=cohfos_count_g2;
 
 aver_g1_27=vec_g1_27./vec_g1_count_27.';
 aver_g2_27=vec_g2_27./vec_g2_count_27.';
+%% Tables
+for n=1:4
+vec=aver_g1_24(n,:);
+% vec=vec(:);
+vec2=aver_g2_24(n,:);
+aj(n)=(1+sum(vec >=0))/(length(vec)+1);
+aj2(n)=(1+sum(vec2 >=0))/(length(vec2)+1);
+
+end
+%%
+vec=aver_g1_24(:,:);
+vec=vec(:);
+(1+sum(vec >=0))/(length(vec)+1)
+
+vec=aver_g2_24(:,:);
+vec=vec(:);
+(1+sum(vec >=0))/(length(vec)+1)
+%%
+
+for n=1:4
+%w=1;
+a_26=aver_g2_26(n,:);
+a_27=aver_g2_27(n,:);
+a_24=aver_g2_24(n,:);
+
+% a_26=All_norm_post_26(n,:);
+% a_27=All_norm_post_27(n,:);
+% a_24=All_norm_post_24(n,:);
+
+% a_26=All_norm_post_26(n,:);
+% a_27=All_norm_post_27(n,:);
+% a_24=All_norm_post_24(n,:);
+
+vec=[a_26 a_27 a_24];
+
+aj(n)=(1+sum(vec >=0))/(length(vec)+1);
+end
+%%
+
+a_26=aver_g2_26(:,:);
+a_26=a_26(:);
+a_27=aver_g2_27(:,:);
+a_27=a_27(:);
+a_24=aver_g2_24(:,:);
+a_24=a_24(:);
+
+vec=[a_26; a_27; a_24]; %a_26; a_27; a_24
+vec=vec(:);
+(1+sum(vec >=0))/(length(vec)+1)
+
 
 %%
 vec_g1=[vec_g1_24; vec_g1_26; vec_g1_27];

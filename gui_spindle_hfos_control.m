@@ -392,7 +392,7 @@ end
 Cohfos1_PFC_hpc{k}= ([cohfos1_hpc{:}]);
 Cohfos2_PFC_hpc{k}= ([cohfos2_hpc{:}]);
 %% Coocur PFC spindle and shuffled HPC ripples.
-%xo
+xo
  parfor r=1:1000
 [cohfos1_rand_hpc,cohfos2_rand_hpc]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_nhpc,Mx_nhpc,Ex_nhpc,Sr_cortex{r},Sr_cortex{r},Er_cortex{r},'UniformOutput',false);
 
