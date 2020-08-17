@@ -47,8 +47,8 @@ for condition=1:length(labelconditions3)
     g1{condition}=gran1.grangerspctrm;%Parametric
     g2{condition}=grangercon.grangerspctrm;%Non-parametric (Conditional)
     
-[FB{condition}]=gc_freqbands(gran,0);%Non-parametric (Pairwise)
-[FB1{condition}]=gc_freqbands(gran1,0);%Parametric
+[FB{condition}]=gc_freqbands(gran,0,'granger');%Non-parametric (Pairwise)
+[FB1{condition}]=gc_freqbands(gran1,0,'granger');%Parametric
 
     
 end

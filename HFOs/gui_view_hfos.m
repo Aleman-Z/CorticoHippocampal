@@ -328,26 +328,26 @@ k=1;
 % Find longuest epoch and plot
 % max_length=cellfun(@length,v_hpc);
 % N=max_length==max(max_length);
-
+%xo
 %Largest amount of PAR HFOS
 max_length=cellfun(@length,swr_pfc(:,1));
 N=max_length==max(max_length);
 
-%Largest amount of HPC QUAD
-max_length=cellfun(@length,swr_hpc_quadruplets_1(:,1));
-N=max_length==max(max_length);
-
-%Largest amount of HPC pentuplets
-max_length=cellfun(@length,swr_hpc_pentuplets_1(:,1));
-N=max_length==max(max_length);
-
-%Largest amount of HPC sextuplets
-max_length=cellfun(@length,swr_hpc_sextuplets_1(:,1));
-N=max_length==max(max_length);
-
-%Largest amount of HPC sextuplets
-max_length=cellfun(@length,swr_hpc_nonuplets_1(:,1));
-N=max_length==max(max_length);
+% %Largest amount of HPC QUAD
+% max_length=cellfun(@length,swr_hpc_quadruplets_1(:,1));
+% N=max_length==max(max_length);
+% 
+% %Largest amount of HPC pentuplets
+% max_length=cellfun(@length,swr_hpc_pentuplets_1(:,1));
+% N=max_length==max(max_length);
+% 
+% %Largest amount of HPC sextuplets
+% max_length=cellfun(@length,swr_hpc_sextuplets_1(:,1));
+% N=max_length==max(max_length);
+% 
+% %Largest amount of HPC sextuplets
+% max_length=cellfun(@length,swr_hpc_nonuplets_1(:,1));
+% N=max_length==max(max_length);
 
 hpc=V_hpc{N};
 pfc=V_pfc{N};

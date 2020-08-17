@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets,V,Mono]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn)
     %Band pass filter design:
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients

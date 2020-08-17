@@ -1,4 +1,4 @@
-function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn)
+function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets,V,Mono]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn)
     %Band pass filter design:
     %Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
 %     Wn1=[9/(fn/2) 20/(fn/2)];
