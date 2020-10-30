@@ -1,15 +1,18 @@
+%% gl_hfos_counts
+
 % Main code for detection of fast and slow, coocur and single hfos.
+% Generates hfos counts from Figure 1 and 2 respectively.
+% Requires 'load_me_first.mat' loaded first. 
 
-%% Find location
-close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
-%%
-z= zeros(length(label1),length(rats));
-[T]=gui_table_channels(z,rats,label1,'Threholds');
+%% Find location of downsampled data
 
+% close all
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
+
+cd('/home/adrian/Documents/Plusmaze_downsampled')
 %%
-%Select rat number
+%Select rat ID
 opts.Resize = 'on';
 opts.WindowStyle = 'modal';
 opts.Interpreter = 'tex';
@@ -19,80 +22,21 @@ Rat=str2num(answer{1});
 cd(num2str(Rat))
 tr=getfield(T,strcat('Rat',num2str(Rat)));%Thresholds 
 %%
-        % Ask for brain area.
-% xx = inputdlg({'Cortical Brain area'},...
-%               'Type your selection', [1 30]); 
-xx={'PAR'};
-fn=1000;
-%%
-gg=getfolder;
-gg=gg.';
-if size(label1,1)~=3  % IF not Plusmaze
-    gg(ismember(gg,'OR_N'))=[];
-    gg(ismember(gg,'OD_N(incomplete)'))=[];
-    gg=sort(gg); %Sort alphabetically.
-    labelconditions2=gg;
-    gg(ismember(gg,'CN'))={'CON'};
-end
-labelconditions=gg;
+xx={'PAR'}; %Posterior Parietal cortex used to detect hfos. 
+fn=1000; %Sampling frequency
+g=getfolder;
+g=g.';
+%% Get folder names
+labelconditions=getfolder;
+labelconditions=labelconditions.';
 
-%% Select experiment to perform. 
-inter=1;
-%Select length of window in seconds:
-ro=[1200];
-coher=0;
-selectripples=1;
-notch=0; %Might need to be 1.
-nrem=3;
-level=1;
-
+%% Parameters 
 multiplets=[{'singlets'} {'doublets'} {'triplets'} {'quatruplets'} {'pentuplets'} {'sextuplets'} {'septuplets'} {'octuplets'} {'nonuplets'}];
-%%
 iii=1;
-%for iii=1:length(labelconditions) 
-
-    if size(label1,1)~=3  % IF not Plusmaze
-
-        cd( labelconditions2{iii})
-        g=getfolder;
-
-        if iii==1
-            answer = questdlg('Should we use all trials?', ...
-                'Trial selection', ...
-                'Use all','Select trials','Select trials');
-
-            % Handle response
-            switch answer
-                case 'Use all'
-                    disp(['Using all.'])
-                    an=[];
-                case 'Select trials'
-                    prompt = {['Enter trials name common word without index:' sprintf('\n') '(Use commas for multiple names)']};
-                    dlgtitle = 'Input';
-                    dims = [1 35];
-                    %definput = {'20','hsv'};
-                    an = inputdlg(prompt,dlgtitle,dims);
-                    %an=char(an);
-            %        g=g(contains(g,{'PT'}));
-            end
-
-        end
-
-        if ~isempty(an)
-        g=g(contains(g,strsplit(an{1},',')));
-        end
-  
-    else
-      g=gg;  
-    end
-  %% Colormap
-       % n=length(g);
-myColorMap=jet(length(g));              
 %%
 f=waitbar(0,'Please wait...');
     for k=1:length(g)
         cd(g{k})
-%(level,nrem,notch,w,lepoch)
 %xo
 CORTEX=dir(strcat('*',xx{1},'*.mat'));
 if isempty(CORTEX)
@@ -105,8 +49,9 @@ CORTEX=CORTEX.name;
 CORTEX=load(CORTEX);
 %CORTEX=CORTEX.CORTEX;
 CORTEX=getfield(CORTEX,xx{1});
-CORTEX=CORTEX.*(0.195);
+CORTEX=CORTEX.*(0.195); % OpenEphys BitVolt factor
 
+%Load sleep scoring
 A = dir('*states*.mat');
 A={A.name};
 
@@ -115,34 +60,32 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
- %xo
+
+%Find hfos
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
 
+%Get traces of events and store them
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
-%xo
-% plot_hfo(si,Mx_cortex,Sx_cortex,label1{2})
-% title(['HFO Cortex  ' strrep(g{k},'_','-')])
-% cd ..
-% printing(['HFO Cortex  ' strrep(g{k},'_','-')])
-% close all
-% cd(g{k})
 All_Par.( strrep(g{k},'-','_'))=si;
-% All_timeasleep.( strrep(g{k},'-','_'))=timeasleep;
-%xo
-[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,0,Rat,tr);
-% cd ..
-% printing(['Histograms_Cortex_Count_' g{k}]);
-% close all
-% cd(g{k})
 
-fi_cortex(k)=x;
-fa_cortex(k)=y;
-amp_cortex(k)=z;
-auc_cortex(k)=l;
-p2p_cortex(k)=p;
+%Compute main features of hfos.
+print_hist=0;
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist,Rat,tr);
+if print_hist==1
+    cd ..
+    printing(['Histograms_Cortex_Count_' g{k}]);
+    close all
+    cd(g{k})
+end
+
+fi_cortex(k)=x; %Instantaneous frequency.
+fa_cortex(k)=y; %Average frequency.
+amp_cortex(k)=z; %Amplitude.
+auc_cortex(k)=l; %Area under the curve.
+p2p_cortex(k)=p; %Peak to trough distance
 %xo
 TH(k)=th;
 %% Cortical HFOs
@@ -902,10 +845,4 @@ writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),
 
 %%
 
-%     if size(label1,1)==3 %If Plusmaze
-% %        xo
-%         break;
-%     end
-%xo    
-%end
-xo
+return
