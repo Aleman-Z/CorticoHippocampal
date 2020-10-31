@@ -1,4 +1,6 @@
 function[th]=gaussmix(data,Rat,tr)
+%Fits average frequency values into a two mixed gaussian model and
+%determines the cutoff frequency to separate gaussians.
 
 if size(data,1)< size(data,2)
  data=data.';   

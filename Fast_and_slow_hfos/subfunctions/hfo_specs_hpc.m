@@ -80,12 +80,12 @@ si_mixed=[];
         l=median(l);
 
         %Count
-%         w=length(si);
-w=[];
+         w=length(si);
+%w=[];
 
         %Rate
-%         h=w/(timeasleep*(60));
-h=[];
+         h=w/(timeasleep*(60));
+%h=[];
 
         %Duration
         q=(cellfun('length',si)/1000);

@@ -1,8 +1,4 @@
-%
-% a=Mx_hpc{3};
-% N=Mx_pfc{3};
-% Do per cell
-%%
+
 function [co_vec1,co_vec2]=co_hfo(a,N)%HPC,Cortex
     co_vec1=[];%HPC
     co_vec2=[];%Cortex
@@ -14,7 +10,7 @@ function [co_vec1,co_vec2]=co_hfo(a,N)%HPC,Cortex
 
     %Diference
     df=abs(minVal-n);
-
+    %Coocur if closer to 50ms
     if df<=0.050
         co_vec1=[co_vec1 minVal];
         co_vec2=[co_vec2 n];
@@ -22,5 +18,3 @@ function [co_vec1,co_vec2]=co_hfo(a,N)%HPC,Cortex
 
     end
 end
-% [val,idx]=min(abs(a-n));
-% minVal=a(idx);
