@@ -49,26 +49,25 @@ end
     ro=150;
 
     toy=[-.1:.001:.1];
-    freq3=barplot2_ft(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
-    freq4=barplot2_ft(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
+    freq1=time_frequency(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
+    freq2=time_frequency(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
 
 allscreen()
     for j=1:3
 
     cfg              = [];
-    cfg.channel      = freq3.label{j};
-    [ zmin1, zmax1] = ft_getminmax(cfg, freq3);
-    [zmin2, zmax2] = ft_getminmax(cfg, freq4);
+    cfg.channel      = freq1.label{j};
+    [ zmin1, zmax1] = ft_getminmax(cfg, freq1);
+    [zmin2, zmax2] = ft_getminmax(cfg, freq2);
     zlim=[min([zmin1 zmin2]) max([zmax1 zmax2])];
 
     cfg              = [];
     cfg.zlim=zlim;
-    cfg.channel      = freq4.label{j};
+    cfg.channel      = freq2.label{j};
     cfg.colormap=colormap(jet(256));
 
     subplot(3,3,3*j-2)
-    ft_singleplotTFR(cfg, freq3); 
-    % g=title(['Baseline ' label1{j} ]);
+    ft_singleplotTFR(cfg, freq1); 
     g=title([label1{j} ' Baseline']);
     g.FontSize=12;
     xlabel('Time (s)')
@@ -76,8 +75,7 @@ allscreen()
     ylim([100 250])
 
     subplot(3,3,3*j-1)
-    ft_singleplotTFR(cfg, freq4); 
-    % g=title(strcat(['Plusmaze ' label1{j}]));
+    ft_singleplotTFR(cfg, freq2); 
     g=title(strcat([label1{j} ' Plusmaze' ]));
     g.FontSize=12;
     xlabel('Time (s)')
@@ -86,12 +84,12 @@ allscreen()
 
 
     % Pixel-based stats
-    zmap=stats_high(freq3,freq4,j);
+    zmap=stats_high(freq1,freq2,j);
     subplot(3,3,3*j);
 
     colormap(jet(256))
     zmap(zmap == 0) = NaN;
-    J=imagesc(freq3.time,freq3.freq,zmap)
+    J=imagesc(freq1.time,freq1.freq,zmap)
     xlabel('Time (s)'), ylabel('Frequency (Hz)')
     set(gca,'xlim',xlim,'ydir','no')
     set(J,'AlphaData',~isnan(zmap))
@@ -104,22 +102,7 @@ allscreen()
     g.FontSize=12;
     ylim([100 250])
     
-%     [mdam,mdam2,mdam3,mdam4]=small_window(freq3,j);
-%     [ndam,ndam2,ndam3,ndam4]=small_window(freq4,j);
-%     
-%     Mdam(j)=mdam;
-%     Mdam2(j)=mdam2;
-%     Mdam3(j)=mdam3;
-%     Mdam4(j)=mdam4;
-%     
-%     Ndam(j)=ndam;
-%     Ndam2(j)=ndam2;
-%     Ndam3(j)=ndam3;
-%     Ndam4(j)=ndam4;
 
     end
-% 
-%     values_spec.baseline=[Mdam;Mdam2;Mdam3;Mdam4];
-%     values_spec.plusmaze=[Ndam;Ndam2;Ndam3;Ndam4];
 
 end

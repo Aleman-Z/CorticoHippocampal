@@ -26,9 +26,7 @@ if ~isempty(Sx{k})
     q{j}=[];
     sig_pq{j}=[];
    end
-       % else
-   % sig{j}=0;
-    %    end
+   
     end
 else
     sig=[];

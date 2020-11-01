@@ -24,12 +24,11 @@ tr=getfield(T,strcat('Rat',num2str(Rat)));%Thresholds
 %%
 xx={'PAR'}; %Posterior Parietal cortex used to detect hfos. 
 fn=1000; %Sampling frequency
-g=getfolder;
-g=g.';
+
 %% Get folder names
 labelconditions=getfolder;
 labelconditions=labelconditions.';
-
+g=labelconditions;
 %% Parameters 
 multiplets=[{'singlets'} {'doublets'} {'triplets'} {'quatruplets'} {'pentuplets'} {'sextuplets'} {'septuplets'} {'octuplets'} {'nonuplets'}];
 iii=1;

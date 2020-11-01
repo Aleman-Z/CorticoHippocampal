@@ -365,8 +365,7 @@ v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2
 progress_bar(k,length(g),f)
     cd ..    
     end
-%Stop code here and save values in excel sheets.    
-%xo
+ xo
 
 %% Find values for slow/fast PAR hfos
 win_size=50; %Window size in miliseconds
@@ -381,20 +380,23 @@ end
 
 %SLOW
 %PAR COHFOSs
-s=1; % s=1 for cooccurrent HFOs, s=2 for single events.
-w=3; %Index from 'label1'. w=1 for hpc centered, w=3 for par centered.
-%Find mean power value of the window for different frequency bands.
-[values_spec]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+s=1;
+w=3; %Index from 'label1. 3 is PAR.
+[values_spec,n1]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
-%SLOW 
+ 
 %PAR singles
 s=2;
 w=3;
-[values_spec]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
+[values_spec,n2]=getval_spectra(SP,SQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT2=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
  
@@ -404,15 +406,19 @@ s=1;
 w=3;
 [values_spec,n3]=getval_spectra(FP,FQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT3=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
-%FAST 
+ 
 %PAR singles
 s=2;
 w=3;
 [values_spec,n4]=getval_spectra(FP,FQ,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT4=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT4.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT4.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
@@ -429,40 +435,49 @@ writetable(tab,strcat('spec_SLOWFAST_values_rat_', num2str(Rat),'_' ,num2str(tr(
 end
 
 %% 
-% Using ALL events.
+% GET ALL RIPPLES.
 win_size=50;
 %HPC COHFOS
 s=1;
 w=1;
-[values_spec]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n1]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
 TT=table;
+% TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
 % % %PAR COHFOS
 s=1;
 w=3;
-[values_spec]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n2]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
 TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
 %HPC singles
 s=2;
 w=1;
-[values_spec]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n3]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
 TT2=table;
+% TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
 %PAR singles
 s=2;
 w=3;
-[values_spec]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
+[values_spec,n4]=getval_spectra_All(P,Q,labelconditions2,label1,s,w,win_size);
 TT3=table;
+% TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
+Total=[n1; n3; n4]
 
 t1=repmat({'x'},[1 13]);
 
@@ -478,7 +493,11 @@ if win_size== 50
 writetable(tab,strcat('spec_ALL_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
 end
  
-%% Using minimum number of ripples per type.
+%%
+%Corrected:
+%s: 1 for cohfos, 2 for singles.
+%w:1 for hpc centered, 3 for par centered.
+%% Find minimum number of ripples per type.
 
 %HPC COHFOS
 s=1;
@@ -521,6 +540,8 @@ s=1;
 w=1;
 [values_spec,n1]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT=table;
+% TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
@@ -529,6 +550,8 @@ s=1;
 w=3;
 [values_spec,n2]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
@@ -537,6 +560,8 @@ s=2;
 w=1;
 [values_spec,n3]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT2=table;
+% TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
@@ -545,6 +570,8 @@ s=2;
 w=3;
 [values_spec,n4]=getval_spectra(P,Q,labelconditions2,label1,s,w,win_size,same_nr_types,N,random_hfo,rand_first_run,tr);
 TT3=table;
+% TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl values_spec.plusmaze values_spec.novelty values_spec.for])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'};{'HPC Novelty'};{'PFC Novelty'};{'PAR Novelty'};{'HPC Foraging'};{'PFC Foraging'};{'PAR Foraging'}];    
 TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.nl(:,1) values_spec.plusmaze(:,1) values_spec.novelty(:,1) values_spec.for(:,1) values_spec.nl(:,2) values_spec.plusmaze(:,2) values_spec.novelty(:,2) values_spec.for(:,2) values_spec.nl(:,3) values_spec.plusmaze(:,3) values_spec.novelty(:,3) values_spec.for(:,3)])];
 TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'HPC Plusmaze'};{'HPC Novelty'};{'HPC Foraging'};{'PFC Baseline'};{'PFC Plusmaze'};{'PFC Novelty'};{'PFC Foraging'};{'PAR Baseline'};{'PAR Plusmaze'};{'PAR Novelty'};{'PAR Foraging'}];    
 
@@ -595,10 +622,28 @@ else
     end
 
 end
+%%
+HPC_cohfos
 
-%% Plot spectrograms
+
+
+
+PAR_cohfos
+
+
+
+
+HPC_singles
+
+
+
+
+PAR_singles
+
+%%
 %HPC specs
 %HPC cohfos
+% xo
 same_nr_types=1; %Same N number across types
 if same_nr_types==0
     N=[];
@@ -614,39 +659,59 @@ else
 printing(['Spec_HPC_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
 end
 close all
+% TT=table;
+% TT.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 
 s=1;
 w=3;
 plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+%printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])
 if same_nr_types==1
 printing(['Spec_PAR_cohfos_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
 else
 printing(['Spec_PAR_cohfos_rat' num2str(Rat) '_' num2str(tr(2))])    
 end
 close all
+% TT1=table;
+% TT1.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT1.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 s=2;
 w=1;
 plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+% printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])
 if same_nr_types==1
 printing(['Spec_HPC_single_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
 else
 printing(['Spec_HPC_single_rat' num2str(Rat) '_' num2str(tr(2))])    
 end
 close all
+% TT2=table;
+% TT2.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT2.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
 
 s=2;
 w=3;
 plot_spectra(P,Q,labelconditions2,label1,s,w,same_nr_types,N)
+% printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
 if same_nr_types==1
 printing(['Spec_PAR_single_SameNR_rat' num2str(Rat) '_' num2str(tr(2))])
 else
 printing(['Spec_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])    
 end
 close all
+% TT3=table;
+% TT3.Variables=    [[{'100-250Hz'};{'100-150Hz'};{'150-200Hz'};{'200-250Hz'}] num2cell([values_spec.baseline values_spec.plusmaze])];
+% TT3.Properties.VariableNames=[{'Range'};{'HPC Baseline'};{'PFC Baseline'};{'PAR Baseline'};{'HPC Plusmaze'};{'PFC Plusmaze'};{'PAR Plusmaze'}];    
 
+xo
+% t1=repmat({'x'},[1 7]);
+% 
+% tab=[TT;t1;TT1;t1;TT2;t1;TT3];
+% writetable(tab,strcat('spec_values_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')    
 
 %%
 same_nr_types=1; %Same N number across types
@@ -694,6 +759,13 @@ printing(['SpecTraces_PAR_single_rat' num2str(Rat) '_' num2str(tr(2))])
 end
 close all
 
+%%
+
+
+for l=1:length(q)
+    plot(q{l}(1,:))
+    hold on
+end
 
 
 

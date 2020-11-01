@@ -9,7 +9,6 @@ Cohfos2=cohfos2_g1(~cellfun('isempty',cohfos2_g1));
 
 %Locate sample per cohfos
 coh_samp_cortex= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_mx_cortex,Cohfos2,'UniformOutput',false);
-% xo
 
 %COHFOS windows
 p_cohfos_cortex=p_cortex(~cellfun('isempty',cohfos2_g1));
