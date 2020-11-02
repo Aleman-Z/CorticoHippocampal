@@ -1,4 +1,4 @@
-%gui_threshold_ripples
+%gui_spindles_hfos
 %% Find location
 close all
 dname=uigetdir([],'Select folder with Matlab data containing all rats.');
@@ -926,11 +926,3 @@ close all
     
 
 %%
-
-%     if size(label1,1)==3 %If Plusmaze
-% %        xo
-%         break;
-%     end
-%xo    
-%end
-xo

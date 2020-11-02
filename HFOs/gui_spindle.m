@@ -1,4 +1,4 @@
-%gui_threshold_ripples
+%gui_spindle
 %% Find location
 close all
 dname=uigetdir([],'Select folder with Matlab data containing all rats.');
@@ -672,12 +672,3 @@ close all
     writetable(TT,strcat('coHFOs_spindles',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:L6')    
     
 
-%%
-
-%     if size(label1,1)==3 %If Plusmaze
-% %        xo
-%         break;
-%     end
-%xo    
-%end
-xo

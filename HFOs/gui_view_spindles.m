@@ -1,3 +1,5 @@
+%Find spindles with Peaks. Not YASA.
+
 %% Find location
 close all
 clear variables

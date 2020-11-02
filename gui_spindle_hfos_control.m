@@ -1214,11 +1214,3 @@ close all
     
 
 %%
-
-%     if size(label1,1)==3 %If Plusmaze
-% %        xo
-%         break;
-%     end
-%xo    
-%end
-xo
