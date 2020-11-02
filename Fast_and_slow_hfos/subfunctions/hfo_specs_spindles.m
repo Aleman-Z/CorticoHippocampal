@@ -17,15 +17,9 @@ function [x,y,z,w,h,q,l,p]=hfo_specs_spindles(si,timeasleep,fn,print_hist)
 %             yticks([0:0.1:0.5])
         end
         x=median(x);
-        %fi_cortex(k)=x;
         %Average frequency
         y=cellfun(@(equis) (meanfreq(equis,fn)) ,si,'UniformOutput',false);
         y=cell2mat(y);
-%         th=gaussmix(y,Rat,tr);
-%         si_mixed.g1=si(y<=th);
-%         si_mixed.i1=find(y<=th);
-%         si_mixed.g2=si(y>th);
-%         si_mixed.i2=find(y>th);
  
         if print_hist==1
             subplot(3,2,2)
@@ -40,7 +34,6 @@ function [x,y,z,w,h,q,l,p]=hfo_specs_spindles(si,timeasleep,fn,print_hist)
 %             yticks([0:0.1:0.5])            
         end
         y=median(y);
-        %fa_cortex(k)=y;
 
         %Amplitude
         z=cellfun(@(equis) max(abs(hilbert(equis))) ,si,'UniformOutput',false);
@@ -56,7 +49,6 @@ function [x,y,z,w,h,q,l,p]=hfo_specs_spindles(si,timeasleep,fn,print_hist)
 %             yticks([0:0.1:0.5])            
         end
         z=median(z);
-        %amp_cortex(k)=z;
         
         %Area under the curve
         l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./1000,abs(equis)),si,'UniformOutput',false));

@@ -7,20 +7,14 @@ function [co_vec1,co_vec2]=co_hfo_spindle(a_s,a_m,a_e,N_s,N_m,N_e)%HPC,Cortex
      for ind=1:length(a_s)
          
               interval2 = fixed.Interval(a_s(ind), a_e(ind), '[]');
-              
+              %Detect coocurrence if durations overlap
               if overlaps(interval1,interval2)
                 co_vec1=[co_vec1 a_m(ind)];%HPC
                 co_vec2=[co_vec2 N_m(index_hfo)];%Cortex
 
               end
 
-%          if  (a_s(ind)<=n(2) && a_s(ind)>=n(1)) || (a_e(ind)<=n(2) && a_e(ind)>=n(1))  
-%                 co_vec1=[co_vec1 a_m(ind)];%HPC
-%                 co_vec2=[co_vec2 N_m(index_hfo)];%Cortex
-%          end
      end
      
-
-
     end
 end
