@@ -1,7 +1,10 @@
-function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets,V,Mono]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn)
+function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets,Mr]=gui_findripples_random(CORTEX,states,xx,tr,multiplets,fn)
     %Band pass filter design:
-    Wn1=[0.3/(fn/2) 300/(fn/2)]; 
-    [b2,a2] = butter(3,Wn1); %0.3 to 300Hz
+    Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
+    [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
+
+    Wn1=[320/(fn/2)]; % Cutoff=320 Hz
+    [b2,a2] = butter(3,Wn1); %Filter coefficients
 %Convert signal to 1 sec epochs.
         e_t=1;
         e_samples=e_t*(fn); %fs=1kHz
@@ -12,7 +15,6 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
           NC(:,kk)= CORTEX(1+e_samples*(kk-1):e_samples*kk);
         end
         vec_bin=states;
-        %Convert to 1 if NREM.
         vec_bin(vec_bin~=3)=0;
         vec_bin(vec_bin==3)=1;
         %Cluster one values:
@@ -22,78 +24,28 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
     for epoch_count=1:length(v_index)
     v{epoch_count,1}=reshape(NC(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
     end
-    V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false); %0.3 to 300Hz
-    
-
-    Wn1=[9/(fn/2) 20/(fn/2)]; % Cutoff=9-20 Hz
-    [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
-    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %Regular 9-20Hz bandpassed for sig variable.
-       
+    V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false);
+    Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false);
     %Total amount of NREM time:
     timeasleep=sum(cellfun('length',V))*(1/fn)/60; % In minutes
-    ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,Mono,'UniformOutput',false);
+    signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
+    % ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
+    ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2,'UniformOutput',false);
 
-    % %% Find largest epoch.
-    max_length=cellfun(@length,v);
-    nrem_epoch=find(max_length==max(max_length)==1);
-    nrem_epoch=nrem_epoch(1);
-
-    
-    
-    if strcmp(xx{1},'PAR')
-            spindout=load('YASA_PAR_spindles.mat');
-            spindout=spindout.averout;
-
-            for jj=1:length(spindout)
-                if ~isempty(spindout{jj})
-                    aver=spindout{jj}(:,1:3); %The first 3 elements contain start, peak and end timestamp of spindle.
-                    aver=[aver{:}];
-                    aver=sort(aver);
-                    aver=reshape(aver,[3,length(aver)/3]);
-                    Sx_spind{jj}=aver(1,:);
-                    Mx_spind{jj}=aver(2,:);
-                    Ex_spind{jj}=aver(3,:);
-                else
-                    Sx_spind{jj}=[];
-                    Mx_spind{jj}=[];
-                    Ex_spind{jj}=[];
-
-                end
-
-            end
-
-              Sx=Sx_spind.';
-              Ex=Ex_spind.';
-              Mx=Mx_spind.';
-    
-
+    %Find ripples or HFOs
+    if strcmp(xx{1},'HPC')
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), [] ), signal2,ti,'UniformOutput',false);
     else
-        
-        spindout=load('YASA_PFC_spindles.mat');
-        spindout=spindout.averout;
-
-        for jj=1:length(spindout)
-            if ~isempty(spindout{jj})
-                aver=spindout{jj}(:,1:3);
-                aver=[aver{:}];
-                aver=sort(aver);
-                aver=reshape(aver,[3,length(aver)/3]);
-                Sx_spind{jj}=aver(1,:);
-                Mx_spind{jj}=aver(2,:);
-                Ex_spind{jj}=aver(3,:);
-            else
-                Sx_spind{jj}=[];
-                Mx_spind{jj}=[];
-                Ex_spind{jj}=[];
-
-            end
-
-        end
-   
-          Sx=Sx_spind.';
-          Ex=Ex_spind.';
-          Mx=Mx_spind.'; 
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
     end
+    
+    %Generate 1000 shuffled timestamps of the events detected.
+    for r=1:1000
+        ti_rand=cellfun(@(equis) equis(randperm(size(equis, 1))),ti,'UniformOutput',false);
+        Mr.(['Field_' num2str(r)])=cellfun(@(equis1,equis2,equis3) equis3(find(sum(equis1==equis2,2))).', ti,Mx,ti_rand,'UniformOutput',false );
+        r
+    end
+    
     
     %Multiplets detection
     for l=1:length(Mx)
@@ -141,5 +93,5 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
     for ll=1:length(multiplets)
         eval(['[ripple_multiplets.(' 'multiplets{ll}' '), RipFreq_multiplets.(' 'multiplets{ll}' '),rip_duration_multiplets.(' 'multiplets{ll}' ')]=hfo_count_freq_duration(Sx_' multiplets{ll} '_1,Ex_' multiplets{ll} '_1,timeasleep);']);
     end
-    RipFreq=RipFreq*60; %Spindles per minute.
+
 end
