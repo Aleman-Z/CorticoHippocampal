@@ -22,25 +22,25 @@ These last two need to be added to the path.
 _Figure 1 and 2: Count of coocurring and single events._
   * GL_hfos_counts.m
 
-_Figure 2C. Shuffling co-occurrence control._
+_Figure 2C: Shuffling co-occurrence control._
   * GL_ ripples_hfos _control.m
 
-_Figure 2D. Shuffling Plusmaze co-occurrence control._
+_Figure 2D: Shuffling Plusmaze co-occurrence control._
   * GL_plusmaze_control.m
 
-_Figure 3. Spectral power during events._
+_Figure 3: Spectral power during events._
   * GL_spectral_power.m 
 
-_Figure 4 (A,B,C,D). Spindle and co-occurrence counts_
+_Figure 4 (A,B,C,D): Spindle and co-occurrence counts_
   * GL_spindles_counts.m *
 
-_Figure 4G. Spindle co-occurrence. Before & After counts._	
+_Figure 4G: Spindle co-occurrence. Before & After counts._	
   * GL_spindles.m *
 
-_Figure 4 (F,G). Spindle co-occurrence shuffling control_
+_Figure 4 (F,G): Spindle co-occurrence shuffling control_
   * GL_spindles_control.m *
 
-_Figure 6. Granger causality during events._
+_Figure 6: Granger causality during events._
   * GL_granger.m
 
 
