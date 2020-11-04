@@ -181,7 +181,7 @@ for ll=1:length(Mx_cortex_sphfo)
 
 end
 
-%% Coocur PFC spindle and ripples
+%% Coocur PFC spindle and hfos
 [cohfos1_g1,cohfos2_g1]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_cortex_g1,Mx_cortex_g1,Ex_cortex_g1,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
 [cohfos1_g2,cohfos2_g2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_cortex_g2,Mx_cortex_g2,Ex_cortex_g2,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
 
@@ -190,7 +190,7 @@ Cohfos2_PFC_g1{k}=([cohfos2_g1{:}]);
 Cohfos1_PFC_g2{k}=([cohfos1_g2{:}]);
 Cohfos2_PFC_g2{k}=([cohfos2_g2{:}]);
 %%
-%PRE POST ANALYSIS
+%PRE POST ANALYSIS (PFC spindle and hfos)
 %Substract/add spindle duration to compute pre/post.
 [Sx_pre,Mx_pre,Ex_pre,Sx_post,Mx_post,Ex_post]=cellfun(@(equis1,equis2,equis3) pre_post_spindle(equis1,equis2,equis3) ,Sx_cortex,Mx_cortex,Ex_cortex ,'UniformOutput',false);
 
