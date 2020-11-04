@@ -12,20 +12,7 @@ Contact: r1.alemanzapata@donders.ru.nl :mailbox:
 
 :warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys/analysis-tools), [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) and [YASA](https://github.com/raphaelvallat/yasa) repositories.
 
-Copy and run this code to add them to your path:
-```matlab
-%Open Ephys
-addpath(uigetdir('C:\','Select Open Ephys functions folder'));
 
-%Fieldtrip
-addpath(uigetdir('C:\','Select Fieldtrip folder'));
-
-%CorticoHippocampal
-addpath(genpath(uigetdir('C:\','Select CorticoHippocampal folder')));
-
-%ADRITOOLS
-addpath(genpath(uigetdir('C:\','Select ADRITOOLS folder')));
-```
 --------------------------------
 ## Main Folders: :file_folder: 
 1. Load_ephys: Converts .continuous channels into downsampled (1kHz) .mat files. :floppy_disk:
@@ -33,5 +20,7 @@ addpath(genpath(uigetdir('C:\','Select ADRITOOLS folder')));
 3. Granger: Implementation of Spectral Granger Causality. 
 4. Ripple_selection: Detection and selection of ripples.
 5. Pre_midterm: Scripts of tests performed prior to midterm presentation. (Old stuff)
-6. GUI :hammer:
+6. Fast_and_slow_hfos :page_facing_up:
+7. GUI :hammer:
+
 --------------------------------
