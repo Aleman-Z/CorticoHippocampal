@@ -3,14 +3,14 @@
 MASTER THESIS PROJECT by: [Adrián Alemán Zapata](https://www.linkedin.com/in/adri%C3%A1n-alem%C3%A1n-zapata-b1b727b2/) <img src="raised.png" width="25"> 
 
 :mortar_board: *Defended on 16th November 2018 at TU Eindhoven, The Netherlands.* 
-<p align="center">
+<!---<p align="center">
 <img src="giphy.gif" width="300">
 </p>
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
-Contact: jraleman10@gmail.com :mailbox: 
+Contact: r1.alemanzapata@donders.ru.nl :mailbox: 
 
-:warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys/analysis-tools) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories.
+:warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys/analysis-tools), [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) and [YASA](https://github.com/raphaelvallat/yasa) repositories.
 
 Copy and run this code to add them to your path:
 ```matlab
