@@ -3,10 +3,10 @@
 % Requires 'load_me_first.mat' loaded first. 
 
 %% Find location
-close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
-%cd('/home/adrian/Documents/Plusmaze_downsampled')
+% close all
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
+cd('/home/adrian/Documents/Plusmaze_downsampled')
 
 %%
 %Select rat number
@@ -138,30 +138,30 @@ for ll=1:3
 end
     
 %% PARIETAL SPINDLES.
-%Despite variable used is called HPC this is actually Parietal as indicated
+%Despite variable used is called par this is actually Parietal as indicated
 %by 'yy'. 
 
-HPC=dir(strcat('*',yy{1},'*.mat'));
-if isempty(HPC)
+par=dir(strcat('*',yy{1},'*.mat'));
+if isempty(par)
     g=g(~contains(g,g{k}));
     cd ..
     progress_bar(k,length(g),f)
     break
 end
 
-HPC=HPC.name;
-HPC=load(HPC);
-HPC=getfield(HPC,yy{1});
-HPC=HPC.*(0.195);
+par=par.name;
+par=load(par);
+par=getfield(par,yy{1});
+par=par.*(0.195);
 
-[ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
-  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc...    
-  ]=gui_findspindlesYASA(HPC,states,yy,multiplets,fn);
+[ripple,RipFreq,rip_duration,Mx_par,timeasleep,sig_par,Ex_par,Sx_par,...
+  ripple_multiplets_par,RipFreq_multiplets_par,rip_duration_multiplets_par,sig_multiplets_par,Mx_multiplets_par...    
+  ]=gui_findspindlesYASA(par,states,yy,multiplets,fn);
 
-si=sig_hpc(~cellfun('isempty',sig_hpc));
+si=sig_par(~cellfun('isempty',sig_par));
 si=[si{:}];
 
-All_HPC.( strrep(g{k},'-','_'))=si;
+All_par.( strrep(g{k},'-','_'))=si;
 
 print_hist=0;
 [x,y,z,~,~,~,l,p]=hfo_specs_spindles(si,timeasleep,fn,print_hist);
@@ -172,31 +172,31 @@ if print_hist==1
     cd(g{k})
 end
 %Main features of spindle
-fi_hpc(k)=x;
-fa_hpc(k)=y;
-amp_hpc(k)=z;
-auc_hpc(k)=l;
-p2p_hpc(k)=p;
+fi_par(k)=x;
+fa_par(k)=y;
+amp_par(k)=z;
+auc_par(k)=l;
+p2p_par(k)=p;
 
 %% PAR spindles
-hfos_hpc(k)=ripple;
-hfos_hpc_rate(k)=RipFreq;
-hfos_hpc_duration(k)=rip_duration;
+hfos_par(k)=ripple;
+hfos_par_rate(k)=RipFreq;
+hfos_par_duration(k)=rip_duration;
 
 %Multiplets    
 for ll=1:length(multiplets)
-   eval(['hfos_hpc_' multiplets{ll} '(k)=ripple_multiplets_hpc.' multiplets{ll} ';']) 
-   eval(['hfos_hpc_rate_' multiplets{ll} '(k)=RipFreq_multiplets_hpc.' multiplets{ll} ';']) 
-   eval(['hfos_hpc_duration_' multiplets{ll} '(k)=rip_duration_multiplets_hpc.' multiplets{ll} ';'])    
+   eval(['hfos_par_' multiplets{ll} '(k)=ripple_multiplets_par.' multiplets{ll} ';']) 
+   eval(['hfos_par_rate_' multiplets{ll} '(k)=RipFreq_multiplets_par.' multiplets{ll} ';']) 
+   eval(['hfos_par_duration_' multiplets{ll} '(k)=rip_duration_multiplets_par.' multiplets{ll} ';'])    
 end
 % xo
 %% Coocurent spindles
-[cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_hpc,Mx_hpc,Ex_hpc,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
+[cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_par,Mx_par,Ex_par,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
 %Remove repeated values
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2) coocur_repeat(equis1,equis2), cohfos1,cohfos2,'UniformOutput',false);
 
 
-%cohfos1: HPC.
+%cohfos1: par.
 %cohfos2: Cortex.
 %Common values:
 cohfos_count(k)=sum(cellfun('length',cohfos1));
@@ -204,69 +204,69 @@ cohfos_rate(k)=sum(cellfun('length',cohfos1))/(timeasleep*(60));
 
 %Multiplet cohfos
 for ll=1:length(multiplets)
-[cohfos1_multiplets.(multiplets{ll}),cohfos2_multiplets.(multiplets{ll})]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_multiplets_hpc.(multiplets{ll}).',Mx_cortex,'UniformOutput',false);
+[cohfos1_multiplets.(multiplets{ll}),cohfos2_multiplets.(multiplets{ll})]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_multiplets_par.(multiplets{ll}).',Mx_cortex,'UniformOutput',false);
 cohfos_count_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})));
 cohfos_rate_multiplets.(multiplets{ll})(k)=sum(cellfun('length',cohfos1_multiplets.(multiplets{ll})))/(timeasleep*(60));
 end
 %%
 
-%HPC COHFOS
-cohf_mx_hpc=Mx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
-cohf_sx_hpc=Sx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
-cohf_ex_hpc=Ex_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
+%par COHFOS
+cohf_mx_par=Mx_par(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
+cohf_sx_par=Sx_par(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
+cohf_ex_par=Ex_par(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
 
 Cohfos1=cohfos1(~cellfun('isempty',cohfos1));
 
 %Locate sample per co-occurrent events
-coh_samp_hpc= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_mx_hpc,Cohfos1,'UniformOutput',false);
+coh_samp_par= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_mx_par,Cohfos1,'UniformOutput',false);
 
-cohf_sx_hpc_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_sx_hpc,coh_samp_hpc,'UniformOutput',false);
-cohf_sx_hpc_val=[cohf_sx_hpc_val{:}];
+cohf_sx_par_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_sx_par,coh_samp_par,'UniformOutput',false);
+cohf_sx_par_val=[cohf_sx_par_val{:}];
 
-cohf_mx_hpc_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_mx_hpc,coh_samp_hpc,'UniformOutput',false);
-cohf_mx_hpc_val=[cohf_mx_hpc_val{:}];
+cohf_mx_par_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_mx_par,coh_samp_par,'UniformOutput',false);
+cohf_mx_par_val=[cohf_mx_par_val{:}];
 
-cohf_ex_hpc_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_ex_hpc,coh_samp_hpc,'UniformOutput',false);
-cohf_ex_hpc_val=[cohf_ex_hpc_val{:}];
+cohf_ex_par_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_ex_par,coh_samp_par,'UniformOutput',false);
+cohf_ex_par_val=[cohf_ex_par_val{:}];
 
-cohf_hpc_dura=cohf_ex_hpc_val-cohf_sx_hpc_val;
-cohf_hpc_dura=median(cohf_hpc_dura);
-Cohf_hpc_dura(k)=cohf_hpc_dura;
+cohf_par_dura=cohf_ex_par_val-cohf_sx_par_val;
+cohf_par_dura=median(cohf_par_dura);
+Cohf_par_dura(k)=cohf_par_dura;
 
-Sig_hpc=sig_hpc(~cellfun('isempty',cohfos1));
-Sig_hpc=cellfun(@(equis1,equis2) equis1(equis2),Sig_hpc,coh_samp_hpc,'UniformOutput',false);
-Sig_hpc=[Sig_hpc{:}];
+Sig_par=sig_par(~cellfun('isempty',cohfos1));
+Sig_par=cellfun(@(equis1,equis2) equis1(equis2),Sig_par,coh_samp_par,'UniformOutput',false);
+Sig_par=[Sig_par{:}];
 
-[x,y,z,w,h,q,l,p]=hfo_specs_spindles(Sig_hpc,timeasleep,fn,0);
-fi_cohfo_hpc(k)=x;
-fa_cohfo_hpc(k)=y;
-amp_cohfo_hpc(k)=z;
-count_cohfo_hpc(k)=w;
-rate_cohfo_hpc(k)=h;
-dura_cohfo_hpc(k)=q;
-auc_cohfo_hpc(k)=l;
-p2p_cohfo_hpc(k)=p;
+[x,y,z,w,h,q,l,p]=hfo_specs_spindles(Sig_par,timeasleep,fn,0);
+fi_cohfo_par(k)=x;
+fa_cohfo_par(k)=y;
+amp_cohfo_par(k)=z;
+count_cohfo_par(k)=w;
+rate_cohfo_par(k)=h;
+dura_cohfo_par(k)=q;
+auc_cohfo_par(k)=l;
+p2p_cohfo_par(k)=p;
 
 %Single events
-v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
+v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_par,cohfos1,'UniformOutput',false);
 
-Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
-Sig_hpc_single=[Sig_hpc_single{:}];
+Sig_par_single=cellfun(@(equis1,equis2) equis1(equis2),sig_par,v2,'UniformOutput',false);
+Sig_par_single=[Sig_par_single{:}];
 
 
-[single_mx_hpc_val,single_sx_hpc_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos1,Mx_hpc,Sx_hpc,'UniformOutput',false);
-single_mx_hpc_val=[single_mx_hpc_val{:}];
-single_sx_hpc_val=[single_sx_hpc_val{:}];
+[single_mx_par_val,single_sx_par_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos1,Mx_par,Sx_par,'UniformOutput',false);
+single_mx_par_val=[single_mx_par_val{:}];
+single_sx_par_val=[single_sx_par_val{:}];
 
-[x,y,z,w,h,q,l,p]=hfo_specs_spindles(Sig_hpc_single,timeasleep,fn,0);
-fi_single_hpc(k)=x;
-fa_single_hpc(k)=y;
-amp_single_hpc(k)=z;
-count_single_hpc(k)=w;
-rate_single_hpc(k)=h;
-dura_single_hpc(k)=q;
-auc_single_hpc(k)=l;
-p2p_single_hpc(k)=p;
+[x,y,z,w,h,q,l,p]=hfo_specs_spindles(Sig_par_single,timeasleep,fn,0);
+fi_single_par(k)=x;
+fa_single_par(k)=y;
+amp_single_par(k)=z;
+count_single_par(k)=w;
+rate_single_par(k)=h;
+dura_single_par(k)=q;
+auc_single_par(k)=l;
+p2p_single_par(k)=p;
 
 
 %%%%
@@ -339,7 +339,7 @@ printing(['HistogramSpindles_' num2str(Rat) '_All_PFC_count'])
 close all
 
 
-A_cell = struct2cell(All_HPC);
+A_cell = struct2cell(All_par);
 All_Par_26=[A_cell{:}];
 hfo_specs_spindles(All_Par_26,timeasleep,fn,1)
 printing(['HistogramSpindles_' num2str(Rat) '_All_PAR_count'])
@@ -348,7 +348,7 @@ close all
 %% Counts of spindles, cooccurrent spindles and single spindles.
     TT=table;
     TT.Variables=    [[{['Count_' xx{1} '_total']};{['Count_' yy{1} '_total']};{['Count_coocur_' xx{1} '_' yy{1}]};{['Count_single_' xx{1}]};{['Count_single_' yy{1}]}] num2cell([...
-        hfos_cortex;hfos_hpc;count_cohfo_hpc;count_single_cortex;count_single_hpc])];
+        hfos_cortex;hfos_par;count_cohfo_par;count_single_cortex;count_single_par])];
 
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
 
@@ -379,7 +379,7 @@ close all
   %%  PAR spindles features      
 %All detections
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_hpc;hfos_hpc_rate;hfos_hpc_duration;fa_hpc;fi_hpc;amp_hpc])];        
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_par;hfos_par_rate;hfos_par_duration;fa_par;fi_par;amp_par])];        
     TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
             writetable(TT,strcat(yy{1},'_Features_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
@@ -388,7 +388,7 @@ close all
 %%
 %PAR spindles coocur
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_hpc;rate_cohfo_hpc;dura_cohfo_hpc;fa_cohfo_hpc;fi_cohfo_hpc; amp_cohfo_hpc])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_cohfo_par;rate_cohfo_par;dura_cohfo_par;fa_cohfo_par;fi_cohfo_par; amp_cohfo_par])];
     
     TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
@@ -396,7 +396,7 @@ close all
 
 %PAR spindles singles
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_hpc;rate_single_hpc;dura_single_hpc;fa_single_hpc;fi_single_hpc; amp_single_hpc])];
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([count_single_par;rate_single_par;dura_single_par;fa_single_par;fi_single_par; amp_single_par])];
     
     TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
