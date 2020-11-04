@@ -4,10 +4,10 @@
 % Requires 'load_me_first.mat' loaded first. 
 
 %% Find location
-% close all
-% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-% cd(dname)
-cd('/home/adrian/Documents/Plusmaze_downsampled')
+close all
+dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+cd(dname)
+% cd('/home/adrian/Documents/Plusmaze_downsampled')
 
 %%
 %Select rat ID
@@ -490,22 +490,22 @@ Sig_par=[Sig_par{:}];
 [x,y,z,w,h,q,l,p]=hfo_specs_spindles(Sig_par,timeasleep,fn,0);
 
 
-%Single Par spindles
-v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_par,cohfos1,'UniformOutput',false);
+%Single HFOs HPC
+v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
 
-Sig_par_single=cellfun(@(equis1,equis2) equis1(equis2),sig_par,v2,'UniformOutput',false);
-Sig_par_single=[Sig_par_single{:}];
+Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
+Sig_hpc_single=[Sig_hpc_single{:}];
 
 
-[single_mx_par_val,single_sx_par_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos1,Mx_par,Sx_par,'UniformOutput',false);
-single_mx_par_val=[single_mx_par_val{:}];
-single_sx_par_val=[single_sx_par_val{:}];
+[single_mx_hpc_val,single_sx_hpc_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos1,Mx_hpc,Sx_hpc,'UniformOutput',false);
+single_mx_hpc_val=[single_mx_hpc_val{:}];
+single_sx_hpc_val=[single_sx_hpc_val{:}];
 
 %%%%
 %Cortical COHFOS
-cohf_mx_cortex=Mx_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex co-occurrent events were found.
-cohf_sx_cortex=Sx_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex co-occurrent events were found.
-cohf_ex_cortex=Ex_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex co-occurrent events were found.
+cohf_mx_cortex=Mx_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex cohfos were found.
+cohf_sx_cortex=Sx_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex cohfos were found.
+cohf_ex_cortex=Ex_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex cohfos were found.
 
 Cohfos2=cohfos2(~cellfun('isempty',cohfos2));
 
