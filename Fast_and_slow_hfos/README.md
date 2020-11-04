@@ -16,6 +16,22 @@ Adrian Aleman-Zapata 1, Richard GM Morris 2, Lisa Genzel *1,2
 :warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) , [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
 These last two need to be added to the path.
 
+_Required Matlab built-in toolboxes:_
+•	Image Processing Toolbox
+•	Signal Processing Toolbox
+•	Statistics and Machine Learning Toolbox
+•	Mapping Toolbox
+•	Deep Learning Toolbox
+•	Symbolic Math Toolbox
+•	Bioinformatics Toolbox
+•	Computer Vision Toolbox
+•	Fixed-Point Designer
+•	MATLAB Coder
+•	Simulink
+•	Parallel Computing Toolbox
+•	MATLAB Parallel Server
+•	Polyspace Bug Finder
+
 --------------------------------
 ## Main scripts: :file_folder: 
 
