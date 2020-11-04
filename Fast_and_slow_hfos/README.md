@@ -1,0 +1,52 @@
+# Fast and slow cortical high frequency oscillations for cortico-cortical and corticohippocampal network consolidation during NonREM sleep. 
+
+Adrian Aleman-Zapata 1, Richard GM Morris 2, Lisa Genzel *1,2
+
+*corresponding author: lgenzel@donders.ru.nl  :mailbox: 
+
+1, Donders Institute for Brain Cognition and Behavior, Radboud University, Postbus 9010, 6500GL Nijmegen/Netherlands.
+
+2, Centre for Cognitive and Neural Systems, Edinburgh Neuroscience, University of Edinburgh, 1 George Square, Edinburgh EH8 9JZ, UK.
+
+-----------------------------
+
+
+
+
+:warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) , [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
+These last two need to be added to the path.
+
+--------------------------------
+## Main scripts: :file_folder: 
+
+_Figure 1 and 2_
+  * GL_hfos_counts.m
+
+_Figure 2C. Shuffling Analysis._
+  * GL_ ripples_hfos _control.m
+
+_Figure 2D. Shuffling Analysis Plusmaze._
+  * GL_plusmaze_control.m
+
+_Figure 3. Spectral analysis._
+  * GL_spectral_power.m 
+
+_Figure 4.1 Spindle counts_
+  * GL_spindles_counts.m *
+
+_Figure 4.2 Spindle coocur. Pre & Post analysis (HFOs). Coocur._	
+  * GL_spindles.m *
+
+_Figure 4.3. Spindle control_
+  * GL_spindles_control.m *
+
+_Figure 6. Granger causality._
+  * GL_granger.m
+
+
+---------
+*The spindles were previously detected using the YASA algorithm. The steps to do this were:
+1. Run GL_spindle_matlab2python.m for every session per condition to export NREM epochs to python.
+2. Run GL_yasa_spindles.py for every session per condition to export detections to Matlab.
+
+--------------------------------
