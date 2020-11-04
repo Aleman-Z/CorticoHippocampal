@@ -4,11 +4,11 @@
 % Requires 'load_me_first.mat' loaded first. 
 
 %% Find location
-% close all
-% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-% cd(dname)
+close all
+dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+cd(dname)
 
-cd('/home/adrian/Documents/Plusmaze_downsampled')
+% cd('/home/adrian/Documents/Plusmaze_downsampled')
 
 %%
 %Select rat number

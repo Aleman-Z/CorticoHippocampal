@@ -124,7 +124,7 @@ amp_cortex(k)=z;
 auc_cortex(k)=l;
 p2p_cortex(k)=p;
 
-%% Cortical HFOs
+%% PFC spindles
     hfos_cortex(k)=ripple;
     hfos_cortex_rate(k)=RipFreq;
     hfos_cortex_duration(k)=rip_duration;
@@ -178,7 +178,7 @@ amp_hpc(k)=z;
 auc_hpc(k)=l;
 p2p_hpc(k)=p;
 
-%% HFOs
+%% PAR spindles
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
@@ -211,13 +211,13 @@ end
 %%
 
 %HPC COHFOS
-cohf_mx_hpc=Mx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where HPC cohfos were found.
-cohf_sx_hpc=Sx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where HPC cohfos were found.
-cohf_ex_hpc=Ex_hpc(~cellfun('isempty',cohfos1));%Peak values cells where HPC cohfos were found.
+cohf_mx_hpc=Mx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
+cohf_sx_hpc=Sx_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
+cohf_ex_hpc=Ex_hpc(~cellfun('isempty',cohfos1));%Peak values cells where co-occurrent events were found.
 
 Cohfos1=cohfos1(~cellfun('isempty',cohfos1));
 
-%Locate sample per cohfos
+%Locate sample per co-occurrent events
 coh_samp_hpc= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_mx_hpc,Cohfos1,'UniformOutput',false);
 
 cohf_sx_hpc_val=cellfun(@(equis1,equis2) equis1(equis2),cohf_sx_hpc,coh_samp_hpc,'UniformOutput',false);
@@ -247,7 +247,7 @@ dura_cohfo_hpc(k)=q;
 auc_cohfo_hpc(k)=l;
 p2p_cohfo_hpc(k)=p;
 
-%Single HFOs HPC
+%Single events
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
 
 Sig_hpc_single=cellfun(@(equis1,equis2) equis1(equis2),sig_hpc,v2,'UniformOutput',false);
@@ -305,7 +305,7 @@ dura_cohfo_cortex(k)=q;
 auc_cohfo_cortex(k)=l;
 p2p_cohfo_cortex(k)=p;
 
-%Single HFOs Cortex
+%Single events Cortex
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex,cohfos2,'UniformOutput',false);
 
 Sig_cortex_single=cellfun(@(equis1,equis2) equis1(equis2),sig_cortex,v2,'UniformOutput',false);
