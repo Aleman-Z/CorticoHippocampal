@@ -319,8 +319,6 @@ end
 Out_PFC{k}=out_pfc;
 
 %% PARIETAL SPINDLES.
-%Despite variable used is called HPC this is actually Parietal as indicated
-%by 'yy'.
 
 par=dir(strcat('*',yy{1},'*.mat'));
 if isempty(par)

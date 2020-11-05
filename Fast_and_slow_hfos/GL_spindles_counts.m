@@ -137,9 +137,7 @@ for ll=1:3
    eval(['hfos_cortex_duration_' multiplets{ll} '(k)=rip_duration_multiplets_cortex.' multiplets{ll} ';'])    
 end
     
-%% PARIETAL SPINDLES.
-%Despite variable used is called par this is actually Parietal as indicated
-%by 'yy'. 
+%% PARIETAL SPINDLES. 
 
 par=dir(strcat('*',yy{1},'*.mat'));
 if isempty(par)
