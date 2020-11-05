@@ -65,6 +65,6 @@ _Figure 6: Granger causality during events._
 ---------
 *Spindles were previously detected using the YASA algorithm. The steps to do this were:
 1. Run GL_spindle_matlab2python.m for every session per condition to export NREM epochs to python.
-2. Run GL_yasa_spindles.py for every session per condition to export detections to Matlab.
+2. Run GL_yasa_spindles.py for every session per condition to save detections in a .mat file.
 
 --------------------------------
