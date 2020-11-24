@@ -1,6 +1,8 @@
 %MULTIPLETS DETECTION (Consecutive ripples)
 
-function [M_multiplets, Mx_multiplets]=findmultiplets(Sx,Ex,Mx)
+function [M_multiplets, Mx_multiplets]=findmultiplets(Mx)
+%Input: Mx is the tim
+
 % We take the timestamps of the ripple peaks and compute their difference.
 % If the ripples are closer to 300ms we consider the ripples to be multiplets.
 % We count how many events are consecutive. 
@@ -12,15 +14,12 @@ multiplets=[{'singlets'} {'doublets'} {'triplets'} {'quatruplets'} {'pentuplets'
 % Convert to cell array. Only need this if your input is not a cell array already.
 if ~iscell(Mx)
 Mx={Mx};
-Sx={Sx};
-Ex={Ex};
-
 end
     
 %% Multiplets detection
-%M_multiplets contains the timestamps of the peak for the detected multiplets.
-%Mx_multiplets contains the same timestamps but classified in groups.
-%For example, ripple 1 of a triplet is in Mx_multiplets.triplets.m_1
+% M_multiplets contains the timestamps of the ripple peak for all the detected multiplets.
+% Mx_multiplets contains the same timestamps but grouped for the specific multiplet type.
+% For example, ripple 1 of a triplet is in Mx_multiplets.triplets.m_1
 % ripple 2 of a triplet is in Mx_multiplets.triplets.m_2
 % and ripple 3 of a triplet is in Mx_multiplets.triplets.m_3
 
@@ -43,8 +42,5 @@ end
          end
     end
 
-    for ll=1:length(multiplets)
-        eval(['[ripple_multiplets.(' 'multiplets{ll}' ')]=hfo_count_freq_duration(Sx_' multiplets{ll} '_1,Ex_' multiplets{ll} '_1,timeasleep);']);
-    end
     
 end

@@ -1,6 +1,9 @@
 %MULTIPLETS DETECTION (Consecutive ripples)
 
 function [M_multiplets, Mx_multiplets]=findmultiplets(Mx)
+%Input: Mx contains the timestamps of the detected ripples peak.
+%This is output M of the findripples function.
+
 % We take the timestamps of the ripple peaks and compute their difference.
 % If the ripples are closer to 300ms we consider the ripples to be multiplets.
 % We count how many events are consecutive. 
@@ -15,9 +18,9 @@ Mx={Mx};
 end
     
 %% Multiplets detection
-%M_multiplets contains the timestamps of the ripple peak for all the detected multiplets.
-%Mx_multiplets contains the same timestamps but grouped in groups.
-%For example, ripple 1 of a triplet is in Mx_multiplets.triplets.m_1
+% M_multiplets contains the timestamps of the ripple peak for all the detected multiplets.
+% Mx_multiplets contains the same timestamps but grouped for the specific multiplet type.
+% For example, ripple 1 of a triplet is in Mx_multiplets.triplets.m_1
 % ripple 2 of a triplet is in Mx_multiplets.triplets.m_2
 % and ripple 3 of a triplet is in Mx_multiplets.triplets.m_3
 
