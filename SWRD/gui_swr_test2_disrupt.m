@@ -117,7 +117,7 @@ end
  %Remove 50Hz and harmonics
 [CORTEX]=notch_filter(CORTEX,fn);
 %xo 
-[si,Sx,Ex,Mx,ti,Mono_cortex,V_cortex,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,multiplets,fn);
+[si,Sx,Ex,Mx,ti,Mono_cortex,V_cortex,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,fn);
 
 [~,~,~,~,~,~,~,~,~,th,PCA_features]=hfo_specs(si,1,0,Rat,tr);
 %Remove frequency features to avoid bias.

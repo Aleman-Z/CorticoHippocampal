@@ -1,4 +1,4 @@
-function [si,Sx,Ex,Mx,ti,Mono,V,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,multiplets,fn,wa,Rat)
+function [si,Sx,Ex,Mx,ti,Mono,V,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,fn,wa,Rat)
     %Band pass filter design:
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
