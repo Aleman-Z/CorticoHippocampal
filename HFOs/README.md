@@ -5,10 +5,10 @@ A couple of scripts used for the detection and characterization of cortical and 
 *Detects single and coocurring fast and slow HFOs and computes their properties. Used to generate Figure 1 of paper.*
 
 * **gui_swr_spec.m:**  
-*Computes spectrograms of detected events. Used to generate Figure 2 of paper.*
+*Computes spectrograms of detected events. Used to generate Figure 3 of paper.*
 
 * **gui_swr_granger.m:**  
-*Computes spectral granger values of detected events. Used to generate Figure 3 of paper.*
+*Computes spectral granger values of detected events. Used to generate Figure 6 of paper.*
 
 * **gui_swr_count_control_federico.m:**  
 *Control for coocur hfos given an increase of PAR count in Plusmaze.*
