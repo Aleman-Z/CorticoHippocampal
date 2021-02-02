@@ -41,6 +41,17 @@ end
                  cont=cont+1;
              end
          end
+         
+         
+            %Correct singlets values
+            multiplets_stamps=[];
+            for i=2:length(multiplets)
+                multiplets_stamps=[multiplets_stamps (M_multiplets.(multiplets{i}){1})];
+            end
+
+            M_multiplets.singlets={ Mx{l}(~ismember(Mx{l}, multiplets_stamps))};
+            Mx_multiplets.singlets.m_1={Mx{l}(~ismember(Mx{l}, multiplets_stamps))};
+
     end
 
     
