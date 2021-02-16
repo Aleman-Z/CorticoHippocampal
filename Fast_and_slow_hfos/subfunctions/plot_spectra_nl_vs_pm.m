@@ -64,9 +64,9 @@ allscreen()
     cfg              = [];
     cfg.zlim=zlim;
     cfg.channel      = freq2.label{j};
-    cfg.colormap=colormap(jet(256));
+    cfg.colormap=colormap(hot(256));
 
-    subplot(3,3,3*j-2)
+    ax(3*j-2) =subplot(3,3,3*j-2)
     ft_singleplotTFR(cfg, freq1); 
     g=title([label1{j} ' Baseline']);
     g.FontSize=12;
@@ -74,7 +74,7 @@ allscreen()
     ylabel('Frequency (Hz)')
     ylim([100 250])
 
-    subplot(3,3,3*j-1)
+    ax(3*j-1) =subplot(3,3,3*j-1)
     ft_singleplotTFR(cfg, freq2); 
     g=title(strcat([label1{j} ' Plusmaze' ]));
     g.FontSize=12;
@@ -85,18 +85,18 @@ allscreen()
 
     % Pixel-based stats
     zmap=stats_high(freq1,freq2,j);
-    subplot(3,3,3*j);
+    ax(3*j) =subplot(3,3,3*j);
 
-    colormap(jet(256))
+    %colormap(jet(256))
     zmap(zmap == 0) = NaN;
     J=imagesc(freq1.time,freq1.freq,zmap)
     xlabel('Time (s)'), ylabel('Frequency (Hz)')
     set(gca,'xlim',xlim,'ydir','no')
     set(J,'AlphaData',~isnan(zmap))
-    c=narrow_colorbar()
-     c.YLim=[-max(abs(c.YLim)) max(abs(c.YLim))];
-    caxis([-max(abs(c.YLim)) max(abs(c.YLim))])
-    c=narrow_colorbar()
+    c(j)=narrow_colorbar()
+     c(j).YLim=[-max(abs(c(j).YLim)) max(abs(c(j).YLim))];
+    caxis([-max(abs(c(j).YLim)) max(abs(c(j).YLim))])
+    c(j)=narrow_colorbar()
 
     g=title(strcat(labelconditions2{1},' vs Baseline'));
     g.FontSize=12;
@@ -104,5 +104,11 @@ allscreen()
     
 
     end
+    colormap(ax(3*1),bluewhitered(256))
+    colormap(ax(3*2),bluewhitered(256))
+    colormap(ax(3*3),bluewhitered(256))
+c(1).Colormap=bluewhitered(256)
+c(2).Colormap=bluewhitered(256)
+c(3).Colormap=bluewhitered(256)
 
 end

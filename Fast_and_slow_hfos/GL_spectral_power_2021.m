@@ -393,7 +393,7 @@ w=3;
 
 plot_spectra_nl_vs_pm(FP,FQ,labelconditions2,label1,w,same_nr_types,N)
 
-printing(['NewSpec_fastPPC_rat' num2str(Rat) '_' num2str(tr(2))])    
+printing(['NewColorSpec_fastPPC_rat' num2str(Rat) '_' num2str(tr(2))])    
 close all
 xo
 %% Ripple only vs slow.
@@ -410,7 +410,7 @@ close all
 close all
 
 [n3]=plot_spectra_hfos_vs_hfos(FP,FQ,SP,SQ,labelconditions2,label1,same_nr_types,N,'Fast HFOs','Slow HFOs')
-%printing(['NewSpec_fast_vs_slow_rat' num2str(Rat) '_' num2str(tr(2))])    
+printing(['NewColorSpec_fast_vs_slow_rat' num2str(Rat) '_' num2str(tr(2))])    
 close all
 
 %%

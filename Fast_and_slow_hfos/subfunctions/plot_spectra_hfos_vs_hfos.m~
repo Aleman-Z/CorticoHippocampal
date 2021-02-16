@@ -134,16 +134,16 @@ allscreen()
 %     colormap(ax(3*j),parula(256))
     zmap(zmap == 0) = NaN;
     J=imagesc(freq1.time,freq1.freq,zmap)
-%     colormap(ax(3*j),parula(256))
+    colormap(ax(3*j),parula(256))
     xlabel('Time (s)'), ylabel('Frequency (Hz)')
     set(gca,'xlim',xlim,'ydir','no')
     set(J,'AlphaData',~isnan(zmap))
     c(j)=narrow_colorbar()
-%     c(j).Colormap=parula(256)
+    c(j).Colormap=parula(256)
      c(j).YLim=[-max(abs(c(j).YLim)) max(abs(c(j).YLim))];
     caxis([-max(abs(c(j).YLim)) max(abs(c(j).YLim))])
     c(j)=narrow_colorbar()
-%     c(j).Colormap=parula(256)
+    c(j).Colormap=parula(256)
 
     g=title([label1{j} ' (' str_P,' vs ' str_SP ')']);
     g.FontSize=12;
@@ -151,11 +151,17 @@ allscreen()
     
 
     end
+%     colormap(ax(3*1),parula(256))
+%     colormap(ax(3*2),parula(256))
+%     colormap(ax(3*3),parula(256))
+% c(1).Colormap=parula(256)
+% c(2).Colormap=parula(256)
+% c(3).Colormap=parula(256)
     colormap(ax(3*1),bluewhitered(256))
     colormap(ax(3*2),bluewhitered(256))
     colormap(ax(3*3),bluewhitered(256))
 c(1).Colormap=bluewhitered(256)
-c(2).Colormap=bluewhitered(256)
-c(3).Colormap=bluewhitered(256)
+c(2).Colormap=cool(256)
+c(3).Colormap=cool(256)
 
 end
