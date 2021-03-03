@@ -35,9 +35,9 @@ function [ripple2,RipFreq2,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplet
     ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2,'UniformOutput',false);
     %xo
     if strcmp(xx{1},'HPC')
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, tr(1), (tr(1))*(1/2), [] ), signal3,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), [] ), signal3,ti,'UniformOutput',false);
     else
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal3,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal3,ti,'UniformOutput',false);
     end
    %%
     for l=1:length(Sx)
@@ -381,7 +381,7 @@ end
 %     sig_octuplets_1=sig_octuplets_1.';    
 %     sig_nonuplets_1=sig_nonuplets_1.';    
 
-    % [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
+    % [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
 %All HFOs
 %     s=cellfun('length',Sx);
 %     RipFreq2=sum(s)/(timeasleep*(60)); %RIpples per second.
