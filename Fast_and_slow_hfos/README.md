@@ -61,7 +61,8 @@ _Figure 4 (F,G): Spindle co-occurrence shuffling control_
 
 _Figure 6: Granger causality during events._
   * GL_granger.m
-_New (2021): 
+  
+_New (2021):_ 
   * GL_swr_disruption.m
 
 ---------
