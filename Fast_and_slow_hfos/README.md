@@ -48,6 +48,7 @@ _Figure 2D: Shuffling Plusmaze co-occurrence control._
 
 _Figure 3: Spectral power during events._
   * GL_spectral_power.m 
+  * GL_spectral_power_2021.m
 
 _Figure 4A: Spindles counts_
   * GL_spindles_counts.m *
