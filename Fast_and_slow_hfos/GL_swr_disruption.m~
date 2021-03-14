@@ -1,16 +1,17 @@
 %gui_threshold_ripples
-% cd('/home/adrian/Dropbox/new_plusmaze')
-% load('plusmaze_21_25.mat')
+cd('/home/adrian/Dropbox/new_plusmaze')
+load('plusmaze_21_25.mat')
+
 cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
-load('load_me_first.mat')
+
 %% Find location
 close all
 % dname=uigetdir([],'Select folder with Matlab data containing all rats.');
 % cd(dname)
 cd('/home/adrian/Dropbox/jukebox/Desktop/SWRD_extra_rats/downsampled_files')
 %%
-% z= zeros(length(label1),length(rats));
-% [T]=gui_table_channels(z,rats,label1,'Threholds');
+z= zeros(length(label1),length(rats));
+[T]=gui_table_channels(z,rats,label1,'Threholds');
 
 %%
 %Select rat number
@@ -284,7 +285,6 @@ sum(idx==cl)
 % idx(Vec_ind)=-1;
 % sum(idx==cl)
 %% Take some of the consecutive detections
-%xo
 averno=idx;
 averno(averno~=cl)=0;
 averno=averno/cl;

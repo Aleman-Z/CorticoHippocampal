@@ -1,4 +1,4 @@
-function [si,Sx,Ex,Mx,ti,Mono,V,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,fn,wa,Rat)
+function [si,Sx,Ex,Mx,ti,Mono,V,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,fn,wa2,Rat)
     %Band pass filter design:
     Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
@@ -29,10 +29,10 @@ function [si,Sx,Ex,Mx,ti,Mono,V,timeasleep]=gui_findripples_swrd_part1(CORTEX,st
     %Total amount of NREM time:
     timeasleep=sum(cellfun('length',V))*(1/fn)/60; % In minutes
     signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
-    if isempty(wa)
+    if isempty(wa2)
         signal3=cellfun(@(equis) remove_stim_peaks(equis,Rat)  ,signal2,'UniformOutput',false); 
     else
-        signal3=cellfun(@(equis1,equis2) equis1.*equis2  ,signal2,wa,'UniformOutput',false); %Remove periods with HPC stimulation peaks
+        signal3=cellfun(@(equis1,equis2) equis1.*equis2  ,signal2,wa2,'UniformOutput',false); %Remove periods with HPC stimulation peaks
         signal3=cellfun(@(equis) remove_stim_peaks(equis,Rat)  ,signal3,'UniformOutput',false); %Remove large peaks in PPC.
     end
     
