@@ -11,13 +11,14 @@ sns.set(font_scale=1.2)
 
 #data = np.loadtxt('data_spindles_15s_200Hz.txt')
 mat=scipy.io.loadmat('YASA_PAR.mat')
-aver=mat['V_par']
+bouts=mat['V_hpc']
 
-averout=aver
-ajalas=np.zeros((1,aver.size))
+boutsout=bouts
+about=np.zeros((1,bouts.size))
 
-for x in range(0, aver.size):
-    data=aver[x];
+#Iterate across all bouts
+for x in range(0, bouts.size):
+    data=bouts[x];
     data=data[0];
     
     data=np.transpose(data)
@@ -43,29 +44,29 @@ for x in range(0, aver.size):
         sp = None;
     
     
-    if sp is not None:
-        ajalas[0,x]=1
-       #  averout[x,0]=sp.get_mask()
+    if sp is not None:  #If there was a spindle detected
+        about[0,x]=1
+       #  boutsout[x,0]=sp.get_mask()
         summary=sp.summary()
         ch=pd.DataFrame(summary).to_numpy()
 
-        averout[x,0]=ch
+        boutsout[x,0]=ch
     else:
-        averout[x,0]=[]
+        boutsout[x,0]=[]
         
 
-scipy.io.savemat('YASA_PAR_spindles.mat',{'averout':averout})
+scipy.io.savemat('YASA_PAR_spindles.mat',{'boutsout':boutsout})
 
 
 
 mat=scipy.io.loadmat('YASA_PFC.mat')
-aver=mat['V_pfc']
+bouts=mat['V_pfc']
 
-averout=aver
-ajalas=np.zeros((1,aver.size))
+boutsout=bouts
+about=np.zeros((1,bouts.size))
 
-for x in range(0, aver.size):
-    data=aver[x];
+for x in range(0, bouts.size):
+    data=bouts[x];
     data=data[0];
     
     data=np.transpose(data)
@@ -91,16 +92,16 @@ for x in range(0, aver.size):
         
     #sp = yasa.spindles_detect(data, sf)
     if sp is not None:
-        ajalas[0,x]=1
-       #  averout[x,0]=sp.get_mask()
+        about[0,x]=1
+       #  boutsout[x,0]=sp.get_mask()
         summary=sp.summary()
         ch=pd.DataFrame(summary).to_numpy()
 
-        averout[x,0]=ch
+        boutsout[x,0]=ch
     else:
-        averout[x,0]=[]
+        boutsout[x,0]=[]
 
-scipy.io.savemat('YASA_PFC_spindles.mat',{'averout':averout})
+scipy.io.savemat('YASA_PFC_spindles.mat',{'boutsout':boutsout})
 
 
  #summary=sp.summary()

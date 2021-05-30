@@ -7,7 +7,8 @@ load('load_me_first.mat')
 close all
 % dname=uigetdir([],'Select folder with Matlab data containing all rats.');
 % cd(dname)
-cd('/home/adrian/Dropbox/jukebox/Desktop/SWRD_extra_rats/downsampled_files')
+%cd('/home/adrian/Dropbox/jukebox/Desktop/SWRD_extra_rats/downsampled_files')
+cd('/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/jukebox/Desktop/SWRD_extra_rats/downsampled_files')
 %%
 % z= zeros(length(label1),length(rats));
 % [T]=gui_table_channels(z,rats,label1,'Threholds');
@@ -195,7 +196,7 @@ CORTEX=CORTEX.*(0.195);
 
  %Remove 50Hz and harmonics
 [CORTEX]=notch_filter(CORTEX,fn);
- %xo 
+ xo 
 [si,Sx,Ex,Mx,ti,Mono_cortex,V_cortex,timeasleep]=gui_findripples_swrd_part1(CORTEX,states,xx,tr,fn,wa2,Rat);
 
 [~,~,~,~,~,~,~,~,~,th,PCA_features]=hfo_specs(si,timeasleep,0,Rat,tr);
