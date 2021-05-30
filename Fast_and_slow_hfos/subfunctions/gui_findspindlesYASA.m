@@ -1,4 +1,4 @@
-function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,RipFreq_multiplets,rip_duration_multiplets,sig_multiplets,M_multiplets,V,Mono]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn)
+function [spindle,SpinFreq,spin_duration,Mx,timeasleep,sig,Ex,Sx,spindle_multiplets,SpinFreq_multiplets,spin_duration_multiplets,sig_multiplets,M_multiplets,V,Mono]=gui_findspindlesYASA(CORTEX,states,xx,multiplets,fn)
     %Band pass filter design:
     Wn1=[0.3/(fn/2) 300/(fn/2)]; 
     [b2,a2] = butter(3,Wn1); %0.3 to 300Hz
@@ -46,13 +46,13 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
 
             for jj=1:length(spindout)
                 if ~isempty(spindout{jj})
-                    aver=spindout{jj}(:,1:3); %The first 3 elements contain start, peak and end timestamp of spindle.
-                    aver=[aver{:}];
-                    aver=sort(aver);
-                    aver=reshape(aver,[3,length(aver)/3]);
-                    Sx_spind{jj}=aver(1,:);
-                    Mx_spind{jj}=aver(2,:);
-                    Ex_spind{jj}=aver(3,:);
+                    ver=spindout{jj}(:,1:3); %The first 3 elements contain start, peak and end timestamp of spindle.
+                    ver=[ver{:}];
+                    ver=sort(ver);
+                    ver=reshape(ver,[3,length(ver)/3]);
+                    Sx_spind{jj}=ver(1,:);
+                    Mx_spind{jj}=ver(2,:);
+                    Ex_spind{jj}=ver(3,:);
                 else
                     Sx_spind{jj}=[];
                     Mx_spind{jj}=[];
@@ -74,13 +74,13 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
 
         for jj=1:length(spindout)
             if ~isempty(spindout{jj})
-                aver=spindout{jj}(:,1:3);
-                aver=[aver{:}];
-                aver=sort(aver);
-                aver=reshape(aver,[3,length(aver)/3]);
-                Sx_spind{jj}=aver(1,:);
-                Mx_spind{jj}=aver(2,:);
-                Ex_spind{jj}=aver(3,:);
+                ver=spindout{jj}(:,1:3);
+                ver=[ver{:}];
+                ver=sort(ver);
+                ver=reshape(ver,[3,length(ver)/3]);
+                Sx_spind{jj}=ver(1,:);
+                Mx_spind{jj}=ver(2,:);
+                Ex_spind{jj}=ver(3,:);
             else
                 Sx_spind{jj}=[];
                 Mx_spind{jj}=[];
@@ -136,10 +136,10 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
 
     sig=sig.';
 
-    [ripple, RipFreq,rip_duration]=hfo_count_freq_duration(Sx,Ex,timeasleep);
+    [spindle, SpinFreq,spin_duration]=hfo_count_freq_duration(Sx,Ex,timeasleep);
     
     for ll=1:length(multiplets)
-        eval(['[ripple_multiplets.(' 'multiplets{ll}' '), RipFreq_multiplets.(' 'multiplets{ll}' '),rip_duration_multiplets.(' 'multiplets{ll}' ')]=hfo_count_freq_duration(Sx_' multiplets{ll} '_1,Ex_' multiplets{ll} '_1,timeasleep);']);
+        eval(['[spindle_multiplets.(' 'multiplets{ll}' '), SpinFreq_multiplets.(' 'multiplets{ll}' '),spin_duration_multiplets.(' 'multiplets{ll}' ')]=hfo_count_freq_duration(Sx_' multiplets{ll} '_1,Ex_' multiplets{ll} '_1,timeasleep);']);
     end
-    RipFreq=RipFreq*60; %Spindles per minute.
+    SpinFreq=SpinFreq*60; %Spindles per minute.
 end

@@ -71,7 +71,7 @@ g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'Uni
  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
 
 else
-%     error('Name issue')
+    error('Name issue')
 end
 
 %%
@@ -178,18 +178,18 @@ auc_par(k)=l;
 p2p_par(k)=p;
 
 %% PAR spindles
-spindles_par(k)=spindle;
-spindles_par_rate(k)=SpinFreq;
-spindles_par_duration(k)=spin_duration;
+hfos_par(k)=spindle;
+hfos_par_rate(k)=SpinFreq;
+hfos_par_duration(k)=spin_duration;
 
 %Multiplets    
 for ll=1:length(multiplets)
-   eval(['spindles_par_' multiplets{ll} '(k)=spindle_multiplets_par.' multiplets{ll} ';']) 
-   eval(['spindles_par_rate_' multiplets{ll} '(k)=SpinFreq_multiplets_par.' multiplets{ll} ';']) 
-   eval(['spindles_par_duration_' multiplets{ll} '(k)=spin_duration_multiplets_par.' multiplets{ll} ';'])    
+   eval(['hfos_par_' multiplets{ll} '(k)=spindle_multiplets_par.' multiplets{ll} ';']) 
+   eval(['hfos_par_rate_' multiplets{ll} '(k)=SpinFreq_multiplets_par.' multiplets{ll} ';']) 
+   eval(['hfos_par_duration_' multiplets{ll} '(k)=spin_duration_multiplets_par.' multiplets{ll} ';'])    
 end
 % xo
-%% Co-occurent spindles
+%% Coocurent spindles
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_par,Mx_par,Ex_par,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
 %Remove repeated values
 [cohfos1,cohfos2]=cellfun(@(equis1,equis2) coocur_repeat(equis1,equis2), cohfos1,cohfos2,'UniformOutput',false);
@@ -347,20 +347,11 @@ close all
 %% Counts of spindles, cooccurrent spindles and single spindles.
     TT=table;
     TT.Variables=    [[{['Count_' xx{1} '_total']};{['Count_' yy{1} '_total']};{['Count_coocur_' xx{1} '_' yy{1}]};{['Count_single_' xx{1}]};{['Count_single_' yy{1}]}] num2cell([...
-        spindles_cortex;spindles_par;count_cohfo_par;count_single_cortex;count_single_par])];
+        spindles_cortex;hfos_par;count_cohfo_par;count_single_cortex;count_single_par])];
 
     TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
 
-            writetable(TT,strcat(xx{1},'_',yy{1},'_spindles','.xls'),'Sheet',1,'Range','A2:L10')                
-%% Rates of spindles, cooccurrent spindles and single spindles.
-    TT=table;
-    TT.Variables=    [[{['Rate_' xx{1} '_total']};{['Rate_' yy{1} '_total']};{['Rate_coocur_' xx{1} '_' yy{1}]};{['Rate_single_' xx{1}]};{['Rate_single_' yy{1}]}] num2cell([...
-        spindles_cortex_rate;spindles_par_rate;rate_cohfo_par;rate_single_cortex;rate_single_par])];
-
-    TT.Properties.VariableNames=['Metric';cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false).'].';
-
-            writetable(TT,strcat(xx{1},'_',yy{1},'_spindles_rate','.xls'),'Sheet',1,'Range','A2:L10')    
-            
+            writetable(TT,strcat(xx{1},'_',yy{1},'_spindles','.xls'),'Sheet',1,'Range','A2:L10')    
 %% PFC spindles features
     %All detections cortex
     TT=table;
@@ -387,7 +378,7 @@ close all
   %%  PAR spindles features      
 %All detections
     TT=table;
-    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([spindles_par;spindles_par_rate;spindles_par_duration;fa_par;fi_par;amp_par])];        
+    TT.Variables=    [[{'Count'};{'Rate'};{'Duration'};{'Average Frequency'};{'Instantaneous Frequency'};{'Amplitude'}] num2cell([hfos_par;hfos_par_rate;hfos_par_duration;fa_par;fi_par;amp_par])];        
     TT.Properties.VariableNames=['Metric' cellfun(@(equis) strrep(equis,'_','-'),g,'UniformOutput',false)].';
     
             writetable(TT,strcat(yy{1},'_Features_spindles','.xls'),'Sheet',1,'Range','A2:L10')    

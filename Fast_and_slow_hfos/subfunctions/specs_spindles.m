@@ -1,4 +1,4 @@
-function [x,y,z,w,h,q,l,p]=hfo_specs_spindles(si,timeasleep,fn,print_hist)
+function [x,y,z,w,h,q,l,p]=specs_spindles(si,timeasleep,fn,print_hist)
 
     if ~isempty(si)
 
