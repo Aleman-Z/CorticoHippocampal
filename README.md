@@ -8,7 +8,7 @@ Project by: [Adrián Alemán Zapata](https://www.linkedin.com/in/adri%C3%A1n-ale
 </p>
 <!--- <img src="poster_Adrian8.png" width="800">--->
 
-Contact: r1.alemanzapata@donders.ru.nl :mailbox: 
+Contact: adrian.alemanzapata@donders.ru.nl :mailbox: 
 
 :warning: Makes use of functions from the [Fieldtrip](https://github.com/fieldtrip/fieldtrip) , [OpenEphys](https://github.com/open-ephys/analysis-tools), [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) and [YASA](https://github.com/raphaelvallat/yasa) repositories.
 
