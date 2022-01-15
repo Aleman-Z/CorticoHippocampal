@@ -1,4 +1,4 @@
-function [S, E, M] = findRipplesLisa2020(Filt_EEG, timestamps, DetectThreshold, LimitThreshold,varargin)
+function [S, E, M] = findRipplesLisa2020(Filt_EEG, timestamps, DetectThreshold, LimitThreshold,fn,varargin)
 % [S, E, M] = findRipples(Filt_EEG, DetectThreshold, LimitThreshold, varargin)
 % 
 % INPUTS: 
@@ -27,10 +27,10 @@ function [S, E, M] = findRipplesLisa2020(Filt_EEG, timestamps, DetectThreshold, 
 % parameters
 Q1 = 3;
 %CloseThreshold = 20 / 1000;
-CloseThreshold = 200 / 1000;
+CloseThreshold = 200 / fn;
 
-MinRippleDuration = 30 / 1000;
-MaxRippleDuration = 100 / 1000;
+MinRippleDuration = 30 / fn;
+MaxRippleDuration = 100 / fn;
 
 
 EEGStart = timestamps(1);

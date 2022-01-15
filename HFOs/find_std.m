@@ -1,4 +1,4 @@
-function [sd_swr]=find_std(HPC,PFC,states,ss)
+function [sd_swr,signal2_hpc,signal2_pfc]=find_std(HPC,PFC,states,ss,fn)
  
 %Ignore NaNs
 if sum(isnan(HPC))~=0 || sum(isnan(PFC))~=0
@@ -8,20 +8,20 @@ if sum(isnan(HPC))~=0 || sum(isnan(PFC))~=0
 end
 
 %Band pass filter design:
-fn=1000; % New sampling frequency. 
+%fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
 % Wn1=[50/(fn/2) 80/(fn/2)]; 
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
 
 %LPF 300 Hz:
-fn=1000; % New sampling frequency. 
+% fn=1000; % New sampling frequency. 
 Wn1=[320/(fn/2)]; % Cutoff=320 Hz
 [b2,a2] = butter(3,Wn1); %Filter coefficients
 
 
 %Convert signal to 1 sec epochs.
     e_t=1;
-    e_samples=e_t*(1000); %fs=1kHz
+    e_samples=e_t*(fn); %fs=1kHz
     ch=length(HPC);
     nc=floor(ch/e_samples); %Number of epochs
     NC=[];
@@ -77,7 +77,7 @@ sd5_hpc_co=5*sd_hpc_co+mean_hpc_co;
 sd_pfc_co=std(cell2mat(signal2_pfc));
 mean_pfc_co=mean(cell2mat(signal2_pfc));
 sd2_pfc_co=2*sd_pfc_co+mean_pfc_co;
-sd5_pfc_co=5*sd_pfc_co+mean_pfc_co;
+sd5_pfc_co=4*sd_pfc_co+mean_pfc_co;
 
 
 %2) Longest NREM epoch

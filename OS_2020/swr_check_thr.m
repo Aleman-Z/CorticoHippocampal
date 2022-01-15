@@ -1,4 +1,4 @@
-function [swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc,sd_swr]=swr_check_thr(HPC,PFC,states,ss,D1,D2)
+function [swr_hpc,swr_pfc,s_hpc,s_pfc,V_hpc,V_pfc,signal2_hpc,signal2_pfc,sd_swr,sig]=swr_check_thr(HPC,PFC,states,ss,D1,D2,fn)
  
 %Ignore NaNs
 if sum(isnan(HPC))~=0 || sum(isnan(PFC))~=0
@@ -8,7 +8,7 @@ if sum(isnan(HPC))~=0 || sum(isnan(PFC))~=0
 end
 
 %Band pass filter design:
-fn=1000; % New sampling frequency. 
+%fn=1000; % New sampling frequency. 
 Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=100-300 Hz
 % Wn1=[50/(fn/2) 80/(fn/2)]; 
 [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
@@ -20,7 +20,7 @@ Wn1=[320/(fn/2)]; % Cutoff=320 Hz
 
 %Convert signal to 1 sec epochs.
     e_t=1;
-    e_samples=e_t*(1000); %fs=1kHz
+    e_samples=e_t*(fn); %fs=1kHz
     ch=length(HPC);
     nc=floor(ch/e_samples); %Number of epochs
     NC=[];
@@ -82,14 +82,24 @@ ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[]
 %% SWR in HPC
 % D1=70;%THRESHOLD
 k=1;
-    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2), [] ), signal2_hpc,ti,'UniformOutput',false);    
+    [Sx_hpc,Ex_hpc,Mx_hpc] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, D1, (D1)*(1/2),fn), signal2_hpc,ti,'UniformOutput',false);    
     swr_hpc(:,:,k)=[Sx_hpc Ex_hpc Mx_hpc];
     s_hpc(:,k)=cellfun('length',Sx_hpc);
 %% Cortical ripples
 %D2=35;%THRESHOLD
-    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), [] ), signal2_pfc,ti,'UniformOutput',false);    
+    [Sx_pfc,Ex_pfc,Mx_pfc] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, D2, (D2)*(1/2), fn ), signal2_pfc,ti,'UniformOutput',false);    
     swr_pfc(:,:,k)=[Sx_pfc Ex_pfc Mx_pfc];
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
+%% Extract waveforms.
+
+%Get traces of events detected    
+    for l=1:length(Sx_pfc)
+         sig{l}=getsignal(Sx_pfc,Ex_pfc,ti,Mono_pfc,l);
+%         sig{l}=getsignal(Sx_pfc,Ex_pfc,ti,V_pfc,l);
+    end
+
+    sig=sig.';
+    
 %% SD analysis
 %Two approaches
 %1) Concatenated epochs:
