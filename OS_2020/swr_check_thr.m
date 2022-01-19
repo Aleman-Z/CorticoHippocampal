@@ -47,10 +47,12 @@ V_hpc=0;
 V_pfc=0;
 signal2_hpc=0;
 signal2_pfc=0;
-sd_swr=0;            
+sd_swr=0;
+sig={};
             return
         end
     end
+    
     %Cluster one values:
     v2=ConsecutiveOnes(vec_bin);
     
@@ -92,12 +94,12 @@ k=1;
     s_pfc(:,k)=cellfun('length',Sx_pfc);%% Cortical ripples
 %% Extract waveforms.
 
-%Get traces of events detected    
+%Get traces of events detected
+
     for l=1:length(Sx_pfc)
          sig{l}=getsignal(Sx_pfc,Ex_pfc,ti,Mono_pfc,l);
 %         sig{l}=getsignal(Sx_pfc,Ex_pfc,ti,V_pfc,l);
     end
-
     sig=sig.';
     
 %% SD analysis
@@ -111,7 +113,7 @@ sd5_hpc_co=5*sd_hpc_co+mean_hpc_co;
 sd_pfc_co=std(cell2mat(signal2_pfc));
 mean_pfc_co=mean(cell2mat(signal2_pfc));
 sd2_pfc_co=2*sd_pfc_co+mean_pfc_co;
-sd5_pfc_co=5*sd_pfc_co+mean_pfc_co;
+sd5_pfc_co=4*sd_pfc_co+mean_pfc_co;
 
 
 %2) Longest NREM epoch

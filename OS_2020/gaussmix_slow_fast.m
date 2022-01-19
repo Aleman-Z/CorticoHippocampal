@@ -1,7 +1,12 @@
 function[cutoff,std_TH]=gaussmix_slow_fast(data)
-
 if size(data,1)< size(data,2)
  data=data.';   
+end
+
+if length(data)==1
+    cutoff=NaN;
+    std_TH=NaN;
+    return
 end
 
 %Run 100 times.

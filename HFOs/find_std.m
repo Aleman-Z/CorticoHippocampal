@@ -36,8 +36,21 @@ Wn1=[320/(fn/2)]; % Cutoff=320 Hz
     vec_bin(vec_bin~=ss)=0;
     vec_bin(vec_bin==ss)=1;
     
-    if sum(vec_bin)==0  %%All states
-        vec_bin=vec_bin+1;
+    if sum(vec_bin)==0  % In the absence of NREM.
+%         vec_bin=vec_bin+1;
+        'No NREM found'
+        signal2_hpc=[];
+        signal2_pfc=[];
+        
+        sd_swr.sd2_hpc_co=NaN;
+        sd_swr.sd5_hpc_co=NaN;
+        sd_swr.sd2_pfc_co=NaN;
+        sd_swr.sd5_pfc_co=NaN;
+        sd_swr.sd2_hpc_long=NaN;
+        sd_swr.sd5_hpc_long=NaN;
+        sd_swr.sd2_pfc_long=NaN;
+        sd_swr.sd5_pfc_long=NaN;
+        return
     end
     %Cluster one values:
     v2=ConsecutiveOnes(vec_bin);
