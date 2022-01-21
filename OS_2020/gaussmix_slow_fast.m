@@ -3,7 +3,7 @@ if size(data,1)< size(data,2)
  data=data.';   
 end
 
-if length(data)==1
+if length(data)<3 
     cutoff=NaN;
     std_TH=NaN;
     return
