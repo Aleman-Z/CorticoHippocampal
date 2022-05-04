@@ -2,15 +2,21 @@
 
 % Main code for detection of fast and slow, coocur and single hfos.
 % Generates hfos counts from Figure 1 and 2 respectively.
-% Requires 'load_me_first.mat' loaded first. 
-
+% Requires 'load_me_first.mat' loaded first. /home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos
+clear variables
+cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
+load('load_me_first.mat')
 %% Find location of downsampled data
 
 close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+%dname='/home/adrian/Dropbox/jukebox/Documents/Plusmaze_downsampled';
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
 cd(dname)
 
 %cd('/home/adrian/Documents/Plusmaze_downsampled')
+%/home/adrian/Dropbox/jukebox/Documents/Plusmaze_downsampled
+
 %%
 %Select rat ID
 opts.Resize = 'on';
@@ -59,10 +65,10 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-
+%xo
 %Find hfos
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
-  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~, ...
+  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
 
 %Get traces of events and store them
@@ -72,7 +78,7 @@ All_Par.( strrep(g{k},'-','_'))=si;
 
 %Compute main features of hfos.
 print_hist=0;
-[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist,Rat,tr);
+[x,y,z,~,~,~,l,p,si_mixed,th]=hfo_specs(si,timeasleep,print_hist,Rat,tr,fn);
 if print_hist==1
     cd ..
     printing(['Histograms_Cortex_Count_' g{k}]);
@@ -105,10 +111,10 @@ HPC=HPC.name;
 HPC=load(HPC);
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
-
+xo
 %Find ripples 
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
-  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc...    
+  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc,~,~,Sx_ti,Ex_ti,Mx_ti...    
   ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets,fn);
 
 %Ripple traces
@@ -118,7 +124,7 @@ All_HPC.( strrep(g{k},'-','_'))=si;
 
 %Compute ripples main features
 print_hist=0; %No printing
-[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,print_hist);
+[x,y,z,~,~,~,l,p]=hfo_specs_hpc(si,timeasleep,print_hist,fn);
 if print_hist==1
     cd ..
     printing(['Histograms_HPC_Probability_' g{k}]);
@@ -242,7 +248,7 @@ Sig_hpc=[Sig_hpc{:}];
 
 
 %Extract main features of coocuring ripples
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc,timeasleep,0,Rat,tr);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc,timeasleep,0,Rat,tr,fn);
 fi_cohfo_hpc(k)=x;
 fa_cohfo_hpc(k)=y;
 amp_cohfo_hpc(k)=z;
@@ -263,7 +269,7 @@ single_mx_hpc_val=[single_mx_hpc_val{:}];
 single_sx_hpc_val=[single_sx_hpc_val{:}];
 
 %Compute main features of single ripples
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0,Rat,tr);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0,Rat,tr,fn);
 fi_single_hpc(k)=x;
 fa_single_hpc(k)=y;
 amp_single_hpc(k)=z;
@@ -303,7 +309,7 @@ Sig_cortex=cellfun(@(equis1,equis2) equis1(equis2),Sig_cortex,coh_samp_cortex,'U
 Sig_cortex=[Sig_cortex{:}];
 
 %Compute features of PPC cohfos
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex,timeasleep,0,Rat,tr);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex,timeasleep,0,Rat,tr,fn);
 fi_cohfo_cortex(k)=x;
 fa_cohfo_cortex(k)=y;
 amp_cohfo_cortex(k)=z;
@@ -324,7 +330,7 @@ single_mx_cortex_val=[single_mx_cortex_val{:}];
 single_sx_cortex_val=[single_sx_cortex_val{:}];
 
 %Compute features of single hfos
-[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0,Rat,tr);
+[x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0,Rat,tr,fn);
 fi_single_cortex(k)=x;
 fa_single_cortex(k)=y;
 amp_single_cortex(k)=z;
@@ -337,7 +343,7 @@ p2p_single_cortex(k)=p;
 progress_bar(k,length(g),f)
     cd ..    
     end
-        
+xo        
 %% Generate tables and save values into spreadsheets.
 
 %%
