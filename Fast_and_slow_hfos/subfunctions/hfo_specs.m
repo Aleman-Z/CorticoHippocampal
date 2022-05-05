@@ -1,10 +1,10 @@
-function [x,y,z,w,h,q,l,p,si_mixed,th,PCA_features]=hfo_specs(si,timeasleep,print_hist,Rat,tr)
+function [x,y,z,w,h,q,l,p,si_mixed,th,PCA_features]=hfo_specs(si,timeasleep,print_hist,Rat,tr,fn)
 %Computes main features of events detected.
 PCA_features=[];
     if ~isempty(si)
 
         %Instantaneous frequency.
-        x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
+        x=cellfun(@(equis) mean(instfreq(equis,fn)) ,si,'UniformOutput',false);
         x=cell2mat(x);
         if print_hist==1
             subplot(3,2,1)
@@ -21,9 +21,11 @@ PCA_features=[];
         x=median(x);
         %fi_cortex(k)=x;
         %Average frequency
-        y=cellfun(@(equis) (meanfreq(equis,1000)) ,si,'UniformOutput',false);
+        y=cellfun(@(equis) (meanfreq(equis,fn)) ,si,'UniformOutput',false);
+%         y=cellfun(@(equis) (freqmaxpeak(equis,fn)) ,si,'UniformOutput',false);
         y=cell2mat(y);
         th=gaussmix(y,Rat,tr);
+%         [th]=gaussmix_slow_fast(y)
         si_mixed.g1=si(y<=th);
         si_mixed.i1=find(y<=th);
         si_mixed.g2=si(y>th);
@@ -32,7 +34,7 @@ PCA_features=[];
         if print_hist==1
             subplot(3,2,2)
             xlim([100 250])
-            histogram(y,[100:10:250]); title('Average Frequencies');xlabel('Frequency (Hz)');ylabel('Count') 
+            histogram(y,[100:5:250]); title('Average Frequencies');xlabel('Frequency (Hz)');ylabel('Count') 
 %             ylim([0 50])
 %             
 %             yticks([0:10:50])
@@ -63,7 +65,7 @@ PCA_features=[];
         %amp_cortex(k)=z;
         
         %Area under the curve
-        l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./1000,abs(equis)),si,'UniformOutput',false));
+        l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./fn,abs(equis)),si,'UniformOutput',false));
         if print_hist==1
             subplot(3,2,4)
 %             xlim([0 0.5])
@@ -84,7 +86,7 @@ PCA_features=[];
         h=w/(timeasleep*(60));
 
         %Duration
-        q=(cellfun('length',si)/1000);
+        q=(cellfun('length',si)/fn);
         if print_hist==1
             subplot(3,2,5)
 %             xlim([.03 0.1]*1000)
@@ -119,6 +121,22 @@ PCA_features=[];
         %Power
         PCA_features(:,7)=cellfun(@power_signal,si);
 
+        yfreqmax=cellfun(@(equis) (freqmaxpeak(equis,fn)) ,si,'UniformOutput',false);
+        yfreqmax=cell2mat(yfreqmax);
+        
+        if print_hist==1
+            figure()
+            xlim([100 250])
+            histogram(yfreqmax,[100:5:250]); title('Peak Frequencies');xlabel('Frequency (Hz)');ylabel('Count') 
+%             ylim([0 50])
+%             
+%             yticks([0:10:50])
+%             histogram(y,[100:10:250],'Normalization','probability'); title('Average Frequencies');xlabel('Frequency (Hz)');ylabel('Probability')
+%             ylim([0 0.5]) 
+%             yticks([0:0.1:0.5])            
+        end
+
+        
     else
 
         x=NaN;
@@ -135,5 +153,6 @@ PCA_features=[];
         si_mixed.g2=NaN;
         si_mixed.i2=NaN;
     end
-
+    
+%freqmaxpeak(x,fn)
 end
