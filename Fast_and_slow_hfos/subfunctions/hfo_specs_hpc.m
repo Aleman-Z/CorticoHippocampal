@@ -1,9 +1,9 @@
-function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs_hpc(si,timeasleep,print_hist)
+function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs_hpc(si,timeasleep,print_hist,fn)
 
     if ~isempty(si)
 
         %Instantaneous frequency.
-        x=cellfun(@(equis) mean(instfreq(equis,1000)) ,si,'UniformOutput',false);
+        x=cellfun(@(equis) mean(instfreq(equis,fn)) ,si,'UniformOutput',false);
         x=cell2mat(x);
         if print_hist==1
             subplot(3,2,1)
@@ -20,7 +20,7 @@ function [x,y,z,w,h,q,l,p,si_mixed,th]=hfo_specs_hpc(si,timeasleep,print_hist)
         x=median(x);
         %fi_cortex(k)=x;
         %Average frequency
-        y=cellfun(@(equis) (meanfreq(equis,1000)) ,si,'UniformOutput',false);
+        y=cellfun(@(equis) (meanfreq(equis,fn)) ,si,'UniformOutput',false);
         y=cell2mat(y);
 %         th=gaussmix(y);
 %         si_mixed.g1=si(y<=th);
@@ -65,7 +65,7 @@ si_mixed=[];
         %amp_cortex(k)=z;
         
         %Area under the curve
-        l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./1000,abs(equis)),si,'UniformOutput',false));
+        l=cell2mat(cellfun(@(equis) trapz((1:length(equis))./fn,abs(equis)),si,'UniformOutput',false));
         if print_hist==1
             subplot(3,2,4)
             histogram(l,[0:0.10:4]); title('Area under the curve');xlabel('AUC');ylabel('Count') 
@@ -88,7 +88,7 @@ si_mixed=[];
 %h=[];
 
         %Duration
-        q=(cellfun('length',si)/1000);
+        q=(cellfun('length',si)/fn);
         if print_hist==1
             subplot(3,2,5)
 
