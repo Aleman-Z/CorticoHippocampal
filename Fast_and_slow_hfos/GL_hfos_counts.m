@@ -70,7 +70,36 @@ end
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
+%% Plot cortical ripples histogram across 4 hours.
+figure()
+xlabel('Time (Hours)','FontSize',12)
+ylabel('Amount of ripples','FontSize',12)
+title('Histogram of cortical ripples','FontSize',12)
 
+vec_trans=(states==4);
+vec_rem=(states==5);
+vec_nrem=(states==3);
+vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
+labels=(0:1:length(states)-1);
+
+rip_times=cell2mat(Mx_cortex_ti);
+hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
+
+hold on
+stripes(vec_trans,0.2,labels/60/60,'b',max(hist_rip)+1)
+stripes(vec_rem,0.2,labels/60/60,'r',max(hist_rip)+1)
+stripes(vec_nrem,0.9,labels/60/60,'k',max(hist_rip)+1)
+
+
+stem(linspace(0,max(labels)/60/60,length(hist_rip)),hist_rip,'filled','Color',[0.3010 0.7450 0.9330])
+ylim([0 max(hist_rip)+1])
+
+cd ..
+ printing(['Histograms_CorticalRipples_across_time' g{k}]);
+close all
+cd(g{k})
+
+%%
 %Get traces of events and store them
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
@@ -116,7 +145,37 @@ xo
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
   ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc,~,~,Sx_ti,Ex_ti,Mx_ti...    
   ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets,fn);
+%% Plot hippocampal ripples histogram across 4 hours.
+figure()
+xlabel('Time (Hours)','FontSize',12)
+ylabel('Amount of ripples','FontSize',12)
+title('Histogram of hippocampal ripples','FontSize',12)
 
+vec_trans=(states==4);
+vec_rem=(states==5);
+vec_nrem=(states==3);
+vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
+labels=(0:1:length(states)-1);
+
+rip_times=cell2mat(Mx_ti);
+hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
+
+hold on
+stripes(vec_trans,0.2,labels/60/60,'b',30)
+stripes(vec_rem,0.2,labels/60/60,'r',30)
+stripes(vec_nrem,0.9,labels/60/60,'k',30)
+
+
+stem(linspace(0,max(labels)/60/60,length(hist_rip)),hist_rip,'filled','Color',[0.3010 0.7450 0.9330])
+ylim([0 30])
+
+cd ..
+ printing(['Histograms_HippocampalRipples_across_time' g{k}]);
+close all
+cd(g{k})
+
+
+%%
 %Ripple traces
 si=sig_hpc(~cellfun('isempty',sig_hpc));
 si=[si{:}];
