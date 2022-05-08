@@ -43,9 +43,9 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
     %If HPC find ripples, else find hfos.
     %Finds start, end and peak timestamp.
     if strcmp(xx{1},'HPC')
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, tr(1), (tr(1))*(1/2), fn ), signal2,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), fn ), signal2,ti,'UniformOutput',false);
     else
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), fn ), signal2,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), fn ), signal2,ti,'UniformOutput',false);
     end
     
     
@@ -59,9 +59,9 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
 %     %If HPC find ripples, else find hfos.
 %     %Finds start, end and peak timestamp.
 %     if strcmp(xx{1},'HPC')
-%     [Sx_ti,Ex_ti,Mx_ti] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2, tr(1), (tr(1))*(1/2), fn ), signal2,v_ti,'UniformOutput',false);
+%     [Sx_ti,Ex_ti,Mx_ti] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), fn ), signal2,v_ti,'UniformOutput',false);
 %     else
-%     [Sx_ti,Ex_ti,Mx_ti] =cellfun(@(equis1,equis2) findRipplesLisa2020(equis1, equis2, tr(2), (tr(2))*(1/2), fn ), signal2,v_ti,'UniformOutput',false);
+%     [Sx_ti,Ex_ti,Mx_ti] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), fn ), signal2,v_ti,'UniformOutput',false);
 %     end
 
     
