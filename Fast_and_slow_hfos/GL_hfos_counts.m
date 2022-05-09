@@ -68,8 +68,14 @@ end
 %xo
 %Find hfos
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
-  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti ...
+  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti,v_rate ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
+
+[Mx_cortex_ti_1] =cellfun(@(x) x(x/60/60<=1) , Mx_cortex_ti,'UniformOutput',false);
+[Mx_cortex_ti_2] =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , Mx_cortex_ti,'UniformOutput',false);
+[Mx_cortex_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Mx_cortex_ti,'UniformOutput',false);
+[Mx_cortex_ti_4] =cellfun(@(x) x(x/60/60>3) , Mx_cortex_ti,'UniformOutput',false);
+
 %% Plot cortical ripples histogram across 4 hours.
 figure()
 xlabel('Time (Hours)','FontSize',12)
@@ -140,11 +146,19 @@ HPC=HPC.name;
 HPC=load(HPC);
 HPC=getfield(HPC,'HPC');
 HPC=HPC.*(0.195);
-xo
+%xo
 %Find ripples 
 [ripple,RipFreq,rip_duration,Mx_hpc,timeasleep,sig_hpc,Ex_hpc,Sx_hpc,...
-  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc,~,~,Sx_ti,Ex_ti,Mx_ti...    
+  ripple_multiplets_hpc,RipFreq_multiplets_hpc,rip_duration_multiplets_hpc,sig_multiplets_hpc,Mx_multiplets_hpc,~,~,Sx_ti,Ex_ti,Mx_ti,v_rate...    
   ]=gui_findripples(HPC,states,{'HPC'},tr,multiplets,fn);
+
+[Mx_ti_1] =cellfun(@(x) x(x/60/60<=1) , Mx_ti,'UniformOutput',false);
+[Mx_ti_2] =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , Mx_ti,'UniformOutput',false);
+[Mx_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Mx_ti,'UniformOutput',false);
+[Mx_ti_4] =cellfun(@(x) x(x/60/60>3) , Mx_ti,'UniformOutput',false);
+
+
+
 %% Plot hippocampal ripples histogram across 4 hours.
 figure()
 xlabel('Time (Hours)','FontSize',12)
@@ -196,11 +210,17 @@ fa_hpc(k)=y;
 amp_hpc(k)=z;
 auc_hpc(k)=l;
 p2p_hpc(k)=p;
-
-%% HFC HFOs
+xo
+%% HPC HFOs
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
 hfos_hpc_duration(k)=rip_duration;
+
+hfos_hpc_perhour(k,1)=sum(cellfun('length',Mx_ti_1));
+hfos_hpc_perhour(k,2)=sum(cellfun('length',Mx_ti_2));
+hfos_hpc_perhour(k,3)=sum(cellfun('length',Mx_ti_3));
+hfos_hpc_perhour(k,4)=sum(cellfun('length',Mx_ti_4));
+
 
 %Multiplets    
 for ll=1:length(multiplets)
@@ -217,6 +237,23 @@ end
 cohfos_count(k)=sum(cellfun('length',cohfos1));
 cohfos_rate(k)=sum(cellfun('length',cohfos1))/(timeasleep*(60));
 
+%Cohfos per hour
+[cohfos1_ti_1,cohfos2_ti_1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_1,Mx_cortex_ti_1,'UniformOutput',false);
+[cohfos1_ti_2,cohfos2_ti_2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_2,Mx_cortex_ti_2,'UniformOutput',false);
+[cohfos1_ti_3,cohfos2_ti_3]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_3,Mx_cortex_ti_3,'UniformOutput',false);
+[cohfos1_ti_4,cohfos2_ti_4]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_4,Mx_cortex_ti_4,'UniformOutput',false);
+
+cohfos_count_perhour(k,1)=sum(cellfun('length',cohfos1_ti_1));
+cohfos_count_perhour(k,2)=sum(cellfun('length',cohfos1_ti_2));
+cohfos_count_perhour(k,3)=sum(cellfun('length',cohfos1_ti_3));
+cohfos_count_perhour(k,4)=sum(cellfun('length',cohfos1_ti_4));
+
+cohfos_rate_perhour(k,1)=sum(cellfun('length',cohfos1_ti_1))/(v_rate(1)*(60));
+cohfos_rate_perhour(k,2)=sum(cellfun('length',cohfos1_ti_2))/(v_rate(2)*(60));
+cohfos_rate_perhour(k,3)=sum(cellfun('length',cohfos1_ti_3))/(v_rate(3)*(60));
+cohfos_rate_perhour(k,4)=sum(cellfun('length',cohfos1_ti_4))/(v_rate(4)*(60));
+
+
 %Multiplet cohfos
 for ll=1:length(multiplets)
 [cohfos1_multiplets.(multiplets{ll}),cohfos2_multiplets.(multiplets{ll})]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_multiplets_hpc.(multiplets{ll}).',Mx_cortex,'UniformOutput',false);
@@ -229,6 +266,8 @@ end
 %g1 and g2 stand for gaussian1 and gaussian2 (slow and fast hfos)
 Mx_cortex_g1=Mx_cortex;
 Mx_cortex_g2=Mx_cortex;
+
+
 
 row=si_mixed.i1;
 cont=0;
