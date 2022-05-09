@@ -29,6 +29,17 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
     v{epoch_count,1}=reshape(NC(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
     v_ti{epoch_count,1}=reshape(NC_ti_main(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
     end
+    
+     % Splitting the 4 hour recording duration into 1 hour segments
+    v_ti_sub{1,1} =cellfun(@(x) x(x/60/60<=1) , v_ti,'UniformOutput',false);
+    v_ti_sub{2,1} =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , v_ti,'UniformOutput',false);
+    v_ti_sub{3,1} =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , v_ti,'UniformOutput',false);
+    v_ti_sub{4,1} =cellfun(@(x) x(x/60/60>3) , v_ti,'UniformOutput',false);
+    % Computing NREM duration in each hour
+    for i=1:4
+        v_rate(i,1)= sum(cell2mat(cellfun(@(x) (size(x,1)),v_ti_sub{i,1},'UniformOutput',false)))/(60*fn);
+    end
+    
     %Filter
     V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false);
     Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false);
