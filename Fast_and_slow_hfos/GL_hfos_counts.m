@@ -442,16 +442,6 @@ rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
 auc_single_cortex(k)=l;
 p2p_single_cortex(k)=p;
-%% 30_minute counts
-
-    TT=table;
-    TT.Variables=    [[{'Cortical Ripples Count'};{'Hippocampal Ripples Count'}] num2cell([CR_30_count{k};HR_30_count{k}])];
-    
-    TT.Properties.VariableNames=[{'Ripple type'};{'30 minutes '};{'1 hour'};...
-        {'1.5 hours'};{'2 hours'};{'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}].';
-    
-            writetable(TT,strcat('30_min_count_',g{k},'.xls'),'Sheet',1,'Range','A2:L10')    
-
 
 progress_bar(k,length(g),f)
     cd ..    
@@ -545,14 +535,21 @@ writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'
 writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
 %% 30_minute counts
-
+    
     TT=table;
-    TT.Variables=    [[{'Cortical Ripples Count'};{'Hippocampal Ripples Count'}] num2cell([CR_30_count;HR_30_count])];
+    TT.Variables=    [[{'Cortical Ripples Count'};{''};{''};{''};...
+        {''};{''};{''};{''};...
+        {'Hippocampal Ripples Count'};{''};{''};{''};...
+        {''};{''};{''};{''}], ...
+        [{'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
+        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
+        {'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
+        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}],...
+        num2cell([cell2mat(CR_30_count)',cell2mat(HR_30_count)'])];
     
-    TT.Properties.VariableNames=[{'Ripple type'};{'30 minutes '};{'1 hour'};...
-        {'1.5 hours'};{'2 hours'};{'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}].';
+    TT.Properties.VariableNames=['Ripple type';'Duration';g];
     
-            writetable(TT,strcat('30_min_count','.xls'),'Sheet',1,'Range','A2:L10')    
+            writetable(TT,strcat('30_min_count','.xls'),'Sheet',1,'Range','A2:L20')    
 
 
 
