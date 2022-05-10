@@ -684,6 +684,6 @@ end
     
     TT.Properties.VariableNames=['Ripple type';'Duration';g];
     
-            writetable(TT,strcat('30_min_count_',answer,'.xls'),'Sheet',1,'Range','A2:L20')    
+            writetable(TT,strcat('30_min_count_',num2str(cell2mat(answer)),'.xls'),'Sheet',1,'Range','A2:L20')    
 
 return
