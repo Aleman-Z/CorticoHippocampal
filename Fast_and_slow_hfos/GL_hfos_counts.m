@@ -92,15 +92,15 @@ rip_times=cell2mat(Mx_cortex_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
 CR_30_count(k)={histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))])};% 30-minute counts
 
-
+yu = 35; % ylim
 hold on
-stripes(vec_trans,0.2,labels/60/60,'b',max(hist_rip)+1)
-stripes(vec_rem,0.2,labels/60/60,'r',max(hist_rip)+1)
-stripes(vec_nrem,0.9,labels/60/60,'k',max(hist_rip)+1)
+stripes(vec_trans,0.2,labels/60/60,'b',yu)
+stripes(vec_rem,0.2,labels/60/60,'r',yu)
+stripes(vec_nrem,0.9,labels/60/60,'k',yu)
 
 
 stem(linspace(0,max(labels)/60/60,length(hist_rip)),hist_rip,'filled','Color',[0.3010 0.7450 0.9330])
-ylim([0 max(hist_rip)+1])
+ylim([0 yu])
 xlim([0 4])
 
 cd ..
@@ -177,6 +177,8 @@ labels=(0:1:length(states)-1);
 rip_times=cell2mat(Mx_ti);
 hist_rip=histcounts(rip_times,[0:1800: max(labels)+1]);
 HR_30_count(k)={histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))])};% 30-minute counts
+
+yu = 35; % ylim
 
 hold on
 stripes(vec_trans,0.2,labels/60/60,'b',yu)
