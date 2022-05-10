@@ -217,7 +217,7 @@ fa_hpc(k)=y;
 amp_hpc(k)=z;
 auc_hpc(k)=l;
 p2p_hpc(k)=p;
-xo
+% xo
 %% HPC HFOs
 hfos_hpc(k)=ripple;
 hfos_hpc_rate(k)=RipFreq;
