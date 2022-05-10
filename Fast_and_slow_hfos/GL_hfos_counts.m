@@ -686,4 +686,77 @@ end
     
             writetable(TT,strcat('30_min_count_',num2str(cell2mat(answer)),'.xls'),'Sheet',1,'Range','A2:L20')    
 
+%% New Section: Counts and rates per hour.            
+%%  Cohfos per hour
+ 
+%Counts
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([cohfos_count_perhour.';sum(cohfos_count_perhour.')])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('cohfos_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+    
+%Rates
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([cohfos_rate_perhour.'])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('cohfos_rate_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+    
+%% Slow and fast hfos 
+
+%coocurrent HFOs
+
+%Slow Counts
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([cohfos_count_g1_ti.';sum(cohfos_count_g1_ti.')])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('slow_cohfos_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%Fast Counts
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([cohfos_count_g2_ti.';sum(cohfos_count_g2_ti.')])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('fast_cohfos_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%Slow Rates
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([cohfos_rate_g1_ti.'])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('slow_cohfos_rates_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%Fast Rates
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([cohfos_rate_g2_ti.'])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('fast_cohfos_rates_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+    
+%% 
+
+
+%Single HFOs Counts G1
+TT=table;
+TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([singles_count_g1_ti.';sum(singles_count_g1_ti.')])];
+TT.Properties.VariableNames=[{'Hour'};g];
+writetable(TT,strcat('slow_single_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+
+%Single HFOs Counts G2    
+TT=table;
+TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([singles_count_g2_ti.';sum(singles_count_g2_ti.')])];
+TT.Properties.VariableNames=[{'Hour'};g];
+writetable(TT,strcat('fast_single_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+
+%Single HFOs Rates G1    
+TT=table;
+TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([singles_rate_g1_ti.'])];
+TT.Properties.VariableNames=[{'Hour'};g];
+writetable(TT,strcat('slow_single_rates_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+
+%Single HFOs Rates G2    
+TT=table;
+TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([singles_rate_g2_ti.'])];
+TT.Properties.VariableNames=[{'Hour'};g];
+writetable(TT,strcat('fast_single_rates_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+            
 return
