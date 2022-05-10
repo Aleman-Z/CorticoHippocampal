@@ -307,6 +307,91 @@ cohfos_rate_g1(k)=sum(cellfun('length',cohfos1_g1))/(timeasleep*(60));
 cohfos_count_g2(k)=sum(cellfun('length',cohfos1_g2));
 cohfos_rate_g2(k)=sum(cellfun('length',cohfos1_g2))/(timeasleep*(60));
 
+%% Find slow and fast per hour
+
+Mx_cortex_g1_ti=Mx_cortex_ti;
+Mx_cortex_g2_ti=Mx_cortex_ti;
+
+
+
+row=si_mixed.i1;
+cont=0;
+for ll=1:length(Mx_cortex)
+
+    if ~isempty(Mx_cortex{ll})
+
+        for lll=1:length(Mx_cortex{ll})
+            cont=cont+1;
+    %         xo
+
+            if ~ismember(cont,row)
+                Mx_cortex_g1_ti{ll}(lll)=NaN;
+            else
+                Mx_cortex_g2_ti{ll}(lll)=NaN;
+            end
+
+        end
+         Mx_cortex_g1_ti{ll}=Mx_cortex_g1_ti{ll}(~isnan(Mx_cortex_g1_ti{ll}));
+         Mx_cortex_g2_ti{ll}=Mx_cortex_g2_ti{ll}(~isnan(Mx_cortex_g2_ti{ll}));
+
+    end
+
+end
+%%
+[Mx_cortex_g1_ti_1] =cellfun(@(x) x(x/60/60<=1) , Mx_cortex_g1_ti,'UniformOutput',false);
+[Mx_cortex_g1_ti_2] =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , Mx_cortex_g1_ti,'UniformOutput',false);
+[Mx_cortex_g1_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Mx_cortex_g1_ti,'UniformOutput',false);
+[Mx_cortex_g1_ti_4] =cellfun(@(x) x(x/60/60>3) , Mx_cortex_g1_ti,'UniformOutput',false);
+
+[Mx_cortex_g2_ti_1] =cellfun(@(x) x(x/60/60<=1) , Mx_cortex_g2_ti,'UniformOutput',false);
+[Mx_cortex_g2_ti_2] =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , Mx_cortex_g2_ti,'UniformOutput',false);
+[Mx_cortex_g2_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Mx_cortex_g2_ti,'UniformOutput',false);
+[Mx_cortex_g2_ti_4] =cellfun(@(x) x(x/60/60>3) , Mx_cortex_g2_ti,'UniformOutput',false);
+
+
+
+%Coocur slow and coocur fast
+% HOUR 1
+[cohfos1_g1_1,cohfos2_g1_1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_1,Mx_cortex_g1_ti_1,'UniformOutput',false);
+[cohfos1_g2_1,cohfos2_g2_1]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_1,Mx_cortex_g2_ti_1,'UniformOutput',false);
+
+cohfos_count_g1_ti(k,1)=sum(cellfun('length',cohfos1_g1_1));
+cohfos_rate_g1_ti(k,1)=sum(cellfun('length',cohfos1_g1_1))/(v_rate(1)*(60));
+
+cohfos_count_g2_ti(k,1)=sum(cellfun('length',cohfos1_g2_1));
+cohfos_rate_g2_ti(k,1)=sum(cellfun('length',cohfos1_g2_1))/(v_rate(1)*(60));
+
+% HOUR 2
+[cohfos1_g1_2,cohfos2_g1_2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_2,Mx_cortex_g1_ti_2,'UniformOutput',false);
+[cohfos1_g2_2,cohfos2_g2_2]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_2,Mx_cortex_g2_ti_2,'UniformOutput',false);
+
+cohfos_count_g1_ti(k,2)=sum(cellfun('length',cohfos1_g1_2));
+cohfos_rate_g1_ti(k,2)=sum(cellfun('length',cohfos1_g1_2))/(v_rate(2)*(60));
+
+cohfos_count_g2_ti(k,2)=sum(cellfun('length',cohfos1_g2_2));
+cohfos_rate_g2_ti(k,2)=sum(cellfun('length',cohfos1_g2_2))/(v_rate(2)*(60));
+
+% HOUR 3
+[cohfos1_g1_3,cohfos2_g1_3]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_3,Mx_cortex_g1_ti_3,'UniformOutput',false);
+[cohfos1_g2_3,cohfos2_g2_3]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_3,Mx_cortex_g2_ti_3,'UniformOutput',false);
+
+cohfos_count_g1_ti(k,3)=sum(cellfun('length',cohfos1_g1_3));
+cohfos_rate_g1_ti(k,3)=sum(cellfun('length',cohfos1_g1_3))/(v_rate(3)*(60));
+
+cohfos_count_g2_ti(k,3)=sum(cellfun('length',cohfos1_g2_3));
+cohfos_rate_g2_ti(k,3)=sum(cellfun('length',cohfos1_g2_3))/(v_rate(3)*(60));
+
+% HOUR 4
+[cohfos1_g1_4,cohfos2_g1_4]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_4,Mx_cortex_g1_ti_4,'UniformOutput',false);
+[cohfos1_g2_4,cohfos2_g2_4]=cellfun(@(equis1,equis2) co_hfo(equis1,equis2),Mx_ti_4,Mx_cortex_g2_ti_4,'UniformOutput',false);
+
+cohfos_count_g1_ti(k,4)=sum(cellfun('length',cohfos1_g1_4));
+cohfos_rate_g1_ti(k,4)=sum(cellfun('length',cohfos1_g1_4))/(v_rate(4)*(60));
+
+cohfos_count_g2_ti(k,4)=sum(cellfun('length',cohfos1_g2_4));
+cohfos_rate_g2_ti(k,4)=sum(cellfun('length',cohfos1_g2_4))/(v_rate(4)*(60));
+%xo
+%-----------
 %Find single fast and slow events
 v2_g1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1,cohfos2_g1,'UniformOutput',false);
 singles_count_g1(k)=sum(cellfun('length',v2_g1));
@@ -316,7 +401,51 @@ singles_rate_g1(k)=sum(cellfun('length',v2_g1))/(timeasleep*(60));
 v2_g2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2,cohfos2_g2,'UniformOutput',false);
 singles_count_g2(k)=sum(cellfun('length',v2_g2));
 singles_rate_g2(k)=sum(cellfun('length',v2_g2))/(timeasleep*(60));
+%------------
+%% HOUR 1
+%Find single fast and slow events
+v2_g1_1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1_ti_1,cohfos2_g1_1,'UniformOutput',false);
+singles_count_g1_ti(k,1)=sum(cellfun('length',v2_g1_1));
+singles_rate_g1_ti(k,1)=sum(cellfun('length',v2_g1_1))/(v_rate(1)*(60));
 
+
+v2_g2_1=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2_ti_1,cohfos2_g2_1,'UniformOutput',false);
+singles_count_g2_ti(k,1)=sum(cellfun('length',v2_g2_1));
+singles_rate_g2_ti(k,1)=sum(cellfun('length',v2_g2_1))/(v_rate(1)*(60));
+
+%% HOUR 2
+%Find single fast and slow events
+v2_g1_2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1_ti_2,cohfos2_g1_2,'UniformOutput',false);
+singles_count_g1_ti(k,2)=sum(cellfun('length',v2_g1_2));
+singles_rate_g1_ti(k,2)=sum(cellfun('length',v2_g1_2))/(v_rate(2)*(60));
+
+
+v2_g2_2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2_ti_2,cohfos2_g2_2,'UniformOutput',false);
+singles_count_g2_ti(k,2)=sum(cellfun('length',v2_g2_2));
+singles_rate_g2_ti(k,2)=sum(cellfun('length',v2_g2_2))/(v_rate(2)*(60));
+
+%% HOUR 3
+%Find single fast and slow events
+v2_g1_3=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1_ti_3,cohfos2_g1_3,'UniformOutput',false);
+singles_count_g1_ti(k,3)=sum(cellfun('length',v2_g1_3));
+singles_rate_g1_ti(k,3)=sum(cellfun('length',v2_g1_3))/(v_rate(3)*(60));
+
+
+v2_g2_3=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2_ti_3,cohfos2_g2_3,'UniformOutput',false);
+singles_count_g2_ti(k,3)=sum(cellfun('length',v2_g2_3));
+singles_rate_g2_ti(k,3)=sum(cellfun('length',v2_g2_3))/(v_rate(3)*(60));
+
+%% HOUR 4
+%Find single fast and slow events
+v2_g1_4=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g1_ti_4,cohfos2_g1_4,'UniformOutput',false);
+singles_count_g1_ti(k,4)=sum(cellfun('length',v2_g1_4));
+singles_rate_g1_ti(k,4)=sum(cellfun('length',v2_g1_4))/(v_rate(4)*(60));
+
+
+v2_g2_4=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_cortex_g2_ti_4,cohfos2_g2_4,'UniformOutput',false);
+singles_count_g2_ti(k,4)=sum(cellfun('length',v2_g2_4));
+singles_rate_g2_ti(k,4)=sum(cellfun('length',v2_g2_4))/(v_rate(4)*(60));
+%xo
 
 %%
 
