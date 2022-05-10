@@ -76,6 +76,11 @@ end
 [Mx_cortex_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Mx_cortex_ti,'UniformOutput',false);
 [Mx_cortex_ti_4] =cellfun(@(x) x(x/60/60>3) , Mx_cortex_ti,'UniformOutput',false);
 
+[Sx_cortex_ti_1] =cellfun(@(x) x(x/60/60<=1) , Sx_cortex_ti,'UniformOutput',false);
+[Sx_cortex_ti_2] =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , Sx_cortex_ti,'UniformOutput',false);
+[Sx_cortex_ti_3] =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , Sx_cortex_ti,'UniformOutput',false);
+[Sx_cortex_ti_4] =cellfun(@(x) x(x/60/60>3) , Sx_cortex_ti,'UniformOutput',false);
+
 %% Plot cortical ripples histogram across 4 hours.
 figure()
 xlabel('Time (Hours)','FontSize',12)
