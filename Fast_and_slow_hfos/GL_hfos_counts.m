@@ -90,6 +90,8 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_cortex_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
+CR_30_count=histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))]);% 30-minute counts
+
 
 hold on
 stripes(vec_trans,0.2,labels/60/60,'b',max(hist_rip)+1)
@@ -99,6 +101,7 @@ stripes(vec_nrem,0.9,labels/60/60,'k',max(hist_rip)+1)
 
 stem(linspace(0,max(labels)/60/60,length(hist_rip)),hist_rip,'filled','Color',[0.3010 0.7450 0.9330])
 ylim([0 max(hist_rip)+1])
+xlim([0 4])
 
 cd ..
  printing(['Histograms_CorticalRipples_across_time' g{k}]);
@@ -172,16 +175,18 @@ vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
 labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_ti);
-hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
+hist_rip=histcounts(rip_times,[0:1800: max(labels)+1]);
+HR_30_count=histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))]);% 30-minute counts
 
 hold on
-stripes(vec_trans,0.2,labels/60/60,'b',30)
-stripes(vec_rem,0.2,labels/60/60,'r',30)
-stripes(vec_nrem,0.9,labels/60/60,'k',30)
+stripes(vec_trans,0.2,labels/60/60,'b',yu)
+stripes(vec_rem,0.2,labels/60/60,'r',yu)
+stripes(vec_nrem,0.9,labels/60/60,'k',yu)
 
 
 stem(linspace(0,max(labels)/60/60,length(hist_rip)),hist_rip,'filled','Color',[0.3010 0.7450 0.9330])
-ylim([0 30])
+ylim([0 yu])
+xlim([0 4])
 
 cd ..
  printing(['Histograms_HippocampalRipples_across_time' g{k}]);
@@ -528,6 +533,18 @@ writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'
 
 
 writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%% 30_minute counts
+
+    TT=table;
+    TT.Variables=    [[{'Cortical Ripples Count'};{'Hippocampal Ripples Count'}] num2cell([CR_30_count;HR_30_count])];
+    
+    TT.Properties.VariableNames=[{'Ripple type'};{'30 minutes '};{'1 hour'};...
+        {'1.5 hours'};{'2 hours'};{'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}].';
+    
+            writetable(TT,strcat('30_min_count','.xls'),'Sheet',1,'Range','A2:L10')    
+
+
 
 
 return
