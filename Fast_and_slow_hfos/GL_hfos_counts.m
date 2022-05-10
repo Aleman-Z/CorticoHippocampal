@@ -666,7 +666,11 @@ writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'
 writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
 
 %% 30_minute counts
-    
+     temp = [num2cell(CR_30_count{1,1}');num2cell(HR_30_count{1,1}')];
+for k=2:6
+        tt = [num2cell(CR_30_count{1,k}');num2cell(HR_30_count{1,k}')];
+        temp = [temp,tt];
+end
     TT=table;
     TT.Variables=    [[{'Cortical Ripples Count'};{''};{''};{''};...
         {''};{''};{''};{''};...
@@ -676,13 +680,10 @@ writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),
         {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
         {'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
         {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}],...
-        num2cell([cell2mat(CR_30_count)',cell2mat(HR_30_count)'])];
+        [temp]];
     
     TT.Properties.VariableNames=['Ripple type';'Duration';g];
     
-            writetable(TT,strcat('30_min_count','.xls'),'Sheet',1,'Range','A2:L20')    
-
-
-
+            writetable(TT,strcat('30_min_count_',answer,'.xls'),'Sheet',1,'Range','A2:L20')    
 
 return
