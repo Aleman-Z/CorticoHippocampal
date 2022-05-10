@@ -90,7 +90,7 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_cortex_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
-CR_30_count=histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))]);% 30-minute counts
+CR_30_count(k)={histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))])};% 30-minute counts
 
 
 hold on
@@ -176,7 +176,7 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_ti);
 hist_rip=histcounts(rip_times,[0:1800: max(labels)+1]);
-HR_30_count=histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))]);% 30-minute counts
+HR_30_count(k)={histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))])};% 30-minute counts
 
 hold on
 stripes(vec_trans,0.2,labels/60/60,'b',yu)
@@ -442,6 +442,16 @@ rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
 auc_single_cortex(k)=l;
 p2p_single_cortex(k)=p;
+%% 30_minute counts
+
+    TT=table;
+    TT.Variables=    [[{'Cortical Ripples Count'};{'Hippocampal Ripples Count'}] num2cell([CR_30_count{k};HR_30_count{k}])];
+    
+    TT.Properties.VariableNames=[{'Ripple type'};{'30 minutes '};{'1 hour'};...
+        {'1.5 hours'};{'2 hours'};{'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}].';
+    
+            writetable(TT,strcat('30_min_count_',g{k},'.xls'),'Sheet',1,'Range','A2:L10')    
+
 
 progress_bar(k,length(g),f)
     cd ..    
