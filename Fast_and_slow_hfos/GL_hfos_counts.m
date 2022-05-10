@@ -175,7 +175,7 @@ vec_wake=not(vec_trans) & not(vec_rem) & not(vec_nrem);
 labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_ti);
-hist_rip=histcounts(rip_times,[0:1800: max(labels)+1]);
+hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
 HR_30_count(k)={histcounts(rip_times,[0:1800: max(labels)+(mod(max(labels),1800))])};% 30-minute counts
 
 yu = 35; % ylim
@@ -577,7 +577,7 @@ p2p_single_cortex(k)=p;
 progress_bar(k,length(g),f)
     cd ..    
     end
-xo        
+%xo        
 %% Generate tables and save values into spreadsheets.
 
 %%
@@ -664,27 +664,6 @@ writetable(TT,strcat('slower_faster_cohfos_',num2str(tr(1)),'_',num2str(tr(2)),'
 
 
 writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
-
-%% 30_minute counts
-     temp = [num2cell(CR_30_count{1,1}');num2cell(HR_30_count{1,1}')];
-for k=2:6
-        tt = [num2cell(CR_30_count{1,k}');num2cell(HR_30_count{1,k}')];
-        temp = [temp,tt];
-end
-    TT=table;
-    TT.Variables=    [[{'Cortical Ripples Count'};{''};{''};{''};...
-        {''};{''};{''};{''};...
-        {'Hippocampal Ripples Count'};{''};{''};{''};...
-        {''};{''};{''};{''}], ...
-        [{'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
-        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
-        {'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
-        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}],...
-        [temp]];
-    
-    TT.Properties.VariableNames=['Ripple type';'Duration';g];
-    
-            writetable(TT,strcat('30_min_count_',num2str(cell2mat(answer)),'.xls'),'Sheet',1,'Range','A2:L20')    
 
 %% New Section: Counts and rates per hour.            
 %%  Cohfos per hour
