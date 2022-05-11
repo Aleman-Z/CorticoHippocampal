@@ -68,7 +68,7 @@ end
 %xo
 %Find hfos
 [ripple,RipFreq,rip_duration,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
-  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti,v_rate ...
+  ripple_multiplets_cortex,RipFreq_multiplets_cortex,rip_duration_multiplets_cortex,sig_multiplets_cortex,~,~,~,Sx_cortex_ti,Ex_cortex_ti,Mx_cortex_ti,v_rate_CR{k} ...
   ]=gui_findripples(CORTEX,states,xx,tr,multiplets,fn);
 
 [Mx_cortex_ti_1] =cellfun(@(x) x(x/60/60<=1) , Mx_cortex_ti,'UniformOutput',false);
@@ -853,5 +853,31 @@ end
 
     writetable(TT,strcat('30_min_count_',num2str(cell2mat(answer)),'.xls'),'Sheet',1,'Range','A2:L24')
 
+%% NREM duration
+    for i=1:length(g)
+        tet=length(v_rate_CR{1,i});
+        if tet<10
+                v_rate_CR_t{i} = v_rate_CR{1,i};
+            v_rate_CR{1,i}(tet+1:10,1)= zeros(10-tet,1);
+        elseif tet>10
+            xo % if this happens, modify the code to include the excess time
+        end
+    end
+
+    temp = [num2cell(v_rate_CR{1,1})]; %;num2cell(v_rate_HR{1,1});num2cell(v_rate_HR{1,k})
+    for k=2:length(g)
+        tt = [num2cell(v_rate_CR{1,k})];
+        temp = [temp,tt];
+    end
+    TT=table;
+    TT.Variables=    [[{'NREM duration'};{''};{''};{''};...
+        {''};{''};{''};{''};{''};{''}]...
+        [{'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
+        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
+        {'4.5 hours'};{'5 hours'}]...
+        [temp]];
+    TT.Properties.VariableNames=['NREM';'Duration';g];
+
+    writetable(TT,strcat('30_min_NREM_',num2str(cell2mat(answer)),'.xls'),'Sheet',1,'Range','A2:L20')
 
 return
