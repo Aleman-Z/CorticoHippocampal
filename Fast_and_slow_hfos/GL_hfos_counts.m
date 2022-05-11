@@ -496,7 +496,7 @@ rate_cohfo_hpc(k)=h;
 dura_cohfo_hpc(k)=q;
 auc_cohfo_hpc(k)=l;
 p2p_cohfo_hpc(k)=p;
-
+%xo
 %Single HPC ripples
 v2=cellfun(@(equis1,equis2) single_hfo_get_sample(equis1,equis2),Mx_hpc,cohfos1,'UniformOutput',false);
 
@@ -506,6 +506,11 @@ Sig_hpc_single=[Sig_hpc_single{:}];
 [single_mx_hpc_val,single_sx_hpc_val]=cellfun(@(equis1,equis2,equis3) single_hfos_mx(equis1,equis2,equis3),cohfos1,Mx_hpc,Sx_hpc,'UniformOutput',false);
 single_mx_hpc_val=[single_mx_hpc_val{:}];
 single_sx_hpc_val=[single_sx_hpc_val{:}];
+
+[Sig_hpc_single_1]=find_single_events(Mx_ti_1,cohfos1_ti_1, sig_hpc);
+[Sig_hpc_single_2]=find_single_events(Mx_ti_2,cohfos1_ti_2, sig_hpc);
+[Sig_hpc_single_3]=find_single_events(Mx_ti_3,cohfos1_ti_3, sig_hpc);
+[Sig_hpc_single_4]=find_single_events(Mx_ti_4,cohfos1_ti_4, sig_hpc);
 
 %Compute main features of single ripples
 [x,y,z,w,h,q,l,p]=hfo_specs(Sig_hpc_single,timeasleep,0,Rat,tr,fn);
@@ -518,6 +523,10 @@ dura_single_hpc(k)=q;
 auc_single_hpc(k)=l;
 p2p_single_hpc(k)=p;
 
+count_single_hpc_perhour(k,1)=length(Sig_hpc_single_1);
+count_single_hpc_perhour(k,2)=length(Sig_hpc_single_2);
+count_single_hpc_perhour(k,3)=length(Sig_hpc_single_3);
+count_single_hpc_perhour(k,4)=length(Sig_hpc_single_4);
 
 %%%%
 %Cortical COHFOS
@@ -568,6 +577,13 @@ Sig_cortex_single=[Sig_cortex_single{:}];
 single_mx_cortex_val=[single_mx_cortex_val{:}];
 single_sx_cortex_val=[single_sx_cortex_val{:}];
 
+
+[Sig_cortex_single_1]=find_single_events(Mx_cortex_ti_1,cohfos2_ti_1, sig_cortex);
+[Sig_cortex_single_2]=find_single_events(Mx_cortex_ti_2,cohfos2_ti_2, sig_cortex);
+[Sig_cortex_single_3]=find_single_events(Mx_cortex_ti_3,cohfos2_ti_3, sig_cortex);
+[Sig_cortex_single_4]=find_single_events(Mx_cortex_ti_4,cohfos2_ti_4, sig_cortex);
+
+
 %Compute features of single hfos
 [x,y,z,w,h,q,l,p]=hfo_specs(Sig_cortex_single,timeasleep,0,Rat,tr,fn);
 fi_single_cortex(k)=x;
@@ -578,6 +594,11 @@ rate_single_cortex(k)=h;
 dura_single_cortex(k)=q;
 auc_single_cortex(k)=l;
 p2p_single_cortex(k)=p;
+
+count_single_cortex_perhour(k,1)=length(Sig_cortex_single_1);
+count_single_cortex_perhour(k,2)=length(Sig_cortex_single_2);
+count_single_cortex_perhour(k,3)=length(Sig_cortex_single_3);
+count_single_cortex_perhour(k,4)=length(Sig_cortex_single_4);
 
 progress_bar(k,length(g),f)
     cd ..    
