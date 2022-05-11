@@ -30,13 +30,24 @@ function [ripple,RipFreq,rip_duration,Mx,timeasleep,sig,Ex,Sx,ripple_multiplets,
     v_ti{epoch_count,1}=reshape(NC_ti_main(:, v_index(epoch_count):v_index(epoch_count)+(v_values(1,epoch_count)-1)), [], 1);
     end
     
-     % Splitting the 4 hour recording duration into 1 hour segments
-    v_ti_sub{1,1} =cellfun(@(x) x(x/60/60<=1) , v_ti,'UniformOutput',false);
-    v_ti_sub{2,1} =cellfun(@(x) x(x/60/60>1 & x/60/60<=2) , v_ti,'UniformOutput',false);
-    v_ti_sub{3,1} =cellfun(@(x) x(x/60/60>2 & x/60/60<=3) , v_ti,'UniformOutput',false);
-    v_ti_sub{4,1} =cellfun(@(x) x(x/60/60>3) , v_ti,'UniformOutput',false);
+     % Splitting the 4 hour recording duration into 0.5 hour segments
+     dur =0.5;
+     labels=(0:1:length(states)-1);
+     tet= [0:1800:((max(labels)-rem(max(labels),1800))+1800)]/60/60;
+     if ceil(max(labels)/(30*60))>10
+         xo % to check if the recording duration exceeds 5 hours
+     end
+
+     v_ti_sub{1,1} =cellfun(@(x) x(x/60/60<=tet(2)) , v_ti,'UniformOutput',false);
+     ct=2;
+
+     for ll = 1:(length(tet)-3)
+         v_ti_sub{ct,1} =cellfun(@(x) x(x/60/60>(tet(ct)) & x/60/60<=(tet(ct)+dur)) , v_ti,'UniformOutput',false);
+         ct=ct+1;
+     end
+     v_ti_sub{ct,1} =cellfun(@(x) x(x/60/60>tet(ct)) , v_ti,'UniformOutput',false);
     % Computing NREM duration in each hour
-    for i=1:4
+    for i=1:(length(tet)-1)
         v_rate(i,1)= sum(cell2mat(cellfun(@(x) (size(x,1)),v_ti_sub{i,1},'UniformOutput',false)))/(60*fn);
     end
     
