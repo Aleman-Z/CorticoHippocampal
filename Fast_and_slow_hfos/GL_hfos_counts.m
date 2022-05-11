@@ -184,7 +184,7 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
-HR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),,ceil(max(labels)/(30*60))+1))};
+HR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),ceil(max(labels)/(30*60))+1))};
 if ceil(max(labels)/(30*60))>10
     xo % to check if the recording duration exceeds 5 hours
 end
@@ -812,20 +812,41 @@ writetable(TT,strcat('fast_single_rates_perhour_',num2str(tr(1)),'_',num2str(tr(
 
 %% 30_minute counts
 
+for i=1:length(g)
+    tet=length(CR_30_count{1,i});
+    if tet<10
+        %     C_temp{i} = CR_30_count{1,i};
+        CR_30_count{1,i}(1,tet+1:10)= zeros(1,10-tet);
+    elseif tet>10
+        xo % if this happens, modify the code to include the excess time
+    end
+end
+
+for i=1:length(g)
+    tet=length(HR_30_count{1,i});
+    if tet<10
+        %     H_temp{i} = HR_30_count{1,i};
+        HR_30_count{1,i}(1,tet+1:10)= zeros(1,10-tet);
+    elseif tet>10
+        xo % if this happens, modify the code to include the excess time
+    end
+end
     temp = [num2cell(CR_30_count{1,1}');num2cell(HR_30_count{1,1}')];
 for k=2:length(g)
         tt = [num2cell(CR_30_count{1,k}');num2cell(HR_30_count{1,k}')];
         temp = [temp,tt];
 end
     TT=table;
-    TT.Variables=    [[{'Cortical Ripples Count'};{''};{''};{''};...
-        {''};{''};{''};{''};...
-        {'Hippocampal Ripples Count'};{''};{''};{''};...
-        {''};{''};{''};{''}], ...
+    TT.Variables=    [[{'Cortical Ripples count'};{''};{''};{''};...
+        {''};{''};{''};{''};{''};{''};...
+        {'Hippocampal Ripples count'};{''};{''};{''};...
+        {''};{''};{''};{''};{''};{''}]...
         [{'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
         {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
+        {'4.5 hours'};{'5 hours'};...
         {'30 minutes '};{'1 hour'};{'1.5 hours'};{'2 hours'};...
-        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'}],...
+        {'2.5 hours'};{'3 hours'};{'3.5 hours '};{'4 hours'};...
+        {'4.5 hours'};{'5 hours'}],...
         [temp]];
     
     TT.Properties.VariableNames=['Ripple type';'Duration';g];
