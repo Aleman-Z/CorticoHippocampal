@@ -95,7 +95,10 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_cortex_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
-CR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),9))};% 30-minute counts
+CR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),ceil(max(labels)/(30*60))+1))};
+if ceil(max(labels)/(30*60))>10
+    xo % to check if the recording duration exceeds 5 hours
+end
 
 yu = 35; % ylim
 hold on
@@ -181,7 +184,10 @@ labels=(0:1:length(states)-1);
 
 rip_times=cell2mat(Mx_ti);
 hist_rip=histcounts(rip_times,[0:10: max(labels)+1]);
-HR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),9))};% 30-minute counts
+HR_30_count(k)={histcounts(rip_times,linspace(0,max(labels),,ceil(max(labels)/(30*60))+1))};
+if ceil(max(labels)/(30*60))>10
+    xo % to check if the recording duration exceeds 5 hours
+end
 
 yu = 35; % ylim
 
