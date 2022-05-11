@@ -717,7 +717,35 @@ writetable(TT,strcat('slower_faster_singles_',num2str(tr(1)),'_',num2str(tr(2)),
     TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([cohfos_rate_perhour.'])];
     TT.Properties.VariableNames=[{'Hour'};g];
     writetable(TT,strcat('cohfos_rate_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+%% Singles per hour
+%HPC 
+
+%Counts
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([count_single_hpc_perhour.';sum(count_single_hpc_perhour.')])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('singles_hpc_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
     
+%Rates
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([rate_single_hpc_perhour.'])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('singles_hpc_rate_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+%CORTEX
+%Counts
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'};{'Total'}] num2cell([count_single_cortex_perhour.';sum(count_single_cortex_perhour.')])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('singles_cortex_counts_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+    
+%Rates
+    TT=table;
+    TT.Variables=    [[{'Hour1'};{'Hour2'};{'Hour3'};{'Hour4'}] num2cell([rate_single_cortex_perhour.'])];
+    TT.Properties.VariableNames=[{'Hour'};g];
+    writetable(TT,strcat('singles_cortex_rate_perhour_',num2str(tr(1)),'_',num2str(tr(2)),'.xls'),'Sheet',1,'Range','A1:Z50')
+
+
 %% Slow and fast hfos 
 
 %coocurrent HFOs
