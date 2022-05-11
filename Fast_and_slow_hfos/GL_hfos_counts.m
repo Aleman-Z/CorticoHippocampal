@@ -528,6 +528,13 @@ count_single_hpc_perhour(k,2)=length(Sig_hpc_single_2);
 count_single_hpc_perhour(k,3)=length(Sig_hpc_single_3);
 count_single_hpc_perhour(k,4)=length(Sig_hpc_single_4);
 
+rate_single_hpc_perhour(k,1)=length(Sig_hpc_single_1)/(v_rate(1)*60);
+rate_single_hpc_perhour(k,2)=length(Sig_hpc_single_2)/(v_rate(2)*60);
+rate_single_hpc_perhour(k,3)=length(Sig_hpc_single_3)/(v_rate(3)*60);
+rate_single_hpc_perhour(k,4)=length(Sig_hpc_single_4)/(v_rate(4)*60);
+
+
+
 %%%%
 %Cortical COHFOS
 cohf_mx_cortex=Mx_cortex(~cellfun('isempty',cohfos2));%Peak values cells where cortex cohfos were found.
@@ -600,10 +607,15 @@ count_single_cortex_perhour(k,2)=length(Sig_cortex_single_2);
 count_single_cortex_perhour(k,3)=length(Sig_cortex_single_3);
 count_single_cortex_perhour(k,4)=length(Sig_cortex_single_4);
 
+rate_single_cortex_perhour(k,1)=length(Sig_cortex_single_1)/(v_rate(1)*60);
+rate_single_cortex_perhour(k,2)=length(Sig_cortex_single_2)/(v_rate(2)*60);
+rate_single_cortex_perhour(k,3)=length(Sig_cortex_single_3)/(v_rate(3)*60);
+rate_single_cortex_perhour(k,4)=length(Sig_cortex_single_4)/(v_rate(4)*60);
+
 progress_bar(k,length(g),f)
     cd ..    
     end
-%xo        
+xo        
 %% Generate tables and save values into spreadsheets.
 
 %%
