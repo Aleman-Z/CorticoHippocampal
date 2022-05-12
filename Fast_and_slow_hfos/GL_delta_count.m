@@ -1,12 +1,20 @@
 % GL_delta_count.m
 %Detects Delta waves and counts them.
 % Requires 'load_me_first.mat' loaded first. 
+clear variables
+cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
+load('load_me_first.mat')
 
 %% Find location
 close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
+
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
+
 %cd('/home/adrian/Documents/Plusmaze_downsampled')
+
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
+cd(dname)
 
 %%
 %Select rat number
@@ -103,7 +111,7 @@ end
 pfc_thresholds=[1.5, 3, -1.5, 0];
 
 %Find PFC Deltawaves
-
+xo
 [deltaWave_count_pfc,deltaFreq_pfc,delta_duration_pfc,Mx_pfc,timeasleep,sig_pfc,Ex_pfc,Sx_pfc, ...
    DeltaWaves, ti_cont,duration_epoch_cumsum]=gui_finddeltawavesZugaro(CORTEX,states,xx,multiplets,fn, pfc_thresholds);
 
