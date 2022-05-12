@@ -16,7 +16,10 @@ Reference:  [doi.org/10.1101/765149](https://doi.org/10.1101/765149)
 
 
 :warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) , [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
+
 These last two need to be added to the path.
+
+We also include in the subfunctions folder some functions taken from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses)
 
 _Required Matlab built-in toolboxes:_
 •	Image Processing Toolbox
@@ -65,8 +68,14 @@ _Figure 6: Granger causality during events._
 _New (2021):_ 
   * GL_swr_disruption.m
 
+_Newer (2022):_ 
+  * GL_delta_counts.m
+  * GL_spindles_Nayanika.m
+  
 ---------
-*Spindles were previously detected using the YASA algorithm. The steps to do this were:
+*In the current version (2022): Spindles were computed using an adaptation of the FindSpindles.m function from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses) (Zugaro lab).
+
+*In the older version (2020): Spindles were previously detected using the YASA algorithm. The steps to do this were:
 1. Run GL_spindle_matlab2python.m for every session per condition to export NREM epochs to python.
 2. Run GL_yasa_spindles.py for every session per condition to save detections in a .mat file.
 
