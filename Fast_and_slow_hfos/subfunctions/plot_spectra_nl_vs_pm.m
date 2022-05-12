@@ -1,4 +1,4 @@
-function plot_spectra_nl_vs_pm(P,Q,labelconditions2,label1,w,same_nr_types,N)
+function plot_spectra_nl_vs_pm(P,Q,labelconditions2,label1,w,same_nr_types,N,fn)
 
 if same_nr_types==1
     n=N;
@@ -49,8 +49,8 @@ end
     ro=150;
 
     toy=[-.1:.001:.1];
-    freq1=time_frequency(q_nl,create_timecell(ro,length(q_nl)),[100:1:300],[],toy);
-    freq2=time_frequency(q,create_timecell(ro,length(q)),[100:1:300],[],toy);
+    freq1=time_frequency(q_nl,create_timecell(ro,length(q_nl),fn),[100:1:300],[],toy,fn);
+    freq2=time_frequency(q,create_timecell(ro,length(q),fn),[100:1:300],[],toy,fn);
 
 allscreen()
     for j=1:3
