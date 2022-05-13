@@ -71,6 +71,7 @@ _New (2021):_
 _Newer (2022):_ 
   * GL_delta_counts.m
   * GL_spindles_Nayanika.m
+  * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
   
 ---------
 *In the current version (2022): Spindles were computed using an adaptation of the FindSpindles.m function from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses) (Zugaro lab).
