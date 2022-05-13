@@ -2,13 +2,18 @@
 
 % Main code for computation of spectral granger causality between brain areas wrt events.
 % Requires 'load_me_first.mat' loaded first. 
+cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
+load('load_me_first.mat')
 
 %% Find location
 close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
 
 % cd('/home/adrian/Documents/Plusmaze_downsampled')
+
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
+cd(dname)
 
 %%
 %Select rat number
@@ -134,7 +139,7 @@ Q_cortex=q_cortex(~cellfun('isempty',q_cortex));
 Q_cortex=[Q_cortex{:}];
 
 %Find slow and fast Hfos
-[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr);
+[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr,fn);
 
 void_index=find(cellfun('isempty',Q_cortex));
 
