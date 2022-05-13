@@ -14,12 +14,23 @@ coh_samp_cortex= cellfun(@(equis1,equis2) co_hfo_get_sample(equis1,equis2),cohf_
 p_cohfos_cortex=p_cortex(~cellfun('isempty',cohfos2_g1));
 p_cohfos_cortex=cellfun(@(equis1,equis2) equis1(equis2),p_cohfos_cortex,coh_samp_cortex,'UniformOutput',false);
 p_cohfos_cortex=[p_cohfos_cortex{:}];
-use_me=~cellfun('isempty',p_cohfos_cortex);
+try
+    use_me=~cellfun('isempty',p_cohfos_cortex);
+catch
+    warning('No ripples found.  Assigning an empty value.');
+    use_me=[];
+end
 q_cohfos_cortex=q_cortex(~cellfun('isempty',cohfos2_g1));
 q_cohfos_cortex=cellfun(@(equis1,equis2) equis1(equis2),q_cohfos_cortex,coh_samp_cortex,'UniformOutput',false);
 q_cohfos_cortex=[q_cohfos_cortex{:}];
+if ~isempty(p_cohfos_cortex)
 p_cohfos_cortex=p_cohfos_cortex(~cellfun('isempty',p_cohfos_cortex));
 q_cohfos_cortex=q_cohfos_cortex(~cellfun('isempty',q_cohfos_cortex));
+else
+p_cohfos_cortex=[];
+q_cohfos_cortex=[];
+
+end
 
 
 
