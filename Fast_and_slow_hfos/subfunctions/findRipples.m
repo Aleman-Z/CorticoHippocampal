@@ -1,4 +1,4 @@
-function [S, E, M] = findRipples(Filt_EEG, timestamps, DetectThreshold, LimitThreshold, varargin)
+function [S, E, M] = findRipples(Filt_EEG, timestamps, DetectThreshold, LimitThreshold,fn,varargin)
 % [S, E, M] = findRipples(Filt_EEG, DetectThreshold, LimitThreshold, varargin)
 % 
 % INPUTS: 
@@ -26,9 +26,9 @@ function [S, E, M] = findRipples(Filt_EEG, timestamps, DetectThreshold, LimitThr
 
 % parameters
 Q1 = 3;
-CloseThreshold = 50 / 1000;
+CloseThreshold = 50 / fn;
 %CloseThreshold = 50;
-MinRippleDuration = 30 / 1000;
+MinRippleDuration = 30 / fn;
 
 
 

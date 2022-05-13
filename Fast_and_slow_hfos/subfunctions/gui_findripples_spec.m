@@ -6,15 +6,15 @@ function [Mx,timeasleep,sig,Ex,Sx,p,q,cont,sig_pq]=gui_findripples_spec(CORTEX,s
 
 
     %Total amount of NREM time:
-    timeasleep=sum(cellfun('length',V))*(1/1000)/60; % In minutes
+    timeasleep=sum(cellfun('length',V))*(1/fn)/60; % In minutes
     signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono,'UniformOutput',false);
     ti=cellfun(@(equis) reshape(linspace(0, length(equis)-1,length(equis))*(1/fn),[],1) ,signal2,'UniformOutput',false);
 
     %Find HFOs or ripples 
     if strcmp(xx{1},'HPC')
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), [] ), signal2,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findRipples(equis1, equis2, tr(1), (tr(1))*(1/2), fn ), signal2,ti,'UniformOutput',false);
     else
-    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2), [] ), signal2,ti,'UniformOutput',false);
+    [Sx,Ex,Mx] =cellfun(@(equis1,equis2) findHFOs(equis1, equis2, tr(2), (tr(2))*(1/2)), signal2,ti,'UniformOutput',false);
     end
    
 %Get signal trace and arrange in the format needed by Fieldtrip.
