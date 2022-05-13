@@ -25,7 +25,7 @@ if length(data)>2 %Only when having more than 2 detections.
     %Uncomment if running for the first time:
     
     %Find threshold value
-    % th=min([max(cluster1) max(cluster2)]);
+%     th=min([max(cluster1) max(cluster2)]);
 
 end
 
@@ -33,11 +33,11 @@ end
 if Rat==26
     th=156.7; %Rat 26
 end
-
+% 
 if Rat==27
     th=158; %Rat 27
 end
-
+% 
 if Rat==24
     if tr(2)==40
         th=153.5; %Rat 24 (40)
