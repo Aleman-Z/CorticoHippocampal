@@ -2,13 +2,17 @@
 
 % Main code for computation of spectral granger causality between brain areas wrt events.
 % Requires 'load_me_first.mat' loaded first. 
-
+cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
+load('load_me_first.mat')
 %% Find location
 close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
 
 % cd('/home/adrian/Documents/Plusmaze_downsampled')
+
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
+cd(dname)
 
 %%
 %Select rat number
@@ -63,15 +67,15 @@ fn=1000; %Sampling frequency after downsampling.
     close(f);
 g={g{logical(boxch)}};    
 
-if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
-g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{3}),g,'UniformOutput',false)))...
- find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
-
-else
-    error('Name issue')
-end
+% if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
+% g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
+%  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
+%  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{3}),g,'UniformOutput',false)))...
+%  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
+% 
+% else
+%     error('Name issue')
+% end
 
 %%
 f=waitbar(0,'Please wait...');
@@ -133,7 +137,7 @@ Q_cortex=q_cortex(~cellfun('isempty',q_cortex));
 Q_cortex=[Q_cortex{:}];
 
 %Find slow and fast Hfos
-[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr);
+[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr,fn);
 
 void_index=find(cellfun('isempty',Q_cortex));
 
