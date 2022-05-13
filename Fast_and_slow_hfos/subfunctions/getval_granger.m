@@ -38,7 +38,7 @@ for condition=1:length(labelconditions3)
     
     ro=1200;
     %Compute non-parametric, parametric and conditional spectral GC.
-    [gran,gran1,grangercon]=getgranger(p,create_timecell(ro,length(p)),'Wideband',ro,10,[0:1:300],fn);
+    [gran,gran1,grangercon]=getgranger(p,create_timecell(ro,length(p),fn),'Wideband',ro,10,[0:1:300],fn);
     
     %Extract granger spectrums
     G{condition}=gran.grangerspctrm;%Non-parametric (Pairwise)
