@@ -26,7 +26,7 @@ function [deltaWave_count,deltaFreq,delta_duration,Mx,timeasleep,sig,Ex,Sx, Delt
     end
     V=cellfun(@(equis) filtfilt(b2,a2,equis), v ,'UniformOutput',false); %0.3 to 300Hz
     
-    Wn1=[1/(fn/2) 4/(fn/2)]; % Cutoff=1-4 Hz % maingret and lisa both prefer 4 Hz.
+    Wn1=[1/(fn/2) 6/(fn/2)]; % Cutoff=1-4 Hz % maingret and lisa both prefer 4 Hz.
     [b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
     Mono=cellfun(@(equis) filtfilt(b1,a1,equis), V ,'UniformOutput',false); %Regular 9-20Hz bandpassed for sig variable.
     
