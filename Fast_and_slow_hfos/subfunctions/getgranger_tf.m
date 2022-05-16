@@ -12,6 +12,6 @@ data1.label{2}='PFC';
 data1.label{3}='HPC';
 
 % time frequency 
-[granger_tf, freq_tf]=createauto_timefreq(data1,freqrange);
+[granger_tf, freq_tf]=createauto_timefreq_Nayanika(data1,freqrange);
 end
 
