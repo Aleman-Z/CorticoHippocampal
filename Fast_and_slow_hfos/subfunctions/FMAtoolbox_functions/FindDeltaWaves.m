@@ -54,10 +54,17 @@ function delta = FindDeltaWaves(filtered,varargin)
 % (at your option) any later version.
 
 % Default values
-highPeak = 2 ; % Threshold for filtered signal (number of SDs)
-lowPeak = 1;
-highTrough = 1.5;
-lowTrough = 0;
+% highPeak = 2 ; % Threshold for filtered signal (number of SDs)
+% lowPeak = 1;
+% highTrough = 1.5;
+% lowTrough = 0;
+%[1 2 0 1.5]
+
+highPeak = 3 ; % Threshold for filtered signal (number of SDs)
+lowPeak = 1.5;
+highTrough = 0;
+lowTrough = -1.5;
+
 minDuration = 150; % min time between successive zero crossings (in ms)
 maxDuration = 450; % max time between successive zero crossings (in ms)
 
