@@ -441,11 +441,11 @@ labelconditions3=labelconditions3.';
 
 s=1; %Slow Cohfos. s=1 cooccurrent. s=2 singles.
 w=3; %w=3 PAR. 
-tf=1; % tf=1 to compute time frequency granger
+tf=0; % tf=1 to compute time frequency granger
 %[g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(SP,SQ,labelconditions3,label1,s,w,fn);
-%[n, g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(SP,SQ,labelconditions2,label1,s,w,fn, tf);
-[n, g_tf1]=getval_granger_Nayanika(SP,SQ,labelconditions2,label1,s,w,fn, tf);
-plot_granger_tf(g_tf1, 'Slow HFO');
+[n, g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(SP,SQ,labelconditions2,label1,s,w,fn, tf);
+%[n, g_tf1]=getval_granger_Nayanika(SP,SQ,labelconditions2,label1,s,w,fn, tf);
+%plot_granger_tf(g_tf1, 'Slow HFO');
 %g1 :Parametric Granger spectrum
 %g1_f :Parametric frequencies
 %G :Non parametric Granger spectrum.
@@ -495,9 +495,9 @@ writematrix('Slow HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4,
 
 %-------------
 w=3; %PAR
-%[n2, g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(FP,FQ,labelconditions2,label1,s,w,fn, tf);
-[n2, g_tf2]=getval_granger_Nayanika(FP,FQ,labelconditions2,label1,s,w,fn, tf);
-plot_granger_tf(g_tf2, 'Fast HFO');
+[n2, g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(FP,FQ,labelconditions2,label1,s,w,fn, tf);
+% [n2, g_tf2]=getval_granger_Nayanika(FP,FQ,labelconditions2,label1,s,w,fn, tf);
+% plot_granger_tf(g_tf2, 'Fast HFO');
 
 %labelconditions3{1}='baseline';
 granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
@@ -539,10 +539,10 @@ writematrix('Fast HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4,
 %labelconditions3{1}='nl';
 %s=2; %Slow singles
 w=1;%HPC
-%[n3,g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(P,Q,labelconditions2,label1,s,w,fn, tf);
-[n3, g_tf3]=getval_granger_Nayanika(P,Q,labelconditions2,label1,s,w,fn, tf);
+[n3,g1,g1_f,G,G_f,FB,FB1]=getval_granger_Nayanika(P,Q,labelconditions2,label1,s,w,fn, tf);
+%[n3, g_tf3]=getval_granger_Nayanika(P,Q,labelconditions2,label1,s,w,fn, tf);
 %plot_granger_tf(g_tf3, 'HPC');
-plot_granger_tf(g_tf1, g_tf2, g_tf3,'Slow HFO', 'Fast HFO', 'ripples');
+%plot_granger_tf(g_tf1, g_tf2, g_tf3,'Slow HFO', 'Fast HFO', 'ripples');
 
 labelconditions3{1}='baseline';
 granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
