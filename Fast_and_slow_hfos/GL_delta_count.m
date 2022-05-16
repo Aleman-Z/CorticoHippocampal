@@ -111,7 +111,7 @@ end
 pfc_thresholds=[1.5, 3, -1.5, 0];
 
 %Find PFC Deltawaves
-xo
+
 [deltaWave_count_pfc,deltaFreq_pfc,delta_duration_pfc,Mx_pfc,timeasleep,sig_pfc,Ex_pfc,Sx_pfc, ...
    DeltaWaves, ti_cont,duration_epoch_cumsum]=gui_finddeltawavesZugaro(CORTEX,states,xx,multiplets,fn, pfc_thresholds);
 
@@ -122,6 +122,7 @@ delta_count_PFC(k)=deltaWave_count_pfc;
 sig_pfc =[sig_pfc{:}];
 print_hist=0;
 
+%This delta_specs comes from Milan's RGS repo.
 [x,y,z,w,h,q,l,p,si_mixed,th,PCA_features]=delta_specs(sig_pfc,timeasleep,print_hist);
 
 instafreq_pfc{k}=x;
@@ -157,6 +158,7 @@ delta_count_PAR(k)=deltaWave_count_par;
 
 sig_par =[sig_par{:}];
 
+%This delta_specs comes from Milan's RGS repo.
 [x,y,z,w,h,q,l,p,si_mixed,th,PCA_features]=delta_specs(sig_par,timeasleep,print_hist);
 
 instafreq_par{k}=x;
