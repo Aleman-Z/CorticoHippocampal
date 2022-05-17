@@ -67,7 +67,7 @@ fn=1000; %Sampling frequency after downsampling.
     clear Boxcheck
     close(f);
 g={g{logical(boxch)}};    
-
+%xo
 if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
 g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
@@ -428,11 +428,11 @@ xo
 %Q: Bandpassed signal.
 
 %Labels
-labelconditions3{1}='nl';
-labelconditions3{2}='plusmaze';
-labelconditions3{3}='novelty';
-labelconditions3{4}='for';
-labelconditions3=labelconditions3.';
+% labelconditions3{1}='nl';
+% labelconditions3{2}='plusmaze';
+% labelconditions3{3}='novelty';
+% labelconditions3{4}='for';
+% labelconditions3=labelconditions3.';
 
 %-------------
 %Compute Granger
@@ -454,17 +454,17 @@ tf=0; % tf=1 to compute time frequency granger
 %FB1 : Frequency band granger values (Parametric)
 
 %Plot Granger values across frequencies.
-labelconditions3{1}='baseline';
+% labelconditions3{1}='baseline';
 %Parametric
 %granger_plot(g1,g1_f,labelconditions3,[0 300]) %All
-granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
-printing(['Parametric_Slow_Cohfos' '_' num2str(tr(2))])
-close all
+% granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
+% printing(['Parametric_Slow_Cohfos' '_' num2str(tr(2))])
+% close all
 %Non Parametric
 %granger_plot(G,G_f,labelconditions3,[0 300]) %All
-granger_plot(G,G_f,labelconditions2,[0 300]) %All
-printing(['Non_parametric_Slow_Cohfos' '_' num2str(tr(2))])
-close all
+% granger_plot(G,G_f,labelconditions2,[0 300]) %All
+% printing(['Non_parametric_Slow_Cohfos' '_' num2str(tr(2))])
+% close all
 
 %Tables with granger values for different frequency bands
 TT1_20_np=table;
@@ -500,13 +500,13 @@ w=3; %PAR
 % plot_granger_tf(g_tf2, 'Fast HFO');
 
 %labelconditions3{1}='baseline';
-granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
-printing(['Parametric_fast' '_' num2str(tr(2))])
-close all
+% granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
+% printing(['Parametric_fast' '_' num2str(tr(2))])
+% close all
 
-granger_plot(G,G_f,labelconditions2,[0 300]) %All
-printing(['Non_parametric_fast' '_' num2str(tr(2))])
-close all    
+% granger_plot(G,G_f,labelconditions2,[0 300]) %All
+% printing(['Non_parametric_fast' '_' num2str(tr(2))])
+% close all    
 
 %Tables with granger values for different frequency bands
 TT2_20_np=table;
@@ -544,14 +544,14 @@ w=1;%HPC
 %plot_granger_tf(g_tf3, 'HPC');
 %plot_granger_tf(g_tf1, g_tf2, g_tf3,'Slow HFO', 'Fast HFO', 'ripples');
 
-labelconditions3{1}='baseline';
-granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
-printing(['Parametric_HPC' '_' num2str(tr(2))])
-close all
+% labelconditions3{1}='baseline';
+% granger_plot(g1,g1_f,labelconditions2,[0 300]) %All
+% printing(['Parametric_HPC' '_' num2str(tr(2))])
+% close all
 
-granger_plot(G,G_f,labelconditions2,[0 300]) %All
-printing(['Non_parametric_HPC' '_' num2str(tr(2))])
-close all
+% granger_plot(G,G_f,labelconditions2,[0 300]) %All
+% printing(['Non_parametric_HPC' '_' num2str(tr(2))])
+% close all
 
 %Tables with granger values for different frequency bands
 
