@@ -124,14 +124,14 @@ else
 end
  %Window duration in miliseconds
  ro=1200;
-%Find HFOs and extraxt event-centered traces with Fieldtrip format.
+%Find HFOs and extract event-centered traces with Fieldtrip format.
 [Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex,...
   p_cortex,q_cortex,cont_cortex,sig_pq_cortex ...
   ]=gui_findripples_spec(CORTEX,states,xx,tr,PFC,HPC,fn,ro);
 
 si=sig_cortex(~cellfun('isempty',sig_cortex));
 si=[si{:}];
-
+%xo
 si_pq=sig_pq_cortex(~cellfun('isempty',sig_pq_cortex));
 si_pq=[si_pq{:}];
 
@@ -140,7 +140,7 @@ Q_cortex=[Q_cortex{:}];
 
 %Find slow and fast Hfos
 [~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr,fn);
-
+%xo
 void_index=find(cellfun('isempty',Q_cortex));
 
 %All par HFOS splitted in slow and fast.
@@ -579,20 +579,20 @@ TT5_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelco
 writetable(TT5_300_p,'granger_causality.xls','sheet',4,'Range','A19:L26') 
 writematrix('HPC: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A18')
 
-xo
-%% EXPORT tables to Excel sheets
-
-t1=repmat({'x'},[1 5]);
-
-tab=[TT1_20_p;t1;TT2_20_p;t1;TT3_20_p;t1;TT4_20_p;t1;TT5_20_p];
-writetable(tab,strcat('Granger_20_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-
-tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
-writetable(tab2,strcat('Granger_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-
-tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
-writetable(tab3,strcat('Granger_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-
-tab4=[TT1_300_p;t1;TT2_300_p;t1;TT3_300_p;t1;TT4_300_p;t1;TT5_300_p];
-writetable(tab4,strcat('Granger_300_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
-
+% xo
+% %% EXPORT tables to Excel sheets
+% 
+% t1=repmat({'x'},[1 5]);
+% 
+% tab=[TT1_20_p;t1;TT2_20_p;t1;TT3_20_p;t1;TT4_20_p;t1;TT5_20_p];
+% writetable(tab,strcat('Granger_20_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+% 
+% tab2=[TT1_20_np;t1;TT2_20_np;t1;TT3_20_np;t1;TT4_20_np;t1;TT5_20_np];
+% writetable(tab2,strcat('Granger_20_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+% 
+% tab3=[TT1_300_np;t1;TT2_300_np;t1;TT3_300_np;t1;TT4_300_np;t1;TT5_300_np];
+% writetable(tab3,strcat('Granger_300_NonParametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+% 
+% tab4=[TT1_300_p;t1;TT2_300_p;t1;TT3_300_p;t1;TT4_300_p;t1;TT5_300_p];
+% writetable(tab4,strcat('Granger_300_Parametric_rat_', num2str(Rat),'_' ,num2str(tr(2)),'.xls'),'Sheet',1,'Range','A2:Z50')  
+% 
