@@ -106,7 +106,7 @@ if  ~isempty(A)
 else
       error('No Scoring found')    
 end
-xo
+%xo
 % PFC spindles
 [ripple,~,~,Mx_cortex,timeasleep,sig_cortex,Ex_cortex,Sx_cortex]=gui_findspindlesZugaro(CORTEX,states,xx,multiplets,fn);
 
@@ -141,7 +141,7 @@ end
 si=sig_cortex_sphfo(~cellfun('isempty',sig_cortex_sphfo));
 si=[si{:}];
 % Group in slow and fast HFOs
-[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr);
+[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,0,Rat,tr,fn);
 %% Separate bimodal distribution (Average freq)  in slow and fast HFOs
 %g1: slow, g2:fast
 %Initialize variables
@@ -247,9 +247,9 @@ end
   ~,~,~,~,~, ...
   ]=gui_findripples(CORTEX,states,{'HPC'},tr,multiplets,fn);
 
-Mx_nhpc=Mx_nhpc';
-Sx_nhpc=Sx_nhpc';
-Ex_nhpc=Ex_nhpc';
+% Mx_nhpc=Mx_nhpc';
+% Sx_nhpc=Sx_nhpc';
+% Ex_nhpc=Ex_nhpc';
 %% Coocur PFC spindle and HPC ripples
 [cohfos1_hpc,cohfos2_hpc]=cellfun(@(equis1,equis2,equis3,equis4,equis5,equis6) co_hfo_spindle(equis1,equis2,equis3,equis4,equis5,equis6),Sx_nhpc,Mx_nhpc,Ex_nhpc,Sx_cortex,Mx_cortex,Ex_cortex,'UniformOutput',false);
 

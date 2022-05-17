@@ -38,7 +38,7 @@ function [spindle,SpinFreq,spin_duration,Mx,timeasleep,sig,Ex,Sx]=gui_findspindl
     %% Finding number of spindles in the dataset
     ti_cont=(1:length(Concat_mono))./1000;    
     Concat_input = [ti_cont' Concat_mono];
-    spindles=FindSpindles(Concat_input, 'durations', [0.5 2000], 'peak', 4);
+    spindles=FindSpindlesNayanika(Concat_input, 'durations', [0.5 2000], 'peak', 4);
     
     %finding number of spindles per epoch
     
