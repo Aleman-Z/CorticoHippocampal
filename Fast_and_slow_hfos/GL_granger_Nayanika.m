@@ -75,7 +75,13 @@ g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'Uni
  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
 
 else
-%     error('Name issue')
+     warning('Condition name issue. Fixing it.')
+    labelconditions2{1}='baseline';
+    labelconditions2{2}='foraging';
+    labelconditions2{3}='novelty';
+    labelconditions2{4}='plusmaze';
+    labelconditions2=labelconditions2.';
+
 end
 
 rat_no= ['Rat_' num2str(Rat)];
@@ -466,30 +472,109 @@ tf=0; % tf=1 to compute time frequency granger
 % printing(['Non_parametric_Slow_Cohfos' '_' num2str(tr(2))])
 % close all
 
-%Tables with granger values for different frequency bands
-TT1_20_np=table;
-TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
-TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT1_20_np,'granger_causality.xls','sheet',1,'Range','A2:L10') 
-writematrix('Slow HFO: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A1')
+%% Tables with granger values for different frequency bands (NEW: 18/05/2022)
+%NOn parametric
+TT1_SO_np=table;
+TT1_SO_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+TT1_SO_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric SO:0.01-4 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',1, 'Range', 'A1')
 
-TT1_20_p=table;
-TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
-TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT1_20_p,'granger_causality.xls','sheet',2,'Range','A2:L10') 
-writematrix('Slow HFO: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A1')
+TT1_theta_np=table;
+TT1_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+TT1_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric theta: 4-8 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_np=table;
+TT1_spindle_beta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,3) FB{2}(:,3) FB{3}(:,3) FB{4}(:,3)])];
+TT1_spindle_beta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric spindle_beta: 10-20 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_np=table;
+TT1_swr_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,4) FB{2}(:,4) FB{3}(:,4) FB{4}(:,4)])];
+TT1_swr_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric swr: 100-250 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_np=table;
+TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,5) FB{2}(:,5) FB{3}(:,5) FB{4}(:,5)])];
+TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric 0-20 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',5, 'Range', 'A1')
 
 TT1_300_np=table;
-TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,6) FB{2}(:,6) FB{3}(:,6) FB{4}(:,6)])];
 TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT1_300_np,'granger_causality.xls','sheet',3,'Range','A2:L10') 
-writematrix('Slow HFO: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A1')
-   
+writetable(TT1_300_np,'granger_causality_Slow_HFO_nonparametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('Slow HFO: Non Parametric 20-300 Hz','granger_causality_Slow_HFO_nonparametric.xls', 'sheet',6, 'Range', 'A1')
+%% Parametric
+TT1_SO_p=table;
+TT1_SO_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+TT1_SO_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_p,'granger_causality_Slow_HFO_parametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric SO:0.01-4 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',1, 'Range', 'A1')
+
+TT1_theta_p=table;
+TT1_theta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+TT1_theta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_p,'granger_causality_Slow_HFO_parametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric theta: 4-8 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_p=table;
+TT1_spindle_beta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,3) FB1{2}(:,3) FB1{3}(:,3) FB1{4}(:,3)])];
+TT1_spindle_beta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_p,'granger_causality_Slow_HFO_parametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric spindle_beta: 10-20 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_p=table;
+TT1_swr_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,4) FB1{2}(:,4) FB1{3}(:,4) FB1{4}(:,4)])];
+TT1_swr_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_p,'granger_causality_Slow_HFO_parametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric swr: 100-250 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_p=table;
+TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,5) FB1{2}(:,5) FB1{3}(:,5) FB1{4}(:,5)])];
+TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_p,'granger_causality_Slow_HFO_parametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric 0-20 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',5, 'Range', 'A1')
+
 TT1_300_p=table;
-TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,6) FB1{2}(:,6) FB1{3}(:,6) FB1{4}(:,6)])];
 TT1_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT1_300_p,'granger_causality.xls','sheet',4,'Range','A2:L10') 
-writematrix('Slow HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A1')
+writetable(TT1_300_p,'granger_causality_Slow_HFO_parametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('Slow HFO: Parametric 20-300 Hz','granger_causality_Slow_HFO_parametric.xls', 'sheet',6, 'Range', 'A1')
+
+
+
+
+
+%% Tables with granger values for different frequency bands
+
+% % % % % TT1_20_np=table;
+% % % % % TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+% % % % % TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % writetable(TT1_20_np,'granger_causality.xls','sheet',1,'Range','A2:L10') 
+% % % % % writematrix('Slow HFO: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A1')
+% % % % % 
+% % % % % TT1_20_p=table;
+% % % % % TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+% % % % % TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % writetable(TT1_20_p,'granger_causality.xls','sheet',2,'Range','A2:L10') 
+% % % % % writematrix('Slow HFO: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A1')
+% % % % % 
+% % % % % TT1_300_np=table;
+% % % % % TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+% % % % % TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % writetable(TT1_300_np,'granger_causality.xls','sheet',3,'Range','A2:L10') 
+% % % % % writematrix('Slow HFO: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A1')
+% % % % %    
+% % % % % TT1_300_p=table;
+% % % % % TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+% % % % % TT1_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % writetable(TT1_300_p,'granger_causality.xls','sheet',4,'Range','A2:L10') 
+% % % % % writematrix('Slow HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A1')
 
 
 
@@ -507,31 +592,103 @@ w=3; %PAR
 % granger_plot(G,G_f,labelconditions2,[0 300]) %All
 % printing(['Non_parametric_fast' '_' num2str(tr(2))])
 % close all    
+%% NOn parametric
+TT1_SO_np=table;
+TT1_SO_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+TT1_SO_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric SO:0.01-4 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',1, 'Range', 'A1')
+
+TT1_theta_np=table;
+TT1_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+TT1_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric theta: 4-8 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_np=table;
+TT1_spindle_beta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,3) FB{2}(:,3) FB{3}(:,3) FB{4}(:,3)])];
+TT1_spindle_beta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric spindle_beta: 10-20 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_np=table;
+TT1_swr_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,4) FB{2}(:,4) FB{3}(:,4) FB{4}(:,4)])];
+TT1_swr_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric swr: 100-250 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_np=table;
+TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,5) FB{2}(:,5) FB{3}(:,5) FB{4}(:,5)])];
+TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric 0-20 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',5, 'Range', 'A1')
+
+TT1_300_np=table;
+TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,6) FB{2}(:,6) FB{3}(:,6) FB{4}(:,6)])];
+TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_300_np,'granger_causality_Fast_HFO_nonparametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('Fast HFO: Non Parametric 20-300 Hz','granger_causality_Fast_HFO_nonparametric.xls', 'sheet',6, 'Range', 'A1')
+%% Parametric
+TT1_SO_p=table;
+TT1_SO_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+TT1_SO_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_p,'granger_causality_Fast_HFO_parametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric SO:0.01-4 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',1, 'Range', 'A1')
+
+TT1_theta_p=table;
+TT1_theta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+TT1_theta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_p,'granger_causality_Fast_HFO_parametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric theta: 4-8 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_p=table;
+TT1_spindle_beta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,3) FB1{2}(:,3) FB1{3}(:,3) FB1{4}(:,3)])];
+TT1_spindle_beta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_p,'granger_causality_Fast_HFO_parametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric spindle_beta: 10-20 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_p=table;
+TT1_swr_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,4) FB1{2}(:,4) FB1{3}(:,4) FB1{4}(:,4)])];
+TT1_swr_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_p,'granger_causality_Fast_HFO_parametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric swr: 100-250 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_p=table;
+TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,5) FB1{2}(:,5) FB1{3}(:,5) FB1{4}(:,5)])];
+TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_p,'granger_causality_Fast_HFO_parametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric 0-20 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',5, 'Range', 'A1')
+
+TT1_300_p=table;
+TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,6) FB1{2}(:,6) FB1{3}(:,6) FB1{4}(:,6)])];
+TT1_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_300_p,'granger_causality_Fast_HFO_parametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('Fast HFO: Parametric 20-300 Hz','granger_causality_Fast_HFO_parametric.xls', 'sheet',6, 'Range', 'A1')
 
 %Tables with granger values for different frequency bands
-TT2_20_np=table;
-TT2_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
-TT2_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT2_20_np,'granger_causality.xls','sheet',1,'Range','A10:L17') 
-writematrix('Fast HFO: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A9')
-
-TT2_20_p=table;
-TT2_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
-TT2_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT2_20_p,'granger_causality.xls','sheet',2,'Range','A10:L17') 
-writematrix('Fast HFO: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A9')
-
-TT2_300_np=table;
-TT2_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
-TT2_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT2_300_np,'granger_causality.xls','sheet',3,'Range','A10:L17') 
-writematrix('Fast HFO: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A9')
-
-TT2_300_p=table;
-TT2_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
-TT2_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT2_300_p,'granger_causality.xls','sheet',4,'Range','A10:L17') 
-writematrix('Fast HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A9')
+% % % % % % TT2_20_np=table;
+% % % % % % TT2_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+% % % % % % TT2_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % writetable(TT2_20_np,'granger_causality.xls','sheet',1,'Range','A10:L17') 
+% % % % % % writematrix('Fast HFO: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A9')
+% % % % % % 
+% % % % % % TT2_20_p=table;
+% % % % % % TT2_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+% % % % % % TT2_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % writetable(TT2_20_p,'granger_causality.xls','sheet',2,'Range','A10:L17') 
+% % % % % % writematrix('Fast HFO: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A9')
+% % % % % % 
+% % % % % % TT2_300_np=table;
+% % % % % % TT2_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+% % % % % % TT2_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % writetable(TT2_300_np,'granger_causality.xls','sheet',3,'Range','A10:L17') 
+% % % % % % writematrix('Fast HFO: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A9')
+% % % % % % 
+% % % % % % TT2_300_p=table;
+% % % % % % TT2_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+% % % % % % TT2_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % writetable(TT2_300_p,'granger_causality.xls','sheet',4,'Range','A10:L17') 
+% % % % % % writematrix('Fast HFO: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A9')
 
 
 %HPC
@@ -552,32 +709,104 @@ w=1;%HPC
 % granger_plot(G,G_f,labelconditions2,[0 300]) %All
 % printing(['Non_parametric_HPC' '_' num2str(tr(2))])
 % close all
+%NOn parametric
+TT1_SO_np=table;
+TT1_SO_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+TT1_SO_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric SO:0.01-4 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',1, 'Range', 'A1')
+
+TT1_theta_np=table;
+TT1_theta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+TT1_theta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric theta: 4-8 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_np=table;
+TT1_spindle_beta_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,3) FB{2}(:,3) FB{3}(:,3) FB{4}(:,3)])];
+TT1_spindle_beta_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric spindle_beta: 10-20 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_np=table;
+TT1_swr_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,4) FB{2}(:,4) FB{3}(:,4) FB{4}(:,4)])];
+TT1_swr_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric swr: 100-250 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_np=table;
+TT1_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,5) FB{2}(:,5) FB{3}(:,5) FB{4}(:,5)])];
+TT1_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric 0-20 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',5, 'Range', 'A1')
+
+TT1_300_np=table;
+TT1_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,6) FB{2}(:,6) FB{3}(:,6) FB{4}(:,6)])];
+TT1_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_300_np,'granger_causality_HPC_ripple_nonparametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('HPC ripple: Non Parametric 20-300 Hz','granger_causality_HPC_ripple_nonparametric.xls', 'sheet',6, 'Range', 'A1')
+%% Parametric
+TT1_SO_p=table;
+TT1_SO_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+TT1_SO_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_SO_p,'granger_causality_HPC_ripple_parametric.xls','sheet',1,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric SO:0.01-4 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',1, 'Range', 'A1')
+
+TT1_theta_p=table;
+TT1_theta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+TT1_theta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_theta_p,'granger_causality_HPC_ripple_parametric.xls','sheet',2,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric theta: 4-8 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',2, 'Range', 'A1')
+
+TT1_spindle_beta_p=table;
+TT1_spindle_beta_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,3) FB1{2}(:,3) FB1{3}(:,3) FB1{4}(:,3)])];
+TT1_spindle_beta_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_spindle_beta_p,'granger_causality_HPC_ripple_parametric.xls','sheet',3,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric spindle_beta: 10-20 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',3, 'Range', 'A1')
+
+TT1_swr_p=table;
+TT1_swr_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,4) FB1{2}(:,4) FB1{3}(:,4) FB1{4}(:,4)])];
+TT1_swr_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_swr_p,'granger_causality_HPC_ripple_parametric.xls','sheet',4,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric swr: 100-250 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',4, 'Range', 'A1')
+
+TT1_20_p=table;
+TT1_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,5) FB1{2}(:,5) FB1{3}(:,5) FB1{4}(:,5)])];
+TT1_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_20_p,'granger_causality_HPC_ripple_parametric.xls','sheet',5,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric 0-20 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',5, 'Range', 'A1')
+
+TT1_300_p=table;
+TT1_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,6) FB1{2}(:,6) FB1{3}(:,6) FB1{4}(:,6)])];
+TT1_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+writetable(TT1_300_p,'granger_causality_HPC_ripple_parametric.xls','sheet',6,'Range','A2:L10') 
+writematrix('HPC ripple: Parametric 20-300 Hz','granger_causality_HPC_ripple_parametric.xls', 'sheet',6, 'Range', 'A1')
 
 %Tables with granger values for different frequency bands
 
-TT5_20_np=table;
-TT5_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
-TT5_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT5_20_np,'granger_causality.xls','sheet',1,'Range','A19:L26') 
-writematrix('HPC: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A18')
-   
-TT5_20_p=table;
-TT5_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
-TT5_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT5_20_p,'granger_causality.xls','sheet',2,'Range','A19:L26') 
-writematrix('HPC: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A18')
-
-TT5_300_np=table;
-TT5_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
-TT5_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT5_300_np,'granger_causality.xls','sheet',3,'Range','A19:L26') 
-writematrix('HPC: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A18')
-
-TT5_300_p=table;
-TT5_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
-TT5_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
-writetable(TT5_300_p,'granger_causality.xls','sheet',4,'Range','A19:L26') 
-writematrix('HPC: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A18')
+% % % % % % % % TT5_20_np=table;
+% % % % % % % % TT5_20_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,1) FB{2}(:,1) FB{3}(:,1) FB{4}(:,1)])];
+% % % % % % % % TT5_20_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % % % writetable(TT5_20_np,'granger_causality.xls','sheet',1,'Range','A19:L26') 
+% % % % % % % % writematrix('HPC: Non Parametric 0-20 Hz','granger_causality.xls', 'sheet',1, 'Range', 'A18')
+% % % % % % % %    
+% % % % % % % % TT5_20_p=table;
+% % % % % % % % TT5_20_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,1) FB1{2}(:,1) FB1{3}(:,1) FB1{4}(:,1)])];
+% % % % % % % % TT5_20_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % % % writetable(TT5_20_p,'granger_causality.xls','sheet',2,'Range','A19:L26') 
+% % % % % % % % writematrix('HPC: Parametric 0-20 Hz','granger_causality.xls', 'sheet',2, 'Range', 'A18')
+% % % % % % % % 
+% % % % % % % % TT5_300_np=table;
+% % % % % % % % TT5_300_np.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB{1}(:,2) FB{2}(:,2) FB{3}(:,2) FB{4}(:,2)])];
+% % % % % % % % TT5_300_np.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % % % writetable(TT5_300_np,'granger_causality.xls','sheet',3,'Range','A19:L26') 
+% % % % % % % % writematrix('HPC: Non Parametric 20-300 Hz','granger_causality.xls', 'sheet',3, 'Range', 'A18')
+% % % % % % % % 
+% % % % % % % % TT5_300_p=table;
+% % % % % % % % TT5_300_p.Variables=    [[{'PAR->PFC'};{'PFC->PAR'};{'PAR->HPC'};{'HPC->PAR'};{'PFC->HPC'};{'HPC->PFC'}] num2cell([FB1{1}(:,2) FB1{2}(:,2) FB1{3}(:,2) FB1{4}(:,2)])];
+% % % % % % % % TT5_300_p.Properties.VariableNames=[{'Direction'};{labelconditions2{1}};{labelconditions2{2}};{labelconditions2{3}};{labelconditions2{4}}];    
+% % % % % % % % writetable(TT5_300_p,'granger_causality.xls','sheet',4,'Range','A19:L26') 
+% % % % % % % % writematrix('HPC: Parametric 20-300 Hz','granger_causality.xls', 'sheet',4, 'Range', 'A18')
 
 % xo
 % %% EXPORT tables to Excel sheets

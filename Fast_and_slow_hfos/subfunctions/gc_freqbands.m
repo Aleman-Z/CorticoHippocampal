@@ -13,17 +13,17 @@ end
 %Frequency bands in which to inspect granger.
 gc_bands=struct;
 gc_bands.so=[0.01 4];
-gc_bands.delta=[2 4];
+%gc_bands.delta=[2 4];
 gc_bands.theta=[4 8];
-gc_bands.spindle_beta=[8 20];
+gc_bands.spindle_beta=[10 20];
 gc_bands.swr=[100 250];
-gc_bands.gamma_low=[30 50];
-gc_bands.gamma_high=[50 100];
-gc_bands.swr_slow=[100 150];
-gc_bands.swr_middle=[150 200];
-gc_bands.swr_fast=[200 250];
+% gc_bands.gamma_low=[30 50];
+% gc_bands.gamma_high=[50 100];
+% gc_bands.swr_slow=[100 150];
+% gc_bands.swr_middle=[150 200];
+% gc_bands.swr_fast=[200 250];
 %Newest
-gc_bands.whole=[0 300]; %Whole spectrum
+% gc_bands.whole=[0 300]; %Whole spectrum
 gc_bands.ZeroTwenty=[0 20];
 gc_bands.TwentyThreehundred=[20 300];
 
