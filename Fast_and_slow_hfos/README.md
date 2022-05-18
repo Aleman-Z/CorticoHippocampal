@@ -71,7 +71,7 @@ _New (2021):_
 _Newer (2022):_ 
   * GL_delta_counts.m
   * GL_spindles_counts_nayanika.m *
-  * GL_spindles_Nayanika.m
+  * GL_spindles_Nayanika.m *
   * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
   
 ---------
