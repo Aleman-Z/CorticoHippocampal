@@ -327,14 +327,14 @@ progress_bar(k,length(g),f)
 A_cell = struct2cell(All_Par);
 All_Par_26=[A_cell{:}];
 specs_spindles(All_Par_26,timeasleep,fn,1)
-% printing(['HistogramSpindles_' num2str(Rat) '_All_PFC_count'])
+printing(['HistogramSpindles_' num2str(Rat) '_All_PFC_count'])
 close all
 
 
 A_cell = struct2cell(All_par);
 All_Par_26=[A_cell{:}];
 specs_spindles(All_Par_26,timeasleep,fn,1)
-% printing(['HistogramSpindles_' num2str(Rat) '_All_PAR_count'])
+printing(['HistogramSpindles_' num2str(Rat) '_All_PAR_count'])
 close all
 
 %% Counts of spindles, cooccurrent spindles and single spindles.
