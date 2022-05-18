@@ -2,13 +2,18 @@
 %GL_spindles_counts.
 %Detects spindles and counts them.
 % Requires 'load_me_first.mat' loaded first. 
+cd('/home/adrian/Documents/GitHub/CorticoHippocampal/Fast_and_slow_hfos')
+load('load_me_first.mat')
 
 %% Find location
 close all
-dname=uigetdir([],'Select folder with Matlab data containing all rats.');
-cd(dname)
+% dname=uigetdir([],'Select folder with Matlab data containing all rats.');
+% cd(dname)
+
 %cd('/home/adrian/Documents/Plusmaze_downsampled')
 
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
+cd(dname)
 %%
 %Select rat number
 opts.Resize = 'on';
