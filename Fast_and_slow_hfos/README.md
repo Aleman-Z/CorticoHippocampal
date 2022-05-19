@@ -72,6 +72,7 @@ _Newer (2022):_
   * GL_delta_counts.m
   * GL_spindles_counts_nayanika.m *
   * GL_spindles_Nayanika.m *
+  * GL_delta_spindles.* (Computes the co-occurrence of deltas an spindles from PPC and PFC as done by [Kim et al.,Cell, 2019](https://www.cell.com/cell/pdf/S0092-8674(19)30959-6.pdf))
   * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
   
 ---------
