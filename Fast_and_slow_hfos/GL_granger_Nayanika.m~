@@ -459,6 +459,7 @@ for k=1:4
 
 end
 
+
 %% Granger analysis.
 %P: Raw signal
 %Q: Bandpassed signal.
