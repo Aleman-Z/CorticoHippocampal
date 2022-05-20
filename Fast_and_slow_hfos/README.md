@@ -15,7 +15,7 @@ Reference:  [doi.org/10.1101/765149](https://doi.org/10.1101/765149)
 
 
 
-:warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) , [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
+:warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) (only for older version 2020), [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
 
 These last two need to be added to the path.
 
