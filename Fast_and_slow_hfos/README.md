@@ -43,10 +43,10 @@ _Required Matlab built-in toolboxes:_
 _**Figure 2B and 2D:** Count of coocurring and single events, as well as slow and fast counts and rates._
   * GL_hfos_counts.m
 
-_**Mentioned in Text**: Shuffling co-occurrence control._
+_Mentioned in Text: Shuffling co-occurrence control._
   * GL_ ripples_hfos _control.m
 
-_**Mentioned in Text**: Shuffling Plusmaze co-occurrence control._
+_Mentioned in Text: Shuffling Plusmaze co-occurrence control._
   * GL_plusmaze_control.m
 
 _**Figure 3 (A,B,C,D)**: Spectral power during events._
@@ -71,7 +71,7 @@ _**Figure 4 (D,E,F)**: Spindle co-occurrence. Before & After counts._
   * GL_spindles.m * (Older version 2020)
   * GL_spindles_Nayanika.m * (Updated version 2022)
 
-_**Mentioned in Text**: Spindle co-occurrence shuffling control_
+_Mentioned in Text: Spindle co-occurrence shuffling control_
   * GL_spindles_control.m *
  
 _**Figure 4I**:_ 
