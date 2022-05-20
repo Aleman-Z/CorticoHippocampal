@@ -40,41 +40,41 @@ _Required Matlab built-in toolboxes:_
 --------------------------------
 ## Main scripts: :file_folder: 
 
-_Figure 2B and 2D: Count of coocurring and single events, as well as slow and fast counts and rates._
+_**Figure 2B and 2D:** Count of coocurring and single events, as well as slow and fast counts and rates._
   * GL_hfos_counts.m
 
-_Mentioned in Text: Shuffling co-occurrence control._
+_**Mentioned in Text**: Shuffling co-occurrence control._
   * GL_ ripples_hfos _control.m
 
-_Mentioned in Text: Shuffling Plusmaze co-occurrence control._
+_**Mentioned in Text**: Shuffling Plusmaze co-occurrence control._
   * GL_plusmaze_control.m
 
-_Figure 3 (A,B,C,D): Spectral power during events._
+_**Figure 3 (A,B,C,D)**: Spectral power during events._
   * GL_spectral_power.m  (Older version 2020)
   * GL_spectral_power_2021.m (Updated version 2022)
 
-_Figure 3 (E,F,G): Granger causality during events._
+_**Figure 3 (E,F,G)**: Granger causality during events._
   * GL_granger.m
   * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
 
-_Figure 4  A:_ 
+_**Figure 4A**:_ 
   * GL_delta_counts.m
 
-_Figure 4B: Spindles counts_
+_**Figure 4B**: Spindles counts_
   * GL_spindles_counts.m * (Older version 2020)
   * GL_spindles_counts_nayanika.m * (Updated version 2022)
 
-_Figure 4 C:_ 
+_**Figure 4C**:_ 
   * GL_delta_spindles.* (Computes the co-occurrence of deltas an spindles from PPC and PFC as done by [Kim et al.,Cell, 2019](https://www.cell.com/cell/pdf/S0092-8674(19)30959-6.pdf))
 
-_Figure 4 (D,E,F): Spindle co-occurrence. Before & After counts._	
+_**Figure 4 (D,E,F)**: Spindle co-occurrence. Before & After counts._	
   * GL_spindles.m * (Older version 2020)
   * GL_spindles_Nayanika.m * (Updated version 2022)
 
-_Mentioned in Text: Spindle co-occurrence shuffling control_
+_**Mentioned in Text**: Spindle co-occurrence shuffling control_
   * GL_spindles_control.m *
  
-_Figure 4 I:_ 
+_**Figure 4I**:_ 
   * GL_swr_disruption.m
  
    
