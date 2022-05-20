@@ -49,7 +49,7 @@ _Mentioned in Text: Shuffling co-occurrence control._
 _Mentioned in Text: Shuffling Plusmaze co-occurrence control._
   * GL_plusmaze_control.m
 
-_Figure 3: Spectral power during events._
+_Figure 3 (A,B,C,D): Spectral power during events._
   * GL_spectral_power.m  (Older version 2020)
   * GL_spectral_power_2021.m (Updated version 2022)
 
