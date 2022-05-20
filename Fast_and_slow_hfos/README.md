@@ -15,7 +15,7 @@ Reference:  [doi.org/10.1101/765149](https://doi.org/10.1101/765149)
 
 
 
-:warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) (only for older version 2020), [Fieldtrip](https://github.com/fieldtrip/fieldtrip) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
+:warning: Requirements: Makes use of functions from the [YASA](https://github.com/raphaelvallat/yasa) (only used in the older version of the manuscript 2020), [Fieldtrip](https://github.com/fieldtrip/fieldtrip) (Suggest to use 2019 version to avoid plotting issues) and [ADRITOOLS](https://github.com/Aleman-Z/ADRITOOLS) repositories. 
 
 These last two need to be added to the path.
 
