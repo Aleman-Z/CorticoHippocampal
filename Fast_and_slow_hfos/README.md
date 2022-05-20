@@ -19,7 +19,7 @@ Reference:  [doi.org/10.1101/765149](https://doi.org/10.1101/765149)
 
 These last two need to be added to the path.
 
-We also include in the subfunctions folder some functions taken from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses)
+We also include in the subfunctions folder some functions borrowed from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses)
 
 _Required Matlab built-in toolboxes:_
 •	Image Processing Toolbox
