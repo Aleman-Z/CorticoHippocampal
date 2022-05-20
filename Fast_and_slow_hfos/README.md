@@ -53,28 +53,30 @@ _Figure 3 (A,B,C,D): Spectral power during events._
   * GL_spectral_power.m  (Older version 2020)
   * GL_spectral_power_2021.m (Updated version 2022)
 
-_Figure 4A: Spindles counts_
-  * GL_spindles_counts.m *
+_Figure 4B: Spindles counts_
+  * GL_spindles_counts.m * (Older version 2020)
+  * GL_spindles_counts_nayanika.m * (Updated version 2022)
 
-_Figure 4 (B,C,D,G): Spindle co-occurrence. Before & After counts._	
-  * GL_spindles.m *
+_Figure 4 (D,E,F): Spindle co-occurrence. Before & After counts._	
+  * GL_spindles.m * (Older version 2020)
+  * GL_spindles_Nayanika.m * (Updated version 2022)
 
-_Figure 4 (F,G): Spindle co-occurrence shuffling control_
+_Mentioned in Text: Spindle co-occurrence shuffling control_
   * GL_spindles_control.m *
 
-_Figure 6: Granger causality during events._
+_Figure 3 (E,F,G): Granger causality during events._
   * GL_granger.m
-  
-_New (2021):_ 
+  * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
+ 
+_Figure 4 (I):_ 
   * GL_swr_disruption.m
 
-_Newer (2022):_ 
+_Figure 4 (A):_ 
   * GL_delta_counts.m
-  * GL_spindles_counts_nayanika.m *
-  * GL_spindles_Nayanika.m *
+ 
+_Figure 4 (C):_ 
   * GL_delta_spindles.* (Computes the co-occurrence of deltas an spindles from PPC and PFC as done by [Kim et al.,Cell, 2019](https://www.cell.com/cell/pdf/S0092-8674(19)30959-6.pdf))
-  * GL_granger_Nayanika.m (Computes spectral Granger Causality analysis after combining events of all rats).
-  
+   
 ---------
 *In the current version (2022): Spindles were computed using an adaptation of the FindSpindles.m function from [FMA toolbox](https://github.com/michael-zugaro/FMAToolbox/tree/master/Analyses) (Zugaro lab).
 
