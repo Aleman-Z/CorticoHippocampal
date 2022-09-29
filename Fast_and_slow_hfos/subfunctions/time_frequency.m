@@ -1,7 +1,7 @@
-function [freq]=time_frequency(q,timecell,freqrange,label,toy,pad_option)
+function [freq]=time_frequency(q,timecell,freqrange,label,toy,fn)
 
 ft_data1 = [];
-ft_data1.fsample = 1000;
+ft_data1.fsample = fn;
 ft_data1.trial = q(1,1:end); 
 ft_data1.time = (timecell(1,1:end));
 

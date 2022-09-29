@@ -1,4 +1,4 @@
-function [granger]=createauto_timefreq(data1,freqrange)
+function [granger, freq]=createauto_timefreq(data1,freqrange)
 % Compute Multitaper
 equis=0.5;
        
@@ -10,7 +10,9 @@ cfg.taper = 'hanning';
 %cfg.taper = 'dpss';
 
 %cfg.pad='nextpow2';
-cfg.pad=3;
+%cfg.pad=3;
+cfg.pad=10;
+
 %cfg.padtype='edge';
 cfg.foi = freqrange;
 %cfg.t_ftimwin = 0.4 * ones(size(cfg.foi));
@@ -18,7 +20,7 @@ cfg.t_ftimwin = 0.5.*ones(size(4./cfg.foi'));
 cfg.tapsmofrq = equis*cfg.foi;
 
 %cfg.toi=toy;
-cfg.toi       = -1:0.01:1;
+cfg.toi       = -2.5:0.01:2.5;
 %cfg.output         = 'pow';
 cfg.output         = 'fourier';
 

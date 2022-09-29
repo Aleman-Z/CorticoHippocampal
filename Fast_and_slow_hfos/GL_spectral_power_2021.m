@@ -10,8 +10,13 @@ close all
 % cd(dname)
 
 % cd('/home/adrian/Documents/Plusmaze_downsampled')
-cd('/home/adrian/Dropbox/jukebox/Documents/Plusmaze_downsampled')
-dname=cd;
+
+% cd('/home/adrian/Dropbox/jukebox/Documents/Plusmaze_downsampled')
+% dname=cd;
+
+dname='/media/adrian/6aa1794c-0320-4096-a7df-00ab0ba946dc/Plusmaze_downsampled/Data_plusmaze';
+cd(dname)
+
 %%
 %Select rat number
 opts.Resize = 'on';
@@ -60,7 +65,7 @@ fn=1000; %Sampling frequency after downsampling.
     clear Boxcheck
     close(f);
 g={g{logical(boxch)}};    
-
+xo
 if sum(cell2mat(cellfun(@(equis1) contains(equis1,'nl'),g,'UniformOutput',false)))==1
 g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'UniformOutput',false)))...
  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{2}),g,'UniformOutput',false)))...
@@ -68,7 +73,8 @@ g=g([find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{1}),g,'Uni
  find(cell2mat(cellfun(@(equis1) contains(equis1,labelconditions2{4}),g,'UniformOutput',false)))]);
 
 else
-    error('Name issue')
+    warning('Name issue')
+%     labelconditions2=labelconditions2([2 1 3 4]); 
 end
 %xo
 %%
@@ -137,7 +143,7 @@ Q_cortex=[Q_cortex{:}];
 
 %Find slow and fast hfos.
 print_hist=0;
-[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,print_hist,Rat,tr);
+[~,~,~,~,~,~,~,~,si_mixed,~]=hfo_specs(si,timeasleep,print_hist,Rat,tr,fn);
 %Find empty cells
 void_index=find(cellfun('isempty',Q_cortex));
 
@@ -368,7 +374,7 @@ progress_bar(k,length(g),f)
     cd ..    
     end
 %Stop code here and save values in excel sheets.    
-
+xo
 
 %% Find values for slow/fast PAR hfos
 win_size=50; %Window size in miliseconds
@@ -391,7 +397,7 @@ w=3;
 % P=FP;
 % Q=FQ;
 
-plot_spectra_nl_vs_pm(FP,FQ,labelconditions2,label1,w,same_nr_types,N)
+plot_spectra_nl_vs_pm(FP,FQ,labelconditions2,label1,w,same_nr_types,N,fn)
 
 printing(['NewColorSpec_fastPPC_rat' num2str(Rat) '_' num2str(tr(2))])    
 close all
