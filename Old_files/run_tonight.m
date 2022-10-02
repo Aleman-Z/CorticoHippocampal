@@ -11,7 +11,7 @@ addpath('C:\Users\Welt Meister\Documents\Donders\CorticoHippocampal\CorticoHippo
 end
 %%
 %Rat=26;
-for tdura=1:2
+for tdura=1:1
 for Rat=1:2
 rats=[26 27 21];
 Rat=rats(Rat);    
@@ -223,7 +223,7 @@ cd(nFF{iii})
 % if ro==1200 && inter==0 && granger==0
 % run('newest_load_data.m')
 % else
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+% [sig1,sig2,ripple,ca,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 % end
 % lepoch=2;
 % error('stop')
@@ -233,7 +233,7 @@ chtm=load('vq_loop2.mat');
 chtm=chtm.vq;
 
 %Get averaged time signal.
-% [sig1,sig2,ripple,carajo,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
+% [sig1,sig2,ripple,ca,veamos,CHTM,RipFreq2,timeasleep]=newest_only_ripple_level(level);    
 % [ripple,timeasleep,DEMAIS,y1]=NREM_accurate_spectrogram(nrem,notch,chtm);
 %error('stop')
 
@@ -243,8 +243,8 @@ files={files.name};
 tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'findrip.mat'), files.', 'UniformOutput',false)));
 % error('stop') 
 if tst~=1
-[sig1,sig2,ripple2,carajo,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
-save findrip.mat   sig1 sig2 ripple2 carajo veamos RipFreq2 timeasleep                                                                                                                                                                                                                                                                                                                                             
+[sig1,sig2,ripple2,ca,veamos,RipFreq2,timeasleep]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
+save findrip.mat   sig1 sig2 ripple2 ca veamos RipFreq2 timeasleep                                                                                                                                                                                                                                                                                                                                             
 else
 load('findrip.mat')    
 end
@@ -262,10 +262,10 @@ sig2{6}=0;
 
 %error('stop')
 % for t=1:60
-[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,tend,tin);
-% [carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,30,0);
+% [ca,veamos]=equal_time2(sig1,sig2,ca,veamos,tend,tin);
+[ca,veamos]=equal_time2(sig1,sig2,ca,veamos,30,0);
 
-ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal times. 
+ripple=sum(cellfun('length',ca{1}(:,1))); %Number of ripples after equal times. 
 % R(t)=ripple;
 %end
 
@@ -273,9 +273,9 @@ ripple=sum(cellfun('length',carajo{1}(:,1))); %Number of ripples after equal tim
 %Get p and q.
   %Get averaged time signal.
 tic
-[p,q,~,~,~,~]=getwin2(carajo{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
+[p,q,~,~,~,~]=getwin2(ca{:,:,level},veamos{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
 toc
-% [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
+% [p2,q2,timecell2,Q2,~,~]=getwin2(ca2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),chtm);
 
 
 
@@ -303,7 +303,7 @@ end
 %timecell are the time labels. 
 %Q is the envelope of the Bandpassed signal.  
 
-% [p2,q2,timecell2,Q2,~,~]=getwin2(carajo2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),CHTM2(level+1));
+% [p2,q2,timecell2,Q2,~,~]=getwin2(ca2{:,:,level},veamos2{level},sig1,sig2,label1,label2,ro,ripple2(level),CHTM2(level+1));
 
 %close all
 %P1 bandpassed
@@ -348,8 +348,8 @@ if mergebaseline==3
      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'findrip.mat'), files.', 'UniformOutput',false)));
  
 if tst~=1
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
-save findrip.mat   sig1_nl sig2_nl ripple_nl carajo_nl veamos_nl RipFreq2 timeasleep2                                                                                                                                                                                                                                                                                                                                             
+[sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
+save findrip.mat   sig1_nl sig2_nl ripple_nl ca_nl veamos_nl RipFreq2 timeasleep2                                                                                                                                                                                                                                                                                                                                             
 else
 %load('findrip.mat')
 if Rat==26
@@ -357,7 +357,7 @@ if Rat==26
     sig1_nl=aa.sig1;
     sig2_nl=aa.sig2;
     ripple_nl=aa.ripple2; 
-    carajo_nl=aa.carajo;
+    ca_nl=aa.ca;
     veamos_nl=aa.veamos; 
     RipFreq2=aa.RipFreq2; 
     timeasleep2=aa.timeasleep;
@@ -367,14 +367,14 @@ else
 end
 end
 
-%[carajo,veamos]=equal_time2(sig1,sig2,carajo,veamos,60,30);
+%[ca,veamos]=equal_time2(sig1,sig2,ca,veamos,60,30);
 
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tend,tin);
-ripple=sum(cellfun('length',carajo_nl{1}(:,1)));
+[ca_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,ca_nl,veamos_nl,tend,tin);
+ripple=sum(cellfun('length',ca_nl{1}(:,1)));
 
 % error('stop')
-%     [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
-    [p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);
+%     [sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+    [p_nl,q_nl,~,~,~,~]=getwin2(ca_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);
     
     
         if selectripples==1
@@ -457,8 +457,8 @@ else %NOT MERGING  BASELINES
      tst=sum(cell2mat(cellfun(@(equis)  strcmp(equis,'findrip.mat'), files.', 'UniformOutput',false)));
  
 if tst~=1
-[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
-save findrip.mat   sig1_nl sig2_nl ripple_nl carajo_nl veamos_nl RipFreq2 timeasleep2                                                                                                                                                                                                                                                                                                                                             
+[sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],[]);
+save findrip.mat   sig1_nl sig2_nl ripple_nl ca_nl veamos_nl RipFreq2 timeasleep2                                                                                                                                                                                                                                                                                                                                             
 else
 %load('findrip.mat')        
 if Rat==26
@@ -466,7 +466,7 @@ if Rat==26
     sig1_nl=aa.sig1;
     sig2_nl=aa.sig2;
     ripple_nl=aa.ripple2; 
-    carajo_nl=aa.carajo;
+    ca_nl=aa.ca;
     veamos_nl=aa.veamos; 
     RipFreq2=aa.RipFreq2; 
     timeasleep2=aa.timeasleep;
@@ -487,20 +487,20 @@ sig2_nl{4}=0;
 sig2_nl{6}=0;
 
 
-[carajo_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tend,tin);
+[ca_nl,veamos_nl]=equal_time2(sig1_nl,sig2_nl,ca_nl,veamos_nl,tend,tin);
 
-%[carajo_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,carajo_nl,veamos_nl,tdura);
+%[ca_nl,veamos_nl]=equal_time(sig1_nl,sig2_nl,ca_nl,veamos_nl,tdura);
 
-% ripple3=sum(cellfun('length',carajo_nl{1}(:,1)));
+% ripple3=sum(cellfun('length',ca_nl{1}(:,1)));
    
-%  [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],lepoch);
+%  [sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,RipFreq2,timeasleep2]=nrem_fixed_thr(chtm,nrem,notch,[],lepoch);
 
-%[sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+%[sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
 ripple3=ripple_nl;
 
-% [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+% [p_nl,q_nl,timecell,~,~,~]=getwin2(ca_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 tic
-[p_nl,q_nl,~,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);
+[p_nl,q_nl,~,~,~,~]=getwin2(ca_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),chtm);
 toc
 clear sig1 sig2 sig1_nl sig2_nl
 
@@ -538,7 +538,7 @@ toc
 % load('freq1same.mat')            
 % end
 %  error('stop')
-[freq1]=norm_spec_total(freq1);    
+[freq1]=norm_spec(freq1);    
 
 %      files=dir(fullfile(cd,'*.mat'));
 %      files={files.name};
@@ -551,7 +551,7 @@ else
 toy=[-10:.1:10]; %[-10:.2:10];    
 end
 freq3=barplot2_ft(q_nl,create_timecell(ro),[100:2:300],[],toy);
-[freq3]=norm_spec_total(freq3);    
+[freq3]=norm_spec(freq3);    
 
 % save freq3same.mat freq3                                                                                                                                                                                                                                                                                                                                                
 % else
@@ -574,11 +574,11 @@ clear sig1 sig2 sig1_nl sig2_nl
 %  error('stop')
 %%
 %run('newest_load_data_nl.m')
-%[sig1_nl,sig2_nl,ripple2_nl,carajo_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
-% % % % % % % % % % [sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
+%[sig1_nl,sig2_nl,ripple2_nl,ca_nl,veamos_nl,CHTM_nl]=newest_only_ripple_nl;
+% % % % % % % % % % [sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,CHTM2,timeasleep2,RipFreq3]=newest_only_ripple_nl_level(level);
 % % % % % % % % % % ripple3=ripple_nl;
 % % % % % % % % % % 
-% % % % % % % % % % [p_nl,q_nl,timecell,~,~,~]=getwin2(carajo_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
+% % % % % % % % % % [p_nl,q_nl,timecell,~,~,~]=getwin2(ca_nl{:,:,level},veamos_nl{level},sig1_nl,sig2_nl,label1,label2,ro,ripple_nl(level),CHTM2(level+1));
 % % % % % % % % % % 
 % % % % % % % % % % if selectripples==1
 % % % % % % % % % % 
@@ -625,7 +625,7 @@ end
 
 freq2=justtesting(p,create_timecell(ro),[1:0.5:30],[],0.5,toy);
 
-[freq2]=norm_spec_total(freq2);    
+[freq2]=norm_spec(freq2);    
 
 % save freq2same.mat freq2                                                                                                                                                                                                                                                                                                                                                
 % else
@@ -649,7 +649,7 @@ else
 freq4=barplot2_ft(q,create_timecell(ro),[100:2:300],w,toy); %Memory reasons.     
 end
 
-[freq4]=norm_spec_total(freq4);    
+[freq4]=norm_spec(freq4);    
 
 % save freq4same.mat freq4
 % else
@@ -657,11 +657,11 @@ end
 % end    
 
 if ro==1200
-plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,[],create_timecell(ro),[],[],ripple_nl,carajo_nl,veamos_nl,chtm,[],selectripples,acer,P1_nl,P2_nl,[],[],freq1,freq3,freq2,freq4)
+plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,[],create_timecell(ro),[],[],ripple_nl,ca_nl,veamos_nl,chtm,[],selectripples,acer,P1_nl,P2_nl,[],[],freq1,freq3,freq2,freq4)
 else
-plot_inter_FIXED_10(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,[],create_timecell(ro),[],[],ripple_nl,carajo_nl,veamos_nl,chtm,[],selectripples,acer,P1_nl,P2_nl,[],[],freq1,freq3,freq2,freq4)    
+plot_inter_FIXED_10(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,[],create_timecell(ro),[],[],ripple_nl,ca_nl,veamos_nl,chtm,[],selectripples,acer,P1_nl,P2_nl,[],[],freq1,freq3,freq2,freq4)    
 end
-%plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,carajo_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
+%plot_inter_FIXED(Rat,nFF,level,ro,w,labelconditions,label1,label2,iii,P1,P2,p,timecell,sig1_nl,sig2_nl,ripple_nl,ca_nl,veamos_nl,CHTM2,q,timeasleep2,RipFreq3,RipFreq2,timeasleep,ripple,CHTM,selectripples);
 string=strcat(label1{2*w-1},'_',titl{mergebaseline},'.png');
 %cd('/home/raleman/Dropbox/SWR/NL_vs_Conditions_2')
 %cd('/home/raleman/Dropbox/SWR/rat 27/NL_vs_Conditions_2/Baseline3/plusmaze2')
@@ -680,23 +680,23 @@ string=strcat(label1{2*w-1},'_',titl{mergebaseline},'.png');
 
 %if Rat==27
 %UNCOMMENT THIS:
-if tdura==2
-    if acer==0
-      %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
-      cd(strcat('/home/raleman/Dropbox/SD30_normtime_max/',num2str(Rat)))
-
-    else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\SD30_normtime_max\',num2str(Rat)))   
-    end
-end
+% % % % % % % % % % % % if tdura==2
+% % % % % % % % % % % %     if acer==0
+% % % % % % % % % % % %       %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
+% % % % % % % % % % % %       cd(strcat('/home/raleman/Dropbox/SD30_normtime/',num2str(Rat)))
+% % % % % % % % % % % % 
+% % % % % % % % % % % %     else
+% % % % % % % % % % % %       cd(strcat('C:\Users\Welt Meister\Dropbox\SD30_normtime\',num2str(Rat)))   
+% % % % % % % % % % % %     end
+% % % % % % % % % % % % end
    
 if tdura==1
     if acer==0
       %cd(strcat('/home/raleman/Dropbox/SWR/rat 27/NoLearning_vs_Conditions_2/Baseline3/',labelconditions{iii-3}))
-      cd(strcat('/home/raleman/Dropbox/SD60_normtime_max/',num2str(Rat)))
+      cd(strcat('/home/raleman/Dropbox/SD60_normtime_first/',num2str(Rat)))
 
     else
-      cd(strcat('C:\Users\Welt Meister\Dropbox\SD60_normtime_max\',num2str(Rat)))   
+      cd(strcat('C:\Users\Welt Meister\Dropbox\SD60_normtime_first\',num2str(Rat)))   
     end
 end
 
@@ -723,3 +723,7 @@ end
 clearvars -except aver Rat tdura
 end
 end
+
+cd('/home/raleman/Documents/internship')
+run_tonight_maxpower;
+% run('run_tonight_maxpower.m')
