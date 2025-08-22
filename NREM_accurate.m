@@ -1,120 +1,86 @@
-function [ripple2,timeasleep,DEMAIS,y1]=NREM_accurate(level,nrem,notch,w,lepoch,chtm)
-%{
-LOAD DATA, easy and quick. 
+function [ripple2,timeAsleep,DEMAIS,y1] = NREM_accurate(level,nrem,notch,w,lepoch,chtm)
+%NREM_ACCURATE Detect ripples during NREM sleep with threshold sweep.
+%
+%   [ripple2,timeAsleep,DEMAIS,y1] = NREM_accurate(level,nrem,notch,w,lepoch,chtm)
+%
+%   Inputs:
+%       level   - Threshold level index
+%       nrem    - NREM sleep label
+%       notch   - Apply notch filter? (1=yes, 0=no)
+%       w       - (unused?) parameter
+%       lepoch  - Epoch length
+%       chtm    - Threshold reference value
+%
+%   Outputs:
+%       ripple2    - Ripple counts across thresholds
+%       timeAsleep - Total NREM time (minutes)
+%       DEMAIS     - Threshold sweep values
+%       y1         - Polynomial fit of ripple counts
+%
+%   Notes:
+%       - Monopolar recordings are taken from data17m.mat
+%       - NREM segments extracted using transitions.mat
+%       - Filters: 100–300 Hz bandpass, 320 Hz lowpass
+%
 
-The V signals are the monopolar recordings of the 4 channels. 
+%% Parameters
+fn = 1000;   % Sampling frequency
+g  = 0.5;    % Step for threshold sweep
 
-The S signals are the bipolar recordings which have been substracted the
-reference signal (V6)
-%}
+%% Filters
+[b1,a1] = butter(3,[100 300]/(fn/2),'bandpass');  % Ripple band
+[b2,a2] = butter(3,320/(fn/2));                   % Low-pass 320 Hz
 
-%Band pass filter design:
-fn=1000; % New sampling frequency. 
-Wn1=[100/(fn/2) 300/(fn/2)]; % Cutoff=500 Hz
-[b1,a1] = butter(3,Wn1,'bandpass'); %Filter coefficients
+%% Load data
+load('transitions.mat');   % Sleep stage transitions
+V17 = load('data17m.mat'); % Monopolar signal
+V17 = V17.data17m;
 
-%LPF 300 Hz:
-fn=1000; % New sampling frequency. 
-Wn1=[320/(fn/2)]; % Cutoff=500 Hz
-[b2,a2] = butter(3,Wn1); %Filter coefficients
+% Apply low-pass
+V17 = filtfilt(b2,a2,V17);
 
-
-%Load Sleeping stage classification
-load('transitions.mat')
-%Load Monopolar signals
-% Fline=[50 100 150 200 250 300];
-
-
-V17=load('data17m.mat');
-%Monopolar
-V17=V17.data17m;
-%V17=V17/max(V17);
-V17=filtfilt(b2,a2,V17);
-%NO NEED OF NOTCH FILTER FOR HIPPOCAMPUS
-%UPDATE: Actually does need one!
-%V17=flipud(filter(Hcas,flipud(filter(Hcas,V17))));
-
+% Optional notch filtering
 if notch==1
-Fline=[50 100 150 200 250.5 300];
-
-[V17] = ft_notch(V17.', fn,Fline,1,2);
-%V17=V17/median(V17);
-V17=V17.';
+    Fline = [50 100 150 200 250.5 300];
+    V17   = ft_notch(V17.', fn, Fline, 1, 2).'; 
 end
 
-%Bandpassed versions
-Mono17=filtfilt(b1,a1,V17); 
-%NREM extraction
-[V17,~]=reduce_data(V17,transitions,1000,nrem);
-[Mono17,~]=reduce_data(Mono17,transitions,1000,nrem);
+% Band-pass filtered version
+Mono17 = filtfilt(b1,a1,V17);
 
+% Reduce to NREM segments
+[V17,~]    = reduce_data(V17,transitions,fn,nrem);
+[Mono17,~] = reduce_data(Mono17,transitions,fn,nrem);
 
-'Loaded channels'
+disp('Loaded channels & performed bandpass');
 
-%Total amount of time spent sleeping:
-timeasleep=sum(cellfun('length',V17))*(1/1000)/60; % In minutes
+%% Time asleep (minutes)
+timeAsleep = sum(cellfun(@length,V17)) / fn / 60;
 
+%% Threshold sweep values
+DEMAIS = chtm + (-5:3)*g;  
+rep    = numel(DEMAIS);
 
-'Bandpass performed'
+%% Scale and time vectors
+signal2 = cellfun(@(x) x/0.195, Mono17,'UniformOutput',false);
+ti      = cellfun(@(x) (0:numel(x)-1)/fn, signal2,'UniformOutput',false);
 
+%% Ripple detection across thresholds
+s172 = zeros(numel(signal2),rep);
+for k = 1:rep
+    [S2x,E2x,M2x] = cellfun(@(sig,t) ...
+        findRipplesLisa(sig,t.',DEMAIS(k),DEMAIS(k)/2,[]), ...
+        signal2, ti, 'UniformOutput',false);
 
-rep=5; %Number of thresholds+1
-
-%%
-% [NC]=epocher(Mono17,lepoch);
-% % ncmax=max(NC)*(1/0.195);
-% % chtm=median(ncmax);
-% 
-% %ncmax=quantile(NC,0.999)*(1/0.195);
-% ncmax=max(NC)*(1/0.195);
-% chtm=median(ncmax);
-
-%Might need to comment this:
-% chtm=median(cellfun(@max,Mono17))*(1/0.195); %Minimum maximum value among epochs.
-
-%Median is used to account for any artifact/outlier. 
-% DEMAIS=linspace(floor(chtm/16),floor(chtm),30);
-g=0.5;
-DEMAIS=[chtm-5*g chtm-4*g chtm-3*g chtm-2*g chtm-1*g chtm chtm+1*g chtm+2*g chtm+3*g];
-
-%DEMAIS=linspace((chtm/16),(chtm),30);
-rep=length(DEMAIS);
-
-
-signal2=cellfun(@(equis) times((1/0.195), equis)  ,Mono17,'UniformOutput',false);
-ti=cellfun(@(equis) linspace(0, length(equis)-1,length(equis))*(1/fn) ,signal2,'UniformOutput',false);
-
-
-
-%Find ripples
-% for k=1:rep-1
-for k=1:rep
-% k=level;
-[S2x,E2x,M2x] =cellfun(@(equis1,equis2) findRipplesLisa(equis1, equis2.', DEMAIS(k), (DEMAIS(k))*(1/2), [] ), signal2,ti,'UniformOutput',false);    
-swr172(:,:,k)=[S2x E2x M2x];
-s172(:,k)=cellfun('length',S2x);
-k
+    s172(:,k) = cellfun(@numel,S2x);
 end
 
-RipFreq2=sum(s172)/(timeasleep*(60)); %RIpples per second. 
+%% Ripple count
+ripple2 = sum(s172);               % Total ripples per threshold
+% rippleRate = sum(s172)/(timeAsleep*60); % Ripples/sec (optional)
 
-%To display number of events use:
-ripple2=sum(s172); %When using same threshold per epoch.
-%ripple when using different threshold per epoch. 
- 
-%Adjustment to prevent decrease 
-DEMAIS2=DEMAIS;
-% DEMAIS=DEMAIS(2:end-1);
-
-% size(DEMAIS)
-% size(ripple2)
-%%
-% [p]=polyfit(DEMAIS,ripple2,3);
-% y1=polyval(p,DEMAIS);
-
-[p,S,mu]=polyfit(DEMAIS,ripple2,rep-1);
-y1=polyval(p,DEMAIS,[],mu);
-% [p,S,mu]=polyfit(DEMAIS(2:end),ripple2(2:end),10);
-% y1=polyval(p,DEMAIS(2:end),[],mu);
+%% Polynomial fit
+[p,S,mu] = polyfit(DEMAIS,ripple2,rep-1);
+y1 = polyval(p,DEMAIS,[],mu);
 
 end
